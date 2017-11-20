@@ -118,31 +118,7 @@ module.exports = {
     logout: '/admin/logout',
     userInfo: '/admin/info',
     register: '/admin/register',
-    modifyPassword: '/admin/modify-password',
-    //>>>>>>>>>>wxOpen
-    wxOpenConfig: '/admin/wx-open/config',
-    wxOpenGenerateToken: '/admin/wx-open/generate-token',
-    wxOpenGenerateAeskey: '/admin/wx-open/generate-aeskey',
-    wxOpenAuthList: '/admin/wx-open/auth/list',
-    wxOpenAuthorize: '/admin/wx-open/authorize',
-    //>>>>>>>>>>wxAcc
-    wxAccCardList: '/admin/wx-acc/card/list',
-    //>>>>>>>>>>wxApp
-    wxAppInfo: 'admin/wx-app/info',
-    wxAppDomain: 'admin/wx-app/domain',
-    //>>>>>>>>>>admin
-    wxAccAuthList: '/admin/wx-acc/auth/list',
-    wxAccPullCard: '/admin/wx-acc/pull-card',
-
-    cardCateList: '/admin/card-cate/list',
-    cardCateCreate: '/admin/card-cate/create',
-    cardCateUpdate: '/admin/card-cate/update',
-    cardCateDelete: '/admin/card-cate/delete',
-
-    cardDisplayList: '/admin/card-display/list',
-    cardDisplayCreate: '/admin/card-display/create',
-    cardDisplayUpdate: '/admin/card-display/update',
-    cardDisplayDelete: '/admin/card-display/delete'
+    modifyPassword: '/admin/modify-password'
 };
 
 /***/ }),
@@ -532,7 +508,7 @@ exports = module.exports = __webpack_require__(17)(undefined);
 
 
 // module
-exports.push([module.i, "\n.header-wrapper {\n    position: fixed;\n    width: 100%;\n    height: 60px;\n    z-index: 101;\n}\n.body-wrapper {\n    position: absolute;\n    width: 100%;\n    top: 60px;\n    bottom: 0;\n    z-index: 100;\n}\n.main-sidebar {\n    height: 100%;\n    width: 180px;\n}\n.content-wrapper {\n    position: absolute;\n    top: 0;\n    left: 180px;\n    bottom: 0;\n    right: 0;\n    padding: 10px;\n    overflow: hidden;\n}\n.el-pagination {\n    float: right;\n}\n.el-row {\n    margin: 10px 0;\n}\n", ""]);
+exports.push([module.i, "\n.header-wrapper {\n    width: 100%;\n}\n.body-wrapper {\n    position: absolute;\n    width: 100%;\n    top: 60px;\n    bottom: 0;\n}\n.main-sidebar {\n    height: 100%;\n    width: 180px;\n}\n.content-wrapper {\n    position: absolute;\n    top: 0;\n    left: 180px;\n    bottom: 0;\n    right: 0;\n    padding: 10px;\n    overflow: hidden;\n}\n.el-pagination {\n    float: right;\n}\n.el-row {\n    margin: 10px 0;\n}\n", ""]);
 
 // exports
 
@@ -695,7 +671,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -706,8 +681,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 name: ''
             },
             modifyPasswordVisible: false,
-            infoVisible: false,
-            formLabelWidth: '120px',
             form: {
                 password: '',
                 newPassword: '',
@@ -799,10 +772,10 @@ var render = function() {
               _c(
                 "el-menu-item",
                 {
-                  attrs: { index: "2-2" },
+                  attrs: { index: "2-1" },
                   on: {
                     click: function($event) {
-                      _vm.dialogFormVisible = true
+                      _vm.modifyPasswordVisible = true
                     }
                   }
                 },
@@ -811,7 +784,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-menu-item",
-                { attrs: { index: "2-3" }, on: { click: _vm.logout } },
+                { attrs: { index: "2-2" }, on: { click: _vm.logout } },
                 [_vm._v("注销")]
               )
             ],
@@ -834,17 +807,14 @@ var render = function() {
         [
           _c(
             "el-form",
-            { ref: "form", attrs: { model: _vm.form, rules: _vm.rules } },
+            {
+              ref: "form",
+              attrs: { model: _vm.form, rules: _vm.rules, labelWidth: "120px" }
+            },
             [
               _c(
                 "el-form-item",
-                {
-                  attrs: {
-                    prop: "password",
-                    label: "原密码",
-                    "label-width": _vm.formLabelWidth
-                  }
-                },
+                { attrs: { prop: "password", label: "原密码" } },
                 [
                   _c("el-input", {
                     attrs: { type: "password" },
@@ -862,13 +832,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                {
-                  attrs: {
-                    prop: "newPassword",
-                    label: "新密码",
-                    "label-width": _vm.formLabelWidth
-                  }
-                },
+                { attrs: { prop: "newPassword", label: "新密码" } },
                 [
                   _c("el-input", {
                     attrs: { type: "password" },
@@ -886,13 +850,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                {
-                  attrs: {
-                    prop: "newPasswordConfirm",
-                    label: "确认密码",
-                    "label-width": _vm.formLabelWidth
-                  }
-                },
+                { attrs: { prop: "newPasswordConfirm", label: "确认密码" } },
                 [
                   _c("el-input", {
                     attrs: { type: "password" },

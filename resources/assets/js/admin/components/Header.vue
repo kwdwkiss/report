@@ -7,20 +7,19 @@
             </div>
             <el-submenu index="2">
                 <template slot="title">{{user.name}}</template>
-                <!--<el-menu-item index="2-1" @click="info">个人信息</el-menu-item>-->
-                <el-menu-item index="2-2" @click="dialogFormVisible = true">修改密码</el-menu-item>
-                <el-menu-item index="2-3" @click="logout">注销</el-menu-item>
+                <el-menu-item index="2-1" @click="modifyPasswordVisible = true">修改密码</el-menu-item>
+                <el-menu-item index="2-2" @click="logout">注销</el-menu-item>
             </el-submenu>
         </el-menu>
         <el-dialog title="修改密码" :visible.sync="modifyPasswordVisible">
-            <el-form :model="form" :rules="rules" ref="form">
-                <el-form-item prop="password" label="原密码" :label-width="formLabelWidth">
+            <el-form :model="form" :rules="rules" ref="form" labelWidth="120px">
+                <el-form-item prop="password" label="原密码">
                     <el-input type="password" v-model="form.password"></el-input>
                 </el-form-item>
-                <el-form-item prop="newPassword" label="新密码" :label-width="formLabelWidth">
+                <el-form-item prop="newPassword" label="新密码">
                     <el-input type="password" v-model="form.newPassword"></el-input>
                 </el-form-item>
-                <el-form-item prop="newPasswordConfirm" label="确认密码" :label-width="formLabelWidth">
+                <el-form-item prop="newPasswordConfirm" label="确认密码">
                     <el-input type="password" v-model="form.newPasswordConfirm"></el-input>
                 </el-form-item>
             </el-form>
@@ -41,8 +40,6 @@
                     name: ''
                 },
                 modifyPasswordVisible: false,
-                infoVisible: false,
-                formLabelWidth: '120px',
                 form: {
                     password: '',
                     newPassword: '',

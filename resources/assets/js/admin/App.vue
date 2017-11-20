@@ -19,10 +19,7 @@
 </script>
 <style>
     .header-wrapper {
-        position: fixed;
         width: 100%;
-        height: 60px;
-        z-index: 101;
     }
 
     .body-wrapper {
@@ -30,7 +27,6 @@
         width: 100%;
         top: 60px;
         bottom: 0;
-        z-index: 100;
     }
 
     .main-sidebar {
