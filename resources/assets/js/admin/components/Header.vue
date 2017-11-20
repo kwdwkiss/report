@@ -48,7 +48,6 @@
                 rules: {
                     password: [
                         {required: true, message: '密码不能为空', trigger: 'blur'},
-                        {min: 8, message: '长度不小于8', trigger: 'blur'},
                     ],
                     newPassword: [
                         {required: true, message: '新密码不能为空', trigger: 'blur'},
@@ -73,9 +72,7 @@
         created: function () {
             let self = this;
             axios.get(api.userInfo).then(function (res) {
-                if (res.data.code === 0) {
-                    self.user = res.data.data;
-                }
+                self.user = res.data.data;
             })
         },
         methods: {
@@ -87,9 +84,8 @@
                 this.$refs.form.validate((valid) => {
                     if (valid) {
                         axios.post(api.modifyPassword, self.form).then(function (res) {
-                            if (res.data.code === 0) {
-                                app.$message.success('修改密码成功');
-                            }
+                            self.modifyPasswordVisible = false;
+                            app.$message.success('修改密码成功');
                         });
                     } else {
                         return false;

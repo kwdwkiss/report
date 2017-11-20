@@ -687,7 +687,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 newPasswordConfirm: ''
             },
             rules: {
-                password: [{ required: true, message: '密码不能为空', trigger: 'blur' }, { min: 8, message: '长度不小于8', trigger: 'blur' }],
+                password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
                 newPassword: [{ required: true, message: '新密码不能为空', trigger: 'blur' }, { min: 8, message: '长度不小于8', trigger: 'blur' }],
                 newPasswordConfirm: [{ required: true, message: '确认密码不能为空', trigger: 'blur' }, { min: 8, message: '长度不小于8', trigger: 'blur' }, {
                     validator: function validator(rule, value, callback) {
@@ -704,9 +704,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var self = this;
         axios.get(api.userInfo).then(function (res) {
-            if (res.data.code === 0) {
-                self.user = res.data.data;
-            }
+            self.user = res.data.data;
         });
     },
     methods: {
@@ -716,9 +714,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$refs.form.validate(function (valid) {
                 if (valid) {
                     axios.post(api.modifyPassword, self.form).then(function (res) {
-                        if (res.data.code === 0) {
-                            app.$message.success('修改密码成功');
-                        }
+                        self.modifyPasswordVisible = false;
+                        app.$message.success('修改密码成功');
                     });
                 } else {
                     return false;
@@ -1225,11 +1222,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
