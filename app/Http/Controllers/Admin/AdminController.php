@@ -33,9 +33,18 @@ class AdminController extends Controller
                 'message' => '只有超级管理员才能进行此操作'
             ];
         }
+        $name = request('name');
+
+        $existsAdmin = Admin::where('name', $name)->first();
+        if ($existsAdmin) {
+            return [
+                'code' => -1,
+                'message' => '用户名已存在'
+            ];
+        }
 
         Admin::create([
-            'name' => request('name'),
+            'name' => $name,
             'password' => bcrypt(request('password'))
         ]);
 

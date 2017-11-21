@@ -2,6 +2,11 @@
     <div>
         <el-row>
             <el-button type="primary" @click="dialogCreate.display=true">添加</el-button>
+
+            <el-pagination layout="prev, pager, next"
+                           :total="dataList.meta.total"
+                           :page-size="dataList.meta.per_page"
+                           @current-change="paginate"></el-pagination>
         </el-row>
         <el-row>
             <el-table :data="dataList.data" stripe>
@@ -62,7 +67,10 @@
     export default {
         data: function () {
             return {
-                dataList: {},
+                dataList: {
+                    meta: {},
+                    search: {}
+                },
                 dialogCreate: {
                     display: false,
                     data: {}
@@ -80,11 +88,17 @@
             this.loadData();
         },
         methods: {
-            loadData: function () {
+            loadData: function (params) {
                 let self = this;
-                axios.get(api.adminList).then(function (res) {
+                axios.get(api.adminList, {
+                    params: _.merge(self.dataList.search, params)
+                }).then(function (res) {
                     self.dataList = res.data;
                 });
+            },
+            paginate: function (page) {
+                _.merge(this.dataList, {search: {page: page}});
+                this.loadData();
             },
             dataCreate: function () {
                 let self = this;

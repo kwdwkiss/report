@@ -680,7 +680,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         var self = this;
         return {
-            title: '后台系统',
+            title: '系统后台',
             user: {
                 name: ''
             },
@@ -1485,7 +1485,7 @@ exports = module.exports = __webpack_require__(17)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -1557,11 +1557,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            dataList: {},
+            dataList: {
+                meta: {},
+                search: {}
+            },
             dialogCreate: {
                 display: false,
                 data: {}
@@ -1579,11 +1587,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.loadData();
     },
     methods: {
-        loadData: function loadData() {
+        loadData: function loadData(params) {
             var self = this;
-            axios.get(api.adminList).then(function (res) {
+            axios.get(api.adminList, {
+                params: _.merge(self.dataList.search, params)
+            }).then(function (res) {
                 self.dataList = res.data;
             });
+        },
+        paginate: function paginate(page) {
+            _.merge(this.dataList, { search: { page: page } });
+            this.loadData();
         },
         dataCreate: function dataCreate() {
             var self = this;
@@ -1640,7 +1654,16 @@ var render = function() {
               }
             },
             [_vm._v("添加")]
-          )
+          ),
+          _vm._v(" "),
+          _c("el-pagination", {
+            attrs: {
+              layout: "prev, pager, next",
+              total: _vm.dataList.meta.total,
+              "page-size": _vm.dataList.meta.per_page
+            },
+            on: { "current-change": _vm.paginate }
+          })
         ],
         1
       ),

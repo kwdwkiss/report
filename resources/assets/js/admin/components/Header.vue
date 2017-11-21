@@ -35,7 +35,7 @@
         data: function () {
             let self = this;
             return {
-                title: '后台系统',
+                title: '系统后台',
                 user: {
                     name: ''
                 },
