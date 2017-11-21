@@ -28,6 +28,9 @@
                 dataList: {}
             }
         },
+        created: function () {
+            this.loadData();
+        },
         methods: {
             loadData: function () {
                 let self = this;

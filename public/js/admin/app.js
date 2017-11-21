@@ -1050,11 +1050,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             defaultActive: '/',
             menu: [{
                 title: '控制面板',
-                path: '/',
-                children: [{
-                    title: '控制面板',
-                    path: '/'
-                }]
+                path: '/'
             }, {
                 title: '系统设置',
                 path: '/system',
@@ -1463,6 +1459,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             dataList: {}
         };
+    },
+    created: function created() {
+        this.loadData();
     },
     methods: {
         loadData: function loadData() {

@@ -27,12 +27,6 @@
                     {
                         title: '控制面板',
                         path: '/',
-                        children: [
-                            {
-                                title: '控制面板',
-                                path: '/'
-                            },
-                        ]
                     },
                     {
                         title: '系统设置',
