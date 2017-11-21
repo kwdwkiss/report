@@ -30,8 +30,8 @@ const routes = [
         alias: '/',
         children: [
             {path: '', component: require('./pages/Dashboard.vue')},
-            {path: 'system', component: require('./pages/System.vue')},
-            {path: 'system/admin', component: require('./pages/Admin.vue')},
+            {path: 'system/site', component: require('./pages/SysSite.vue')},
+            {path: 'system/admin', component: require('./pages/SysAdmin.vue')},
         ]
     }
 ];

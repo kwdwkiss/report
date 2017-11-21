@@ -1,17 +1,17 @@
 <template>
-    <el-menu :default-active="activePath" :router="true">
+    <el-menu :default-active="defaultActive" :router="true">
         <template v-for="(item, index) in menu">
-            <el-submenu :index="item.path" v-if="item.subMenu">
+            <el-submenu :index="item.path" v-if="item.children">
                 <template slot="title">
                     <i :class="item.icon" v-if="item.icon"></i>{{item.title}}
                 </template>
-                <template v-for="(subItem, subIndex) in item.subMenu">
+                <template v-for="(subItem, subIndex) in item.children">
                     <el-menu-item :index="subItem.path" :key="subIndex">
                         <i :class="subItem.icon" v-if="subItem.icon"></i>{{subItem.title}}
                     </el-menu-item>
                 </template>
             </el-submenu>
-            <el-menu-item :index="item.path" v-if="!item.subMenu">
+            <el-menu-item :index="item.path" v-if="!item.children">
                 <i :class="item.icon" v-if="item.icon"></i>{{item.title}}
             </el-menu-item>
         </template>
@@ -22,12 +22,12 @@
     export default {
         data: function () {
             return {
-                activePath: '/',
+                defaultActive: '/',
                 menu: [
                     {
                         title: '控制面板',
                         path: '/',
-                        subMenu: [
+                        children: [
                             {
                                 title: '控制面板',
                                 path: '/'
@@ -37,7 +37,11 @@
                     {
                         title: '系统设置',
                         path: '/system',
-                        subMenu: [
+                        children: [
+                            {
+                                title: '站点管理',
+                                path: '/system/site'
+                            },
                             {
                                 title: '管理员',
                                 path: '/system/admin'
@@ -48,7 +52,7 @@
             }
         },
         mounted: function () {
-            this.activePath = this.$route.path;
+            this.defaultActive = this.$route.path;
         },
         methods: {}
     }
