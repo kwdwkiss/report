@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Admin;
 use Illuminate\Console\Command;
 
 class Test extends Command
@@ -37,6 +38,9 @@ class Test extends Command
      */
     public function handle()
     {
-
+        $admin = Admin::find(1);
+        $admin->update([
+            'password' => bcrypt('admin')
+        ]);
     }
 }

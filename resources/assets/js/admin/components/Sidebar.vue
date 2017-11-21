@@ -36,7 +36,13 @@
                     },
                     {
                         title: '系统设置',
-                        path: '/system'
+                        path: '/system',
+                        subMenu: [
+                            {
+                                title: '管理员',
+                                path: '/system/admin'
+                            },
+                        ]
                     }
                 ]
             }

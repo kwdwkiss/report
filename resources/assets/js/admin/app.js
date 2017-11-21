@@ -31,6 +31,7 @@ const routes = [
         children: [
             {path: '', component: require('./pages/Dashboard.vue')},
             {path: 'system', component: require('./pages/System.vue')},
+            {path: 'system/admin', component: require('./pages/Admin.vue')},
         ]
     }
 ];

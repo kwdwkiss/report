@@ -19,6 +19,10 @@ Route::middleware(['csrf'])->group(function () {
 });
 
 Route::middleware(['auth:admin', 'csrf'])->group(function () {
+    Route::get('/admin/list', 'Admin\AdminController@list');
+    Route::post('/admin/create', 'Admin\AdminController@create');
+    Route::post('/admin/update', 'Admin\AdminController@update');
+    Route::post('/admin/delete', 'Admin\AdminController@delete');
     Route::get('/admin/info', 'Admin\AdminController@info');
     Route::post('/admin/modify-password', 'Admin\AdminController@modifyPassword');
 });
