@@ -10,5 +10,15 @@ module.exports = {
     adminUpdate: '/admin/update',
     adminDelete: '/admin/delete',
 
-    siteBasic: '/admin/site/basic'
+    siteBasic: '/admin/site/basic',
+
+    tagList: '/admin/tag/list',
+    tagCreate: '/admin/tag/create',
+    tagUpdate: '/admin/tag/update',
+    tagDelete: '/admin/tag/delete',
+
+    userProfileList: '/admin/user-profile/list',
+    userProfileCreate: '/admin/user-profile/create',
+    userProfileUpdate: '/admin/user-profile/update',
+    userProfileDelete: '/admin/user-profile/delete',
 };

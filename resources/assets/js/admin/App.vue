@@ -41,7 +41,6 @@
         bottom: 0;
         right: 0;
         padding: 10px;
-        overflow: hidden;
     }
 
     .el-pagination {

@@ -29,4 +29,14 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
 
     Route::get('/admin/site/basic', 'Admin\SiteController@getBasic');
     Route::post('/admin/site/basic', 'Admin\SiteController@setBasic');
+
+    Route::get('/admin/tag/list', 'Admin\TagController@list');
+    Route::post('/admin/tag/create', 'Admin\TagController@create');
+    Route::post('/admin/tag/update', 'Admin\TagController@update');
+    Route::post('/admin/tag/delete', 'Admin\TagController@delete');
+
+    Route::get('/admin/user-profile/list', 'Admin\UserProfileController@list');
+    Route::post('/admin/user-profile/create', 'Admin\UserProfileController@create');
+    Route::post('/admin/user-profile/update', 'Admin\UserProfileController@update');
+    Route::post('/admin/user-profile/delete', 'Admin\UserProfileController@delete');
 });

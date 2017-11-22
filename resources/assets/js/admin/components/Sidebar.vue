@@ -29,6 +29,14 @@
                         path: '/',
                     },
                     {
+                        title: '标签',
+                        path: '/tag',
+                    },
+                    {
+                        title: '用户资料',
+                        path: '/user/profile',
+                    },
+                    {
                         title: '系统设置',
                         path: '/system',
                         children: [
