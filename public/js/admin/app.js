@@ -3212,6 +3212,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -3418,27 +3419,31 @@ var render = function() {
             { attrs: { data: _vm.dataList.data, stripe: "" } },
             [
               _c("el-table-column", {
-                attrs: { prop: "mobile", label: "手机号", width: "150" }
+                attrs: { prop: "id", label: "ID", "min-width": "50" }
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "qq", label: "QQ", width: "150" }
+                attrs: { prop: "mobile", label: "手机号", "min-width": "120" }
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "wx", label: "微信", width: "150" }
+                attrs: { prop: "qq", label: "QQ", "min-width": "100" }
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "name", label: "姓名", width: "100" }
+                attrs: { prop: "wx", label: "微信", "min-width": "100" }
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "age", label: "年龄", width: "100" }
+                attrs: { prop: "name", label: "姓名", "min-width": "80" }
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { label: "性别", width: "100" },
+                attrs: { prop: "age", label: "年龄", "min-width": "60" }
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "性别", "min-width": "60" },
                 scopedSlots: _vm._u([
                   {
                     key: "default",
@@ -3456,19 +3461,19 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "occupation", label: "职业", width: "100" }
+                attrs: { prop: "occupation", label: "职业", "min-width": "80" }
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "province", label: "省", width: "100" }
+                attrs: { prop: "province", label: "省", "min-width": "80" }
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "city", label: "市", width: "100" }
+                attrs: { prop: "city", label: "市", "min-width": "80" }
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { label: "操作" },
+                attrs: { label: "操作", "min-width": "200" },
                 scopedSlots: _vm._u([
                   {
                     key: "default",

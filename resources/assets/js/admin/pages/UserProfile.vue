@@ -19,20 +19,21 @@
 
         <el-row>
             <el-table :data="dataList.data" stripe>
-                <el-table-column prop="mobile" label="手机号" width="150"></el-table-column>
-                <el-table-column prop="qq" label="QQ" width="150"></el-table-column>
-                <el-table-column prop="wx" label="微信" width="150"></el-table-column>
-                <el-table-column prop="name" label="姓名" width="100"></el-table-column>
-                <el-table-column prop="age" label="年龄" width="100"></el-table-column>
-                <el-table-column label="性别" width="100">
+                <el-table-column prop="id" label="ID" min-width="50"></el-table-column>
+                <el-table-column prop="mobile" label="手机号" min-width="120"></el-table-column>
+                <el-table-column prop="qq" label="QQ" min-width="100"></el-table-column>
+                <el-table-column prop="wx" label="微信" min-width="100"></el-table-column>
+                <el-table-column prop="name" label="姓名" min-width="80"></el-table-column>
+                <el-table-column prop="age" label="年龄" min-width="60"></el-table-column>
+                <el-table-column label="性别" min-width="60">
                     <template slot-scope="scope">
                         {{genderLabel[scope.row.gender]}}
                     </template>
                 </el-table-column>
-                <el-table-column prop="occupation" label="职业" width="100"></el-table-column>
-                <el-table-column prop="province" label="省" width="100"></el-table-column>
-                <el-table-column prop="city" label="市" width="100"></el-table-column>
-                <el-table-column label="操作">
+                <el-table-column prop="occupation" label="职业" min-width="80"></el-table-column>
+                <el-table-column prop="province" label="省" min-width="80"></el-table-column>
+                <el-table-column prop="city" label="市" min-width="80"></el-table-column>
+                <el-table-column label="操作" min-width="200">
                     <template slot-scope="scope">
                         <el-button type="warning" @click="openUpdateDialog(scope)">修改</el-button>
                         <el-button type="danger" @click="openDeleteDialog(scope)">删除</el-button>
