@@ -32,5 +32,7 @@ mix
 
     .sass('resources/assets/sass/app.scss', 'public/css')
 
+if (process.env.NODE_ENV === 'production') {
+    mix.version()
+}
 
-//.version();
