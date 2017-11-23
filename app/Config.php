@@ -18,7 +18,7 @@ class Config extends Model
         'data' => 'array'
     ];
 
-    public static function get($name, $default = null)
+    public static function get($name, $default = '')
     {
         $config = static::find($name);
         if (!$config) {
@@ -32,7 +32,7 @@ class Config extends Model
         static::updateOrCreate([
             'name' => $name
         ], [
-            'data' => $data
+            'data' => $data === null ? '' : $data
         ]);
     }
 }
