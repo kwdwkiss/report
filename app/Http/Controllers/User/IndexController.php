@@ -6,7 +6,7 @@
  * Time: 上午10:08
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Config;
 use App\Http\Controllers\Controller;
@@ -16,19 +16,19 @@ class IndexController extends Controller
     public function index()
     {
         $config = [
-            'siteName' => Config::get('site.name') . ' 管理后台',
+            'siteName' => Config::get('site.name') . ' 用户后台',
         ];
-        return view('admin', compact('config'));
+        return view('user', compact('config'));
     }
 
     public function info()
     {
-        return ['data' => \Auth::guard('admin')->user()];
+        return ['data' => \Auth::guard('user')->user()];
     }
 
     public function login()
     {
-        if (\Auth::guard('admin')->attempt([
+        if (\Auth::guard('user')->attempt([
             'name' => request('username'),
             'password' => request('password')
         ])) {
@@ -42,7 +42,7 @@ class IndexController extends Controller
 
     public function logout()
     {
-        \Auth::guard('admin')->logout();
+        \Auth::guard('user')->logout();
         return [];
     }
 
@@ -51,7 +51,7 @@ class IndexController extends Controller
         $this->validate(request(), [
             'newPassword' => 'required|min:8'
         ]);
-        $user = \Auth::guard('admin')->user();
+        $user = \Auth::guard('user')->user();
         if (!\Hash::check(request('password'), $user->password)) {
             return [
                 'code' => -1,

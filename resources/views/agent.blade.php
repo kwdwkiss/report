@@ -8,15 +8,20 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $config['siteName'] }}</title>
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+<script>
+    window.laravel = JSON.parse('{!! json_encode($config) !!}');
+</script>
 <div id="app"></div>
 
 <!-- Scripts -->
+<script src="{{ mix("js/agent/manifest.js") }}"></script>
+<script src="{{ mix("js/agent/vendor.js") }}"></script>
 <script src="{{ mix("js/agent/app.js") }}"></script>
 </body>
 </html>
