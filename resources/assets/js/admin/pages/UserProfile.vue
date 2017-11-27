@@ -208,8 +208,8 @@
         methods: {
             provinceSelect: function (value) {
                 this.cities = Object.keys(cityData[value]);
-                this.dialogCreate.data.city = '';
-                this.dialogUpdate.data.city = '';
+                this.dialogCreate.data.city = this.cities[0];
+                this.dialogUpdate.data.city = this.cities[0];
             },
             loadTagList: function () {
                 let self = this;
@@ -232,7 +232,10 @@
                 this.loadData();
             },
             openCreateDialog: function () {
-                this.dialogCreate.data = {tags: []};
+                this.dialogCreate.data = {
+                    tags: [],
+                    city: ''
+                };
                 this.dialogCreate.display = true
             },
             doCreate: function () {

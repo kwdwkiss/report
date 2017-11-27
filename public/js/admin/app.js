@@ -2690,8 +2690,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         provinceSelect: function provinceSelect(value) {
             this.cities = Object.keys(__WEBPACK_IMPORTED_MODULE_0__city_json___default.a[value]);
-            this.dialogCreate.data.city = '';
-            this.dialogUpdate.data.city = '';
+            this.dialogCreate.data.city = this.cities[0];
+            this.dialogUpdate.data.city = this.cities[0];
         },
         loadTagList: function loadTagList() {
             var self = this;
@@ -2714,7 +2714,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.loadData();
         },
         openCreateDialog: function openCreateDialog() {
-            this.dialogCreate.data = { tags: [] };
+            this.dialogCreate.data = {
+                tags: [],
+                city: ''
+            };
             this.dialogCreate.display = true;
         },
         doCreate: function doCreate() {
