@@ -29,12 +29,28 @@
                         path: '/',
                     },
                     {
+                        title: '分类',
+                        path: '/taxonomy',
+                    },
+                    {
                         title: '标签',
                         path: '/tag',
                     },
                     {
+                        title: '文章管理',
+                        path: '/article',
+                    },
+                    {
                         title: '用户资料',
                         path: '/user/profile',
+                    },
+                    {
+                        title: '举报信息',
+                        path: '/account/report',
+                    },
+                    {
+                        title: '举报账号',
+                        path: '/account',
                     },
                     {
                         title: '系统设置',

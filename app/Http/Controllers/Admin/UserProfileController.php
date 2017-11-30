@@ -33,7 +33,7 @@ class UserProfileController extends Controller
             $query->where('wx', $wx);
         }
 
-        return UserProfileResource::collection($query->paginate(10));
+        return UserProfileResource::collection($query->paginate());
     }
 
     public function create()

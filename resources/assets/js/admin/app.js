@@ -20,6 +20,7 @@ Vue.use(ElementUI);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+window.UEDITOR_HOME_URL='/utf8-php-ueditor/';
 window.api = require('./api.js');
 
 const routes = [
@@ -30,8 +31,12 @@ const routes = [
         alias: '/',
         children: [
             {path: '', component: require('./pages/Dashboard.vue')},
+            {path: 'taxonomy', component: require('./pages/Taxonomy.vue')},
             {path: 'tag', component: require('./pages/Tag.vue')},
+            {path: 'article', component: require('./pages/Article.vue')},
             {path: 'user/profile', component: require('./pages/UserProfile.vue')},
+            {path: 'account/report', component: require('./pages/AccountReport.vue')},
+            {path: 'account', component: require('./pages/Account.vue')},
             {path: 'system/site', component: require('./pages/Site.vue')},
             {path: 'system/admin', component: require('./pages/Admin.vue')},
         ]

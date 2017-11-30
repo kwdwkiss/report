@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-row>
-            <el-button type="primary" @click="dialogCreate.display=true">添加</el-button>
+            <el-button type="primary" @click="openCreateDialog">添加</el-button>
 
             <el-pagination layout="prev, pager, next"
                            :total="dataList.meta.total"
@@ -14,10 +14,10 @@
                 <el-table-column prop="group_id" label="分组" width="200"></el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button type="warning" @click="dialogUpdate.row=scope.row;dialogUpdate.display=true">
+                        <el-button type="warning" @click="openUpdateDialog(scope)">
                             修改
                         </el-button>
-                        <el-button type="danger" @click="dialogDelete.row=scope.row;dialogDelete.display=true">
+                        <el-button type="danger" @click="doDelete(scope)">
                             删除
                         </el-button>
                     </template>
@@ -33,7 +33,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogCreate.display = false">取 消</el-button>
-                <el-button type="primary" @click="dataCreate">确 定</el-button>
+                <el-button type="primary" @click="doCreate">确 定</el-button>
             </div>
         </el-dialog>
 
@@ -45,18 +45,9 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogUpdate.display = false">取 消</el-button>
-                <el-button type="primary" @click="dataUpdate">确 定</el-button>
+                <el-button type="primary" @click="doUpdate">确 定</el-button>
             </div>
         </el-dialog>
-
-        <el-dialog title="删除" :visible.sync="dialogDelete.display">
-            <label>是否删除？</label>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogDelete.display = false">取 消</el-button>
-                <el-button type="primary" @click="dataDelete">确 定</el-button>
-            </div>
-        </el-dialog>
-
     </div>
 </template>
 
@@ -64,6 +55,10 @@
     export default {
         data: function () {
             return {
+                apiList: api.tagList,
+                apiCreate: api.tagCreate,
+                apiUpdate: api.tagUpdate,
+                apiDelete: api.tagDelete,
                 dataList: {
                     meta: {},
                     search: {}
@@ -76,54 +71,58 @@
                     display: false,
                     data: {}
                 },
-                dialogDelete: {
-                    display: false
-                },
             }
         },
         created: function () {
             this.loadData();
         },
         methods: {
-            loadData: function (params) {
+            loadData: function () {
                 let self = this;
-                axios.get(api.tagList, {
-                    params: _.merge(self.dataList.search, params)
-                }).then(function (res) {
+                axios.get(self.apiList, {params: self.search}).then(function (res) {
                     self.dataList = res.data;
                 });
             },
             paginate: function (page) {
-                _.merge(this.dataList, {search: {page: page}});
+                this.search.page = page;
                 this.loadData();
             },
-            dataCreate: function () {
+            openCreateDialog: function () {
+                this.dialogCreate.data = {};
+                this.dialogCreate.display = true
+            },
+            doCreate: function () {
                 let self = this;
-                axios.post(api.tagCreate, self.dialogCreate.data).then(function () {
-                    self.dialogCreate.data = {};
+                axios.post(self.apiCreate, self.dialogCreate.data).then(function () {
                     self.dialogCreate.display = false;
                     self.$message.success('成功');
                     self.loadData();
                 })
             },
-            dataUpdate: function () {
+            openUpdateDialog: function (scope) {
+                this.dialogUpdate.data = Object.assign({}, scope.row);
+                this.dialogUpdate.display = true;
+            },
+            doUpdate: function () {
                 let self = this;
-                axios.post(api.tagUpdate, _.assign(
-                    {id: self.dialogUpdate.row.id},
-                    self.dialogUpdate.data
-                )).then(function () {
-                    self.dialogUpdate.data = {};
+                axios.post(self.apiUpdate, self.dialogUpdate.data).then(function () {
                     self.dialogUpdate.display = false;
                     self.$message.success('成功');
                     self.loadData();
                 });
             },
-            dataDelete: function () {
+            doDelete: function (scope) {
                 let self = this;
-                axios.post(api.tagDelete, {id: self.dialogDelete.row.id}).then(function () {
-                    self.dialogDelete.display = false;
-                    self.$message.success('成功');
-                    self.loadData();
+                this.$confirm('是否删除？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'error'
+                }).then(() => {
+                    axios.post(self.apiDelete, {id: scope.row.id}).then(function () {
+                        self.$message.success('成功');
+                        self.loadData();
+                    });
+                }).catch(() => {
                 });
             }
         }

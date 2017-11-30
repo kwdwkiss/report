@@ -16,7 +16,7 @@ class AdminController extends Controller
 {
     public function list()
     {
-        return AdminResource::collection(Admin::paginate(10));
+        return AdminResource::collection(Admin::paginate());
     }
 
     public function create()

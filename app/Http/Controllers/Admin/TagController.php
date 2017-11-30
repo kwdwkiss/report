@@ -17,7 +17,7 @@ class TagController extends Controller
 {
     public function list()
     {
-        return TagResource::collection(Tag::paginate(10));
+        return TagResource::collection(Tag::paginate());
     }
 
     public function create()

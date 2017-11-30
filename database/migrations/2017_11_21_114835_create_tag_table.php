@@ -15,7 +15,7 @@ class CreateTagTable extends Migration
     {
         Schema::create('tag', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('group_id');//标签分组
+            $table->integer('type');//标签分组
             $table->string('name');
         });
     }

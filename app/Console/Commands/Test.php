@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Account;
+use App\AccountReport;
 use App\Admin;
 use App\Tag;
+use App\Taxonomy;
 use App\UserProfile;
 use Illuminate\Console\Command;
 
@@ -40,7 +43,6 @@ class Test extends Command
      */
     public function handle()
     {
-        $record = Tag::find(2);
-        $temp = '';
+        AccountReport::report(201, '52508805', 306, '127.0.0.1');
     }
 }

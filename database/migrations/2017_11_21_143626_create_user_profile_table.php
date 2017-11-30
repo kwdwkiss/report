@@ -18,12 +18,10 @@ class CreateUserProfileTable extends Migration
             $table->string('name');
             $table->integer('age');
             $table->tinyInteger('gender');//0-未知 1-男 2-女
-            $table->string('mobile')->unique();
-            $table->string('qq')->unique();
-            $table->string('wx')->unique();
             $table->string('occupation');
             $table->string('province');
             $table->string('city');
+            $table->string('remark');
             $table->timestamps();
         });
     }
