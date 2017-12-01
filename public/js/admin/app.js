@@ -3354,7 +3354,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         updateEditorReady: function updateEditorReady(ue) {
             this.editor.update = ue;
-            this.editor.update.setContent(this.dialogUpdate.data.content);
         },
         loadArticleType: function loadArticleType() {
             var self = this;
@@ -3379,6 +3378,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         openCreateDialog: function openCreateDialog() {
             var type = this.articleTypeList.length && this.articleTypeList[0].id;
             this.dialogCreate.data = { type: type, title: '', remark: '', content: '' };
+            this.editor.create.setContent(this.dialogCreate.data.content);
             this.action = 'create';
         },
         doCreate: function doCreate() {
@@ -3398,6 +3398,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         openUpdateDialog: function openUpdateDialog(scope) {
             this.dialogUpdate.data = Object.assign({}, scope.row);
+            this.editor.update.setContent(this.dialogUpdate.data.content);
             this.action = 'update';
         },
         doUpdate: function doUpdate() {
@@ -3621,518 +3622,519 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm.action == "list"
-        ? [
+  return _c("div", [
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.action == "list",
+            expression: "action=='list'"
+          }
+        ]
+      },
+      [
+        _c(
+          "el-row",
+          { staticClass: "search" },
+          [
             _c(
-              "el-row",
-              { staticClass: "search" },
-              [
-                _c(
-                  "el-select",
-                  {
-                    attrs: { placeholder: "文章类型" },
-                    model: {
-                      value: _vm.search.type,
-                      callback: function($$v) {
-                        _vm.$set(_vm.search, "type", $$v)
-                      },
-                      expression: "search.type"
-                    }
+              "el-select",
+              {
+                attrs: { placeholder: "文章类型" },
+                model: {
+                  value: _vm.search.type,
+                  callback: function($$v) {
+                    _vm.$set(_vm.search, "type", $$v)
                   },
-                  _vm._l(_vm.articleTypeList, function(item) {
-                    return _c("el-option", {
-                      key: item.id,
-                      attrs: { value: item.id, label: item.name }
-                    })
-                  })
-                ),
-                _vm._v(" "),
-                _c("el-input", {
-                  attrs: { placeholder: "标题" },
-                  model: {
-                    value: _vm.search.title,
-                    callback: function($$v) {
-                      _vm.$set(_vm.search, "title", $$v)
-                    },
-                    expression: "search.title"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "el-button",
-                  { attrs: { type: "primary" }, on: { click: _vm.loadData } },
-                  [_vm._v("搜索")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "el-button",
-                  { attrs: { type: "warning" }, on: { click: _vm.reset } },
-                  [_vm._v("重置")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "el-button",
-                  {
-                    attrs: { type: "success" },
-                    on: { click: _vm.openCreateDialog }
-                  },
-                  [_vm._v("添加")]
-                ),
-                _vm._v(" "),
-                _c("el-pagination", {
-                  attrs: {
-                    layout: "prev, pager, next",
-                    total: _vm.dataList.meta.total,
-                    "page-size": _vm.dataList.meta.per_page
-                  },
-                  on: { "current-change": _vm.paginate }
+                  expression: "search.type"
+                }
+              },
+              _vm._l(_vm.articleTypeList, function(item) {
+                return _c("el-option", {
+                  key: item.id,
+                  attrs: { value: item.id, label: item.name }
                 })
-              ],
-              1
+              })
+            ),
+            _vm._v(" "),
+            _c("el-input", {
+              attrs: { placeholder: "标题" },
+              model: {
+                value: _vm.search.title,
+                callback: function($$v) {
+                  _vm.$set(_vm.search, "title", $$v)
+                },
+                expression: "search.title"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "el-button",
+              { attrs: { type: "primary" }, on: { click: _vm.loadData } },
+              [_vm._v("搜索")]
             ),
             _vm._v(" "),
             _c(
-              "el-row",
+              "el-button",
+              { attrs: { type: "warning" }, on: { click: _vm.reset } },
+              [_vm._v("重置")]
+            ),
+            _vm._v(" "),
+            _c(
+              "el-button",
+              {
+                attrs: { type: "success" },
+                on: { click: _vm.openCreateDialog }
+              },
+              [_vm._v("添加")]
+            ),
+            _vm._v(" "),
+            _c("el-pagination", {
+              attrs: {
+                layout: "prev, pager, next",
+                total: _vm.dataList.meta.total,
+                "page-size": _vm.dataList.meta.per_page
+              },
+              on: { "current-change": _vm.paginate }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "el-row",
+          [
+            _c(
+              "el-table",
+              { attrs: { data: _vm.dataList.data, stripe: "" } },
               [
-                _c(
-                  "el-table",
-                  { attrs: { data: _vm.dataList.data, stripe: "" } },
-                  [
-                    _c("el-table-column", {
-                      attrs: {
-                        prop: "article_type",
-                        label: "文章类型",
-                        "min-width": "100"
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "article_type",
+                    label: "文章类型",
+                    "min-width": "100"
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "title", label: "标题", "min-width": "150" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "remark", label: "备注", "min-width": "200" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { label: "显示", "min-width": "100" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _c("el-switch", {
+                            attrs: { "active-value": 1, "inactive-value": 0 },
+                            on: {
+                              change: function($event) {
+                                _vm.switchDisplay(scope.row)
+                              }
+                            },
+                            model: {
+                              value: scope.row.display,
+                              callback: function($$v) {
+                                _vm.$set(scope.row, "display", $$v)
+                              },
+                              expression: "scope.row.display"
+                            }
+                          })
+                        ]
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("el-table-column", {
-                      attrs: {
-                        prop: "title",
-                        label: "标题",
-                        "min-width": "150"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("el-table-column", {
-                      attrs: {
-                        prop: "remark",
-                        label: "备注",
-                        "min-width": "200"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("el-table-column", {
-                      attrs: { label: "显示", "min-width": "100" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              _c("el-switch", {
-                                attrs: {
-                                  "active-value": 1,
-                                  "inactive-value": 0
-                                },
-                                on: {
-                                  change: function($event) {
-                                    _vm.switchDisplay(scope.row)
-                                  }
-                                },
-                                model: {
-                                  value: scope.row.display,
-                                  callback: function($$v) {
-                                    _vm.$set(scope.row, "display", $$v)
-                                  },
-                                  expression: "scope.row.display"
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "created_at",
+                    label: "创建时间",
+                    "min-width": "180"
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { label: "操作", "min-width": "200" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "warning" },
+                              on: {
+                                click: function($event) {
+                                  _vm.openUpdateDialog(scope)
                                 }
-                              })
-                            ]
-                          }
-                        }
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _c("el-table-column", {
-                      attrs: {
-                        prop: "created_at",
-                        label: "创建时间",
-                        "min-width": "180"
+                              }
+                            },
+                            [_vm._v("修改")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "danger" },
+                              on: {
+                                click: function($event) {
+                                  _vm.doDelete(scope)
+                                }
+                              }
+                            },
+                            [_vm._v("删除")]
+                          )
+                        ]
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("el-table-column", {
-                      attrs: { label: "操作", "min-width": "200" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function(scope) {
-                            return [
-                              _c(
-                                "el-button",
-                                {
-                                  attrs: { type: "warning" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.openUpdateDialog(scope)
-                                    }
-                                  }
-                                },
-                                [_vm._v("修改")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "el-button",
-                                {
-                                  attrs: { type: "danger" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.doDelete(scope)
-                                    }
-                                  }
-                                },
-                                [_vm._v("删除")]
-                              )
-                            ]
-                          }
-                        }
-                      ])
-                    })
-                  ],
-                  1
-                )
+                    }
+                  ])
+                })
               ],
               1
             )
-          ]
-        : _vm.action == "create"
-          ? [
-              _c("div", { staticClass: "panel" }, [
-                _c("div", { staticClass: "panel-heading" }, [
-                  _vm._v("创建文章")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "panel-body" },
-                  [
-                    _c(
-                      "el-form",
-                      {
-                        ref: "createForm",
-                        attrs: {
-                          model: _vm.dialogCreate.data,
-                          rules: _vm.rules
-                        }
-                      },
-                      [
-                        _c(
-                          "el-form-item",
-                          {
-                            attrs: {
-                              prop: "type",
-                              label: "文章类型",
-                              labelWidth: "100px"
-                            }
-                          },
-                          [
-                            _c(
-                              "el-select",
-                              {
-                                model: {
-                                  value: _vm.dialogCreate.data.type,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.dialogCreate.data, "type", $$v)
-                                  },
-                                  expression: "dialogCreate.data.type"
-                                }
-                              },
-                              _vm._l(_vm.articleTypeList, function(item) {
-                                return _c("el-option", {
-                                  key: item.id,
-                                  attrs: { value: item.id, label: item.name }
-                                })
-                              })
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          {
-                            attrs: {
-                              prop: "title",
-                              label: "标题",
-                              labelWidth: "100px"
-                            }
-                          },
-                          [
-                            _c("el-input", {
-                              model: {
-                                value: _vm.dialogCreate.data.title,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.dialogCreate.data, "title", $$v)
-                                },
-                                expression: "dialogCreate.data.title"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          {
-                            attrs: {
-                              prop: "remark",
-                              label: "备注",
-                              labelWidth: "100px"
-                            }
-                          },
-                          [
-                            _c("el-input", {
-                              model: {
-                                value: _vm.dialogCreate.data.remark,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.dialogCreate.data, "remark", $$v)
-                                },
-                                expression: "dialogCreate.data.remark"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          {
-                            staticClass: "editor-form-item",
-                            attrs: {
-                              prop: "content",
-                              label: "内容",
-                              labelWidth: "100px"
-                            }
-                          },
-                          [
-                            _c("VueUEditor", {
-                              staticStyle: { "line-height": "20px" },
-                              attrs: { ueditorPath: "/ueditor/" },
-                              on: { ready: _vm.createEditorReady }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-form-item",
-                          { attrs: { labelWidth: "100px" } },
-                          [
-                            _c(
-                              "el-button",
-                              {
-                                attrs: { type: "primary" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.action = "list"
-                                  }
-                                }
-                              },
-                              [_vm._v("返回")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "el-button",
-                              {
-                                attrs: { type: "success" },
-                                on: { click: _vm.doCreate }
-                              },
-                              [_vm._v("提交")]
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ])
-            ]
-          : _vm.action == "update"
-            ? [
-                _c("div", { staticClass: "panel" }, [
-                  _c("div", { staticClass: "panel-heading" }, [
-                    _vm._v("编辑文章")
-                  ]),
-                  _vm._v(" "),
+          ],
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.action == "create",
+            expression: "action=='create'"
+          }
+        ]
+      },
+      [
+        _c("div", { staticClass: "panel" }, [
+          _c("div", { staticClass: "panel-heading" }, [_vm._v("创建文章")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "panel-body" },
+            [
+              _c(
+                "el-form",
+                {
+                  ref: "createForm",
+                  attrs: { model: _vm.dialogCreate.data, rules: _vm.rules }
+                },
+                [
                   _c(
-                    "div",
-                    { staticClass: "panel-body" },
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "type",
+                        label: "文章类型",
+                        labelWidth: "100px"
+                      }
+                    },
                     [
                       _c(
-                        "el-form",
+                        "el-select",
                         {
-                          ref: "createForm",
-                          attrs: {
-                            model: _vm.dialogUpdate.data,
-                            rules: _vm.rules
+                          model: {
+                            value: _vm.dialogCreate.data.type,
+                            callback: function($$v) {
+                              _vm.$set(_vm.dialogCreate.data, "type", $$v)
+                            },
+                            expression: "dialogCreate.data.type"
                           }
                         },
-                        [
-                          _c(
-                            "el-form-item",
-                            {
-                              attrs: {
-                                prop: "type",
-                                label: "文章类型",
-                                labelWidth: "100px"
-                              }
-                            },
-                            [
-                              _c(
-                                "el-select",
-                                {
-                                  model: {
-                                    value: _vm.dialogUpdate.data.type,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.dialogUpdate.data,
-                                        "type",
-                                        $$v
-                                      )
-                                    },
-                                    expression: "dialogUpdate.data.type"
-                                  }
-                                },
-                                _vm._l(_vm.articleTypeList, function(item) {
-                                  return _c("el-option", {
-                                    key: item.id,
-                                    attrs: { value: item.id, label: item.name }
-                                  })
-                                })
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-form-item",
-                            {
-                              attrs: {
-                                prop: "title",
-                                label: "标题",
-                                labelWidth: "100px"
-                              }
-                            },
-                            [
-                              _c("el-input", {
-                                model: {
-                                  value: _vm.dialogUpdate.data.title,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.dialogUpdate.data,
-                                      "title",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "dialogUpdate.data.title"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-form-item",
-                            {
-                              attrs: {
-                                prop: "remark",
-                                label: "备注",
-                                labelWidth: "100px"
-                              }
-                            },
-                            [
-                              _c("el-input", {
-                                model: {
-                                  value: _vm.dialogUpdate.data.remark,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.dialogUpdate.data,
-                                      "remark",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "dialogUpdate.data.remark"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-form-item",
-                            {
-                              attrs: {
-                                prop: "content",
-                                label: "内容",
-                                labelWidth: "100px"
-                              }
-                            },
-                            [
-                              _c("VueUEditor", {
-                                staticStyle: { "line-height": "20px" },
-                                attrs: { ueditorPath: "/ueditor/" },
-                                on: { ready: _vm.updateEditorReady }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-form-item",
-                            { attrs: { labelWidth: "100px" } },
-                            [
-                              _c(
-                                "el-button",
-                                {
-                                  attrs: { type: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.action = "list"
-                                    }
-                                  }
-                                },
-                                [_vm._v("返回")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "el-button",
-                                {
-                                  attrs: { type: "success" },
-                                  on: { click: _vm.doUpdate }
-                                },
-                                [_vm._v("提交")]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
+                        _vm._l(_vm.articleTypeList, function(item) {
+                          return _c("el-option", {
+                            key: item.id,
+                            attrs: { value: item.id, label: item.name }
+                          })
+                        })
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "title",
+                        label: "标题",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.dialogCreate.data.title,
+                          callback: function($$v) {
+                            _vm.$set(_vm.dialogCreate.data, "title", $$v)
+                          },
+                          expression: "dialogCreate.data.title"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "remark",
+                        label: "备注",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.dialogCreate.data.remark,
+                          callback: function($$v) {
+                            _vm.$set(_vm.dialogCreate.data, "remark", $$v)
+                          },
+                          expression: "dialogCreate.data.remark"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      staticClass: "editor-form-item",
+                      attrs: {
+                        prop: "content",
+                        label: "内容",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c("VueUEditor", {
+                        staticStyle: { "line-height": "20px" },
+                        attrs: { ueditorPath: "/ueditor/" },
+                        on: { ready: _vm.createEditorReady }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { labelWidth: "100px" } },
+                    [
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary" },
+                          on: {
+                            click: function($event) {
+                              _vm.action = "list"
+                            }
+                          }
+                        },
+                        [_vm._v("返回")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "success" },
+                          on: { click: _vm.doCreate }
+                        },
+                        [_vm._v("提交")]
                       )
                     ],
                     1
                   )
-                ])
-              ]
-            : _vm._e()
-    ],
-    2
-  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.action == "update",
+            expression: "action=='update'"
+          }
+        ]
+      },
+      [
+        _c("div", { staticClass: "panel" }, [
+          _c("div", { staticClass: "panel-heading" }, [_vm._v("编辑文章")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "panel-body" },
+            [
+              _c(
+                "el-form",
+                {
+                  ref: "createForm",
+                  attrs: { model: _vm.dialogUpdate.data, rules: _vm.rules }
+                },
+                [
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "type",
+                        label: "文章类型",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          model: {
+                            value: _vm.dialogUpdate.data.type,
+                            callback: function($$v) {
+                              _vm.$set(_vm.dialogUpdate.data, "type", $$v)
+                            },
+                            expression: "dialogUpdate.data.type"
+                          }
+                        },
+                        _vm._l(_vm.articleTypeList, function(item) {
+                          return _c("el-option", {
+                            key: item.id,
+                            attrs: { value: item.id, label: item.name }
+                          })
+                        })
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "title",
+                        label: "标题",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.dialogUpdate.data.title,
+                          callback: function($$v) {
+                            _vm.$set(_vm.dialogUpdate.data, "title", $$v)
+                          },
+                          expression: "dialogUpdate.data.title"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "remark",
+                        label: "备注",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.dialogUpdate.data.remark,
+                          callback: function($$v) {
+                            _vm.$set(_vm.dialogUpdate.data, "remark", $$v)
+                          },
+                          expression: "dialogUpdate.data.remark"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "content",
+                        label: "内容",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c("VueUEditor", {
+                        staticStyle: { "line-height": "20px" },
+                        attrs: { ueditorPath: "/ueditor/" },
+                        on: { ready: _vm.updateEditorReady }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { labelWidth: "100px" } },
+                    [
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary" },
+                          on: {
+                            click: function($event) {
+                              _vm.action = "list"
+                            }
+                          }
+                        },
+                        [_vm._v("返回")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "success" },
+                          on: { click: _vm.doUpdate }
+                        },
+                        [_vm._v("提交")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

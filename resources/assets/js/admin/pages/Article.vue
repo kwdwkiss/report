@@ -1,6 +1,6 @@
 <template>
     <div>
-        <template v-if="action=='list'">
+        <div v-show="action=='list'">
             <el-row class="search">
                 <el-select v-model="search.type" placeholder="文章类型">
                     <el-option v-for="item in articleTypeList" :key="item.id" :value="item.id"
@@ -39,8 +39,8 @@
                     </el-table-column>
                 </el-table>
             </el-row>
-        </template>
-        <template v-else-if="action=='create'">
+        </div>
+        <div v-show="action=='create'">
             <div class="panel">
                 <div class="panel-heading">创建文章</div>
                 <div class="panel-body">
@@ -70,8 +70,8 @@
                     </el-form>
                 </div>
             </div>
-        </template>
-        <template v-else-if="action=='update'">
+        </div>
+        <div v-show="action=='update'">
             <div class="panel">
                 <div class="panel-heading">编辑文章</div>
                 <div class="panel-body">
@@ -101,7 +101,7 @@
                     </el-form>
                 </div>
             </div>
-        </template>
+        </div>
     </div>
 </template>
 
@@ -144,7 +144,6 @@
             },
             updateEditorReady: function (ue) {
                 this.editor.update = ue;
-                this.editor.update.setContent(this.dialogUpdate.data.content);
             },
             loadArticleType: function () {
                 let self = this;
@@ -169,6 +168,7 @@
             openCreateDialog: function () {
                 let type = this.articleTypeList.length && this.articleTypeList[0].id;
                 this.dialogCreate.data = {type: type, title: '', remark: '', content: ''};
+                this.editor.create.setContent(this.dialogCreate.data.content);
                 this.action = 'create';
             },
             doCreate: function () {
@@ -188,6 +188,7 @@
             },
             openUpdateDialog: function (scope) {
                 this.dialogUpdate.data = Object.assign({}, scope.row);
+                this.editor.update.setContent(this.dialogUpdate.data.content);
                 this.action = 'update';
             },
             doUpdate: function () {
