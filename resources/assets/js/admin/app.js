@@ -20,7 +20,7 @@ Vue.use(ElementUI);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-window.UEDITOR_HOME_URL='/utf8-php-ueditor/';
+window.UEDITOR_HOME_URL='/ueditor/';
 window.api = require('./api.js');
 
 const routes = [

@@ -450,7 +450,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_element_ui___default.a);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-window.UEDITOR_HOME_URL = '/utf8-php-ueditor/';
+window.UEDITOR_HOME_URL = '/ueditor/';
 window.api = __webpack_require__(188);
 
 var routes = [{ path: '/login', component: __webpack_require__(189) }, {
@@ -3920,7 +3920,7 @@ var render = function() {
                           [
                             _c("VueUEditor", {
                               staticStyle: { "line-height": "20px" },
-                              attrs: { ueditorPath: "/utf8-php-ueditor/" },
+                              attrs: { ueditorPath: "/ueditor/" },
                               on: { ready: _vm.createEditorReady }
                             })
                           ],
@@ -4086,7 +4086,7 @@ var render = function() {
                             [
                               _c("VueUEditor", {
                                 staticStyle: { "line-height": "20px" },
-                                attrs: { ueditorPath: "/utf8-php-ueditor/" },
+                                attrs: { ueditorPath: "/ueditor/" },
                                 on: { ready: _vm.updateEditorReady }
                               })
                             ],

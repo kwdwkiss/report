@@ -58,7 +58,7 @@
                             <el-input v-model="dialogCreate.data.remark"></el-input>
                         </el-form-item>
                         <el-form-item class="editor-form-item" prop="content" label="内容" labelWidth="100px">
-                            <VueUEditor ueditorPath="/utf8-php-ueditor/"
+                            <VueUEditor ueditorPath="/ueditor/"
                                         @ready="createEditorReady"
                                         style="line-height: 20px">
                             </VueUEditor>
@@ -89,7 +89,7 @@
                             <el-input v-model="dialogUpdate.data.remark"></el-input>
                         </el-form-item>
                         <el-form-item prop="content" label="内容" labelWidth="100px">
-                            <VueUEditor ueditorPath="/utf8-php-ueditor/"
+                            <VueUEditor ueditorPath="/ueditor/"
                                         @ready="updateEditorReady"
                                         style="line-height: 20px">
                             </VueUEditor>
