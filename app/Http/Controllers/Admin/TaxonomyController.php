@@ -28,30 +28,6 @@ class TaxonomyController extends Controller
         return TaxonomyResource::collection($query->paginate());
     }
 
-    public function reportTypeList()
-    {
-        $query = Taxonomy::query()->orderBy('order')->where('pid', Taxonomy::REPORT_TYPE);
-        return TaxonomyResource::collection($query->get());
-    }
-
-    public function accountTypeList()
-    {
-        $query = Taxonomy::query()->orderBy('order')->where('pid', Taxonomy::ACCOUNT_TYPE);
-        return TaxonomyResource::collection($query->get());
-    }
-
-    public function accountStatusList()
-    {
-        $query = Taxonomy::query()->orderBy('order')->where('pid', Taxonomy::ACCOUNT_STATUS);
-        return TaxonomyResource::collection($query->get());
-    }
-
-    public function articleTypeList()
-    {
-        $query = Taxonomy::query()->orderBy('order')->where('pid', Taxonomy::ARTICLE_TYPE);
-        return TaxonomyResource::collection($query->get());
-    }
-
     public function create()
     {
         $this->validate(request(), [

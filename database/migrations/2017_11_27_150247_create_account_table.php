@@ -31,6 +31,7 @@ class CreateAccountTable extends Migration
             $table->timestamps();
 
             $table->unique(['name', 'type']);
+            $table->index('name');
         });
     }
 

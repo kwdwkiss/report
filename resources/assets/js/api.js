@@ -11,12 +11,9 @@ module.exports = {
     adminDelete: '/admin/delete',
 
     siteBasic: '/admin/site/basic',
+    siteIndex: '/admin/site/index',
 
     taxonomyList: '/admin/taxonomy/list',
-    taxonomyReportTypeList: '/admin/taxonomy/report-type/list',
-    taxonomyAccountTypeList: '/admin/taxonomy/account-type/list',
-    taxonomyAccountStatusList: '/admin/taxonomy/account-status/list',
-    taxonomyArticleTypeList: '/admin/taxonomy/article-type/list',
     taxonomyCreate: '/admin/taxonomy/create',
     taxonomyUpdate: '/admin/taxonomy/update',
     taxonomyDelete: '/admin/taxonomy/delete',
@@ -45,4 +42,15 @@ module.exports = {
     articleCreate: '/admin/article/create',
     articleUpdate: '/admin/article/update',
     articleDelete: '/admin/article/delete',
+
+    //>>>>>>>>>>index
+    taxonomyReportTypeList: '/taxonomy/report-type/list',
+    taxonomyAccountTypeList: '/taxonomy/account-type/list',
+    taxonomyAccountStatusList: '/taxonomy/account-status/list',
+    taxonomyArticleTypeList: '/taxonomy/article-type/list',
+
+    indexSearch: '/index/search',
+    indexReport: '/index/report',
+
+    captcha: '/captcha/default'
 };

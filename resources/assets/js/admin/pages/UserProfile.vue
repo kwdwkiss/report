@@ -5,11 +5,8 @@
             <el-input v-model="search.qq" placeholder="QQ" style="width: 150px"></el-input>
             <el-input v-model="search.wx" placeholder="微信" style="width: 150px"></el-input>
             <el-button type="primary" @click="loadData">搜索</el-button>
-            <el-button @click="reset">重置</el-button>
-        </el-row>
-
-        <el-row>
-            <el-button type="primary" @click="openCreateDialog">添加</el-button>
+            <el-button type="warning" @click="reset">重置</el-button>
+            <el-button type="success" @click="openCreateDialog">添加</el-button>
 
             <el-pagination layout="prev, pager, next"
                            :total="dataList.meta.total"

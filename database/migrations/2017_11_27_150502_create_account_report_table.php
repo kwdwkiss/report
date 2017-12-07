@@ -15,12 +15,15 @@ class CreateAccountReportTable extends Migration
     {
         Schema::create('account_report', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('account_id');
+            $table->string('account_name');
+            $table->integer('account_type');
             $table->string('ip');
             $table->integer('type');
             $table->tinyInteger('display')->default(1);
             $table->string('remark');
             $table->timestamps();
+
+            $table->index(['account_name','account_type']);
         });
     }
 

@@ -22,9 +22,9 @@
 
         <el-row>
             <el-table :data="dataList.data" stripe>
-                <el-table-column prop="account_type" label="账号类型" min-width="100"></el-table-column>
+                <el-table-column prop="type_label" label="账号类型" min-width="100"></el-table-column>
                 <el-table-column prop="name" label="账号" min-width="150"></el-table-column>
-                <el-table-column prop="account_status" label="账号状态" min-width="150"></el-table-column>
+                <el-table-column prop="status_label" label="账号状态" min-width="150"></el-table-column>
                 <el-table-column prop="report_count" label="举报次数" min-width="100"></el-table-column>
                 <el-table-column prop="auth_cash" label="合作金额" min-width="100"></el-table-column>
                 <el-table-column prop="address" label="常用地址" min-width="150"></el-table-column>

@@ -49,8 +49,12 @@
                         path: '/account/report',
                     },
                     {
-                        title: '举报账号',
+                        title: '账号信息',
                         path: '/account',
+                    },
+                    {
+                        title: '首页设置',
+                        path: '/index/page',
                     },
                     {
                         title: '系统设置',

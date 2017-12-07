@@ -38,22 +38,22 @@ class Taxonomy extends Model
         return static::get(static::ACCOUNT_TYPE);
     }
 
-    public static function AccountStatus()
+    public static function accountStatus()
     {
         return static::get(static::ACCOUNT_STATUS);
     }
 
-    public static function ReportType()
+    public static function reportType()
     {
         return static::get(static::REPORT_TYPE);
     }
 
-    public static function UserType()
+    public static function userType()
     {
         return static::get(static::USER_TYPE);
     }
 
-    public static function ArticleType()
+    public static function articleType()
     {
         return static::get(static::ARTICLE_TYPE);
     }

@@ -1,0 +1,97 @@
+<?php
+
+namespace App\Console\Commands;
+
+use App\AccountReport;
+use App\Taxonomy;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+
+class Report extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'report {startId=0}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        $startId = $this->argument('startId');
+        $conn = \DB::connection('origin');
+
+        $data = $conn->table('ims_report_type')->get();
+        $originReportType = array_combine(array_pluck($data, 'id'), array_pluck($data, 'name'));
+        $data = Taxonomy::reportType();
+        $targetReportType = array_combine(array_pluck($data, 'name'), array_pluck($data, 'id'));
+
+        $conn->table('ims_report')
+            ->where('id', '>', $startId)
+            //->where('id', '<', 1000)
+            ->orderBy('id')
+            ->chunk(1000, function ($rows) use ($originReportType, $targetReportType) {
+                \DB::transaction(function () use ($rows, $originReportType, $targetReportType) {
+                    foreach ($rows as $row) {
+                        $accountTypeId = is_numeric($row->account) ? 201 : 202;
+                        $name = $row->account;
+                        if ($row->type_id == 0) {
+                            $reportTypeId = 310;
+                        } else {
+                            $reportTypeId = $targetReportType[$originReportType[$row->type_id]];
+                        }
+                        if ($row->report_ip == '') {
+                            continue;
+                        }
+                        if (strpos($row->report_ip, ', ') !== false) {
+                            $ip = explode(', ', $row->report_ip)[0];
+                        } else {
+                            $ip = $row->report_ip;
+                        }
+                        if (filter_var($row->report_ip, FILTER_VALIDATE_IP) === false) {
+                            continue;
+                        }
+                        if ($row->time == 0) {
+                            $row->time = 1406773340;
+                        }
+                        $updated_at = $created_at = Carbon::createFromTimestamp($row->time);
+
+                        $accountReport = new AccountReport();
+                        $accountReport->account_type = $accountTypeId;
+                        $accountReport->account_name = $name;
+                        $accountReport->type = $reportTypeId;
+                        $accountReport->ip = $ip;
+                        $accountReport->remark = $row->remark;
+                        $accountReport->created_at = $created_at;
+                        $accountReport->updated_at = $updated_at;
+                        $accountReport->timestamps = false;
+                        $accountReport->save();
+
+                        echo $row->id . "\n";
+                    }
+                });
+            });
+    }
+}

@@ -10,13 +10,13 @@
 
     <title>{{ $config['siteName'] }}</title>
 
+    <script>
+        window.laravel = JSON.parse('{!! json_encode($config) !!}');
+    </script>
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-<script>
-    window.laravel = JSON.parse('{!! json_encode($config) !!}');
-</script>
 <div id="app"></div>
 
 <!-- Scripts -->

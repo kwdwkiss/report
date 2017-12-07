@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-row>
-            <el-button type="primary" @click="openCreateDialog">添加</el-button>
+            <el-button type="success" @click="openCreateDialog">添加</el-button>
 
             <el-pagination layout="prev, pager, next"
                            :total="dataList.meta.total"

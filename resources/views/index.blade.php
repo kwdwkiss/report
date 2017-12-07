@@ -8,18 +8,26 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $config['siteName'] }}</title>
+    <title>宏海网络</title>
 
     <script>
-        window.laravel = JSON.parse('{!! json_encode($config) !!}');
+        window.laravel = JSON.parse('{!! json_encode($page) !!}');
     </script>
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <style>
+        body {
+            margin: 0 auto;
+            width: 1000px;
+            min-height: 400px;
+            background-color: #fff;
+        }
+    </style>
 </head>
 <body>
 <div id="app"></div>
 
 <!-- Scripts -->
-<script src="{{ mix("js/admin/app.js") }}"></script>
+<script src="{{ mix("js/index/app.js") }}"></script>
 </body>
 </html>

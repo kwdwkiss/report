@@ -33,10 +33,10 @@
 
         <el-row>
             <el-table :data="dataList.data" stripe>
-                <el-table-column prop="account_type" label="账号类型" min-width="100"></el-table-column>
+                <el-table-column prop="account_type_label" label="账号类型" min-width="100"></el-table-column>
                 <el-table-column prop="account_name" label="账号" min-width="150"></el-table-column>
-                <el-table-column prop="report_type" label="举报类型" min-width="100"></el-table-column>
-                <el-table-column prop="ip" label="IP" min-width="100"></el-table-column>
+                <el-table-column prop="type_label" label="举报类型" min-width="100"></el-table-column>
+                <el-table-column prop="ip" label="IP" min-width="150"></el-table-column>
                 <el-table-column prop="created_at" label="举报时间" min-width="180"></el-table-column>
                 <el-table-column label="显示" min-width="100">
                     <template slot-scope="scope">

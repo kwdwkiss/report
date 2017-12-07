@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Account;
 use App\AccountReport;
 use App\Admin;
+use App\Config;
 use App\Tag;
 use App\Taxonomy;
 use App\UserProfile;
@@ -43,6 +44,6 @@ class Test extends Command
      */
     public function handle()
     {
-        AccountReport::report(201, '52508805', 306, '127.0.0.1');
+        Config::getSiteStatics(true);
     }
 }

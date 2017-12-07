@@ -58,7 +58,7 @@
                             <el-input v-model="dialogCreate.data.remark"></el-input>
                         </el-form-item>
                         <el-form-item class="editor-form-item" prop="content" label="内容" labelWidth="100px">
-                            <VueUEditor ueditorPath="/ueditor/"
+                            <VueUEditor v-if="action=='create'" ueditorPath="/ueditor/"
                                         @ready="createEditorReady"
                                         style="line-height: 20px">
                             </VueUEditor>
@@ -89,7 +89,7 @@
                             <el-input v-model="dialogUpdate.data.remark"></el-input>
                         </el-form-item>
                         <el-form-item prop="content" label="内容" labelWidth="100px">
-                            <VueUEditor ueditorPath="/ueditor/"
+                            <VueUEditor v-if="action=='update'" ueditorPath="/ueditor/"
                                         @ready="updateEditorReady"
                                         style="line-height: 20px">
                             </VueUEditor>
@@ -144,6 +144,7 @@
             },
             updateEditorReady: function (ue) {
                 this.editor.update = ue;
+                this.editor.update.setContent(this.dialogUpdate.data.content);
             },
             loadArticleType: function () {
                 let self = this;
@@ -168,7 +169,6 @@
             openCreateDialog: function () {
                 let type = this.articleTypeList.length && this.articleTypeList[0].id;
                 this.dialogCreate.data = {type: type, title: '', remark: '', content: ''};
-                this.editor.create.setContent(this.dialogCreate.data.content);
                 this.action = 'create';
             },
             doCreate: function () {
@@ -188,7 +188,6 @@
             },
             openUpdateDialog: function (scope) {
                 this.dialogUpdate.data = Object.assign({}, scope.row);
-                this.editor.update.setContent(this.dialogUpdate.data.content);
                 this.action = 'update';
             },
             doUpdate: function () {

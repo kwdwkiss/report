@@ -26,9 +26,10 @@ mix
         }
     })
 
-    .js('resources/assets/js/admin/app.js', 'public/js/admin')
-    .extract(['lodash', 'jquery', 'bootstrap-sass', 'axios', 'vue', 'vue-router', 'element-ui'
-        , 'element-ui/lib/theme-chalk/index.css'])
+    .js('resources/assets/js/admin/app.js', 'public/js/admin/')
+    .js('resources/assets/js/index/app.js', 'public/js/index/')
+    // .extract(['element-ui', 'element-ui/lib/theme-chalk/index.css'], 'js/element')
+    // .extract(['lodash', 'jquery', 'bootstrap-sass', 'axios', 'vue', 'vue-router'], 'js/vendor.js')
 
     .sass('resources/assets/sass/app.scss', 'public/css')
 

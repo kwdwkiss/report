@@ -13,6 +13,15 @@
 
 //>>>>>>>>>admin
 Route::middleware(['csrf'])->group(function () {
+    Route::get('/', 'Index\IndexController@index');
+    Route::post('/index/search', 'Index\IndexController@search');
+    Route::post('/index/report', 'Index\IndexController@report');
+
+    Route::get('/taxonomy/report-type/list', 'Index\TaxonomyController@reportTypeList');
+    Route::get('/taxonomy/account-type/list', 'Index\TaxonomyController@accountTypeList');
+    Route::get('/taxonomy/account-status/list', 'Index\TaxonomyController@accountStatusList');
+    Route::get('/taxonomy/article-type/list', 'Index\TaxonomyController@articleTypeList');
+
     Route::get('/admin', 'Admin\IndexController@index');
     Route::get('/admin/logout', 'Admin\IndexController@logout');
     Route::post('/admin/login', 'Admin\IndexController@login');
@@ -29,12 +38,10 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
 
     Route::get('/admin/site/basic', 'Admin\SiteController@getBasic');
     Route::post('/admin/site/basic', 'Admin\SiteController@setBasic');
+    Route::get('/admin/site/index', 'Admin\IndexPageController@get');
+    Route::post('/admin/site/index', 'Admin\IndexPageController@set');
 
     Route::get('/admin/taxonomy/list', 'Admin\TaxonomyController@list');
-    Route::get('/admin/taxonomy/report-type/list', 'Admin\TaxonomyController@reportTypeList');
-    Route::get('/admin/taxonomy/account-type/list', 'Admin\TaxonomyController@accountTypeList');
-    Route::get('/admin/taxonomy/account-status/list', 'Admin\TaxonomyController@accountStatusList');
-    Route::get('/admin/taxonomy/article-type/list', 'Admin\TaxonomyController@articleTypeList');
     Route::post('/admin/taxonomy/create', 'Admin\TaxonomyController@create');
     Route::post('/admin/taxonomy/update', 'Admin\TaxonomyController@update');
     Route::post('/admin/taxonomy/delete', 'Admin\TaxonomyController@delete');
