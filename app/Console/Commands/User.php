@@ -47,9 +47,11 @@ class User extends Command
         $pageSize = 1000;
         $pageCount = ceil($total / $pageSize);
         echo "total:$total pageSize:$pageSize pageCount:$pageCount\n";
+
+        $password = bcrypt('123456');
         for ($i = $startPage; $i < $pageCount; $i++) {
             $rows = $conn->table('ims_member')->offset($i * $pageSize)->limit($pageSize)->get();
-            \DB::transaction(function () use ($startPage, $startNum, $i, $rows) {
+            \DB::transaction(function () use ($startPage, $startNum, $i, $rows, $password) {
                 if ($i == $startPage) {
                     $num = $startNum;
                 } else {
@@ -93,6 +95,7 @@ class User extends Command
                         'type' => $type,
                         'qq' => $qq,
                         'mobile' => $mobile,
+                        'password' => $password,
                         'created_at' => $created_at,
                         'updated_at' => $updated_at
                     ]);
