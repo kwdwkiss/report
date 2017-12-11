@@ -55,12 +55,12 @@ class UserController extends Controller
             $this->validate($request, ['mobile' => 'required',]);
 
             $type = array_get($input, 'type');
-            $mobile = array_get($input, 'mobile');
-            $qq = array_get($input, 'qq');
-            $wx = array_get($input, 'wx');
-            $ww = array_get($input, 'ww');
+            $mobile = trim(array_get($input, 'mobile'));
+            $qq = trim(array_get($input, 'qq'));
+            $wx = trim(array_get($input, 'wx'));
+            $ww = trim(array_get($input, 'ww'));
 
-            $name = array_get($input, '_profile.name');
+            $name = trim(array_get($input, '_profile.name'));
             $age = array_get($input, '_profile.age');
             $gender = array_get($input, '_profile.gender');
             $occupation = array_get($input, '_profile.occupation');
@@ -153,12 +153,12 @@ class UserController extends Controller
             $this->validate($request, ['mobile' => 'required',]);
 
             $type = array_get($input, 'type');
-            $mobile = array_get($input, 'mobile');
-            $qq = array_get($input, 'qq');
-            $wx = array_get($input, 'wx');
-            $ww = array_get($input, 'ww');
+            $mobile = trim(array_get($input, 'mobile'));
+            $qq = trim(array_get($input, 'qq'));
+            $wx = trim(array_get($input, 'wx'));
+            $ww = trim(array_get($input, 'ww'));
 
-            $name = array_get($input, '_profile.name');
+            $name = trim(array_get($input, '_profile.name'));
             $age = array_get($input, '_profile.age');
             $gender = array_get($input, '_profile.gender');
             $occupation = array_get($input, '_profile.occupation');

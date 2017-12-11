@@ -96,7 +96,7 @@ class IndexController extends Controller
     public function report()
     {
         $account_type = request('account_type');
-        $name = request('name');
+        $name = trim(request('name'));
         $report_type = request('report_type');
         $captcha = request('captcha');
 

@@ -58,8 +58,12 @@ class Account extends Command
             $rows = $conn->table('ims_account')->offset($i * $pageSize)->limit($pageSize)->get();
             $num = 0;
             foreach ($rows as $row) {
+                if (strpos($row->account, 'peng532') === false) {
+                    $num++;
+                    continue;
+                }
                 $name = trim($row->account);
-                $type = is_numeric($row->account) ? 201 : 202;
+                $type = is_numeric($name) ? 201 : 202;
                 $status = $statusData[$row->status_id];
                 $remark = $row->remark;
                 $address = $row->address;
@@ -71,7 +75,7 @@ class Account extends Command
                     $auth_at = null;
                 }
 
-                $account = \App\Account::where('name', $name)->where('type', 'type')->first();
+                $account = \App\Account::where('name', $name)->where('type', $type)->first();
                 if ($account) {
                     continue;
                 }
