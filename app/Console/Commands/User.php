@@ -60,7 +60,6 @@ class User extends Command
                     $mobile = trim($row->mobile);
                     $profileName = trim($row->username);
                     $profileRemark = $row->admin_remark;
-                    $password = bcrypt('123456');
 
                     if (strpos($row->project, '删除') !== false) {
                         $type = 401;
@@ -94,7 +93,6 @@ class User extends Command
                         'type' => $type,
                         'qq' => $qq,
                         'mobile' => $mobile,
-                        'password' => $password,
                         'created_at' => $created_at,
                         'updated_at' => $updated_at
                     ]);
