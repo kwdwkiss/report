@@ -53,9 +53,8 @@ class Account extends Command
         $total = $conn->table('ims_account')->count();
         $pageSize = 1000;
         $pageCount = ceil($total / $pageSize);
-        echo "total:$total pageSize:$pageSize pageCount:$pageCount";
+        echo "total:$total pageSize:$pageSize pageCount:$pageCount\n";
         for ($i = 0; $i < $pageCount; $i++) {
-            echo "page:$i";
             $rows = $conn->table('ims_account')->offset($i * $pageSize)->limit($pageSize)->get();
             \DB::transaction(function () use ($i, $rows, $statusData) {
                 $num = 0;
