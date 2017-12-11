@@ -50,11 +50,17 @@ class Account extends Command
             7 => 106
         ];
 
-        $i = 0;
-        $conn->table('ims_account')->orderBy('user_id')->chunk(1000, function ($rows) use ($i, $statusData) {
+        $total = $conn->table('ims_account')->count();
+        $pageSize = 1000;
+        $pageCount = ceil($total / $pageSize);
+        echo "total:$total pageSize:$pageSize pageCount:$pageCount";
+        for ($i = 0; $i < $pageCount; $i++) {
+            echo "page:$i";
+            $rows = $conn->table('ims_account')->offset($i * $pageSize)->limit($pageSize)->get();
             \DB::transaction(function () use ($i, $rows, $statusData) {
+                $num = 0;
                 foreach ($rows as $row) {
-                    $name = $row->account;
+                    $name = trim($row->account);
                     $type = is_numeric($row->account) ? 201 : 202;
                     $status = $statusData[$row->status_id];
                     if ($row->auth_time != 0) {
@@ -79,10 +85,10 @@ class Account extends Command
                     $account->auth_cash = $row->auth_cash;
                     $account->save();
 
-                    echo $i++ . "\n";
+                    echo "$i-$num $name $type\n";
+                    $num++;
                 }
             });
-        });
-
+        }
     }
 }

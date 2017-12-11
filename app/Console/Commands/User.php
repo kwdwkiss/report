@@ -51,9 +51,9 @@ class User extends Command
             ->chunk(1000, function ($rows) use ($startTime) {
                 \DB::transaction(function () use ($rows, $startTime) {
                     foreach ($rows as $row) {
-                        $qq = $row->qq;
-                        $mobile = $row->mobile;
-                        $profileName = $row->username;
+                        $qq = trim($row->qq);
+                        $mobile = trim($row->mobile);
+                        $profileName = trim($row->username);
                         $profileRemark = $row->admin_remark;
                         $password = bcrypt('123456');
 

@@ -56,7 +56,7 @@ class Report extends Command
                 \DB::transaction(function () use ($rows, $originReportType, $targetReportType) {
                     foreach ($rows as $row) {
                         $accountTypeId = is_numeric($row->account) ? 201 : 202;
-                        $name = $row->account;
+                        $name = trim($row->account);
                         if ($row->type_id == 0) {
                             $reportTypeId = 310;
                         } else {
