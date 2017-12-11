@@ -61,6 +61,9 @@ class Account extends Command
                 foreach ($rows as $row) {
                     $name = trim($row->account);
                     $type = is_numeric($name) ? 201 : 202;
+                    if (!isset($statusData[$row->status_id])) {
+                        continue;
+                    }
                     $status = $statusData[$row->status_id];
                     $remark = $row->remark;
                     $address = $row->address;
