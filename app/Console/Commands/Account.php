@@ -51,49 +51,51 @@ class Account extends Command
         ];
 
         $total = $conn->table('ims_account')->count();
-        $pageSize = 1000;
+        $pageSize = 3000;
         $pageCount = ceil($total / $pageSize);
         echo "total:$total pageSize:$pageSize pageCount:$pageCount\n";
         for ($i = 0; $i < $pageCount; $i++) {
             $rows = $conn->table('ims_account')->offset($i * $pageSize)->limit($pageSize)->get();
-            $num = 0;
-            foreach ($rows as $row) {
-                if (strpos($row->account, 'peng532') === false) {
+            \DB::transaction(function () use ($i, $rows, $statusData) {
+                $num = 0;
+                foreach ($rows as $row) {
+                    if (strpos($row->account, 'peng532') === false) {
+                        $num++;
+                        continue;
+                    }
+                    $name = trim($row->account);
+                    $type = is_numeric($name) ? 201 : 202;
+                    $status = $statusData[$row->status_id];
+                    $remark = $row->remark;
+                    $address = $row->address;
+                    $report_count = $row->report_count;
+                    $auth_cash = $row->auth_cash;
+                    if ($row->auth_time != 0) {
+                        $auth_at = Carbon::createFromTimestamp($row->auth_time);
+                    } else {
+                        $auth_at = null;
+                    }
+
+                    $account = \App\Account::where('name', $name)->where('type', $type)->first();
+                    if ($account) {
+                        continue;
+                    }
+
+                    $account = new \App\Account();
+                    $account->name = $name;
+                    $account->type = $type;
+                    $account->status = $status;
+                    $account->remark = $remark;
+                    $account->address = $address;
+                    $account->report_count = $report_count;
+                    $account->auth_at = $auth_at;
+                    $account->auth_cash = $auth_cash;
+                    $account->save();
+
+                    echo "$i-$num $name $type $status $remark $address $report_count $auth_at $auth_cash\n";
                     $num++;
-                    continue;
                 }
-                $name = trim($row->account);
-                $type = is_numeric($name) ? 201 : 202;
-                $status = $statusData[$row->status_id];
-                $remark = $row->remark;
-                $address = $row->address;
-                $report_count = $row->report_count;
-                $auth_cash = $row->auth_cash;
-                if ($row->auth_time != 0) {
-                    $auth_at = Carbon::createFromTimestamp($row->auth_time);
-                } else {
-                    $auth_at = null;
-                }
-
-                $account = \App\Account::where('name', $name)->where('type', $type)->first();
-                if ($account) {
-                    continue;
-                }
-
-                $account = new \App\Account();
-                $account->name = $name;
-                $account->type = $type;
-                $account->status = $status;
-                $account->remark = $remark;
-                $account->address = $address;
-                $account->report_count = $report_count;
-                $account->auth_at = $auth_at;
-                $account->auth_cash = $auth_cash;
-                $account->save();
-
-                echo "$i-$num $name $type $status $remark $address $report_count $auth_at $auth_cash\n";
-                $num++;
-            }
+            });
         }
     }
 }
