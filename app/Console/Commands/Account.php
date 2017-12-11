@@ -51,7 +51,7 @@ class Account extends Command
         ];
 
         $total = $conn->table('ims_account')->count();
-        $pageSize = 3000;
+        $pageSize = 1000;
         $pageCount = ceil($total / $pageSize);
         echo "total:$total pageSize:$pageSize pageCount:$pageCount\n";
         for ($i = 0; $i < $pageCount; $i++) {
