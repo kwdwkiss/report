@@ -250,6 +250,10 @@
         margin-bottom: 0;
     }
 
+    input {
+        line-height: normal;
+    }
+
     .row {
         margin: 10px 0;
     }
