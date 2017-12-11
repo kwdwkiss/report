@@ -54,6 +54,7 @@ class Account extends Command
         $conn->table('ims_account')->orderBy('user_id')->chunk(1000, function ($rows) use ($i, $statusData) {
             \DB::transaction(function () use ($i, $rows, $statusData) {
                 foreach ($rows as $row) {
+                    $name = $row->account;
                     $type = is_numeric($row->account) ? 201 : 202;
                     $status = $statusData[$row->status_id];
                     if ($row->auth_time != 0) {
@@ -62,8 +63,13 @@ class Account extends Command
                         $auth_at = null;
                     }
 
+                    $account = \App\Account::where('name', $name)->where('type', 'type')->first();
+                    if ($account) {
+                        continue;
+                    }
+
                     $account = new \App\Account();
-                    $account->name = $row->account;
+                    $account->name = $name;
                     $account->type = $type;
                     $account->status = $status;
                     $account->remark = $row->remark;
