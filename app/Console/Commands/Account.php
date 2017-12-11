@@ -59,10 +59,6 @@ class Account extends Command
             \DB::transaction(function () use ($i, $rows, $statusData) {
                 $num = 0;
                 foreach ($rows as $row) {
-                    if (strpos($row->account, 'peng532') === false) {
-                        $num++;
-                        continue;
-                    }
                     $name = trim($row->account);
                     $type = is_numeric($name) ? 201 : 202;
                     $status = $statusData[$row->status_id];
