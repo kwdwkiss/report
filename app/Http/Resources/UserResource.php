@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class UserProfileResource extends Resource
+class UserResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -15,7 +15,10 @@ class UserProfileResource extends Resource
     public function toArray($request)
     {
         $data = parent::toArray($request);
-        $data['gender_label'] = ['未知', '男', '女'][$this->resource->gender];
+        $data['type_label'] = $this->resource->_type->name;
+        $data['tags'] = $this->_tags->modelKeys();
+        unset($data['_tags']);
+        $data['_profile'] = new UserProfileResource($this->resource->_profile);
         return $data;
     }
 }

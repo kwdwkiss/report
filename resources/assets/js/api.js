@@ -23,10 +23,10 @@ module.exports = {
     tagUpdate: '/admin/tag/update',
     tagDelete: '/admin/tag/delete',
 
-    userProfileList: '/admin/user-profile/list',
-    userProfileCreate: '/admin/user-profile/create',
-    userProfileUpdate: '/admin/user-profile/update',
-    userProfileDelete: '/admin/user-profile/delete',
+    userList: '/admin/user/list',
+    userCreate: '/admin/user/create',
+    userUpdate: '/admin/user/update',
+    userDelete: '/admin/user/delete',
 
     accountList: '/admin/account/list',
     accountCreate: '/admin/account/create',
@@ -48,6 +48,7 @@ module.exports = {
     taxonomyAccountTypeList: '/taxonomy/account-type/list',
     taxonomyAccountStatusList: '/taxonomy/account-status/list',
     taxonomyArticleTypeList: '/taxonomy/article-type/list',
+    taxonomyUserTypeList: '/taxonomy/user-type/list',
 
     indexSearch: '/index/search',
     indexReport: '/index/report',

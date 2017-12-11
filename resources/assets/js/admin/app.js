@@ -27,7 +27,7 @@ const routes = [
             {path: 'taxonomy', component: require('./pages/Taxonomy.vue')},
             {path: 'tag', component: require('./pages/Tag.vue')},
             {path: 'article', component: require('./pages/Article.vue')},
-            {path: 'user/profile', component: require('./pages/UserProfile.vue')},
+            {path: 'user', component: require('./pages/User.vue')},
             {path: 'account/report', component: require('./pages/AccountReport.vue')},
             {path: 'account', component: require('./pages/Account.vue')},
             {path: 'index/page', component: require('./pages/IndexPage')},

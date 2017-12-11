@@ -111,11 +111,9 @@
                 },
                 search: {},
                 dialogCreate: {
-                    display: false,
                     data: {}
                 },
                 dialogUpdate: {
-                    display: false,
                     data: {}
                 },
                 rules: {}

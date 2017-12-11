@@ -14,6 +14,11 @@ use App\Taxonomy;
 
 class TaxonomyController extends Controller
 {
+    public function all()
+    {
+        return TaxonomyResource::collection(Taxonomy::get());
+    }
+
     public function reportTypeList()
     {
         return TaxonomyResource::collection(Taxonomy::reportType());
@@ -32,5 +37,10 @@ class TaxonomyController extends Controller
     public function articleTypeList()
     {
         return TaxonomyResource::collection(Taxonomy::articleType());
+    }
+
+    public function userTypeList()
+    {
+        return TaxonomyResource::collection(Taxonomy::userType());
     }
 }

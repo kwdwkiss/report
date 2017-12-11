@@ -46,7 +46,7 @@ class Config extends Model
 
     public static function generateStatics()
     {
-        $auth_member_num = '14183';
+        $auth_member_num = User::count();
         $report_num = AccountReport::count();
         $last_24_report_num = AccountReport::where('created_at', '>', date('Y-m-d H:i:s', time() - 3600 * 24))->count();
         $last_4_report_data = AccountReportResource::collection(

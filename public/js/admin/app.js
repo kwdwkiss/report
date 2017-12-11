@@ -43625,10 +43625,10 @@ module.exports = {
     tagUpdate: '/admin/tag/update',
     tagDelete: '/admin/tag/delete',
 
-    userProfileList: '/admin/user-profile/list',
-    userProfileCreate: '/admin/user-profile/create',
-    userProfileUpdate: '/admin/user-profile/update',
-    userProfileDelete: '/admin/user-profile/delete',
+    userList: '/admin/user/list',
+    userCreate: '/admin/user/create',
+    userUpdate: '/admin/user/update',
+    userDelete: '/admin/user/delete',
 
     accountList: '/admin/account/list',
     accountCreate: '/admin/account/create',
@@ -43650,6 +43650,7 @@ module.exports = {
     taxonomyAccountTypeList: '/taxonomy/account-type/list',
     taxonomyAccountStatusList: '/taxonomy/account-status/list',
     taxonomyArticleTypeList: '/taxonomy/article-type/list',
+    taxonomyUserTypeList: '/taxonomy/user-type/list',
 
     indexSearch: '/index/search',
     indexReport: '/index/report',
@@ -43727,7 +43728,7 @@ var routes = [{ path: '/login', component: __webpack_require__(53) }, {
     path: '/admin',
     component: __webpack_require__(58),
     alias: '/',
-    children: [{ path: '', component: __webpack_require__(73) }, { path: 'taxonomy', component: __webpack_require__(78) }, { path: 'tag', component: __webpack_require__(83) }, { path: 'article', component: __webpack_require__(88) }, { path: 'user/profile', component: __webpack_require__(97) }, { path: 'account/report', component: __webpack_require__(103) }, { path: 'account', component: __webpack_require__(108) }, { path: 'index/page', component: __webpack_require__(113) }, { path: 'system/site', component: __webpack_require__(118) }, { path: 'system/admin', component: __webpack_require__(123) }]
+    children: [{ path: '', component: __webpack_require__(73) }, { path: 'taxonomy', component: __webpack_require__(78) }, { path: 'tag', component: __webpack_require__(83) }, { path: 'article', component: __webpack_require__(88) }, { path: 'user', component: __webpack_require__(97) }, { path: 'account/report', component: __webpack_require__(103) }, { path: 'account', component: __webpack_require__(108) }, { path: 'index/page', component: __webpack_require__(113) }, { path: 'system/site', component: __webpack_require__(118) }, { path: 'system/admin', component: __webpack_require__(123) }]
 }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
@@ -47252,13 +47253,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 path: '/article'
             }, {
                 title: '用户资料',
-                path: '/user/profile'
-            }, {
-                title: '举报信息',
-                path: '/account/report'
+                path: '/user'
             }, {
                 title: '账号信息',
                 path: '/account'
+            }, {
+                title: '举报信息',
+                path: '/account/report'
             }, {
                 title: '首页设置',
                 path: '/index/page'
@@ -47736,11 +47737,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             search: {},
             dialogCreate: {
-                display: false,
                 data: {}
             },
             dialogUpdate: {
-                display: false,
                 data: {}
             },
             rules: {}
@@ -49875,7 +49874,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-15f9f8f1"
+var __vue_scopeId__ = "data-v-168a7b48"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -49886,7 +49885,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/admin/pages/UserProfile.vue"
+Component.options.__file = "resources/assets/js/admin/pages/User.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -49896,9 +49895,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-15f9f8f1", Component.options)
+    hotAPI.createRecord("data-v-168a7b48", Component.options)
   } else {
-    hotAPI.reload("data-v-15f9f8f1", Component.options)
+    hotAPI.reload("data-v-168a7b48", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -49919,13 +49918,13 @@ var content = __webpack_require__(99);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("52ddf0fc", content, false);
+var update = __webpack_require__(3)("6144ae26", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-15f9f8f1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./UserProfile.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-15f9f8f1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./UserProfile.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-168a7b48\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./User.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-168a7b48\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./User.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -49943,7 +49942,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.el-dialog .el-select[data-v-15f9f8f1] {\n    width: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.panel-body .el-select[data-v-168a7b48] {\n    width: 100%;\n}\n.demo-table-expand[data-v-168a7b48] {\n    font-size: 0;\n}\n.demo-table-expand label[data-v-168a7b48] {\n    width: 90px;\n    color: #99a9bf;\n}\n.demo-table-expand .el-form-item[data-v-168a7b48] {\n    margin-right: 0;\n    margin-bottom: 0;\n    width: 50%;\n}\n", ""]);
 
 // exports
 
@@ -50107,56 +50106,84 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            action: 'list',
+            apiList: api.userList,
+            apiCreate: api.userCreate,
+            apiUpdate: api.userUpdate,
+            apiDelete: api.userDelete,
             tagList: [],
+            userTypeList: [],
             provinces: Object.keys(__WEBPACK_IMPORTED_MODULE_0__city_json___default.a),
             cities: [],
-            genderLabel: {
-                0: '未知',
-                1: '男',
-                2: '女'
-            },
             dataList: {
                 meta: {}
             },
             search: {},
-            dialogCreate: {
-                display: false,
-                data: {
-                    tags: []
-                }
-            },
-            dialogUpdate: {
-                display: false,
-                data: {
-                    tags: []
-                }
-            },
-            dialogDelete: {
-                display: false
-            },
+            createData: { tags: [], city: '', type: 0, _profile: {} },
+            updateData: { tags: [], city: '', type: 0, _profile: {} },
             rules: {
-                name: [{ required: true, message: '姓名不能为空', trigger: 'blur' }],
-                mobile: [{ required: true, message: '手机号不能为空', trigger: 'blur' }],
-                qq: [{ required: true, message: 'QQ不能为空', trigger: 'blur' }],
-                wx: [{ required: true, message: '微信不能为空', trigger: 'blur' }]
+                mobile: [{ required: true, message: '手机号不能为空', trigger: 'blur' }]
             }
         };
     },
     created: function created() {
-        this.loadTagList();
+        //this.loadTagList();
+        this.loadUserType();
         this.loadData();
     },
     methods: {
         provinceSelect: function provinceSelect(value) {
             this.cities = Object.keys(__WEBPACK_IMPORTED_MODULE_0__city_json___default.a[value]);
-            this.dialogCreate.data.city = this.cities[0];
-            this.dialogUpdate.data.city = this.cities[0];
+            this.createData.city = this.cities[0];
+            this.updateData.city = this.cities[0];
         },
         loadTagList: function loadTagList() {
             var self = this;
@@ -50164,9 +50191,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.tagList = res.data.data;
             });
         },
+        loadUserType: function loadUserType() {
+            var self = this;
+            axios.get(api.taxonomyUserTypeList).then(function (res) {
+                self.userTypeList = res.data.data;
+            });
+        },
         loadData: function loadData() {
             var self = this;
-            axios.get(api.userProfileList, { params: self.search }).then(function (res) {
+            axios.get(self.apiList, { params: self.search }).then(function (res) {
                 self.dataList = res.data;
             });
         },
@@ -50179,18 +50212,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.loadData();
         },
         openCreateDialog: function openCreateDialog() {
-            this.dialogCreate.data = {
-                tags: [],
-                city: ''
-            };
-            this.dialogCreate.display = true;
+            var type = this.userTypeList.length > 0 ? this.userTypeList[0].id : 0;
+            this.createData = { tags: [], city: '', type: type, _profile: {} };
+            this.action = 'create';
         },
         doCreate: function doCreate() {
             var self = this;
             self.$refs.createForm.validate(function (valid) {
                 if (valid) {
-                    axios.post(api.userProfileCreate, self.dialogCreate.data).then(function () {
-                        self.dialogCreate.display = false;
+                    axios.post(self.apiCreate, self.createData).then(function () {
+                        self.action = 'list';
                         self.$message.success('成功');
                         self.loadData();
                     });
@@ -50200,28 +50231,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         openUpdateDialog: function openUpdateDialog(scope) {
-            this.dialogUpdate.data = Object.assign({}, scope.row);
-            this.dialogUpdate.display = true;
+            this.updateData = Object.assign({}, scope.row);
+            this.action = 'update';
         },
         doUpdate: function doUpdate() {
             var self = this;
-            axios.post(api.userProfileUpdate, self.dialogUpdate.data).then(function () {
-                self.dialogUpdate.display = false;
+            axios.post(self.apiUpdate, self.updateData).then(function () {
+                self.action = 'list';
                 self.$message.success('成功');
                 self.loadData();
             });
         },
-        openDeleteDialog: function openDeleteDialog(scope) {
-            this.dialogDelete.data = Object.assign({}, scope.row);
-            this.dialogDelete.display = true;
-        },
-        doDelete: function doDelete() {
+        doDelete: function doDelete(scope) {
             var self = this;
-            axios.post(api.userProfileDelete, { id: self.dialogDelete.data.id }).then(function () {
-                self.dialogDelete.display = false;
-                self.$message.success('成功');
-                self.loadData();
-            });
+            this.$confirm('是否删除？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'error'
+            }).then(function () {
+                axios.post(self.apiDelete, { id: scope.row.id }).then(function () {
+                    self.$message.success('成功');
+                    self.loadData();
+                });
+            }).catch(function () {});
         }
     }
 });
@@ -50240,753 +50272,934 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "el-row",
-        [
-          _c("el-input", {
-            staticStyle: { width: "150px" },
-            attrs: { placeholder: "手机号" },
-            model: {
-              value: _vm.search.mobile,
-              callback: function($$v) {
-                _vm.$set(_vm.search, "mobile", $$v)
-              },
-              expression: "search.mobile"
-            }
-          }),
-          _vm._v(" "),
-          _c("el-input", {
-            staticStyle: { width: "150px" },
-            attrs: { placeholder: "QQ" },
-            model: {
-              value: _vm.search.qq,
-              callback: function($$v) {
-                _vm.$set(_vm.search, "qq", $$v)
-              },
-              expression: "search.qq"
-            }
-          }),
-          _vm._v(" "),
-          _c("el-input", {
-            staticStyle: { width: "150px" },
-            attrs: { placeholder: "微信" },
-            model: {
-              value: _vm.search.wx,
-              callback: function($$v) {
-                _vm.$set(_vm.search, "wx", $$v)
-              },
-              expression: "search.wx"
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.loadData } },
-            [_vm._v("搜索")]
-          ),
-          _vm._v(" "),
-          _c(
-            "el-button",
-            { attrs: { type: "warning" }, on: { click: _vm.reset } },
-            [_vm._v("重置")]
-          ),
-          _vm._v(" "),
-          _c(
-            "el-button",
-            { attrs: { type: "success" }, on: { click: _vm.openCreateDialog } },
-            [_vm._v("添加")]
-          ),
-          _vm._v(" "),
-          _c("el-pagination", {
-            attrs: {
-              layout: "prev, pager, next",
-              total: _vm.dataList.meta.total,
-              "page-size": _vm.dataList.meta.per_page
-            },
-            on: { "current-change": _vm.paginate }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-row",
-        [
-          _c(
-            "el-table",
-            { attrs: { data: _vm.dataList.data, stripe: "" } },
-            [
-              _c("el-table-column", {
-                attrs: { prop: "id", label: "ID", "min-width": "50" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "mobile", label: "手机号", "min-width": "120" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "qq", label: "QQ", "min-width": "100" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "wx", label: "微信", "min-width": "100" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "name", label: "姓名", "min-width": "80" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "age", label: "年龄", "min-width": "60" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { label: "性别", "min-width": "60" },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        _vm._v(
-                          "\n                    " +
-                            _vm._s(_vm.genderLabel[scope.row.gender]) +
-                            "\n                "
-                        )
-                      ]
-                    }
-                  }
-                ])
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "occupation", label: "职业", "min-width": "80" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "province", label: "省", "min-width": "80" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "city", label: "市", "min-width": "80" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { label: "操作", "min-width": "200" },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        _c(
-                          "el-button",
-                          {
-                            attrs: { type: "warning" },
-                            on: {
-                              click: function($event) {
-                                _vm.openUpdateDialog(scope)
-                              }
-                            }
-                          },
-                          [_vm._v("修改")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "el-button",
-                          {
-                            attrs: { type: "danger" },
-                            on: {
-                              click: function($event) {
-                                _vm.openDeleteDialog(scope)
-                              }
-                            }
-                          },
-                          [_vm._v("删除")]
-                        )
-                      ]
-                    }
-                  }
-                ])
-              })
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: { title: "创建", visible: _vm.dialogCreate.display },
-          on: {
-            "update:visible": function($event) {
-              _vm.$set(_vm.dialogCreate, "display", $event)
-            }
+  return _c("div", [
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.action == "list",
+            expression: "action=='list'"
           }
-        },
-        [
-          _c(
-            "el-form",
-            {
-              ref: "createForm",
-              attrs: { model: _vm.dialogCreate.data, rules: _vm.rules }
-            },
-            [
-              _c(
-                "el-form-item",
-                { attrs: { label: "标签", labelWidth: "100px" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { multiple: "" },
-                      model: {
-                        value: _vm.dialogCreate.data.tags,
-                        callback: function($$v) {
-                          _vm.$set(_vm.dialogCreate.data, "tags", $$v)
-                        },
-                        expression: "dialogCreate.data.tags"
-                      }
-                    },
-                    _vm._l(_vm.tagList, function(item) {
-                      return _c("el-option", {
-                        key: item.id,
-                        attrs: { value: item.id, label: item.name }
-                      })
-                    })
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                {
-                  attrs: {
-                    prop: "mobile",
-                    label: "手机号",
-                    labelWidth: "100px"
-                  }
-                },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogCreate.data.mobile,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogCreate.data, "mobile", $$v)
-                      },
-                      expression: "dialogCreate.data.mobile"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { prop: "qq", label: "QQ", labelWidth: "100px" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogCreate.data.qq,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogCreate.data, "qq", $$v)
-                      },
-                      expression: "dialogCreate.data.qq"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { prop: "wx", label: "微信", labelWidth: "100px" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogCreate.data.wx,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogCreate.data, "wx", $$v)
-                      },
-                      expression: "dialogCreate.data.wx"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { prop: "name", label: "姓名", labelWidth: "100px" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogCreate.data.name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogCreate.data, "name", $$v)
-                      },
-                      expression: "dialogCreate.data.name"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { prop: "age", label: "年龄", labelWidth: "100px" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogCreate.data.age,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogCreate.data, "age", _vm._n($$v))
-                      },
-                      expression: "dialogCreate.data.age"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "性别", labelWidth: "100px" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      model: {
-                        value: _vm.dialogCreate.data.gender,
-                        callback: function($$v) {
-                          _vm.$set(_vm.dialogCreate.data, "gender", $$v)
-                        },
-                        expression: "dialogCreate.data.gender"
-                      }
-                    },
-                    [
-                      _c("el-option", { attrs: { value: "1", label: "男" } }),
-                      _vm._v(" "),
-                      _c("el-option", { attrs: { value: "2", label: "女" } })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "职业", labelWidth: "100px" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogCreate.data.occupation,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogCreate.data, "occupation", $$v)
-                      },
-                      expression: "dialogCreate.data.occupation"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "省", labelWidth: "100px" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      on: { change: _vm.provinceSelect },
-                      model: {
-                        value: _vm.dialogCreate.data.province,
-                        callback: function($$v) {
-                          _vm.$set(_vm.dialogCreate.data, "province", $$v)
-                        },
-                        expression: "dialogCreate.data.province"
-                      }
-                    },
-                    _vm._l(_vm.provinces, function(item) {
-                      return _c("el-option", {
-                        key: item,
-                        attrs: { value: item, label: item }
-                      })
-                    })
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "市", labelWidth: "100px" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      model: {
-                        value: _vm.dialogCreate.data.city,
-                        callback: function($$v) {
-                          _vm.$set(_vm.dialogCreate.data, "city", $$v)
-                        },
-                        expression: "dialogCreate.data.city"
-                      }
-                    },
-                    _vm._l(_vm.cities, function(item) {
-                      return _c("el-option", {
-                        key: item,
-                        attrs: { value: item, label: item }
-                      })
-                    })
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "el-button",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.dialogCreate.display = false
-                    }
-                  }
-                },
-                [_vm._v("取 消")]
-              ),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                { attrs: { type: "primary" }, on: { click: _vm.doCreate } },
-                [_vm._v("确 定")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: { title: "更新", visible: _vm.dialogUpdate.display },
-          on: {
-            "update:visible": function($event) {
-              _vm.$set(_vm.dialogUpdate, "display", $event)
-            }
-          }
-        },
-        [
-          _c(
-            "el-form",
-            [
-              _c(
-                "el-form-item",
-                { attrs: { label: "标签", labelWidth: "100px" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { multiple: "" },
-                      model: {
-                        value: _vm.dialogUpdate.data.tags,
-                        callback: function($$v) {
-                          _vm.$set(_vm.dialogUpdate.data, "tags", $$v)
-                        },
-                        expression: "dialogUpdate.data.tags"
-                      }
-                    },
-                    _vm._l(_vm.tagList, function(item) {
-                      return _c("el-option", {
-                        key: item.id,
-                        attrs: { value: item.id, label: item.name }
-                      })
-                    })
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "手机号", labelWidth: "100px" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogUpdate.data.mobile,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogUpdate.data, "mobile", $$v)
-                      },
-                      expression: "dialogUpdate.data.mobile"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "QQ", labelWidth: "100px" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogUpdate.data.qq,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogUpdate.data, "qq", $$v)
-                      },
-                      expression: "dialogUpdate.data.qq"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "微信", labelWidth: "100px" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogUpdate.data.wx,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogUpdate.data, "wx", $$v)
-                      },
-                      expression: "dialogUpdate.data.wx"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "姓名", labelWidth: "100px" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogUpdate.data.name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogUpdate.data, "name", $$v)
-                      },
-                      expression: "dialogUpdate.data.name"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "年龄", labelWidth: "100px" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogUpdate.data.age,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogUpdate.data, "age", $$v)
-                      },
-                      expression: "dialogUpdate.data.age"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "性别", labelWidth: "100px" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      model: {
-                        value: _vm.dialogUpdate.data.gender,
-                        callback: function($$v) {
-                          _vm.$set(_vm.dialogUpdate.data, "gender", $$v)
-                        },
-                        expression: "dialogUpdate.data.gender"
-                      }
-                    },
-                    [
-                      _c("el-option", { attrs: { value: 1, label: "男" } }),
-                      _vm._v(" "),
-                      _c("el-option", { attrs: { value: 2, label: "女" } })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "职业", labelWidth: "100px" } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.dialogUpdate.data.occupation,
-                      callback: function($$v) {
-                        _vm.$set(_vm.dialogUpdate.data, "occupation", $$v)
-                      },
-                      expression: "dialogUpdate.data.occupation"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "省", labelWidth: "100px" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      on: { change: _vm.provinceSelect },
-                      model: {
-                        value: _vm.dialogUpdate.data.province,
-                        callback: function($$v) {
-                          _vm.$set(_vm.dialogUpdate.data, "province", $$v)
-                        },
-                        expression: "dialogUpdate.data.province"
-                      }
-                    },
-                    _vm._l(_vm.provinces, function(item) {
-                      return _c("el-option", {
-                        key: item,
-                        attrs: { value: item, label: item }
-                      })
-                    })
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "市", labelWidth: "100px" } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      model: {
-                        value: _vm.dialogUpdate.data.city,
-                        callback: function($$v) {
-                          _vm.$set(_vm.dialogUpdate.data, "city", $$v)
-                        },
-                        expression: "dialogUpdate.data.city"
-                      }
-                    },
-                    _vm._l(_vm.cities, function(item) {
-                      return _c("el-option", {
-                        key: item,
-                        attrs: { value: item, label: item }
-                      })
-                    })
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "el-button",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.dialogUpdate.display = false
-                    }
-                  }
-                },
-                [_vm._v("取 消")]
-              ),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                { attrs: { type: "primary" }, on: { click: _vm.doUpdate } },
-                [_vm._v("确 定")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-dialog",
-        {
-          attrs: { title: "删除", visible: _vm.dialogDelete.display },
-          on: {
-            "update:visible": function($event) {
-              _vm.$set(_vm.dialogDelete, "display", $event)
-            }
-          }
-        },
-        [
-          _c("label", [_vm._v("是否删除？")]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dialog-footer",
-              attrs: { slot: "footer" },
-              slot: "footer"
-            },
-            [
-              _c(
-                "el-button",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.dialogDelete.display = false
-                    }
-                  }
-                },
-                [_vm._v("取 消")]
-              ),
-              _vm._v(" "),
-              _c(
-                "el-button",
-                { attrs: { type: "primary" }, on: { click: _vm.doDelete } },
-                [_vm._v("确 定")]
-              )
-            ],
-            1
-          )
         ]
-      )
-    ],
-    1
-  )
+      },
+      [
+        _c(
+          "el-row",
+          [
+            _c(
+              "el-select",
+              {
+                attrs: { placeholder: "会员类型" },
+                model: {
+                  value: _vm.search.type,
+                  callback: function($$v) {
+                    _vm.$set(_vm.search, "type", $$v)
+                  },
+                  expression: "search.type"
+                }
+              },
+              _vm._l(_vm.userTypeList, function(item) {
+                return _c("el-option", {
+                  key: item.id,
+                  attrs: { value: item.id, label: item.name }
+                })
+              })
+            ),
+            _vm._v(" "),
+            _c("el-input", {
+              staticStyle: { width: "150px" },
+              attrs: { placeholder: "手机号" },
+              model: {
+                value: _vm.search.mobile,
+                callback: function($$v) {
+                  _vm.$set(_vm.search, "mobile", $$v)
+                },
+                expression: "search.mobile"
+              }
+            }),
+            _vm._v(" "),
+            _c("el-input", {
+              staticStyle: { width: "150px" },
+              attrs: { placeholder: "QQ" },
+              model: {
+                value: _vm.search.qq,
+                callback: function($$v) {
+                  _vm.$set(_vm.search, "qq", $$v)
+                },
+                expression: "search.qq"
+              }
+            }),
+            _vm._v(" "),
+            _c("el-input", {
+              staticStyle: { width: "150px" },
+              attrs: { placeholder: "微信" },
+              model: {
+                value: _vm.search.wx,
+                callback: function($$v) {
+                  _vm.$set(_vm.search, "wx", $$v)
+                },
+                expression: "search.wx"
+              }
+            }),
+            _vm._v(" "),
+            _c("el-input", {
+              staticStyle: { width: "150px" },
+              attrs: { placeholder: "旺旺" },
+              model: {
+                value: _vm.search.ww,
+                callback: function($$v) {
+                  _vm.$set(_vm.search, "ww", $$v)
+                },
+                expression: "search.ww"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "el-button",
+              { attrs: { type: "primary" }, on: { click: _vm.loadData } },
+              [_vm._v("搜索")]
+            ),
+            _vm._v(" "),
+            _c(
+              "el-button",
+              { attrs: { type: "warning" }, on: { click: _vm.reset } },
+              [_vm._v("重置")]
+            ),
+            _vm._v(" "),
+            _c(
+              "el-button",
+              {
+                attrs: { type: "success" },
+                on: { click: _vm.openCreateDialog }
+              },
+              [_vm._v("添加")]
+            ),
+            _vm._v(" "),
+            _c("el-pagination", {
+              attrs: {
+                layout: "prev, pager, next",
+                total: _vm.dataList.meta.total,
+                "page-size": _vm.dataList.meta.per_page
+              },
+              on: { "current-change": _vm.paginate }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "el-row",
+          [
+            _c(
+              "el-table",
+              { attrs: { data: _vm.dataList.data, stripe: "" } },
+              [
+                _c("el-table-column", {
+                  attrs: { type: "expand" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(props) {
+                        return [
+                          _c(
+                            "el-form",
+                            {
+                              staticClass: "demo-table-expand",
+                              attrs: { "label-position": "left", inline: "" }
+                            },
+                            [
+                              _c("el-form-item", { attrs: { label: "姓名" } }, [
+                                _c("span", [
+                                  _vm._v(_vm._s(props.row._profile.name))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("el-form-item", { attrs: { label: "年龄" } }, [
+                                _c("span", [
+                                  _vm._v(_vm._s(props.row._profile.age))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("el-form-item", { attrs: { label: "性别" } }, [
+                                _c("span", [
+                                  _vm._v(
+                                    _vm._s(props.row._profile.gender_label)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("el-form-item", { attrs: { label: "职业" } }, [
+                                _c("span", [
+                                  _vm._v(_vm._s(props.row._profile.occupation))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("el-form-item", { attrs: { label: "省" } }, [
+                                _c("span", [
+                                  _vm._v(_vm._s(props.row._profile.province))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("el-form-item", { attrs: { label: "市" } }, [
+                                _c("span", [
+                                  _vm._v(_vm._s(props.row._profile.city))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("el-form-item", { attrs: { label: "备注" } }, [
+                                _c("span", [
+                                  _vm._v(_vm._s(props.row._profile.remark))
+                                ])
+                              ])
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "id", label: "ID", "min-width": "100" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "type_label",
+                    label: "会员类型",
+                    "min-width": "100"
+                  }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "mobile", label: "手机号", "min-width": "120" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "qq", label: "QQ", "min-width": "120" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "wx", label: "微信", "min-width": "120" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "ww", label: "旺旺", "min-width": "120" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { label: "操作", "min-width": "200" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "warning" },
+                              on: {
+                                click: function($event) {
+                                  _vm.openUpdateDialog(scope)
+                                }
+                              }
+                            },
+                            [_vm._v("修改")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "danger" },
+                              on: {
+                                click: function($event) {
+                                  _vm.doDelete(scope)
+                                }
+                              }
+                            },
+                            [_vm._v("删除")]
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                })
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.action == "create",
+            expression: "action=='create'"
+          }
+        ]
+      },
+      [
+        _c("div", { staticClass: "panel" }, [
+          _c("div", { staticClass: "panel-heading" }, [_vm._v("创建")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "panel-body" },
+            [
+              _c(
+                "el-form",
+                {
+                  ref: "createForm",
+                  attrs: { model: _vm.createData, rules: _vm.rules }
+                },
+                [
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "type",
+                        label: "会员类型",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          model: {
+                            value: _vm.createData.type,
+                            callback: function($$v) {
+                              _vm.$set(_vm.createData, "type", $$v)
+                            },
+                            expression: "createData.type"
+                          }
+                        },
+                        _vm._l(_vm.userTypeList, function(item) {
+                          return _c("el-option", {
+                            key: item.id,
+                            attrs: { value: item.id, label: item.name }
+                          })
+                        })
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "mobile",
+                        label: "手机号",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.createData.mobile,
+                          callback: function($$v) {
+                            _vm.$set(_vm.createData, "mobile", $$v)
+                          },
+                          expression: "createData.mobile"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { prop: "qq", label: "QQ", labelWidth: "100px" } },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.createData.qq,
+                          callback: function($$v) {
+                            _vm.$set(_vm.createData, "qq", $$v)
+                          },
+                          expression: "createData.qq"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: { prop: "wx", label: "微信", labelWidth: "100px" }
+                    },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.createData.wx,
+                          callback: function($$v) {
+                            _vm.$set(_vm.createData, "wx", $$v)
+                          },
+                          expression: "createData.wx"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: { prop: "ww", label: "旺旺", labelWidth: "100px" }
+                    },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.createData.ww,
+                          callback: function($$v) {
+                            _vm.$set(_vm.createData, "ww", $$v)
+                          },
+                          expression: "createData.ww"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "remark",
+                        label: "备注",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.createData._profile.remark,
+                          callback: function($$v) {
+                            _vm.$set(_vm.createData._profile, "remark", $$v)
+                          },
+                          expression: "createData._profile.remark"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "name",
+                        label: "姓名",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.createData._profile.name,
+                          callback: function($$v) {
+                            _vm.$set(_vm.createData._profile, "name", $$v)
+                          },
+                          expression: "createData._profile.name"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: { prop: "age", label: "年龄", labelWidth: "100px" }
+                    },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.createData._profile.age,
+                          callback: function($$v) {
+                            _vm.$set(
+                              _vm.createData._profile,
+                              "age",
+                              _vm._n($$v)
+                            )
+                          },
+                          expression: "createData._profile.age"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "性别", labelWidth: "100px" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          model: {
+                            value: _vm.createData._profile.gender,
+                            callback: function($$v) {
+                              _vm.$set(_vm.createData._profile, "gender", $$v)
+                            },
+                            expression: "createData._profile.gender"
+                          }
+                        },
+                        [
+                          _c("el-option", {
+                            attrs: { value: "1", label: "男" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: { value: "2", label: "女" }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "职业", labelWidth: "100px" } },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.createData._profile.occupation,
+                          callback: function($$v) {
+                            _vm.$set(_vm.createData._profile, "occupation", $$v)
+                          },
+                          expression: "createData._profile.occupation"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "省", labelWidth: "100px" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          on: { change: _vm.provinceSelect },
+                          model: {
+                            value: _vm.createData._profile.province,
+                            callback: function($$v) {
+                              _vm.$set(_vm.createData._profile, "province", $$v)
+                            },
+                            expression: "createData._profile.province"
+                          }
+                        },
+                        _vm._l(_vm.provinces, function(item) {
+                          return _c("el-option", {
+                            key: item,
+                            attrs: { value: item, label: item }
+                          })
+                        })
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "市", labelWidth: "100px" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          model: {
+                            value: _vm.createData._profile.city,
+                            callback: function($$v) {
+                              _vm.$set(_vm.createData._profile, "city", $$v)
+                            },
+                            expression: "createData._profile.city"
+                          }
+                        },
+                        _vm._l(_vm.cities, function(item) {
+                          return _c("el-option", {
+                            key: item,
+                            attrs: { value: item, label: item }
+                          })
+                        })
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { labelWidth: "100px" } },
+                    [
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary" },
+                          on: {
+                            click: function($event) {
+                              _vm.action = "list"
+                            }
+                          }
+                        },
+                        [_vm._v("返回")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "success" },
+                          on: { click: _vm.doCreate }
+                        },
+                        [_vm._v("提交")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.action == "update",
+            expression: "action=='update'"
+          }
+        ]
+      },
+      [
+        _c("div", { staticClass: "panel" }, [
+          _c("div", { staticClass: "panel-heading" }, [_vm._v("更新分类")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "panel-body" },
+            [
+              _c(
+                "el-form",
+                [
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "type",
+                        label: "会员类型",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          model: {
+                            value: _vm.updateData.type,
+                            callback: function($$v) {
+                              _vm.$set(_vm.updateData, "type", $$v)
+                            },
+                            expression: "updateData.type"
+                          }
+                        },
+                        _vm._l(_vm.userTypeList, function(item) {
+                          return _c("el-option", {
+                            key: item.id,
+                            attrs: { value: item.id, label: item.name }
+                          })
+                        })
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "手机号", labelWidth: "100px" } },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.updateData.mobile,
+                          callback: function($$v) {
+                            _vm.$set(_vm.updateData, "mobile", $$v)
+                          },
+                          expression: "updateData.mobile"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "QQ", labelWidth: "100px" } },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.updateData.qq,
+                          callback: function($$v) {
+                            _vm.$set(_vm.updateData, "qq", $$v)
+                          },
+                          expression: "updateData.qq"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "微信", labelWidth: "100px" } },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.updateData.wx,
+                          callback: function($$v) {
+                            _vm.$set(_vm.updateData, "wx", $$v)
+                          },
+                          expression: "updateData.wx"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "旺旺", labelWidth: "100px" } },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.updateData.ww,
+                          callback: function($$v) {
+                            _vm.$set(_vm.updateData, "ww", $$v)
+                          },
+                          expression: "updateData.ww"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        prop: "remark",
+                        label: "备注",
+                        labelWidth: "100px"
+                      }
+                    },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.updateData._profile.remark,
+                          callback: function($$v) {
+                            _vm.$set(_vm.updateData._profile, "remark", $$v)
+                          },
+                          expression: "updateData._profile.remark"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "姓名", labelWidth: "100px" } },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.updateData._profile.name,
+                          callback: function($$v) {
+                            _vm.$set(_vm.updateData._profile, "name", $$v)
+                          },
+                          expression: "updateData._profile.name"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "年龄", labelWidth: "100px" } },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.updateData._profile.age,
+                          callback: function($$v) {
+                            _vm.$set(_vm.updateData._profile, "age", $$v)
+                          },
+                          expression: "updateData._profile.age"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "性别", labelWidth: "100px" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          model: {
+                            value: _vm.updateData._profile.gender,
+                            callback: function($$v) {
+                              _vm.$set(_vm.updateData._profile, "gender", $$v)
+                            },
+                            expression: "updateData._profile.gender"
+                          }
+                        },
+                        [
+                          _c("el-option", {
+                            attrs: { value: 0, label: "未知" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", { attrs: { value: 1, label: "男" } }),
+                          _vm._v(" "),
+                          _c("el-option", { attrs: { value: 2, label: "女" } })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "职业", labelWidth: "100px" } },
+                    [
+                      _c("el-input", {
+                        model: {
+                          value: _vm.updateData._profile.occupation,
+                          callback: function($$v) {
+                            _vm.$set(_vm.updateData._profile, "occupation", $$v)
+                          },
+                          expression: "updateData._profile.occupation"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "省", labelWidth: "100px" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          on: { change: _vm.provinceSelect },
+                          model: {
+                            value: _vm.updateData._profile.province,
+                            callback: function($$v) {
+                              _vm.$set(_vm.updateData._profile, "province", $$v)
+                            },
+                            expression: "updateData._profile.province"
+                          }
+                        },
+                        _vm._l(_vm.provinces, function(item) {
+                          return _c("el-option", {
+                            key: item,
+                            attrs: { value: item, label: item }
+                          })
+                        })
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "市", labelWidth: "100px" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          model: {
+                            value: _vm.updateData._profile.city,
+                            callback: function($$v) {
+                              _vm.$set(_vm.updateData._profile, "city", $$v)
+                            },
+                            expression: "updateData._profile.city"
+                          }
+                        },
+                        _vm._l(_vm.cities, function(item) {
+                          return _c("el-option", {
+                            key: item,
+                            attrs: { value: item, label: item }
+                          })
+                        })
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    { attrs: { labelWidth: "100px" } },
+                    [
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary" },
+                          on: {
+                            click: function($event) {
+                              _vm.action = "list"
+                            }
+                          }
+                        },
+                        [_vm._v("返回")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "success" },
+                          on: { click: _vm.doUpdate }
+                        },
+                        [_vm._v("提交")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50994,7 +51207,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-15f9f8f1", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-168a7b48", module.exports)
   }
 }
 

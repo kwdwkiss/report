@@ -42,15 +42,15 @@
                     },
                     {
                         title: '用户资料',
-                        path: '/user/profile',
-                    },
-                    {
-                        title: '举报信息',
-                        path: '/account/report',
+                        path: '/user',
                     },
                     {
                         title: '账号信息',
                         path: '/account',
+                    },
+                    {
+                        title: '举报信息',
+                        path: '/account/report',
                     },
                     {
                         title: '首页设置',

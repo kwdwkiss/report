@@ -17,10 +17,12 @@ Route::middleware(['csrf'])->group(function () {
     Route::post('/index/search', 'Index\IndexController@search');
     Route::post('/index/report', 'Index\IndexController@report');
 
+    Route::get('/taxonomy/list', 'Index\TaxonomyController@all');
     Route::get('/taxonomy/report-type/list', 'Index\TaxonomyController@reportTypeList');
     Route::get('/taxonomy/account-type/list', 'Index\TaxonomyController@accountTypeList');
     Route::get('/taxonomy/account-status/list', 'Index\TaxonomyController@accountStatusList');
     Route::get('/taxonomy/article-type/list', 'Index\TaxonomyController@articleTypeList');
+    Route::get('/taxonomy/user-type/list', 'Index\TaxonomyController@userTypeList');
 
     Route::get('/admin', 'Admin\IndexController@index');
     Route::get('/admin/logout', 'Admin\IndexController@logout');
@@ -51,10 +53,10 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/tag/update', 'Admin\TagController@update');
     Route::post('/admin/tag/delete', 'Admin\TagController@delete');
 
-    Route::get('/admin/user-profile/list', 'Admin\UserProfileController@list');
-    Route::post('/admin/user-profile/create', 'Admin\UserProfileController@create');
-    Route::post('/admin/user-profile/update', 'Admin\UserProfileController@update');
-    Route::post('/admin/user-profile/delete', 'Admin\UserProfileController@delete');
+    Route::get('/admin/user/list', 'Admin\UserController@list');
+    Route::post('/admin/user/create', 'Admin\UserController@create');
+    Route::post('/admin/user/update', 'Admin\UserController@update');
+    Route::post('/admin/user/delete', 'Admin\UserController@delete');
 
     Route::get('/admin/account/list', 'Admin\AccountController@list');
     Route::post('/admin/account/create', 'Admin\AccountController@create');

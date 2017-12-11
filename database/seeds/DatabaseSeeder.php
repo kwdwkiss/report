@@ -54,9 +54,9 @@ class DatabaseSeeder extends Seeder
                 ['id' => 312, 'pid' => 3, 'name' => '改后台'],
                 ['id' => 313, 'pid' => 3, 'name' => '不收菜'],
 
-                ['id' => 401, 'pid' => 4, 'name' => '会员'],
-                ['id' => 402, 'pid' => 4, 'name' => '删除'],
-                ['id' => 403, 'pid' => 4, 'name' => '加群'],
+                ['id' => 401, 'pid' => 4, 'name' => '普通会员'],
+                ['id' => 402, 'pid' => 4, 'name' => '刷手'],
+                ['id' => 403, 'pid' => 4, 'name' => '商家'],
 
                 ['id' => 501, 'pid' => 5, 'name' => '宏海公告'],
                 ['id' => 502, 'pid' => 5, 'name' => '防骗资讯'],
