@@ -60,7 +60,11 @@ class Report extends Command
                         if ($row->type_id == 0) {
                             $reportTypeId = 310;
                         } else {
-                            $reportTypeId = $targetReportType[$originReportType[$row->type_id]];
+                            if (!isset($originReportType[$row->type_id])) {
+                                continue;
+                            }
+                            $originReportTypeId = $originReportType[$row->type_id];
+                            $reportTypeId = $targetReportType[$originReportTypeId];
                         }
                         if ($row->report_ip == '') {
                             continue;
