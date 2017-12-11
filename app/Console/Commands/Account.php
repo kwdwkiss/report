@@ -13,7 +13,7 @@ class Account extends Command
      *
      * @var string
      */
-    protected $signature = 'account {startId=0}';
+    protected $signature = 'account {page=0} {num=0}';
 
     /**
      * The console command description.
@@ -39,7 +39,8 @@ class Account extends Command
      */
     public function handle()
     {
-        $startId = $this->argument('startId');
+        $startPage = $this->argument('page');
+        $startNum = $this->argument('num');
         $conn = \DB::connection('origin');
 
         $statusData = [
@@ -54,10 +55,14 @@ class Account extends Command
         $pageSize = 1000;
         $pageCount = ceil($total / $pageSize);
         echo "total:$total pageSize:$pageSize pageCount:$pageCount\n";
-        for ($i = 0; $i < $pageCount; $i++) {
+        for ($i = $startPage; $i < $pageCount; $i++) {
             $rows = $conn->table('ims_account')->offset($i * $pageSize)->limit($pageSize)->get();
-            \DB::transaction(function () use ($i, $rows, $statusData) {
-                $num = 0;
+            \DB::transaction(function () use ($startPage, $startNum, $i, $rows, $statusData) {
+                if ($i == $startPage) {
+                    $num = $startNum;
+                } else {
+                    $num = 0;
+                }
                 foreach ($rows as $row) {
                     $name = trim($row->account);
                     $type = is_numeric($name) ? 201 : 202;
