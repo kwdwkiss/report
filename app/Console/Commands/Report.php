@@ -63,8 +63,13 @@ class Report extends Command
                             if (!isset($originReportType[$row->type_id])) {
                                 continue;
                             }
-                            $originReportTypeId = $originReportType[$row->type_id];
-                            $reportTypeId = $targetReportType[$originReportTypeId];
+                            $originReportTypeLabel = $originReportType[$row->type_id];
+                            if ($originReportTypeLabel == '微信') {
+                                $reportTypeId = 311;
+                            } else {
+                                $reportTypeId = $targetReportType[$originReportTypeLabel];
+                            }
+
                         }
                         if ($row->report_ip == '') {
                             continue;
