@@ -63,6 +63,10 @@ class Account extends Command
                     $name = trim($row->account);
                     $type = is_numeric($row->account) ? 201 : 202;
                     $status = $statusData[$row->status_id];
+                    $remark = $row->remark;
+                    $address = $row->address;
+                    $report_count = $row->report_count;
+                    $auth_cash = $row->auth_cash;
                     if ($row->auth_time != 0) {
                         $auth_at = Carbon::createFromTimestamp($row->auth_time);
                     } else {
@@ -78,14 +82,14 @@ class Account extends Command
                     $account->name = $name;
                     $account->type = $type;
                     $account->status = $status;
-                    $account->remark = $row->remark;
-                    $account->address = $row->address;
-                    $account->report_count = $row->report_count;
+                    $account->remark = $remark;
+                    $account->address = $address;
+                    $account->report_count = $report_count;
                     $account->auth_at = $auth_at;
-                    $account->auth_cash = $row->auth_cash;
+                    $account->auth_cash = $auth_cash;
                     $account->save();
 
-                    echo "$i-$num $name $type\n";
+                    echo "$i-$num $name $type $status $remark $address $report_count $auth_at $auth_cash\n";
                     $num++;
                 }
             });
