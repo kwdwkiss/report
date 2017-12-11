@@ -21,6 +21,9 @@ class CreateArticleTable extends Migration
             $table->tinyInteger('display')->default(1);
             $table->string('remark');
             $table->timestamps();
+
+            $table->index('title');
+            $table->index('created_at');
         });
     }
 

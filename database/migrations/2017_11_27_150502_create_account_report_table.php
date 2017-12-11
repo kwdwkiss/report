@@ -23,7 +23,8 @@ class CreateAccountReportTable extends Migration
             $table->string('remark');
             $table->timestamps();
 
-            $table->index(['account_name','account_type']);
+            $table->index(['account_name', 'account_type']);
+            $table->index('created_at');
         });
     }
 

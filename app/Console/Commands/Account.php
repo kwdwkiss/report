@@ -80,6 +80,9 @@ class Account extends Command
                         $auth_at = null;
                     }
 
+                    if ($type == 201 && !preg_match('/[1-9][0-9]{4,14}/', $name)) {
+                        continue;
+                    }
                     $account = \App\Account::where('name', $name)->where('type', $type)->first();
                     if ($account) {
                         continue;

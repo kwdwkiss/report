@@ -87,6 +87,10 @@ class Report extends Command
                         }
                         $updated_at = $created_at = Carbon::createFromTimestamp($row->time);
 
+                        if ($accountTypeId == 201 && !preg_match('/[1-9][0-9]{4,14}/', $name)) {
+                            continue;
+                        }
+
                         $accountReport = new AccountReport();
                         $accountReport->account_type = $accountTypeId;
                         $accountReport->account_name = $name;

@@ -32,6 +32,7 @@ class CreateAccountTable extends Migration
 
             $table->unique(['name', 'type']);
             $table->index('name');
+            $table->index('created_at');
         });
     }
 
