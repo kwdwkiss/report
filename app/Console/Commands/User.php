@@ -13,7 +13,7 @@ class User extends Command
      *
      * @var string
      */
-    protected $signature = 'user {startId=0}';
+    protected $signature = 'user {page=0} {num=0}';
 
     /**
      * The console command description.
