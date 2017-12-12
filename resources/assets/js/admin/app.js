@@ -43,6 +43,6 @@ const router = new VueRouter({
 
 window.app = new Vue({
     el: '#app',
+    template: '<router-view></router-view>',
     router,
-    template: '<router-view></router-view>'
 });

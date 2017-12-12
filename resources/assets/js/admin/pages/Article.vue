@@ -20,9 +20,15 @@
 
             <el-row>
                 <el-table :data="dataList.data" stripe>
+                    <el-table-column prop="id" label="ID" min-width="50"></el-table-column>
+                    <!--<el-table-column label="URL" min-width="50">-->
+                    <!--<template slot-scope="scope">-->
+                    <!--<a target="_blank" :href="scope.row.url">查看</a>-->
+                    <!--</template>-->
+                    <!--</el-table-column>-->
                     <el-table-column prop="article_type" label="文章类型" min-width="100"></el-table-column>
-                    <el-table-column prop="title" label="标题" min-width="150"></el-table-column>
-                    <el-table-column prop="remark" label="备注" min-width="200"></el-table-column>
+                    <el-table-column prop="title" label="标题" min-width="200"></el-table-column>
+                    <el-table-column prop="remark" label="备注" min-width="160"></el-table-column>
                     <el-table-column label="显示" min-width="100">
                         <template slot-scope="scope">
                             <el-switch v-model="scope.row.display" :active-value="1" :inactive-value="0"
@@ -30,9 +36,12 @@
                             </el-switch>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="created_at" label="创建时间" min-width="180"></el-table-column>
-                    <el-table-column label="操作" min-width="200">
+                    <el-table-column prop="created_at" label="创建时间" min-width="160"></el-table-column>
+                    <el-table-column label="操作" min-width="400">
                         <template slot-scope="scope">
+                            <el-button type="primary" class="btn-copy" :data-clipboard-text="scope.row.url">复制链接
+                            </el-button>
+                            <el-button type="success" @click="preview(scope)">预览</el-button>
                             <el-button type="warning" @click="openUpdateDialog(scope)">修改</el-button>
                             <el-button type="danger" @click="doDelete(scope)">删除</el-button>
                         </template>
@@ -107,6 +116,7 @@
 
 <script>
     import VueUEditor from 'vue-ueditor';
+    import Clipboard from 'clipboard';
 
     export default {
         components: {VueUEditor},
@@ -137,6 +147,12 @@
         created: function () {
             this.loadArticleType();
             this.loadData();
+        },
+        mounted: function () {
+            let clipboard = new Clipboard('.btn-copy');
+            clipboard.on('success', function (e) {
+                e.clearSelection();
+            });
         },
         methods: {
             createEditorReady: function (ue) {
@@ -218,6 +234,9 @@
                     });
                 }).catch(() => {
                 });
+            },
+            preview: function (scope) {
+                window.open(scope.row.url);
             }
         }
     }

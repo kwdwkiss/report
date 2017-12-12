@@ -15,20 +15,12 @@
     </script>
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <style>
-        body {
-            margin: 0 auto;
-            width: 1000px;
-            min-height: 400px;
-            background-color: #fff;
-        }
-    </style>
 </head>
-<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1271314784'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1271314784%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 <body>
 <div id="app"></div>
 
 <!-- Scripts -->
 <script src="{{ mix("js/index/app.js") }}"></script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1271314784'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1271314784%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 </body>
 </html>

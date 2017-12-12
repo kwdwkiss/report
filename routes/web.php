@@ -17,6 +17,9 @@ Route::middleware(['csrf'])->group(function () {
     Route::post('/index/search', 'Index\IndexController@search');
     Route::post('/index/report', 'Index\IndexController@report');
 
+    Route::get('/index/article/list', 'Index\ArticleController@list');
+    Route::get('/index/article/show', 'Index\ArticleController@show');
+
     Route::get('/taxonomy/list', 'Index\TaxonomyController@all');
     Route::get('/taxonomy/report-type/list', 'Index\TaxonomyController@reportTypeList');
     Route::get('/taxonomy/account-type/list', 'Index\TaxonomyController@accountTypeList');

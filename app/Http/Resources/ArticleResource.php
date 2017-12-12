@@ -16,6 +16,7 @@ class ArticleResource extends Resource
     {
         $data = parent::toArray($request);
         $data['article_type'] = $this->_type->name;
+        $data['url'] = url('/') . '#/article/' . $this->resource->id;
         return $data;
     }
 }

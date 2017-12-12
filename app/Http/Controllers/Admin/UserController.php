@@ -81,7 +81,7 @@ class UserController extends Controller
             }
             $exists = User::where('mobile', $mobile)->first();
             if ($exists && $exists->id != $user->id) {
-                throw new \Exception('手机号码已存在');
+                throw new JsonException('手机号码已存在');
             }
             $user->mobile = $mobile;
 
@@ -91,21 +91,21 @@ class UserController extends Controller
                 }
                 $exists = User::where('qq', $qq)->first();
                 if ($exists && $exists->id != $user->id) {
-                    throw new \Exception('QQ已存在');
+                    throw new JsonException('QQ已存在');
                 }
                 $user->qq = $qq;
             }
             if ($wx) {
                 $exists = User::where('wx', $wx)->first();
                 if ($exists && $exists->id != $user->id) {
-                    throw new \Exception('微信已存在');
+                    throw new JsonException('微信已存在');
                 }
                 $user->wx = $wx;
             }
             if ($ww) {
                 $exists = User::where('ww', $ww)->first();
                 if ($exists && $exists->id != $user->id) {
-                    throw new \Exception('旺旺已存在');
+                    throw new JsonException('旺旺已存在');
                 }
                 $user->ww = $ww;
             }
@@ -179,7 +179,7 @@ class UserController extends Controller
             }
             $exists = User::where('mobile', $mobile)->first();
             if ($exists && $exists->id != $user->id) {
-                throw new \Exception('手机号码已存在');
+                throw new JsonException('手机号码已存在');
             }
             $user->mobile = $mobile;
 
@@ -189,21 +189,21 @@ class UserController extends Controller
                 }
                 $exists = User::where('qq', $qq)->first();
                 if ($exists && $exists->id != $user->id) {
-                    throw new \Exception('QQ已存在');
+                    throw new JsonException('QQ已存在');
                 }
                 $user->qq = $qq;
             }
             if ($wx) {
                 $exists = User::where('wx', $wx)->first();
                 if ($exists && $exists->id != $user->id) {
-                    throw new \Exception('微信已存在');
+                    throw new JsonException('微信已存在');
                 }
                 $user->wx = $wx;
             }
             if ($ww) {
                 $exists = User::where('ww', $ww)->first();
                 if ($exists && $exists->id != $user->id) {
-                    throw new \Exception('旺旺已存在');
+                    throw new JsonException('旺旺已存在');
                 }
                 $user->ww = $ww;
             }

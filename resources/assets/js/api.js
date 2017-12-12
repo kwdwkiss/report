@@ -53,5 +53,8 @@ module.exports = {
     indexSearch: '/index/search',
     indexReport: '/index/report',
 
-    captcha: '/captcha/default'
+    captcha: '/captcha/default',
+
+    indexArticleList: '/index/article/list',
+    indexArticleShow: '/index/article/show',
 };
