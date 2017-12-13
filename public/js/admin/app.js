@@ -52875,7 +52875,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -53045,6 +53045,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "index-set",
@@ -53052,6 +53065,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             activeName: 'article',
             data: {
+                notice: { title: '', url: '' },
                 article_data: []
             }
         };
@@ -53169,6 +53183,57 @@ var render = function() {
         "el-tab-pane",
         { attrs: { label: "文章设置", name: "article" } },
         [
+          _c("div", { staticClass: "panel" }, [
+            _c("div", { staticClass: "panel-heading" }, [_vm._v("公告")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "panel-body" },
+              [
+                _c(
+                  "el-form",
+                  [
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "标题" } },
+                      [
+                        _c("el-input", {
+                          model: {
+                            value: _vm.data.notice.title,
+                            callback: function($$v) {
+                              _vm.$set(_vm.data.notice, "title", $$v)
+                            },
+                            expression: "data.notice.title"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-form-item",
+                      { attrs: { label: "链接" } },
+                      [
+                        _c("el-input", {
+                          model: {
+                            value: _vm.data.notice.url,
+                            callback: function($$v) {
+                              _vm.$set(_vm.data.notice, "url", $$v)
+                            },
+                            expression: "data.notice.url"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
           _vm._l(_vm.data.article_data, function(item) {
             return [
               _c("div", { staticClass: "panel" }, [

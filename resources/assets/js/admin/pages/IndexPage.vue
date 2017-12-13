@@ -21,6 +21,19 @@
             </div>
         </el-tab-pane>
         <el-tab-pane label="文章设置" name="article">
+            <div class="panel">
+                <div class="panel-heading">公告</div>
+                <div class="panel-body">
+                    <el-form>
+                        <el-form-item label="标题">
+                            <el-input v-model="data.notice.title"></el-input>
+                        </el-form-item>
+                        <el-form-item label="链接">
+                            <el-input v-model="data.notice.url"></el-input>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </div>
             <template v-for="item in data.article_data">
                 <div class="panel">
                     <div class="panel-heading">分组</div>
@@ -164,6 +177,7 @@
             return {
                 activeName: 'article',
                 data: {
+                    notice: {title: '', url: ''},
                     article_data: []
                 }
             }

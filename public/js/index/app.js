@@ -47325,6 +47325,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 var page = window.laravel;
 
@@ -47461,7 +47462,13 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row notice" }, [
-        _c("span", [_vm._v("公告：" + _vm._s(_vm.page.notice))])
+        _c("span", [_vm._v("公告：" + _vm._s(_vm.page.notice.title))]),
+        _vm._v(" "),
+        _c("span", { staticClass: "pull-right" }, [
+          _c("a", { attrs: { href: _vm.page.notice.moreUrl } }, [
+            _vm._v("更多")
+          ])
+        ])
       ]),
       _vm._v(" "),
       _c("router-view"),

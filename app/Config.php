@@ -61,22 +61,21 @@ class Config extends Model
 
     public static function getSiteIndex()
     {
-        return array_replace_recursive(static::$indexPageDefault, Config::get('site.index', []));
+        return array_replace_recursive(static::$indexPageDefault, static::get('site.index', []));
     }
 
     public static function setSiteIndex($data)
     {
-        $data = array_replace_recursive(static::$indexPageDefault, $data);
-        static::updateOrCreate(['name' => 'site.index'], ['data' => $data]);
+        static::set('site.index', array_replace_recursive(static::$indexPageDefault, $data));
     }
 
     public static $indexPageDefault = [
         'menu' => [
-            ['name' => '账号查询', 'url' => ''],
-            ['name' => '电商导航', 'url' => ''],
-            ['name' => '网络兼职', 'url' => ''],
-            ['name' => '电商干货', 'url' => ''],
-            ['name' => '电商服务', 'url' => ''],
+            ['name' => '账号查询', 'url' => '/#/'],
+            ['name' => '电商导航', 'url' => '/#/article/list/502'],
+            ['name' => '网络兼职', 'url' => '/#/article/list/503'],
+            ['name' => '电商干货', 'url' => '/#/article/list/504'],
+            ['name' => '电商服务', 'url' => '/#/article/list/505'],
             ['name' => '关于我们', 'url' => ''],
             ['name' => '会员中心', 'url' => ''],
         ],
@@ -110,46 +109,50 @@ class Config extends Model
             ['name' => ''],
             ['name' => ''],
         ],
-        'notice' => '12月1日起，凡被恶意举报超过180天的记录，可以联系网站客服免费删除',
+        'notice' => [
+            'title' => '12月1日起，凡被恶意举报超过180天的记录，可以联系网站客服免费删除',
+            'url' => '',
+            'moreUrl' => '/#/article/list/501'
+        ],
         'article_data' => [
             [
                 'type' => '电商导航',
-                'url' => '',
+                'url' => '/#/article/list/502',
                 'data' => [
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
+                    ['title' => '全国最大的买家秀平台', 'url' => ''],
+                    ['title' => '全国最大的淘宝客推广平台', 'url' => ''],
+                    ['title' => '一个比较不错的黑搜索技术公司', 'url' => ''],
+                    ['title' => '最安全的补单平台', 'url' => ''],
                 ]
             ],
             [
                 'type' => '电商干货',
-                'url' => '',
+                'url' => '/#/article/list/503',
                 'data' => [
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
+                    ['title' => '新店开业前3个月怎么办？看大神如何玩转教你', 'url' => ''],
+                    ['title' => '看大神如何优化店铺转化率与关键词', 'url' => ''],
+                    ['title' => '刷单违法后，看各路淘宝店的全新推广手段', 'url' => ''],
+                    ['title' => '如何利用各种新媒体打开店铺的销量', 'url' => ''],
                 ]
             ],
             [
                 'type' => '网络兼职',
-                'url' => '',
+                'url' => '/#/article/list/504',
                 'data' => [
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
+                    ['title' => '秒赚10元任务，时间2分钟，0风险', 'url' => ''],
+                    ['title' => '秒赚24元任务，时间2分钟，0风险', 'url' => ''],
+                    ['title' => '理财小兼职，投资48天回本，往后每月赚50%', 'url' => ''],
+                    ['title' => '消费者联盟兼职，每月收益没上限，每小时20元', 'url' => ''],
                 ]
             ],
             [
                 'type' => '电商服务',
-                'url' => '',
+                'url' => '/#/article/list/505',
                 'data' => [
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
-                    ['title' => '', 'url' => ''],
+                    ['title' => '品牌商代运营服务', 'url' => ''],
+                    ['title' => '淘宝京东新店顾问指导', 'url' => ''],
+                    ['title' => '公众号的申请与吸粉', 'url' => ''],
+                    ['title' => '微信电商小程序开发', 'url' => ''],
                 ]
             ]
         ]
