@@ -96,7 +96,7 @@
         <div class="row article-data">
             <div class="col-xs-6" v-for="item in page.article_data">
                 <div>
-                    <p>{{item.type}}<a target="_blank" :href="item.url">更多</a></p>
+                    <p>{{item.type}}<a :href="item.url">更多</a></p>
                     <p v-for="subItem in item.data"><a target="_blank" :href="subItem.url">{{subItem.title}}</a></p>
                 </div>
             </div>

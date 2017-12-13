@@ -46992,9 +46992,7 @@ var render = function() {
             [
               _c("p", [
                 _vm._v(_vm._s(item.type)),
-                _c("a", { attrs: { target: "_blank", href: item.url } }, [
-                  _vm._v("更多")
-                ])
+                _c("a", { attrs: { href: item.url } }, [_vm._v("更多")])
               ]),
               _vm._v(" "),
               _vm._l(item.data, function(subItem) {
