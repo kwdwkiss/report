@@ -11,6 +11,8 @@ class TaxonomySeeder extends Seeder
      */
     public function run()
     {
+        $model = new \App\Taxonomy();
+        DB::statement('truncate table ' . $model->getTable());
         DB::transaction(function () {
             $taxonomy = [
                 //parent
