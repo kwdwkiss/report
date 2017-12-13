@@ -76,7 +76,7 @@ class Config extends Model
             ['name' => '网络兼职', 'url' => '/#/article/list/503'],
             ['name' => '电商干货', 'url' => '/#/article/list/504'],
             ['name' => '电商服务', 'url' => '/#/article/list/505'],
-            ['name' => '关于我们', 'url' => ''],
+            ['name' => '关于我们', 'url' => '/#/article/list/506'],
             ['name' => '会员中心', 'url' => ''],
         ],
         'ad_top' => [

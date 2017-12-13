@@ -56,6 +56,7 @@ class TaxonomySeeder extends Seeder
                 ['id' => 503, 'pid' => 5, 'name' => '网络兼职'],
                 ['id' => 504, 'pid' => 5, 'name' => '电商干货'],
                 ['id' => 505, 'pid' => 5, 'name' => '电商服务'],
+                ['id' => 506, 'pid' => 5, 'name' => '关于我们'],
             ];
             foreach ($taxonomy as $item) {
                 \App\Taxonomy::create($item);
