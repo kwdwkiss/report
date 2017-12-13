@@ -59,8 +59,10 @@ class DatabaseSeeder extends Seeder
                 ['id' => 403, 'pid' => 4, 'name' => '商家'],
 
                 ['id' => 501, 'pid' => 5, 'name' => '宏海公告'],
-                ['id' => 502, 'pid' => 5, 'name' => '防骗资讯'],
-                ['id' => 503, 'pid' => 5, 'name' => '电商资讯'],
+                ['id' => 502, 'pid' => 5, 'name' => '电商导航'],
+                ['id' => 503, 'pid' => 5, 'name' => '网络兼职'],
+                ['id' => 504, 'pid' => 5, 'name' => '电商干货'],
+                ['id' => 505, 'pid' => 5, 'name' => '电商服务'],
             ];
             foreach ($taxonomy as $item) {
                 \App\Taxonomy::create($item);

@@ -123,7 +123,7 @@
 
 <script>
     let page = window.laravel;
-    
+
     export default {
         name: "index",
         data: function () {
@@ -174,5 +174,97 @@
 </script>
 
 <style scoped>
+    .search {
+        background-color: #f5f5f5;
+        line-height: 60px;
+        font-size: 16px;
+    }
 
+    .search > div:first-child > * {
+        margin: 0 5px;
+        height: 35px;
+    }
+
+    .search select {
+        width: 100px;
+    }
+
+    .search input[name=name] {
+        width: 250px;
+    }
+
+    .search button {
+        width: 80px;
+    }
+
+    .member-num {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .member-num span {
+        color: green;
+    }
+
+    .report-num {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .report-num span {
+        color: red;
+    }
+
+    .report-data {
+        font-size: 16px;
+    }
+
+    .search-data {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .article-data > div {
+        margin: 5px 0;
+    }
+
+    .article-data > div > div {
+        border: 1px solid #9d9d9d;
+        border-radius: 3px;
+        height: 160px;
+    }
+
+    .article-data p {
+        padding: 5px 10px;
+    }
+
+    .article-data p:first-child {
+        background-color: #f5f5f5;
+    }
+
+    .article-data p:first-child > a {
+        float: right;
+    }
+
+    .report-form {
+        background-color: #f5f5f5;
+        line-height: 60px;
+    }
+
+    .report-form > div > * {
+        margin: 0 5px;
+        height: 35px;
+    }
+
+    .report-form select {
+        width: 100px;
+    }
+
+    .report-form input[name=name] {
+        width: 200px;
+    }
+
+    input[name=captcha] {
+        width: 100px;
+    }
 </style>
