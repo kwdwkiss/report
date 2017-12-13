@@ -42,7 +42,7 @@
         </div>
         <div class="row notice">
             <span>公告：{{page.notice.title}}</span>
-            <span class="pull-right"><a :href="page.notice.moreUrl">更多</a></span>
+            <span><a :href="page.notice.moreUrl">更多</a></span>
         </div>
 
         <router-view></router-view>
@@ -65,13 +65,11 @@
 </template>
 
 <script>
-    let page = window.laravel;
-
     export default {
         name: "app",
         data: function () {
             return {
-                page: page,
+                page: store.state.page,
             }
         }
     }

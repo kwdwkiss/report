@@ -3,7 +3,7 @@
         <div class="row search">
             <div class="col-xs-6">
                 <select v-model="search.account_type">
-                    <option v-for="item in page.account_types" :value="item.id">{{item.name}}</option>
+                    <option v-for="item in page.taxonomy.account_type" :value="item.id">{{item.name}}</option>
                 </select>
                 <input v-model="search.name" name="name" type="text" placeholder="请输入账号">
                 <button @click="doSearch" class="btn btn-success">查询</button>
@@ -106,12 +106,12 @@
             <div>
                 <span>账号类型</span>
                 <select v-model="report.account_type" name="account_type">
-                    <option v-for="item in page.account_types" :value="item.id">{{item.name}}</option>
+                    <option v-for="item in page.taxonomy.account_type" :value="item.id">{{item.name}}</option>
                 </select>
                 <input v-model="report.name" name="name" type="text" placeholder="投诉账号">
                 <span>投诉类型</span>
                 <select v-model="report.report_type" name="report_type">
-                    <option v-for="item in page.report_types" :value="item.id">{{item.name}}</option>
+                    <option v-for="item in page.taxonomy.report_type" :value="item.id">{{item.name}}</option>
                 </select>
                 <img :src="captcha_src" alt="" @click="doCaptcha">
                 <input v-model="report.captcha" name="captcha" type="text" placeholder="请输入验证码">
@@ -122,15 +122,13 @@
 </template>
 
 <script>
-    let page = window.laravel;
-
     export default {
         name: "index",
         data: function () {
             return {
-                page: page,
+                page: store.state.page,
                 search: {
-                    account_type: page.account_types[0].id
+                    account_type: store.state.taxonomy.account_type[0].id
                 },
                 searchData: {
                     account_reports: [],
@@ -139,8 +137,8 @@
                 },
                 //type 0-不显示 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
                 report: {
-                    account_type: page.account_types[0].id,
-                    report_type: page.report_types[0].id,
+                    account_type: store.state.taxonomy.account_type[0].id,
+                    report_type: store.state.taxonomy.report_type[0].id,
                 },
                 captcha_src: api.captcha + '?' + Date.parse(new Date())
             }
@@ -160,8 +158,8 @@
                 let self = this;
                 axios.post(api.indexReport, self.report).then(function () {
                     self.report = {
-                        account_type: page.account_types[0].id,
-                        report_type: page.report_types[0].id
+                        account_type: store.state.taxonomy.account_type[0].id,
+                        report_type: store.state.taxonomy.report_type[0].id
                     };
                     self.doCaptcha();
                     self.$message.success('成功');

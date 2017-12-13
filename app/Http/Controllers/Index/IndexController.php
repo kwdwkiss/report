@@ -22,10 +22,9 @@ class IndexController extends Controller
     public function index()
     {
         $page = [];
-        \DB::transaction(function () use (&$page) {
+        \DB::transaction(function () use (&$page, &$taxonomy) {
             $page = array_merge([
-                'account_types' => Taxonomy::accountType(),
-                'report_types' => Taxonomy::reportType(),
+                'taxonomy' => Taxonomy::allDisplay(),
             ], Config::getSiteIndex(), Config::getSiteStatics());
         });
         return view('index', compact('page'));

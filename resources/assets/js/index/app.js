@@ -4,6 +4,10 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter);
 
+import Vuex from 'vuex'
+
+Vue.use(Vuex);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -24,6 +28,20 @@ const routes = [
 
 const router = new VueRouter({
     routes // （缩写）相当于 routes: routes
+});
+
+window.store = new Vuex.Store({
+    state: {
+        page: laravel,
+        taxonomy: laravel.taxonomy,
+    },
+    mutations: {
+        taxonomy(state) {
+            axios.get(api.taxonomyAllDisplay).then(function (res) {
+                state.taxonomy = res.data.data;
+            })
+        }
+    }
 });
 
 window.app = new Vue({

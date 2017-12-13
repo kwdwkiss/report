@@ -14,33 +14,13 @@ use App\Taxonomy;
 
 class TaxonomyController extends Controller
 {
-    public function all()
+    public function allData()
     {
-        return TaxonomyResource::collection(Taxonomy::get());
+        return ['data' => Taxonomy::allData()];
     }
 
-    public function reportTypeList()
+    public function allDisplay()
     {
-        return TaxonomyResource::collection(Taxonomy::reportType());
-    }
-
-    public function accountTypeList()
-    {
-        return TaxonomyResource::collection(Taxonomy::accountType());
-    }
-
-    public function accountStatusList()
-    {
-        return TaxonomyResource::collection(Taxonomy::accountStatus());
-    }
-
-    public function articleTypeList()
-    {
-        return TaxonomyResource::collection(Taxonomy::articleType());
-    }
-
-    public function userTypeList()
-    {
-        return TaxonomyResource::collection(Taxonomy::userType());
+        return ['data' => Taxonomy::allDisplay()];
     }
 }

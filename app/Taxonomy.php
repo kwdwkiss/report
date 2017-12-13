@@ -12,6 +12,15 @@ class Taxonomy extends Model
     const USER_TYPE = 4;
     const ARTICLE_TYPE = 5;
 
+    public static $types = [
+        0 => 'root',
+        1 => 'account_status',
+        2 => 'account_type',
+        3 => 'report_type',
+        4 => 'user_type',
+        5 => 'article_type',
+    ];
+
     protected $table = 'taxonomy';
 
     protected $guarded = [];
@@ -28,33 +37,23 @@ class Taxonomy extends Model
         return $this->hasMany(static::class, 'pid', 'id');
     }
 
-    public static function get($pid)
+    public static function allData()
     {
-        return static::where('pid', $pid)->orderBy('order')->get();
+        $taxonomy = Taxonomy::orderBy('order')->get()->groupBy('pid');
+        $data = [];
+        foreach ($taxonomy as $key => $value) {
+            $data[static::$types[$key]] = $value->toArray();
+        }
+        return $data;
     }
 
-    public static function accountType()
+    public static function allDisplay()
     {
-        return static::get(static::ACCOUNT_TYPE);
-    }
-
-    public static function accountStatus()
-    {
-        return static::get(static::ACCOUNT_STATUS);
-    }
-
-    public static function reportType()
-    {
-        return static::get(static::REPORT_TYPE);
-    }
-
-    public static function userType()
-    {
-        return static::get(static::USER_TYPE);
-    }
-
-    public static function articleType()
-    {
-        return static::get(static::ARTICLE_TYPE);
+        $taxonomy = Taxonomy::where('display', 1)->orderBy('order')->get()->groupBy('pid');
+        $data = [];
+        foreach ($taxonomy as $key => $value) {
+            $data[static::$types[$key]] = $value->toArray();
+        }
+        return $data;
     }
 }

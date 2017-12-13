@@ -203,7 +203,7 @@
                 apiUpdate: api.userUpdate,
                 apiDelete: api.userDelete,
                 tagList: [],
-                userTypeList: [],
+                userTypeList: store.state.taxonomy.user_type,
                 provinces: Object.keys(cityData),
                 cities: [],
                 dataList: {
@@ -221,7 +221,6 @@
         },
         created: function () {
             //this.loadTagList();
-            this.loadUserType();
             this.loadData();
         },
         methods: {
@@ -234,12 +233,6 @@
                 let self = this;
                 axios.get(api.tagList).then(function (res) {
                     self.tagList = res.data.data;
-                });
-            },
-            loadUserType: function () {
-                let self = this;
-                axios.get(api.taxonomyUserTypeList).then(function (res) {
-                    self.userTypeList = res.data.data;
                 });
             },
             loadData: function () {

@@ -44,16 +44,12 @@ module.exports = {
     articleDelete: '/admin/article/delete',
 
     //>>>>>>>>>>index
-    taxonomyReportTypeList: '/taxonomy/report-type/list',
-    taxonomyAccountTypeList: '/taxonomy/account-type/list',
-    taxonomyAccountStatusList: '/taxonomy/account-status/list',
-    taxonomyArticleTypeList: '/taxonomy/article-type/list',
-    taxonomyUserTypeList: '/taxonomy/user-type/list',
+    taxonomyAllData: '/taxonomy/all/data',
+    taxonomyAllDisplay: '/taxonomy/all/display',
+    captcha: '/captcha/default',
 
     indexSearch: '/index/search',
     indexReport: '/index/report',
-
-    captcha: '/captcha/default',
 
     indexArticleList: '/index/article/list',
     indexArticleShow: '/index/article/show',

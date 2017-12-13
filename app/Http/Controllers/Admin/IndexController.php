@@ -10,12 +10,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Config;
 use App\Http\Controllers\Controller;
+use App\Taxonomy;
 
 class IndexController extends Controller
 {
     public function index()
     {
         $config = [
+            'taxonomy' => Taxonomy::allData(),
             'siteName' => Config::get('site.name') . ' 管理后台',
         ];
         return view('admin', compact('config'));

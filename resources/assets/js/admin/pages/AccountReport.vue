@@ -127,8 +127,8 @@
                         }
                     }]
                 },
-                accountTypeList: {},
-                reportTypeList: {},
+                accountTypeList: store.state.taxonomy.account_type,
+                reportTypeList: store.state.taxonomy.report_type,
                 apiList: api.accountReportList,
                 apiCreate: api.accountReportCreate,
                 apiUpdate: api.accountReportUpdate,
@@ -149,23 +149,9 @@
             }
         },
         created: function () {
-            this.loadAccountType();
-            this.loadReportType();
             this.loadData();
         },
         methods: {
-            loadAccountType: function () {
-                let self = this;
-                axios.get(api.taxonomyAccountTypeList).then(function (res) {
-                    self.accountTypeList = res.data.data;
-                });
-            },
-            loadReportType: function () {
-                let self = this;
-                axios.get(api.taxonomyReportTypeList).then(function (res) {
-                    self.reportTypeList = res.data.data;
-                });
-            },
             loadData: function () {
                 let self = this;
                 axios.get(self.apiList, {params: self.search}).then(function (res) {

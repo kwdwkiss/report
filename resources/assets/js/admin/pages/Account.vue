@@ -88,8 +88,8 @@
     export default {
         data: function () {
             return {
-                accountTypeList: {},
-                accountStatusList: {},
+                accountTypeList: store.state.taxonomy.account_type,
+                accountStatusList: store.state.taxonomy.account_status,
                 apiList: api.accountList,
                 apiCreate: api.accountCreate,
                 apiUpdate: api.accountUpdate,
@@ -110,23 +110,9 @@
             }
         },
         created: function () {
-            this.loadAccountType();
-            this.loadAccountStatus();
             this.loadData();
         },
         methods: {
-            loadAccountType: function () {
-                let self = this;
-                axios.get(api.taxonomyAccountTypeList).then(function (res) {
-                    self.accountTypeList = res.data.data;
-                });
-            },
-            loadAccountStatus: function () {
-                let self = this;
-                axios.get(api.taxonomyAccountStatusList).then(function (res) {
-                    self.accountStatusList = res.data.data;
-                });
-            },
             loadData: function () {
                 let self = this;
                 axios.get(self.apiList, {params: self.search}).then(function (res) {

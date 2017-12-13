@@ -3,7 +3,7 @@
         <div v-show="action=='list'">
             <el-row>
                 <el-select v-model="search.pid" @change="searchPid">
-                    <el-option v-for="item in dataListL0.data" :key="item.id" :value="item.id"
+                    <el-option v-for="item in rootList" :key="item.id" :value="item.id"
                                :label="item.name"></el-option>
                 </el-select>
                 <el-button type="success" @click="openCreateDialog">添加</el-button>
@@ -106,11 +106,13 @@
                 apiCreate: api.taxonomyCreate,
                 apiUpdate: api.taxonomyUpdate,
                 apiDelete: api.taxonomyDelete,
-                dataListL0: {},
+                rootList: store.state.taxonomy.root,
                 dataList: {
                     meta: {},
                 },
-                search: {},
+                search: {
+                    pid: store.state.taxonomy.root[0].id
+                },
                 dialogCreate: {
                     data: {}
                 },
@@ -121,19 +123,9 @@
             }
         },
         created: function () {
-            this.loadDataL0();
+            this.loadData();
         },
         methods: {
-            loadDataL0: function () {
-                let self = this;
-                axios.get(self.apiList, {params: {pid: 0}}).then(function (res) {
-                    self.dataListL0 = res.data;
-                    if (self.dataListL0.data.length > 0) {
-                        self.search.pid = self.dataListL0.data[0].id;
-                        self.loadData();
-                    }
-                });
-            },
             loadData: function () {
                 let self = this;
                 axios.get(self.apiList, {params: self.search}).then(function (res) {
@@ -164,6 +156,7 @@
                             self.action = 'list';
                             self.$message.success('成功');
                             self.loadData();
+                            store.commit('taxonomy');
                         })
                     } else {
                         return false;
@@ -180,6 +173,7 @@
                     self.action = 'list';
                     self.$message.success('成功');
                     self.loadData();
+                    store.commit('taxonomy');
                 });
             },
             doMultiUpdate: function () {
@@ -187,6 +181,7 @@
                 axios.post(self.apiUpdate, self.dataList.data).then(function () {
                     self.$message.success('成功');
                     self.loadData();
+                    store.commit('taxonomy');
                 });
             },
             switchDisplay: function (row) {
@@ -205,6 +200,7 @@
                     axios.post(self.apiDelete, {id: scope.row.id}).then(function () {
                         self.$message.success('成功');
                         self.loadData();
+                        store.commit('taxonomy');
                     });
                 }).catch(() => {
                 });

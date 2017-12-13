@@ -123,7 +123,7 @@
         data: function () {
             return {
                 action: 'list',
-                articleTypeList: {},
+                articleTypeList: store.state.taxonomy.article_type,
                 apiList: api.articleList,
                 apiCreate: api.articleCreate,
                 apiUpdate: api.articleUpdate,
@@ -145,7 +145,6 @@
             }
         },
         created: function () {
-            this.loadArticleType();
             this.loadData();
         },
         mounted: function () {
@@ -161,12 +160,6 @@
             updateEditorReady: function (ue) {
                 this.editor.update = ue;
                 this.editor.update.setContent(this.dialogUpdate.data.content);
-            },
-            loadArticleType: function () {
-                let self = this;
-                axios.get(api.taxonomyArticleTypeList).then(function (res) {
-                    self.articleTypeList = res.data.data;
-                });
             },
             loadData: function () {
                 let self = this;

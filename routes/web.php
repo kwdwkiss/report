@@ -20,12 +20,8 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/index/article/list', 'Index\ArticleController@list');
     Route::get('/index/article/show', 'Index\ArticleController@show');
 
-    Route::get('/taxonomy/list', 'Index\TaxonomyController@all');
-    Route::get('/taxonomy/report-type/list', 'Index\TaxonomyController@reportTypeList');
-    Route::get('/taxonomy/account-type/list', 'Index\TaxonomyController@accountTypeList');
-    Route::get('/taxonomy/account-status/list', 'Index\TaxonomyController@accountStatusList');
-    Route::get('/taxonomy/article-type/list', 'Index\TaxonomyController@articleTypeList');
-    Route::get('/taxonomy/user-type/list', 'Index\TaxonomyController@userTypeList');
+    Route::get('/taxonomy/all/data', 'Index\TaxonomyController@allData');
+    Route::get('/taxonomy/all/display', 'Index\TaxonomyController@allDisplay');
 
     Route::get('/admin', 'Admin\IndexController@index');
     Route::get('/admin/logout', 'Admin\IndexController@logout');

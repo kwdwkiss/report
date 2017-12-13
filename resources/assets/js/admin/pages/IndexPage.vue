@@ -24,7 +24,7 @@
             <div class="panel">
                 <div class="panel-heading">公告</div>
                 <div class="panel-body">
-                    <el-form>
+                    <el-form label-width="100px">
                         <el-form-item label="标题">
                             <el-input v-model="data.notice.title"></el-input>
                         </el-form-item>
