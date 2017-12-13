@@ -16,13 +16,17 @@ class ArticleController extends Controller
 {
     public function list()
     {
-
+        $id = request('id');
+        $query = Article::query();
+        if ($id) {
+            $query->where('type', $id);
+        }
+        return ArticleResource::collection($query->paginate());
     }
 
     public function show()
     {
         $id = request('id');
-        $article = Article::findOrFail($id);
-        return new ArticleResource($article);
+        return new ArticleResource(Article::findOrFail($id));
     }
 }

@@ -47725,6 +47725,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47918,6 +47919,10 @@ var render = function() {
               "el-table",
               { attrs: { data: _vm.dataList.data, stripe: "" } },
               [
+                _c("el-table-column", {
+                  attrs: { prop: "id", label: "ID", "min-width": "50" }
+                }),
+                _vm._v(" "),
                 _c("el-table-column", {
                   attrs: { prop: "name", label: "名称", "min-width": "150" }
                 }),

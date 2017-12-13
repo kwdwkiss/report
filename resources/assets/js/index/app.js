@@ -17,6 +17,7 @@ const routes = [
         children: [
             {path: '', component: require('./pages/Index.vue')},
             {path: 'article/:id', component: require('./pages/Article.vue')},
+            {path: 'article/list/:id', component: require('./pages/ArticleList.vue')},
         ]
     }
 ];

@@ -16,6 +16,7 @@
             </el-row>
             <el-row>
                 <el-table :data="dataList.data" stripe>
+                    <el-table-column prop="id" label="ID" min-width="50"></el-table-column>
                     <el-table-column prop="name" label="名称" min-width="150"></el-table-column>
                     <el-table-column label="顺序" min-width="100">
                         <template slot-scope="scope">
