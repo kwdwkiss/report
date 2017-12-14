@@ -131,6 +131,7 @@
         color: #505050;
         line-height: 40px;
         font-size: 16px;
+        font-weight: 600;
     }
 
     .nav li {
