@@ -46631,6 +46631,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "app",
@@ -46876,7 +46880,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.search[data-v-790317b0] {\n    background-color: #f5f5f5;\n    line-height: 60px;\n    font-size: 16px;\n}\n.search > div:first-child > *[data-v-790317b0] {\n    margin: 0 5px;\n    height: 35px;\n}\n.search select[data-v-790317b0] {\n    width: 100px;\n}\n.search input[name=name][data-v-790317b0] {\n    width: 250px;\n}\n.search button[data-v-790317b0] {\n    width: 80px;\n}\n.member-num[data-v-790317b0] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.member-num span[data-v-790317b0] {\n    color: green;\n}\n.report-num[data-v-790317b0] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.report-num span[data-v-790317b0] {\n    color: red;\n}\n.report-data[data-v-790317b0] {\n    font-size: 16px;\n}\n.search-data[data-v-790317b0] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.article-data > div[data-v-790317b0] {\n    margin: 5px 0;\n}\n.article-data > div > div[data-v-790317b0] {\n    border: 1px solid #9d9d9d;\n    border-radius: 3px;\n    height: 160px;\n}\n.article-data p[data-v-790317b0] {\n    padding: 5px 10px;\n}\n.article-data p[data-v-790317b0]:first-child {\n    background-color: #f5f5f5;\n}\n.article-data p:first-child > a[data-v-790317b0] {\n    float: right;\n}\n.report-form[data-v-790317b0] {\n    background-color: #f5f5f5;\n    line-height: 60px;\n}\n.report-form > div > *[data-v-790317b0] {\n    margin: 0 5px;\n    height: 35px;\n}\n.report-form select[data-v-790317b0] {\n    width: 100px;\n}\n.report-form input[name=name][data-v-790317b0] {\n    width: 200px;\n}\ninput[name=captcha][data-v-790317b0] {\n    width: 100px;\n}\n", ""]);
+exports.push([module.i, "\n.search[data-v-790317b0] {\n    background-color: #f5f5f5;\n    line-height: 60px;\n    font-size: 16px;\n}\n.search > div:first-child > *[data-v-790317b0] {\n    margin: 0 5px;\n    height: 35px;\n}\n.search select[data-v-790317b0] {\n    width: 100px;\n}\n.search input[name=name][data-v-790317b0] {\n    width: 250px;\n}\n.search button[data-v-790317b0] {\n    width: 80px;\n}\n.member-num[data-v-790317b0] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.member-num span[data-v-790317b0] {\n    color: green;\n}\n.report-num[data-v-790317b0] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.report-num span[data-v-790317b0] {\n    color: red;\n}\n.report-data[data-v-790317b0] {\n    font-size: 16px;\n}\n.search-data[data-v-790317b0] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.article-data > div[data-v-790317b0] {\n    margin: 5px 0;\n}\n.article-data > div > div[data-v-790317b0] {\n    border: 1px solid #9d9d9d;\n    border-radius: 3px;\n    height: 160px;\n}\n.article-data p[data-v-790317b0] {\n    padding: 5px 10px;\n    height: 32px;\n}\n.article-data p[data-v-790317b0]:first-child {\n    background-color: #f5f5f5;\n}\n.article-data p:first-child > a[data-v-790317b0] {\n    float: right;\n}\n.article-data .article-title[data-v-790317b0] {\n    display: inline-block;\n    width: 380px;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n}\n.report-form[data-v-790317b0] {\n    background-color: #f5f5f5;\n    line-height: 60px;\n}\n.report-form > div > *[data-v-790317b0] {\n    margin: 0 5px;\n    height: 35px;\n}\n.report-form select[data-v-790317b0] {\n    width: 100px;\n}\n.report-form input[name=name][data-v-790317b0] {\n    width: 200px;\n}\n.report-form input[name=captcha][data-v-790317b0] {\n    width: 100px;\n}\n", ""]);
 
 // exports
 
@@ -47343,9 +47347,14 @@ var render = function() {
               _vm._v(" "),
               _vm._l(item.data, function(subItem) {
                 return _c("p", [
-                  _c("a", { attrs: { target: "_blank", href: subItem.url } }, [
-                    _vm._v(_vm._s(subItem.title))
-                  ]),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "article-title",
+                      attrs: { target: "_blank", href: subItem.url }
+                    },
+                    [_vm._v(_vm._s(subItem.title))]
+                  ),
                   _vm._v(" "),
                   _c("span", { staticClass: "pull-right" }, [
                     _vm._v(_vm._s(subItem.created_at))

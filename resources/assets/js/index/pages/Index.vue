@@ -98,7 +98,7 @@
                 <div>
                     <p>{{item.type}}<a :href="item.url">更多</a></p>
                     <p v-for="subItem in item.data">
-                        <a target="_blank" :href="subItem.url">{{subItem.title}}</a>
+                        <a class="article-title" target="_blank" :href="subItem.url">{{subItem.title}}</a>
                         <span class="pull-right">{{subItem.created_at}}</span>
                     </p>
                 </div>
@@ -237,6 +237,7 @@
 
     .article-data p {
         padding: 5px 10px;
+        height: 32px;
     }
 
     .article-data p:first-child {
@@ -245,6 +246,14 @@
 
     .article-data p:first-child > a {
         float: right;
+    }
+
+    .article-data .article-title {
+        display: inline-block;
+        width: 380px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .report-form {
@@ -265,7 +274,7 @@
         width: 200px;
     }
 
-    input[name=captcha] {
+    .report-form input[name=captcha] {
         width: 100px;
     }
 </style>

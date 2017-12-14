@@ -14,6 +14,7 @@
                 </a>
             </div>
         </div>
+
         <div class="row logo">
             <div class="col-xs-6">
                 <a href="">
@@ -33,6 +34,7 @@
                 </ul>
             </div>
         </div>
+
         <div class="row nav">
             <ul>
                 <a :href="item.url" v-for="item in page.menu">
@@ -40,6 +42,7 @@
                 </a>
             </ul>
         </div>
+
         <div class="row notice">
             <span>公告：{{page.notice.title}}</span>
             <span><a :href="page.notice.moreUrl">更多</a></span>
@@ -56,6 +59,7 @@
         </div>
 
         <hr>
+
         <div class="row copyright">
             <div>
                 <p>Copyright©2015-2020 www.tbpzw.com .All Rights Reserved ICP证：桂ICP备14007039号</p>
