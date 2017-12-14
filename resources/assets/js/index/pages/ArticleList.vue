@@ -1,6 +1,6 @@
 <template>
     <div class="article">
-        <div class="row title"><h3>文章列表</h3></div>
+        <div class="row title"><h3>{{taxonomy}}</h3></div>
 
         <div class="row">
             <ul>
@@ -27,6 +27,7 @@
         name: "article-list",
         data: function () {
             return {
+                taxonomy: '',
                 articleCateList: [],
                 dataList: {
                     data: [],
@@ -43,18 +44,26 @@
             }
         },
         methods: {
+            loadTaxonomy: function () {
+                let id = this.$route.params.id;
+                for (let i in store.state.taxonomy.article_type) {
+                    if (store.state.taxonomy.article_type[i].id == id) {
+                        this.taxonomy = store.state.taxonomy.article_type[i].name;
+                        break;
+                    }
+                }
+            },
             loadData: function () {
                 let self = this;
+                self.loadTaxonomy();
                 axios.get(api.indexArticleList, {params: {id: this.$route.params.id}}).then(function (res) {
                     self.dataList = res.data;
                 });
-            }
-            ,
+            },
             paginate: function (page) {
                 this.search.page = page;
                 this.loadData();
-            }
-            ,
+            },
         }
     }
 </script>

@@ -46454,7 +46454,7 @@ window.store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     mutations: {
         taxonomy: function taxonomy(state) {
-            axios.get(api.taxonomyAllDisplay).then(function (res) {
+            axios.get(api.taxonomyAllData).then(function (res) {
                 state.taxonomy = res.data.data;
             });
         }
@@ -47831,6 +47831,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: "article-list",
     data: function data() {
         return {
+            taxonomy: '',
             articleCateList: [],
             dataList: {
                 data: [],
@@ -47847,18 +47848,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        loadTaxonomy: function loadTaxonomy() {
+            var id = this.$route.params.id;
+            for (var i in store.state.taxonomy.article_type) {
+                if (store.state.taxonomy.article_type[i].id == id) {
+                    this.taxonomy = store.state.taxonomy.article_type[i].name;
+                    break;
+                }
+            }
+        },
         loadData: function loadData() {
             var self = this;
+            self.loadTaxonomy();
             axios.get(api.indexArticleList, { params: { id: this.$route.params.id } }).then(function (res) {
                 self.dataList = res.data;
             });
         },
-
         paginate: function paginate(page) {
             this.search.page = page;
             this.loadData();
         }
-
     }
 });
 
@@ -47871,7 +47880,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "article" }, [
-    _vm._m(0, false, false),
+    _c("div", { staticClass: "row title" }, [
+      _c("h3", [_vm._v(_vm._s(_vm.taxonomy))])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c(
@@ -47909,16 +47920,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row title" }, [
-      _c("h3", [_vm._v("文章列表")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

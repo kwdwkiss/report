@@ -37,7 +37,7 @@ window.store = new Vuex.Store({
     },
     mutations: {
         taxonomy(state) {
-            axios.get(api.taxonomyAllDisplay).then(function (res) {
+            axios.get(api.taxonomyAllData).then(function (res) {
                 state.taxonomy = res.data.data;
             })
         }
