@@ -21,16 +21,17 @@
                     <img src="/images/logo.jpg">
                 </a>
             </div>
-            <div class="col-xs-3 service-wx">
-                <ul>
-                    <li class="col-xs-12">客服微信：</li>
-                    <li class="col-xs-6" v-for="item in page.service_wx">{{item.name}}</li>
-                </ul>
-            </div>
             <div class="col-xs-3 service-qq">
                 <ul>
-                    <li class="col-xs-12">客服QQ：</li>
+                    <li class="col-xs-12">客服QQ、微信：</li>
                     <li class="col-xs-6" v-for="item in page.service_qq">{{item.name}}</li>
+                </ul>
+            </div>
+            <div class="col-xs-3 service-wx">
+                <ul>
+                    <li class="col-xs-6" v-for="item in page.service_wx">
+                        <img :src="item.name" alt="">
+                    </li>
                 </ul>
             </div>
         </div>
@@ -85,7 +86,7 @@
         width: 1000px;
         min-height: 400px;
         background-color: #fff;
-        color:#222
+        color: #222
     }
 
     ul {
@@ -155,6 +156,11 @@
         color: green;
         font-size: 16px;
         font-weight: 600;
+    }
+
+    .service-wx img {
+        height: 80px;
+        width: 80px;
     }
 
     .copyright {

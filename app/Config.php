@@ -106,8 +106,8 @@ class Config extends Model
             ['name' => ''],
         ],
         'service_wx' => [
-            ['name' => ''],
-            ['name' => ''],
+            ['name' => '/images/wx_kf.png'],
+            ['name' => '/images/wx_kf.png'],
         ],
         'notice' => [
             'title' => '12月1日起，凡被恶意举报超过180天的记录，可以联系网站客服免费删除',
