@@ -47638,7 +47638,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.title[data-v-05502268] {\n    margin: 20px auto;\n    text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n.article[data-v-05502268] {\n    margin: 20px auto;\n    padding: 10px 20px;\n    border: 1px solid #d4d4d4;\n    border-radius: 4px;\n    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .05);\n            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .05);\n}\nhr[data-v-05502268] {\n    margin: 10px auto;\n}\n.title[data-v-05502268], .article-bar[data-v-05502268] {\n    text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -47649,6 +47649,8 @@ exports.push([module.i, "\n.title[data-v-05502268] {\n    margin: 20px auto;\n  
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -47680,10 +47682,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "row title" }, [
-      _c("h1", [_vm._v(_vm._s(_vm.articleData.title))])
+  return _c("div", { staticClass: "article" }, [
+    _c("h2", { staticClass: "title" }, [_vm._v(_vm._s(_vm.articleData.title))]),
+    _vm._v(" "),
+    _c("div", { staticClass: "article-bar" }, [
+      _vm._v(_vm._s(_vm.articleData.updated_at))
     ]),
+    _vm._v(" "),
+    _c("hr"),
     _vm._v(" "),
     _c("div", { domProps: { innerHTML: _vm._s(_vm.articleData.content) } })
   ])
@@ -47785,7 +47791,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.el-pagination[data-v-191e4a8a] {\n    float: right;\n}\n", ""]);
+exports.push([module.i, "\nhr[data-v-191e4a8a] {\n    margin: 10px auto;\n}\n.article[data-v-191e4a8a] {\n    padding: 10px 20px;\n}\n.title[data-v-191e4a8a] {\n    text-align: center;\n}\n.el-pagination[data-v-191e4a8a] {\n    float: right;\n}\n", ""]);
 
 // exports
 
@@ -47796,6 +47802,11 @@ exports.push([module.i, "\n.el-pagination[data-v-191e4a8a] {\n    float: right;\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -47859,17 +47870,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "article" }, [
+    _vm._m(0, false, false),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c(
         "ul",
         _vm._l(_vm.dataList.data, function(item) {
           return _c("li", [
-            _c("a", { attrs: { href: item.url } }, [_vm._v(_vm._s(item.title))])
+            _c("a", { attrs: { href: item.url } }, [
+              _vm._v(_vm._s(item.title))
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "pull-right" }, [
+              _vm._v(_vm._s(item.updated_at))
+            ])
           ])
         })
       )
     ]),
+    _vm._v(" "),
+    _c("hr"),
     _vm._v(" "),
     _c(
       "div",
@@ -47888,7 +47909,16 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row title" }, [
+      _c("h3", [_vm._v("文章列表")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
