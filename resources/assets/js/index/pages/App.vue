@@ -85,6 +85,7 @@
         width: 1000px;
         min-height: 400px;
         background-color: #fff;
+        color:#222
     }
 
     ul {
@@ -106,6 +107,10 @@
 
     input {
         line-height: normal;
+    }
+
+    a {
+        color: #222;
     }
 
     .row {
