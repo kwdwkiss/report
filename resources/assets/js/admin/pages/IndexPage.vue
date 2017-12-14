@@ -207,7 +207,7 @@
 </script>
 
 <style scoped>
-    .el-input {
+    .panel-body .el-input {
         max-width: 600px;
     }
 </style>

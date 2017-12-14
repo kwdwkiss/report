@@ -47820,7 +47820,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: "article-list",
     data: function data() {
         return {
-            taxonomyId: 0,
             articleCateList: [],
             dataList: {
                 data: [],
@@ -47831,6 +47830,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         this.loadData();
     },
+    watch: {
+        '$route': function $route(to, from) {
+            this.loadData();
+        }
+    },
     methods: {
         loadData: function loadData() {
             var self = this;
@@ -47838,10 +47842,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.dataList = res.data;
             });
         },
+
         paginate: function paginate(page) {
             this.search.page = page;
             this.loadData();
         }
+
     }
 });
 

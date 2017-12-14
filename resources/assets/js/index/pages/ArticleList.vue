@@ -22,7 +22,6 @@
         name: "article-list",
         data: function () {
             return {
-                taxonomyId: 0,
                 articleCateList: [],
                 dataList: {
                     data: [],
@@ -33,17 +32,24 @@
         mounted: function () {
             this.loadData();
         },
+        watch: {
+            '$route'(to, from) {
+                this.loadData();
+            }
+        },
         methods: {
             loadData: function () {
                 let self = this;
                 axios.get(api.indexArticleList, {params: {id: this.$route.params.id}}).then(function (res) {
                     self.dataList = res.data;
                 });
-            },
+            }
+            ,
             paginate: function (page) {
                 this.search.page = page;
                 this.loadData();
-            },
+            }
+            ,
         }
     }
 </script>

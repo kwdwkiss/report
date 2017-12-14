@@ -53661,7 +53661,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.el-input[data-v-564c6558] {\n    max-width: 600px;\n}\n", ""]);
+exports.push([module.i, "\n.panel-body .el-input[data-v-564c6558] {\n    max-width: 600px;\n}\n", ""]);
 
 // exports
 
