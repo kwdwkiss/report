@@ -47791,7 +47791,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\nhr[data-v-191e4a8a] {\n    margin: 10px auto;\n}\n.article[data-v-191e4a8a] {\n    padding: 10px 20px;\n}\n.title[data-v-191e4a8a] {\n    text-align: center;\n}\n.el-pagination[data-v-191e4a8a] {\n    float: right;\n}\n", ""]);
+exports.push([module.i, "\nhr[data-v-191e4a8a] {\n    margin: 10px auto;\n}\n.article[data-v-191e4a8a] {\n    padding: 10px 20px;\n    font-size: 16px;\n}\n.title[data-v-191e4a8a] {\n    text-align: center;\n}\n.el-pagination[data-v-191e4a8a] {\n    float: right;\n}\n", ""]);
 
 // exports
 

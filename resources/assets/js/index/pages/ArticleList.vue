@@ -66,6 +66,7 @@
 
     .article {
         padding: 10px 20px;
+        font-size: 16px;
     }
 
     .title {
