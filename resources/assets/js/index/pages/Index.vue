@@ -97,7 +97,10 @@
             <div class="col-xs-6" v-for="item in page.article_data">
                 <div>
                     <p>{{item.type}}<a :href="item.url">更多</a></p>
-                    <p v-for="subItem in item.data"><a target="_blank" :href="subItem.url">{{subItem.title}}</a></p>
+                    <p v-for="subItem in item.data">
+                        <a target="_blank" :href="subItem.url">{{subItem.title}}</a>
+                        <span class="pull-right">{{subItem.created_at}}</span>
+                    </p>
                 </div>
             </div>
         </div>

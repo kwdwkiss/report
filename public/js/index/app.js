@@ -47010,6 +47010,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "index",
@@ -47342,6 +47345,10 @@ var render = function() {
                 return _c("p", [
                   _c("a", { attrs: { target: "_blank", href: subItem.url } }, [
                     _vm._v(_vm._s(subItem.title))
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "pull-right" }, [
+                    _vm._v(_vm._s(subItem.created_at))
                   ])
                 ])
               })

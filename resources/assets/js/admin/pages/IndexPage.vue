@@ -52,6 +52,10 @@
                                 <el-form-item label="链接">
                                     <el-input v-model="subItem.url"></el-input>
                                 </el-form-item>
+                                <el-form-item label="日期">
+                                    <el-input v-model="subItem.created_at"></el-input>
+                                    <el-button type="primary" @click="refreshDate(subItem)">刷新日期</el-button>
+                                </el-form-item>
                             </template>
                             <el-form-item>
                                 <el-button type="success" @click="doSave">保存</el-button>
@@ -194,11 +198,16 @@
                 axios.post(api.siteIndex, self.data).then(function () {
                     self.$message.success('成功');
                 });
+            },
+            refreshDate: function (subItem) {
+                subItem.created_at = new Date().toLocaleDateString().replace(/\//g, '-');
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .el-input {
+        max-width: 600px;
+    }
 </style>

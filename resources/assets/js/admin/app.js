@@ -53,7 +53,7 @@ window.store = new Vuex.Store({
         taxonomy(state) {
             axios.get(api.taxonomyAllData).then(function (res) {
                 state.taxonomy = res.data.data;
-            })
+            });
         }
     }
 });
