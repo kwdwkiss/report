@@ -86,7 +86,7 @@ class UserController extends Controller
             $user->mobile = $mobile;
 
             if ($qq) {
-                if (!preg_match('/[1-9][0-9]{4,14}/', $qq)) {
+                if (!preg_match('/^[1-9][0-9]{4,14}$/', $qq)) {
                     throw new JsonException('QQ号错误');
                 }
                 $exists = User::where('qq', $qq)->first();
@@ -184,7 +184,7 @@ class UserController extends Controller
             $user->mobile = $mobile;
 
             if ($qq) {
-                if (!preg_match('/[1-9][0-9]{4,14}/', $qq)) {
+                if (!preg_match('/^[1-9][0-9]{4,14}$/', $qq)) {
                     throw new JsonException('QQ号错误');
                 }
                 $exists = User::where('qq', $qq)->first();

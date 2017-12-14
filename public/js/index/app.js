@@ -46440,19 +46440,31 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 var routes = [{
     path: '/',
     component: __webpack_require__(139),
-    children: [{ path: '', component: __webpack_require__(144) }, { path: 'article/:id', component: __webpack_require__(149) }, { path: 'article/list/:id', component: __webpack_require__(154) }]
+    children: [{
+        path: '',
+        component: __webpack_require__(144),
+        children: [{ path: '', component: __webpack_require__(176) }, { path: 'search', component: __webpack_require__(171), props: true }]
+    }, { path: 'article/:id', component: __webpack_require__(149) }, { path: 'article/list/:id', component: __webpack_require__(154) }]
 }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
     routes: routes // （缩写）相当于 routes: routes
 });
 
-window.store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+var store = window.store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     state: {
         page: laravel,
-        taxonomy: laravel.taxonomy
+        taxonomy: laravel.taxonomy,
+        searchResult: {
+            account_reports: [],
+            account: {},
+            type: 0 //type 0-不显示 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
+        }
     },
     mutations: {
+        searchResult: function searchResult(state, data) {
+            state.searchResult = data;
+        },
         taxonomy: function taxonomy(state) {
             axios.get(api.taxonomyAllData).then(function (res) {
                 state.taxonomy = res.data.data;
@@ -46464,7 +46476,8 @@ window.store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 window.app = new Vue({
     el: '#app',
     template: '<router-view></router-view>',
-    router: router
+    router: router,
+    store: store
 });
 
 /***/ }),
@@ -46880,7 +46893,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.search[data-v-790317b0] {\n    background-color: #f5f5f5;\n    line-height: 60px;\n    font-size: 16px;\n}\n.search > div:first-child > *[data-v-790317b0] {\n    margin: 0 5px;\n    height: 35px;\n}\n.search select[data-v-790317b0] {\n    width: 100px;\n}\n.search input[name=name][data-v-790317b0] {\n    width: 250px;\n}\n.search button[data-v-790317b0] {\n    width: 80px;\n}\n.member-num[data-v-790317b0] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.member-num span[data-v-790317b0] {\n    color: green;\n}\n.report-num[data-v-790317b0] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.report-num span[data-v-790317b0] {\n    color: red;\n}\n.report-data[data-v-790317b0] {\n    font-size: 16px;\n}\n.search-data[data-v-790317b0] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.article-data > div[data-v-790317b0] {\n    margin: 5px 0;\n}\n.article-data > div > div[data-v-790317b0] {\n    border: 1px solid #9d9d9d;\n    border-radius: 3px;\n    height: 160px;\n}\n.article-data p[data-v-790317b0] {\n    padding: 5px 10px;\n    height: 32px;\n}\n.article-data p[data-v-790317b0]:first-child {\n    background-color: #f5f5f5;\n}\n.article-data p:first-child > a[data-v-790317b0] {\n    float: right;\n}\n.article-data .article-title[data-v-790317b0] {\n    display: inline-block;\n    width: 380px;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n}\n.report-form[data-v-790317b0] {\n    background-color: #f5f5f5;\n    line-height: 60px;\n}\n.report-form > div > *[data-v-790317b0] {\n    margin: 0 5px;\n    height: 35px;\n}\n.report-form select[data-v-790317b0] {\n    width: 100px;\n}\n.report-form input[name=name][data-v-790317b0] {\n    width: 200px;\n}\n.report-form input[name=captcha][data-v-790317b0] {\n    width: 100px;\n}\n", ""]);
+exports.push([module.i, "\n.search[data-v-790317b0] {\n    background-color: #f5f5f5;\n    line-height: 60px;\n    font-size: 16px;\n}\n.search > div:first-child > *[data-v-790317b0] {\n    margin: 0 5px;\n    height: 35px;\n}\n.search select[data-v-790317b0] {\n    width: 100px;\n}\n.search input[name=name][data-v-790317b0] {\n    width: 250px;\n}\n.search button[data-v-790317b0] {\n    width: 80px;\n}\n.member-num[data-v-790317b0] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.member-num span[data-v-790317b0] {\n    color: green;\n}\n.report-num[data-v-790317b0] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.report-num span[data-v-790317b0] {\n    color: red;\n}\n.report-data[data-v-790317b0] {\n    font-size: 16px;\n}\n.article-data > div[data-v-790317b0] {\n    margin: 5px 0;\n}\n.article-data > div > div[data-v-790317b0] {\n    border: 1px solid #9d9d9d;\n    border-radius: 3px;\n    height: 160px;\n}\n.article-data p[data-v-790317b0] {\n    padding: 5px 10px;\n    height: 32px;\n}\n.article-data p[data-v-790317b0]:first-child {\n    background-color: #f5f5f5;\n}\n.article-data p:first-child > a[data-v-790317b0] {\n    float: right;\n}\n.article-data .article-title[data-v-790317b0] {\n    display: inline-block;\n    width: 380px;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n}\n.report-form[data-v-790317b0] {\n    background-color: #f5f5f5;\n    line-height: 60px;\n}\n.report-form > div > *[data-v-790317b0] {\n    margin: 0 5px;\n    height: 35px;\n}\n.report-form select[data-v-790317b0] {\n    width: 100px;\n}\n.report-form input[name=name][data-v-790317b0] {\n    width: 200px;\n}\n.report-form input[name=captcha][data-v-790317b0] {\n    width: 100px;\n}\n", ""]);
 
 // exports
 
@@ -46955,86 +46968,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "index",
+    computed: {},
     data: function data() {
         return {
             page: store.state.page,
-            search: {
-                account_type: store.state.taxonomy.account_type[0].id
+            searchParams: {
+                account_type: store.state.taxonomy.account_type[0].id,
+                name: ''
             },
-            searchData: {
+            searchResult: {
                 account_reports: [],
                 account: {},
-                type: 0
+                type: 0 //type 0-不显示 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
             },
-            //type 0-不显示 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
-            report: {
+            reportParams: {
                 account_type: store.state.taxonomy.account_type[0].id,
-                report_type: store.state.taxonomy.report_type[0].id
+                report_type: store.state.taxonomy.report_type[0].id,
+                name: '',
+                captcha: ''
             },
             captcha_src: api.captcha + '?' + Date.parse(new Date())
         };
@@ -47045,9 +46999,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         doSearch: function doSearch() {
             var self = this;
-            axios.post(api.indexSearch, self.search).then(function (res) {
-                self.searchData = res.data.data;
+            axios.post(api.indexSearch, self.searchParams).then(function (res) {
+                self.$store.commit('searchResult', res.data.data);
+                self.$router.push('/search');
                 self.$message.success('成功');
+            }).catch(function () {
+                self.$router.push('/');
             });
         },
         doReport: function doReport() {
@@ -47074,474 +47031,287 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "row search" }, [
-      _c("div", { staticClass: "col-xs-6" }, [
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.search.account_type,
-                expression: "search.account_type"
-              }
-            ],
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.$set(
-                  _vm.search,
-                  "account_type",
-                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                )
-              }
-            }
-          },
-          _vm._l(_vm.page.taxonomy.account_type, function(item) {
-            return _c("option", { domProps: { value: item.id } }, [
-              _vm._v(_vm._s(item.name))
-            ])
-          })
-        ),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.search.name,
-              expression: "search.name"
-            }
-          ],
-          attrs: { name: "name", type: "text", placeholder: "请输入账号" },
-          domProps: { value: _vm.search.name },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.search, "name", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-success", on: { click: _vm.doSearch } },
-          [_vm._v("查询")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xs-6 member-num" }, [
-        _c("p", [
-          _vm._v("网站实名认证会员："),
-          _c("span", [_vm._v(_vm._s(_vm.page.auth_member_num))]),
-          _vm._v("名会员")
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row report-num" }, [
-      _c("p", [
-        _vm._v("\n            本站目前已有"),
-        _c("span", [_vm._v(_vm._s(_vm.page.report_num))]),
-        _vm._v("条恶意账号数据，最近24小时危险监测更新"),
-        _c("span", [_vm._v(_vm._s(_vm.page.last_24_report_num))]),
-        _vm._v("条数据\n        ")
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.searchData.type !== 0,
-            expression: "searchData.type!==0"
-          }
-        ],
-        staticClass: "row search-data"
-      },
-      [
-        _c("div", [
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "row search" }, [
+        _c("div", { staticClass: "col-xs-6" }, [
           _c(
-            "p",
+            "select",
             {
               directives: [
                 {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.searchData.type === 1,
-                  expression: "searchData.type===1"
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchParams.account_type,
+                  expression: "searchParams.account_type"
                 }
               ],
-              staticClass: "col-xs-12",
-              staticStyle: { color: "blue" }
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.searchParams,
+                    "account_type",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
             },
-            [
-              _vm._v(
-                "\n                无" +
-                  _vm._s(_vm.searchData.name) +
-                  "账号信息，如果确认是恶意号码，请到下方添加！"
-              )
-            ]
+            _vm._l(_vm.$store.state.taxonomy.account_type, function(item) {
+              return _c("option", { domProps: { value: item.id } }, [
+                _vm._v(_vm._s(item.name) + "\n                ")
+              ])
+            })
           ),
           _vm._v(" "),
-          _vm.searchData.type === 2
-            ? _c("table", { staticClass: "table table-striped table-hover" }, [
-                _vm._m(0, false, false),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.searchData.account_reports, function(item) {
-                    return _c("tr", { staticStyle: { color: "red" } }, [
-                      _c("td", [_vm._v(_vm._s(item.account_type))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.account_name))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.type_label))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.ip))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.created_at))])
-                    ])
-                  })
-                )
-              ])
-            : _vm._e(),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.searchParams.name,
+                expression: "searchParams.name"
+              }
+            ],
+            attrs: { name: "name", type: "text", placeholder: "请输入账号" },
+            domProps: { value: _vm.searchParams.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.searchParams, "name", $event.target.value)
+              }
+            }
+          }),
           _vm._v(" "),
-          _vm.searchData.type === 3
-            ? _c("div", { staticStyle: { color: "green" } }, [
-                _c("p", { staticClass: "col-xs-6" }, [
-                  _vm._v("账号:" + _vm._s(_vm.searchData.account.name))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "p",
-                  { staticClass: "col-xs-6", staticStyle: { color: "blue" } },
-                  [
-                    _vm._v(
-                      "认证:" + _vm._s(_vm.searchData.account.status_label)
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("p", { staticClass: "col-xs-6" }, [
-                  _vm._v("认证时间:" + _vm._s(_vm.searchData.account.auth_at))
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "col-xs-6" }, [
-                  _vm._v(
-                    "建议合作金额:" + _vm._s(_vm.searchData.account.auth_cash)
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "col-xs-6" }, [
-                  _vm._v("常用地址:" + _vm._s(_vm.searchData.account.address))
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "col-xs-6" }, [
-                  _vm._v("备注:" + _vm._s(_vm.searchData.account.remark))
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "col-xs-6" }, [
-                  _vm._v("如发现此账号有恶意行为，请用户立即联系网站客服处理")
-                ])
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.searchData.type === 4
-            ? _c("div", { staticStyle: { color: "red" } }, [
-                _c("p", { staticClass: "col-xs-12" }, [
-                  _vm._v(
-                    _vm._s(_vm.searchData.name) +
-                      "已被多数用户举报为恶意号码，请用户谨慎合作"
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "col-xs-6" }, [
-                  _vm._v("备注:" + _vm._s(_vm.searchData.account.remark))
-                ]),
-                _vm._v(" "),
-                _c("h1", { staticClass: "col-xs-6" }, [_vm._v("危险！")])
-              ])
-            : _vm._e()
+          _c(
+            "button",
+            { staticClass: "btn btn-success", on: { click: _vm.doSearch } },
+            [_vm._v("查询")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-xs-6 member-num" }, [
+          _c("p", [
+            _vm._v("网站实名认证会员："),
+            _c("span", [_vm._v(_vm._s(_vm.page.auth_member_num))]),
+            _vm._v("名会员")
+          ])
         ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.searchData.type === 0,
-            expression: "searchData.type===0"
-          }
-        ],
-        staticClass: "row report-data"
-      },
-      [
-        _c("div", [
-          _c("table", { staticClass: "table table-striped table-hover" }, [
-            _vm._m(1, false, false),
-            _vm._v(" "),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row report-num" }, [
+        _c("p", [
+          _vm._v("\n            本站目前已有"),
+          _c("span", [_vm._v(_vm._s(_vm.page.report_num))]),
+          _vm._v("条恶意账号数据，最近24小时危险监测更新"),
+          _c("span", [_vm._v(_vm._s(_vm.page.last_24_report_num))]),
+          _vm._v("条数据\n        ")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("router-view"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "row ad" },
+        _vm._l(_vm.page.ad_third, function(item) {
+          return _c("div", { staticClass: "col-xs-6" }, [
+            _c("a", { attrs: { target: "_blank", href: item.url } }, [
+              _c("img", { attrs: { src: item.img_src } })
+            ])
+          ])
+        })
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "row article-data" },
+        _vm._l(_vm.page.article_data, function(item) {
+          return _c("div", { staticClass: "col-xs-6" }, [
             _c(
-              "tbody",
-              _vm._l(_vm.page.last_4_report_data, function(item) {
-                return _c("tr", [
-                  _c("td", [_vm._v(_vm._s(item.account_type_label))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.account_name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.type_label))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.ip))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.created_at))])
-                ])
-              })
+              "div",
+              [
+                _c("p", [
+                  _vm._v(_vm._s(item.type)),
+                  _c("a", { attrs: { href: item.url } }, [_vm._v("更多")])
+                ]),
+                _vm._v(" "),
+                _vm._l(item.data, function(subItem) {
+                  return _c("p", [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "article-title",
+                        attrs: { target: "_blank", href: subItem.url }
+                      },
+                      [_vm._v(_vm._s(subItem.title))]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "pull-right" }, [
+                      _vm._v(_vm._s(subItem.created_at))
+                    ])
+                  ])
+                })
+              ],
+              2
             )
           ])
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row ad" },
-      _vm._l(_vm.page.ad_third, function(item) {
-        return _c("div", { staticClass: "col-xs-6" }, [
-          _c("a", { attrs: { target: "_blank", href: item.url } }, [
-            _c("img", { attrs: { src: item.img_src } })
-          ])
-        ])
-      })
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row article-data" },
-      _vm._l(_vm.page.article_data, function(item) {
-        return _c("div", { staticClass: "col-xs-6" }, [
+        })
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "row report-form" }, [
+        _c("div", [
+          _c("span", [_vm._v("账号类型")]),
+          _vm._v(" "),
           _c(
-            "div",
-            [
-              _c("p", [
-                _vm._v(_vm._s(item.type)),
-                _c("a", { attrs: { href: item.url } }, [_vm._v("更多")])
-              ]),
-              _vm._v(" "),
-              _vm._l(item.data, function(subItem) {
-                return _c("p", [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "article-title",
-                      attrs: { target: "_blank", href: subItem.url }
-                    },
-                    [_vm._v(_vm._s(subItem.title))]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "pull-right" }, [
-                    _vm._v(_vm._s(subItem.created_at))
-                  ])
-                ])
-              })
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.reportParams.account_type,
+                  expression: "reportParams.account_type"
+                }
+              ],
+              attrs: { name: "account_type" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.reportParams,
+                    "account_type",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
+            _vm._l(_vm.$store.state.taxonomy.account_type, function(item) {
+              return _c("option", { domProps: { value: item.id } }, [
+                _vm._v(_vm._s(item.name) + "\n                ")
+              ])
+            })
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.reportParams.name,
+                expression: "reportParams.name"
+              }
             ],
-            2
+            attrs: { name: "name", type: "text", placeholder: "投诉账号" },
+            domProps: { value: _vm.reportParams.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.reportParams, "name", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v("投诉类型")]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.reportParams.report_type,
+                  expression: "reportParams.report_type"
+                }
+              ],
+              attrs: { name: "report_type" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.reportParams,
+                    "report_type",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
+            _vm._l(_vm.$store.state.taxonomy.report_type, function(item) {
+              return _c("option", { domProps: { value: item.id } }, [
+                _vm._v(_vm._s(item.name))
+              ])
+            })
+          ),
+          _vm._v(" "),
+          _c("img", {
+            attrs: { src: _vm.captcha_src, alt: "" },
+            on: { click: _vm.doCaptcha }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.reportParams.captcha,
+                expression: "reportParams.captcha"
+              }
+            ],
+            attrs: {
+              name: "captcha",
+              type: "text",
+              placeholder: "请输入验证码"
+            },
+            domProps: { value: _vm.reportParams.captcha },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.reportParams, "captcha", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-danger", on: { click: _vm.doReport } },
+            [_vm._v("投诉举报")]
           )
         ])
-      })
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "row report-form" }, [
-      _c("div", [
-        _c("span", [_vm._v("账号类型")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.report.account_type,
-                expression: "report.account_type"
-              }
-            ],
-            attrs: { name: "account_type" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.$set(
-                  _vm.report,
-                  "account_type",
-                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                )
-              }
-            }
-          },
-          _vm._l(_vm.page.taxonomy.account_type, function(item) {
-            return _c("option", { domProps: { value: item.id } }, [
-              _vm._v(_vm._s(item.name))
-            ])
-          })
-        ),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.report.name,
-              expression: "report.name"
-            }
-          ],
-          attrs: { name: "name", type: "text", placeholder: "投诉账号" },
-          domProps: { value: _vm.report.name },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.report, "name", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("span", [_vm._v("投诉类型")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.report.report_type,
-                expression: "report.report_type"
-              }
-            ],
-            attrs: { name: "report_type" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.$set(
-                  _vm.report,
-                  "report_type",
-                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                )
-              }
-            }
-          },
-          _vm._l(_vm.page.taxonomy.report_type, function(item) {
-            return _c("option", { domProps: { value: item.id } }, [
-              _vm._v(_vm._s(item.name))
-            ])
-          })
-        ),
-        _vm._v(" "),
-        _c("img", {
-          attrs: { src: _vm.captcha_src, alt: "" },
-          on: { click: _vm.doCaptcha }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.report.captcha,
-              expression: "report.captcha"
-            }
-          ],
-          attrs: { name: "captcha", type: "text", placeholder: "请输入验证码" },
-          domProps: { value: _vm.report.captcha },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.report, "captcha", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-danger", on: { click: _vm.doReport } },
-          [_vm._v("投诉举报")]
-        )
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("账号类型")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("账号")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("举报类型")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("举报者IP")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("举报时间")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("账号类型")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("账号")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("举报类型")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("举报者IP")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("举报时间")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -48880,6 +48650,485 @@ var index_esm = {
 
 /* harmony default export */ __webpack_exports__["a"] = (index_esm);
 
+
+/***/ }),
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(172)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(174)
+/* template */
+var __vue_template__ = __webpack_require__(175)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-6a41507f"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/index/pages/SearchResult.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6a41507f", Component.options)
+  } else {
+    hotAPI.reload("data-v-6a41507f", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 172 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(173);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("5b803692", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a41507f\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./SearchResult.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a41507f\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./SearchResult.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 173 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.search-data[data-v-6a41507f] {\n    font-size: 16px;\n    font-weight: 600;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 174 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "search",
+    computed: {
+        searchResult: function searchResult() {
+            return this.$store.state.searchResult;
+        }
+    }
+});
+
+/***/ }),
+/* 175 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row search-data" }, [
+    _c("div", [
+      _vm.searchResult.type === 1
+        ? _c(
+            "p",
+            { staticClass: "col-xs-12", staticStyle: { color: "blue" } },
+            [
+              _vm._v(
+                "\n            无" +
+                  _vm._s(_vm.$store.state.searchResult.name) +
+                  "账号信息，如果确认是恶意号码，请到下方添加！"
+              )
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.searchResult.type === 2
+        ? _c("table", { staticClass: "table table-striped table-hover" }, [
+            _vm._m(0, false, false),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.searchResult.account_reports, function(item) {
+                return _c("tr", { staticStyle: { color: "red" } }, [
+                  _c("td", [_vm._v(_vm._s(item.account_type_label))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.account_name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.type_label))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.ip))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.created_at))])
+                ])
+              })
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.searchResult.type === 3
+        ? _c("div", { staticStyle: { color: "green" } }, [
+            _c("p", { staticClass: "col-xs-6" }, [
+              _vm._v("账号:" + _vm._s(_vm.searchResult.account.name))
+            ]),
+            _vm._v(" "),
+            _c(
+              "p",
+              { staticClass: "col-xs-6", staticStyle: { color: "blue" } },
+              [_vm._v("认证:" + _vm._s(_vm.searchResult.account.status_label))]
+            ),
+            _vm._v(" "),
+            _c("p", { staticClass: "col-xs-6" }, [
+              _vm._v("认证时间:" + _vm._s(_vm.searchResult.account.auth_at))
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "col-xs-6" }, [
+              _vm._v(
+                "建议合作金额:" + _vm._s(_vm.searchResult.account.auth_cash)
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "col-xs-6" }, [
+              _vm._v("常用地址:" + _vm._s(_vm.searchResult.account.address))
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "col-xs-6" }, [
+              _vm._v("备注:" + _vm._s(_vm.searchResult.account.remark))
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "col-xs-6" }, [
+              _vm._v("如发现此账号有恶意行为，请用户立即联系网站客服处理")
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.searchResult.type === 4
+        ? _c("div", { staticStyle: { color: "red" } }, [
+            _c("p", { staticClass: "col-xs-12" }, [
+              _vm._v(
+                _vm._s(_vm.searchResult.name) +
+                  "已被多数用户举报为恶意号码，请用户谨慎合作"
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "col-xs-6" }, [
+              _vm._v("备注:" + _vm._s(_vm.searchResult.account.remark))
+            ]),
+            _vm._v(" "),
+            _c("h1", { staticClass: "col-xs-6" }, [_vm._v("危险！")])
+          ])
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("账号类型")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("账号")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("举报类型")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("举报者IP")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("举报时间")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6a41507f", module.exports)
+  }
+}
+
+/***/ }),
+/* 176 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(177)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(179)
+/* template */
+var __vue_template__ = __webpack_require__(180)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-312c1798"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/index/pages/ReportData.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-312c1798", Component.options)
+  } else {
+    hotAPI.reload("data-v-312c1798", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 177 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(178);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("66cd7e7c", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-312c1798\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./ReportData.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-312c1798\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./ReportData.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 178 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 179 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "report-data"
+});
+
+/***/ }),
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row report-data" }, [
+    _c("div", [
+      _c("table", { staticClass: "table table-striped table-hover" }, [
+        _vm._m(0, false, false),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.$store.state.page.last_4_report_data, function(item) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(item.account_type_label))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.account_name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.type_label))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.ip))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.created_at))])
+            ])
+          })
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("账号类型")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("账号")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("举报类型")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("举报者IP")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("举报时间")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-312c1798", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -36,7 +36,7 @@ class IndexController extends Controller
         $name = request('name');
 
         Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
-        if ($account_type == 201 && !preg_match('/[1-9][0-9]{4,14}/', $name)) {
+        if ($account_type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {
             throw new JsonException('QQ号码格式错误');
         }
         if ($account_type == 204 && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $name)) {
@@ -102,7 +102,7 @@ class IndexController extends Controller
         if (!captcha_check($captcha)) {
             throw new JsonException('验证码错误');
         }
-        if ($account_type == 201 && !preg_match('/[1-9][0-9]{4,14}/', $name)) {
+        if ($account_type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {
             throw new JsonException('QQ号码格式错误');
         }
         if ($account_type == 204 && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $name)) {

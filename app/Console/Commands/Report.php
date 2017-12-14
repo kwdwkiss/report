@@ -87,7 +87,7 @@ class Report extends Command
                         }
                         $updated_at = $created_at = Carbon::createFromTimestamp($row->time);
 
-                        if ($accountTypeId == 201 && !preg_match('/[1-9][0-9]{4,14}/', $name)) {
+                        if ($accountTypeId == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {
                             continue;
                         }
 

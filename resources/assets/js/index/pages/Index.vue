@@ -2,10 +2,11 @@
     <div>
         <div class="row search">
             <div class="col-xs-6">
-                <select v-model="search.account_type">
-                    <option v-for="item in page.taxonomy.account_type" :value="item.id">{{item.name}}</option>
+                <select v-model="searchParams.account_type">
+                    <option v-for="item in $store.state.taxonomy.account_type" :value="item.id">{{item.name}}
+                    </option>
                 </select>
-                <input v-model="search.name" name="name" type="text" placeholder="请输入账号">
+                <input v-model="searchParams.name" name="name" type="text" placeholder="请输入账号">
                 <button @click="doSearch" class="btn btn-success">查询</button>
             </div>
             <div class="col-xs-6 member-num">
@@ -19,71 +20,7 @@
             </p>
         </div>
 
-        <div class="row search-data" v-show="searchData.type!==0">
-            <div>
-                <p class="col-xs-12" v-show="searchData.type===1" style="color: blue">
-                    无{{searchData.name}}账号信息，如果确认是恶意号码，请到下方添加！</p>
-                <table class="table table-striped table-hover" v-if="searchData.type===2">
-                    <thead>
-                    <tr>
-                        <th>账号类型</th>
-                        <th>账号</th>
-                        <th>举报类型</th>
-                        <th>举报者IP</th>
-                        <th>举报时间</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="item in searchData.account_reports" style="color: red">
-                        <td>{{item.account_type}}</td>
-                        <td>{{item.account_name}}</td>
-                        <td>{{item.type_label}}</td>
-                        <td>{{item.ip}}</td>
-                        <td>{{item.created_at}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div v-if="searchData.type===3" style="color: green">
-                    <p class="col-xs-6">账号:{{searchData.account.name}}</p>
-                    <p class="col-xs-6" style="color:blue">认证:{{searchData.account.status_label}}</p>
-                    <p class="col-xs-6">认证时间:{{searchData.account.auth_at}}</p>
-                    <p class="col-xs-6">建议合作金额:{{searchData.account.auth_cash}}</p>
-                    <p class="col-xs-6">常用地址:{{searchData.account.address}}</p>
-                    <p class="col-xs-6">备注:{{searchData.account.remark}}</p>
-                    <p class="col-xs-6">如发现此账号有恶意行为，请用户立即联系网站客服处理</p>
-                </div>
-                <div v-if="searchData.type===4" style="color: red">
-                    <p class="col-xs-12">{{searchData.name}}已被多数用户举报为恶意号码，请用户谨慎合作</p>
-                    <p class="col-xs-6">备注:{{searchData.account.remark}}</p>
-                    <h1 class="col-xs-6">危险！</h1>
-                </div>
-            </div>
-        </div>
-
-        <div class="row report-data" v-show="searchData.type===0">
-            <div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>账号类型</th>
-                        <th>账号</th>
-                        <th>举报类型</th>
-                        <th>举报者IP</th>
-                        <th>举报时间</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="item in page.last_4_report_data">
-                        <td>{{item.account_type_label}}</td>
-                        <td>{{item.account_name}}</td>
-                        <td>{{item.type_label}}</td>
-                        <td>{{item.ip}}</td>
-                        <td>{{item.created_at}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <router-view></router-view>
 
         <div class="row ad">
             <div class="col-xs-6" v-for="item in page.ad_third">
@@ -108,16 +45,17 @@
         <div class="row report-form">
             <div>
                 <span>账号类型</span>
-                <select v-model="report.account_type" name="account_type">
-                    <option v-for="item in page.taxonomy.account_type" :value="item.id">{{item.name}}</option>
+                <select v-model="reportParams.account_type" name="account_type">
+                    <option v-for="item in $store.state.taxonomy.account_type" :value="item.id">{{item.name}}
+                    </option>
                 </select>
-                <input v-model="report.name" name="name" type="text" placeholder="投诉账号">
+                <input v-model="reportParams.name" name="name" type="text" placeholder="投诉账号">
                 <span>投诉类型</span>
-                <select v-model="report.report_type" name="report_type">
-                    <option v-for="item in page.taxonomy.report_type" :value="item.id">{{item.name}}</option>
+                <select v-model="reportParams.report_type" name="report_type">
+                    <option v-for="item in $store.state.taxonomy.report_type" :value="item.id">{{item.name}}</option>
                 </select>
                 <img :src="captcha_src" alt="" @click="doCaptcha">
-                <input v-model="report.captcha" name="captcha" type="text" placeholder="请输入验证码">
+                <input v-model="reportParams.captcha" name="captcha" type="text" placeholder="请输入验证码">
                 <button @click="doReport" class="btn btn-danger">投诉举报</button>
             </div>
         </div>
@@ -127,21 +65,22 @@
 <script>
     export default {
         name: "index",
+        computed: {
+            page: function () {
+                return this.$store.state.page;
+            },
+        },
         data: function () {
             return {
-                page: store.state.page,
-                search: {
-                    account_type: store.state.taxonomy.account_type[0].id
+                searchParams: {
+                    account_type: store.state.taxonomy.account_type[0].id,
+                    name: ''
                 },
-                searchData: {
-                    account_reports: [],
-                    account: {},
-                    type: 0,
-                },
-                //type 0-不显示 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
-                report: {
+                reportParams: {
                     account_type: store.state.taxonomy.account_type[0].id,
                     report_type: store.state.taxonomy.report_type[0].id,
+                    name: '',
+                    captcha: ''
                 },
                 captcha_src: api.captcha + '?' + Date.parse(new Date())
             }
@@ -152,9 +91,12 @@
             },
             doSearch: function () {
                 let self = this;
-                axios.post(api.indexSearch, self.search).then(function (res) {
-                    self.searchData = res.data.data;
+                axios.post(api.indexSearch, self.searchParams).then(function (res) {
+                    self.$store.commit('searchResult', res.data.data);
+                    self.$router.push('/search');
                     self.$message.success('成功');
+                }).catch(function () {
+                    self.$router.push('/');
                 });
             },
             doReport: function () {
@@ -218,11 +160,6 @@
 
     .report-data {
         font-size: 16px;
-    }
-
-    .search-data {
-        font-size: 16px;
-        font-weight: 600;
     }
 
     .article-data > div {
