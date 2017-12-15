@@ -51972,6 +51972,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -52306,6 +52307,14 @@ var render = function() {
                 _vm._v(" "),
                 _c("el-table-column", {
                   attrs: { prop: "ww", label: "旺旺", "min-width": "120" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: {
+                    prop: "created_at",
+                    label: "创建时间",
+                    "min-width": "180"
+                  }
                 }),
                 _vm._v(" "),
                 _c("el-table-column", {

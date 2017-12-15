@@ -55,6 +55,7 @@
                     <el-table-column prop="qq" label="QQ" min-width="120"></el-table-column>
                     <el-table-column prop="wx" label="微信" min-width="120"></el-table-column>
                     <el-table-column prop="ww" label="旺旺" min-width="120"></el-table-column>
+                    <el-table-column prop="created_at" label="创建时间" min-width="180"></el-table-column>
                     <el-table-column label="操作" min-width="200">
                         <template slot-scope="scope">
                             <el-button type="warning" @click="openUpdateDialog(scope)">修改</el-button>
