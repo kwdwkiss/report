@@ -60,6 +60,12 @@
         </div>
 
         <hr>
+
+        <div class="row copyright">
+            <div>
+                <p>Copyright©2015-2020 www.tbpzw.com .All Rights Reserved ICP证：桂ICP备14007039号</p>
+            </div>
+        </div>
     </div>
 </template>
 
