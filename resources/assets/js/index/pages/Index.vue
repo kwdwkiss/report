@@ -94,7 +94,6 @@
                 axios.post(api.indexSearch, self.searchParams).then(function (res) {
                     self.$store.commit('searchResult', res.data.data);
                     self.$router.push('/search');
-                    self.$message.success('成功');
                 }).catch(function () {
                     self.$router.push('/');
                 });
@@ -107,7 +106,7 @@
                         report_type: store.state.taxonomy.report_type[0].id
                     };
                     self.doCaptcha();
-                    self.$message.success('成功');
+                    alert('成功');
                 }).catch(function () {
                     self.doCaptcha();
                 });
