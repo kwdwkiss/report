@@ -54793,6 +54793,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "index-set",
@@ -54820,6 +54825,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         refreshDate: function refreshDate(subItem) {
             subItem.created_at = new Date().toLocaleDateString().replace(/\//g, '-');
+        },
+        uploadImage: function uploadImage(item) {
+            this.$message('功能还未实现');
         }
     }
 });
@@ -55141,7 +55149,20 @@ var render = function() {
                               },
                               expression: "item.img_src"
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "primary" },
+                              on: {
+                                click: function($event) {
+                                  _vm.uploadImage(item)
+                                }
+                              }
+                            },
+                            [_vm._v("上传")]
+                          )
                         ],
                         1
                       ),
@@ -55212,7 +55233,20 @@ var render = function() {
                               },
                               expression: "item.img_src"
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "primary" },
+                              on: {
+                                click: function($event) {
+                                  _vm.uploadImage(item)
+                                }
+                              }
+                            },
+                            [_vm._v("上传")]
+                          )
                         ],
                         1
                       ),
@@ -55283,7 +55317,20 @@ var render = function() {
                               },
                               expression: "item.img_src"
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "primary" },
+                              on: {
+                                click: function($event) {
+                                  _vm.uploadImage(item)
+                                }
+                              }
+                            },
+                            [_vm._v("上传")]
+                          )
                         ],
                         1
                       ),
@@ -55354,7 +55401,20 @@ var render = function() {
                               },
                               expression: "item.img_src"
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "primary" },
+                              on: {
+                                click: function($event) {
+                                  _vm.uploadImage(item)
+                                }
+                              }
+                            },
+                            [_vm._v("上传")]
+                          )
                         ],
                         1
                       ),
@@ -55427,7 +55487,20 @@ var render = function() {
                               },
                               expression: "item.name"
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "primary" },
+                              on: {
+                                click: function($event) {
+                                  _vm.uploadImage(item)
+                                }
+                              }
+                            },
+                            [_vm._v("上传")]
+                          )
                         ],
                         1
                       )

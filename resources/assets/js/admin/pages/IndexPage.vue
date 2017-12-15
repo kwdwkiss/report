@@ -73,6 +73,7 @@
                         <template v-for="item in data.ad_top">
                             <el-form-item label="图片路径">
                                 <el-input v-model="item.img_src"></el-input>
+                                <el-button type="primary" @click="uploadImage(item)">上传</el-button>
                             </el-form-item>
                             <el-form-item label="链接">
                                 <el-input v-model="item.url"></el-input>
@@ -91,6 +92,7 @@
                         <template v-for="item in data.ad_second">
                             <el-form-item label="图片路径">
                                 <el-input v-model="item.img_src"></el-input>
+                                <el-button type="primary" @click="uploadImage(item)">上传</el-button>
                             </el-form-item>
                             <el-form-item label="链接">
                                 <el-input v-model="item.url"></el-input>
@@ -109,6 +111,7 @@
                         <template v-for="item in data.ad_third">
                             <el-form-item label="图片路径">
                                 <el-input v-model="item.img_src"></el-input>
+                                <el-button type="primary" @click="uploadImage(item)">上传</el-button>
                             </el-form-item>
                             <el-form-item label="链接">
                                 <el-input v-model="item.url"></el-input>
@@ -127,6 +130,7 @@
                         <template v-for="item in data.ad_foot">
                             <el-form-item label="图片路径">
                                 <el-input v-model="item.img_src"></el-input>
+                                <el-button type="primary" @click="uploadImage(item)">上传</el-button>
                             </el-form-item>
                             <el-form-item label="链接">
                                 <el-input v-model="item.url"></el-input>
@@ -147,6 +151,7 @@
                         <template v-for="item in data.service_wx">
                             <el-form-item label="微信">
                                 <el-input v-model="item.name"></el-input>
+                                <el-button type="primary" @click="uploadImage(item)">上传</el-button>
                             </el-form-item>
                         </template>
                         <el-form-item>
@@ -201,6 +206,9 @@
             },
             refreshDate: function (subItem) {
                 subItem.created_at = new Date().toLocaleDateString().replace(/\//g, '-');
+            },
+            uploadImage: function (item) {
+                this.$message('功能还未实现');
             }
         }
     }
