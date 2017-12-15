@@ -57,36 +57,3 @@ window.Vue = require('vue');
 window.api = require('./api.js');
 
 window.UEDITOR_HOME_URL='/ueditor/';
-
-axios.interceptors.response.use(function (response) {
-    let errorMessage = null;
-
-    if (response.data === '') {
-        errorMessage = 'data is empty string';
-    } else if (response.data.code !== 0) {
-        errorMessage = response.data.message;
-    }
-
-    if (errorMessage) {
-        app.$message.error(errorMessage);
-        throw new Error(errorMessage);
-    }
-    return response;
-}, function (error) {
-    if (error.response) {
-        if (error.response.status === 401) {//Unauthorized
-            app.$router.push('/login');
-        } else if (error.response.status === 419) {//csrf token invalid
-            location.reload();
-        } else {
-            let message = error.response.data.message ? error.response.data.message : error.response.statusText;
-            app.$message.error(message);
-        }
-    }
-    return Promise.reject(error);
-});
-
-import 'element-ui/lib/theme-chalk/index.css'
-import ElementUI from 'element-ui'
-
-Vue.use(ElementUI);

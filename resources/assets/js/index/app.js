@@ -13,6 +13,33 @@ Vue.use(Vuex);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+axios.interceptors.response.use(function (response) {
+    let errorMessage = null;
+
+    if (response.data === '') {
+        errorMessage = 'data is empty string';
+    } else if (response.data.code !== 0) {
+        errorMessage = response.data.message;
+    }
+
+    if (errorMessage) {
+        alert(errorMessage);
+        throw new Error(errorMessage);
+    }
+    return response;
+}, function (error) {
+    if (error.response) {
+        if (error.response.status === 401) {//Unauthorized
+            app.$router.push('/login');
+        } else if (error.response.status === 419) {//csrf token invalid
+            location.reload();
+        } else {
+            let message = error.response.data.message ? error.response.data.message : error.response.statusText;
+            alert(message);
+        }
+    }
+    return Promise.reject(error);
+});
 
 const routes = [
     {
