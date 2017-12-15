@@ -100,8 +100,8 @@
             },
             doReport: function () {
                 let self = this;
-                axios.post(api.indexReport, self.report).then(function () {
-                    self.report = {
+                axios.post(api.indexReport, self.reportParams).then(function () {
+                    self.reportParams = {
                         account_type: store.state.taxonomy.account_type[0].id,
                         report_type: store.state.taxonomy.report_type[0].id
                     };
