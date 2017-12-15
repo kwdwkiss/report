@@ -48541,7 +48541,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.search-data[data-v-6a41507f] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.search-data p[data-v-6a41507f] {\n    margin: 10px 0;\n}\n", ""]);
+exports.push([module.i, "\n.search-data[data-v-6a41507f] {\n    font-size: 16px;\n    font-weight: 600;\n}\n.search-data p[data-v-6a41507f] {\n    margin: 5px 0;\n}\n", ""]);
 
 // exports
 

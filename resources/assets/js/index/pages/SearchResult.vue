@@ -59,6 +59,6 @@
     }
 
     .search-data p {
-        margin: 10px 0;
+        margin: 5px 0;
     }
 </style>
