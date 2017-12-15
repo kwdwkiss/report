@@ -55,6 +55,8 @@ class Account extends Command
         $pageSize = 1000;
         $pageCount = ceil($total / $pageSize);
         echo "total:$total pageSize:$pageSize pageCount:$pageCount\n";
+
+        \DB::statement('truncate table ' . (new \App\Account())->getTable());
         for ($i = $startPage; $i < $pageCount; $i++) {
             $rows = $conn->table('ims_account')->offset($i * $pageSize)->limit($pageSize)->get();
             \DB::transaction(function () use ($startPage, $startNum, $i, $rows, $statusData) {

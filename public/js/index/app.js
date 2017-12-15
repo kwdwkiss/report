@@ -48848,7 +48848,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: "article",
     data: function data() {
         return {
-            articleData: {}
+            articleData: {
+                updated_at: ''
+            }
         };
     },
     mounted: function mounted() {
@@ -48871,7 +48873,7 @@ var render = function() {
     _c("h2", { staticClass: "title" }, [_vm._v(_vm._s(_vm.articleData.title))]),
     _vm._v(" "),
     _c("div", { staticClass: "article-bar" }, [
-      _vm._v(_vm._s(_vm.articleData.updated_at))
+      _vm._v(_vm._s(_vm.articleData.updated_at.split(" ")[0]))
     ]),
     _vm._v(" "),
     _c("hr"),
@@ -49079,7 +49081,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("span", { staticClass: "pull-right" }, [
-              _vm._v(_vm._s(item.updated_at))
+              _vm._v(_vm._s(item.updated_at.split(" ")[0]))
             ])
           ])
         })

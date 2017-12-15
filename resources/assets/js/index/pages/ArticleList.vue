@@ -6,7 +6,7 @@
             <ul>
                 <li v-for="item in dataList.data">
                     <a :href="item.url">{{item.title}}</a>
-                    <span class="pull-right">{{item.updated_at}}</span>
+                    <span class="pull-right">{{item.updated_at.split(' ')[0]}}</span>
                 </li>
             </ul>
         </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="article">
         <h2 class="title">{{articleData.title}}</h2>
-        <div class="article-bar">{{articleData.updated_at}}</div>
+        <div class="article-bar">{{articleData.updated_at.split(' ')[0]}}</div>
         <hr>
         <div v-html="articleData.content"></div>
     </div>
@@ -12,7 +12,9 @@
         name: "article",
         data: function () {
             return {
-                articleData: {}
+                articleData: {
+                    updated_at: ''
+                }
             };
         },
         mounted: function () {

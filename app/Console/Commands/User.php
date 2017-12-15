@@ -48,6 +48,7 @@ class User extends Command
         $pageCount = ceil($total / $pageSize);
         echo "total:$total pageSize:$pageSize pageCount:$pageCount\n";
 
+        \DB::statement('truncate table ' . (new \App\User())->getTable());
         $password = bcrypt('123456');
         for ($i = $startPage; $i < $pageCount; $i++) {
             $rows = $conn->table('ims_member')->offset($i * $pageSize)->limit($pageSize)->get();
