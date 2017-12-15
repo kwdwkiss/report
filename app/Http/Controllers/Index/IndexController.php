@@ -46,12 +46,13 @@ class IndexController extends Controller
         $account = Account::where('type', $account_type)->where('name', $name)->first();
 
         //type 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
+        $query = AccountReport::query()
+            ->where('account_type', $account_type)
+            ->where('account_name', $name)
+            ->where('display', 1)
+            ->orderBy('created_at', 'desc');
         if (!$account) {
-            $accountReports = AccountReport::query()
-                ->where('account_type', $account_type)
-                ->where('account_name', $name)
-                ->orderBy('created_at', 'desc')
-                ->get();
+            $accountReports = $query->get();
             if (count($accountReports) > 0) {
                 return ['data' => [
                     'type' => 2,
@@ -66,11 +67,7 @@ class IndexController extends Controller
                     return ['data' => ['type' => 1]];
                     break;
                 case 102:
-                    $accountReports = AccountReport::query()
-                        ->where('account_type', $account_type)
-                        ->where('account_name', $name)
-                        ->orderBy('created_at', 'desc')
-                        ->get();
+                    $accountReports = $query->get();
                     if (count($accountReports) > 0) {
                         return ['data' => [
                             'type' => 2,
