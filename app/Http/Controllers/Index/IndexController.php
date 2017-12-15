@@ -32,6 +32,7 @@ class IndexController extends Controller
 
     public function search()
     {
+        request()->query->set('ip_hide', 1);
         $account_type = request('account_type');
         $name = request('name');
 

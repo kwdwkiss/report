@@ -50,7 +50,7 @@ class Config extends Model
         $report_num = AccountReport::count();
         $last_24_report_num = AccountReport::where('created_at', '>', date('Y-m-d H:i:s', time() - 3600 * 24))->count();
         $last_4_report_data = AccountReportResource::collection(
-            AccountReport::orderBy('created_at', 'desc')->take(4)->get())->toArray(new Request(['ip_hide' => 1]));
+            AccountReport::where('display', 1)->orderBy('created_at', 'desc')->take(4)->get())->toArray(new Request(['ip_hide' => 1]));
         return [
             'auth_member_num' => $auth_member_num,
             'report_num' => $report_num,

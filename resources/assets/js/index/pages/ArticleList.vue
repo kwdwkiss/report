@@ -78,6 +78,10 @@
         font-size: 16px;
     }
 
+    .article ul li {
+        margin: 10px 0;
+    }
+
     .title {
         text-align: center;
     }
