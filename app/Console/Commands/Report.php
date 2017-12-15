@@ -45,7 +45,7 @@ class Report extends Command
 
         $data = $conn->table('ims_report_type')->get();
         $originReportType = array_combine(array_pluck($data, 'id'), array_pluck($data, 'name'));
-        $data = Taxonomy::reportType();
+        $data = Taxonomy::where('pid', Taxonomy::REPORT_TYPE)->get();
         $targetReportType = array_combine(array_pluck($data, 'name'), array_pluck($data, 'id'));
 
         $conn->table('ims_report')
