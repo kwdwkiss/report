@@ -24,6 +24,7 @@ class CreateArticleTable extends Migration
 
             $table->index('title');
             $table->index('created_at');
+            $table->index('updated_at');
         });
     }
 
