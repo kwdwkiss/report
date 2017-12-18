@@ -67,6 +67,7 @@ class UserController extends Controller
             $province = array_get($input, '_profile.province');
             $city = array_get($input, '_profile.city');
             $remark = array_get($input, '_profile.remark');
+            $alipay = array_get($input, '_profile.alipay');
 
             $tags = array_get($input, 'tags', []);
 
@@ -131,6 +132,9 @@ class UserController extends Controller
             if ($remark) {
                 $userProfile->remark = $remark;
             }
+            if ($alipay) {
+                $userProfile->alipay = $alipay;
+            }
             if ($tags) {
                 foreach ($tags as $tag_id) {
                     Tag::findOrFail($tag_id);
@@ -165,6 +169,7 @@ class UserController extends Controller
             $province = array_get($input, '_profile.province');
             $city = array_get($input, '_profile.city');
             $remark = array_get($input, '_profile.remark');
+            $alipay = array_get($input, '_profile.alipay');
 
             $tags = array_get($input, 'tags', []);
 
@@ -228,6 +233,9 @@ class UserController extends Controller
             }
             if ($remark) {
                 $userProfile->remark = $remark;
+            }
+            if ($alipay) {
+                $userProfile->alipay = $alipay;
             }
             if ($tags) {
                 foreach ($tags as $tag_id) {

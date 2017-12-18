@@ -22,6 +22,7 @@ class CreateUserProfileTable extends Migration
             $table->string('occupation');
             $table->string('province');
             $table->string('city');
+            $table->string('alipay');//支付宝账号
             $table->string('remark');
             $table->timestamps();
         });

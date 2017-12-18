@@ -23,7 +23,7 @@
             </div>
             <div class="col-xs-3 service-qq">
                 <ul>
-                    <li class="col-xs-12">客服QQ、微信：</li>
+                    <li class="col-xs-12">客服QQ：</li>
                     <li class="col-xs-6" v-for="item in page.service_qq">{{item.name}}</li>
                 </ul>
             </div>

@@ -26,7 +26,7 @@
             <div v-if="searchResult.type===3" style="color: green">
                 <p class="col-xs-6">账号:{{searchResult.account.name}}</p>
                 <p class="col-xs-6" style="color:blue">认证:{{searchResult.account.status_label}}</p>
-                <p class="col-xs-6">认证时间:{{searchResult.account.auth_at}}</p>
+                <p class="col-xs-6">认证时间:{{searchResult.account.created_at}}</p>
                 <p class="col-xs-6">建议合作金额:{{searchResult.account.auth_cash}}</p>
                 <p class="col-xs-6">常用地址:{{searchResult.account.address}}</p>
                 <p class="col-xs-6">备注:{{searchResult.account.remark}}</p>

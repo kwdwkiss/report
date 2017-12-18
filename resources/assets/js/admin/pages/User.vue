@@ -43,6 +43,9 @@
                                 <el-form-item label="市">
                                     <span>{{ props.row._profile.city }}</span>
                                 </el-form-item>
+                                <el-form-item label="支付宝">
+                                    <span>{{ props.row._profile.alipay }}</span>
+                                </el-form-item>
                                 <el-form-item label="备注">
                                     <span>{{ props.row._profile.remark }}</span>
                                 </el-form-item>
@@ -91,6 +94,9 @@
                         </el-form-item>
                         <el-form-item prop="remark" label="备注" labelWidth="100px">
                             <el-input v-model="createData._profile.remark"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="remark" label="支付宝" labelWidth="100px">
+                            <el-input v-model="createData._profile.alipay"></el-input>
                         </el-form-item>
                         <el-form-item prop="name" label="姓名" labelWidth="100px">
                             <el-input v-model="createData._profile.name"></el-input>
@@ -152,6 +158,9 @@
                         </el-form-item>
                         <el-form-item prop="remark" label="备注" labelWidth="100px">
                             <el-input v-model="updateData._profile.remark"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="remark" label="支付宝" labelWidth="100px">
+                            <el-input v-model="updateData._profile.alipay"></el-input>
                         </el-form-item>
                         <el-form-item label="姓名" labelWidth="100px">
                             <el-input v-model="updateData._profile.name"></el-input>

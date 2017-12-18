@@ -107,6 +107,15 @@ class IndexController extends Controller
             throw new JsonException('手机号码格式错误');
         }
 
+        $todayDate = date('Y-m-d', time());
+        $todayReport = AccountReport::where('account_type', $account_type)
+            ->where('account_name', $name)
+            ->where('created_at', '>', $todayDate)
+            ->first();
+        if ($todayReport) {
+            throw new JsonException('每天对同一账号类型只能举报一次');
+        }
+
         AccountReport::report($account_type, $name, $report_type, request()->getClientIp());
 
         return [];

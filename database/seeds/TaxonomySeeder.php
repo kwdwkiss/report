@@ -34,6 +34,8 @@ class TaxonomySeeder extends Seeder
                 ['id' => 202, 'pid' => 2, 'name' => '旺旺'],
                 ['id' => 203, 'pid' => 2, 'name' => '微信'],
                 ['id' => 204, 'pid' => 2, 'name' => '手机'],
+                ['id' => 205, 'pid' => 2, 'name' => '京东'],
+                ['id' => 206, 'pid' => 2, 'name' => '拼多多'],
 
                 ['id' => 301, 'pid' => 3, 'name' => '退款'],
                 ['id' => 302, 'pid' => 3, 'name' => '售后'],

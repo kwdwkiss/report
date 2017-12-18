@@ -42,6 +42,13 @@ class TaxonomyController extends Controller
 
         $taxonomy = new Taxonomy();
 
+        $last = Taxonomy::where('pid', $pid)->orderBy('id', 'desc')->first();
+        if ($last) {
+            $taxonomy->id = $last->id + 1;
+        } else {
+            $taxonomy->id = $pid * 100 + 1;
+        }
+
         if (!is_null($pid)) {
             if ($pid !== 0) {
                 Taxonomy::findOrFail($pid);
