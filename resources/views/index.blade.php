@@ -18,10 +18,17 @@
 </head>
 <body>
 <div id="app"></div>
-
+<hr>
+<div class="row copyright">
+    <div>
+        <p>
+            <script type="text/javascript" src="https://s22.cnzz.com/z_stat.php?id=1271314784&web_id=1271314784"></script>
+            |
+            Copyright©2015-2020 www.tbpzw.com .All Rights Reserved ICP证：桂ICP备14007039号
+        </p>
+    </div>
+</div>
 <!-- Scripts -->
 <script type="text/javascript" src="{{ mix("js/index/app.js") }}"></script>
-<script type="text/javascript" src="https://s22.cnzz.com/z_stat.php?id=1271314784&web_id=1271314784"></script>
-<style>a[title=站长统计]{display: none}</style>
 </body>
 </html>
