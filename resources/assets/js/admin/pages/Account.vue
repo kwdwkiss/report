@@ -13,6 +13,7 @@
 
             <el-button type="primary" @click="loadData">搜索</el-button>
             <el-button type="warning" @click="reset">重置</el-button>
+            <el-button type="success" @click="openCreateDialog">添加</el-button>
 
             <el-pagination layout="prev, pager, next"
                            :total="dataList.meta.total"
@@ -42,6 +43,30 @@
 
         <el-dialog title="创建" :visible.sync="dialogCreate.display">
             <el-form ref="createForm" :model="dialogCreate.data" :rules="rules">
+                <el-form-item prop="type" label="账号类型" labelWidth="100px">
+                    <el-select v-model="dialogCreate.data.type" placeholder="账号类型">
+                        <el-option v-for="item in accountTypeList" :key="item.id" :value="item.id"
+                                   :label="item.name"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item prop="name" label="账号" labelWidth="100px">
+                    <el-input v-model="dialogCreate.data.name"></el-input>
+                </el-form-item>
+                <el-form-item prop="status" label="账号状态" labelWidth="100px">
+                    <el-select v-model="dialogCreate.data.status">
+                        <el-option v-for="item in accountStatusList" :key="item.id" :value="item.id"
+                                   :label="item.name"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item prop="auth_cash" label="合作金额" labelWidth="100px">
+                    <el-input v-model="dialogCreate.data.auth_cash"></el-input>
+                </el-form-item>
+                <el-form-item prop="address" label="常用地址" labelWidth="100px">
+                    <el-input v-model="dialogCreate.data.address"></el-input>
+                </el-form-item>
+                <el-form-item prop="remark" label="备注" labelWidth="100px">
+                    <el-input v-model="dialogCreate.data.remark"></el-input>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogCreate.display = false">取 消</el-button>
@@ -52,7 +77,7 @@
         <el-dialog title="更新" :visible.sync="dialogUpdate.display">
             <el-form>
                 <el-form-item prop="type" label="账号类型" labelWidth="100px">
-                    <span>{{dialogUpdate.data.account_type}}</span>
+                    <span>{{dialogUpdate.data.type_label}}</span>
                 </el-form-item>
                 <el-form-item prop="name" label="账号" labelWidth="100px">
                     <span>{{dialogUpdate.data.name}}</span>
@@ -88,8 +113,6 @@
     export default {
         data: function () {
             return {
-                accountTypeList: store.state.taxonomy.account_type,
-                accountStatusList: store.state.taxonomy.account_status,
                 apiList: api.accountList,
                 apiCreate: api.accountCreate,
                 apiUpdate: api.accountUpdate,
@@ -107,6 +130,14 @@
                     data: {}
                 },
                 rules: {}
+            }
+        },
+        computed: {
+            accountTypeList: function () {
+                return this.$store.state.taxonomy.account_type;
+            },
+            accountStatusList: function () {
+                return this.$store.state.taxonomy.account_status;
             }
         },
         created: function () {
@@ -128,14 +159,17 @@
                 this.loadData();
             },
             openCreateDialog: function () {
-                this.dialogCreate.data = {pid: this.search.pid, order: 0, display: 1, remark: ''};
+                this.dialogCreate.data = {
+                    type: this.accountTypeList[0].id,
+                    status: this.accountStatusList[0].id
+                };
                 this.dialogCreate.display = true
             },
             doCreate: function () {
                 let self = this;
                 self.$refs.createForm.validate((valid) => {
                     if (valid) {
-                        axios.post(self.apiCreate, self.dialogCreate.data).then(function () {
+                        axios.post(self.apiCreate, [self.dialogCreate.data]).then(function () {
                             self.dialogCreate.display = false;
                             self.$message.success('成功');
                             self.loadData();

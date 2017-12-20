@@ -106,6 +106,9 @@ class IndexController extends Controller
         if ($account_type == 204 && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $name)) {
             throw new JsonException('手机号码格式错误');
         }
+        if (is_null($name)) {
+            throw new JsonException('账号不能为空');
+        }
 
         $todayDate = date('Y-m-d', time());
         $todayReport = AccountReport::where('account_type', $account_type)

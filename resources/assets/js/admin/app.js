@@ -77,7 +77,7 @@ const router = new VueRouter({
     routes // （缩写）相当于 routes: routes
 });
 
-window.store = new Vuex.Store({
+const store = window.store = new Vuex.Store({
     state: {
         taxonomy: laravel.taxonomy,
     },
@@ -94,4 +94,5 @@ window.app = new Vue({
     el: '#app',
     template: '<router-view></router-view>',
     router,
+    store,
 });
