@@ -14,6 +14,7 @@
 //>>>>>>>>>admin
 Route::middleware(['csrf'])->group(function () {
     Route::get('/', 'Index\IndexController@index');
+    Route::get('/index/pop-window', 'Index\IndexController@popWindow');
     Route::post('/index/search', 'Index\IndexController@search');
     Route::post('/index/report', 'Index\IndexController@report');
 
@@ -39,8 +40,9 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
 
     Route::get('/admin/site/basic', 'Admin\SiteController@getBasic');
     Route::post('/admin/site/basic', 'Admin\SiteController@setBasic');
-    Route::get('/admin/site/index', 'Admin\IndexPageController@get');
-    Route::post('/admin/site/index', 'Admin\IndexPageController@set');
+    Route::get('/admin/site/index', 'Admin\SiteController@getIndex');
+    Route::post('/admin/site/index', 'Admin\SiteController@setIndex');
+    Route::post('/admin/site/pop-window', 'Admin\SiteController@popWindow');
 
     Route::get('/admin/taxonomy/list', 'Admin\TaxonomyController@list');
     Route::post('/admin/taxonomy/create', 'Admin\TaxonomyController@create');

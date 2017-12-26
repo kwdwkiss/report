@@ -59,6 +59,18 @@ class Config extends Model
         ];
     }
 
+    public static function getSitePopWindow()
+    {
+        return array_replace_recursive(static::$popWindowDefault, static::get('site.pop-window', []));
+    }
+
+    public static function setSitePopWindow($data)
+    {
+        static::set('site.pop-window', array_replace_recursive(static::$popWindowDefault, $data));
+    }
+
+    public static $popWindowDefault = ['title' => '', 'content' => ''];
+
     public static function getSiteIndex()
     {
         return array_replace_recursive(static::$indexPageDefault, static::get('site.index', []));

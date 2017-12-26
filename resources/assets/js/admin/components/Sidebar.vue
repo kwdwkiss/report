@@ -54,7 +54,11 @@
                     },
                     {
                         title: '首页设置',
-                        path: '/index/page',
+                        path: '/site/index-page',
+                    },
+                    {
+                        title: '弹窗设置',
+                        path: '/site/pop-window',
                     },
                     {
                         title: '系统设置',

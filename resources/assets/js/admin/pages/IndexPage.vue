@@ -192,12 +192,15 @@
             }
         },
         created: function () {
-            let self = this;
-            axios.get(api.siteIndex).then(function (res) {
-                self.data = res.data.data;
-            });
+            this.loadData();
         },
         methods: {
+            loadData: function () {
+                let self = this;
+                axios.get(api.siteIndex).then(function (res) {
+                    self.data = res.data.data;
+                });
+            },
             doSave: function () {
                 let self = this;
                 axios.post(api.siteIndex, self.data).then(function () {

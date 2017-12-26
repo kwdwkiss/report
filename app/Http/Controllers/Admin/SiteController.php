@@ -43,4 +43,21 @@ class SiteController extends Controller
 
         return [];
     }
+
+    public function getIndex()
+    {
+        return ['data' => Config::getSiteIndex()];
+    }
+
+    public function setIndex()
+    {
+        Config::setSiteIndex(json_decode(request()->getContent(), true));
+        return [];
+    }
+
+    public function popWindow()
+    {
+        Config::setSitePopWindow(json_decode(request()->getContent(), true));
+        return [];
+    }
 }

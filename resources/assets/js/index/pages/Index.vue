@@ -106,7 +106,7 @@
                         report_type: store.state.taxonomy.report_type[0].id
                     };
                     self.doCaptcha();
-                    alert('成功');
+                    self.$message.success('成功');
                 }).catch(function () {
                     self.doCaptcha();
                 });

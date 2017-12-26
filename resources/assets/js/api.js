@@ -12,6 +12,7 @@ module.exports = {
 
     siteBasic: '/admin/site/basic',
     siteIndex: '/admin/site/index',
+    sitePopWindow: 'admin/site/pop-window',
 
     taxonomyList: '/admin/taxonomy/list',
     taxonomyCreate: '/admin/taxonomy/create',
@@ -50,6 +51,7 @@ module.exports = {
 
     indexSearch: '/index/search',
     indexReport: '/index/report',
+    indexPopWindow: '/index/pop-window',
 
     indexArticleList: '/index/article/list',
     indexArticleShow: '/index/article/show',

@@ -8,6 +8,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex);
 
+import './element-ui'
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -23,7 +25,7 @@ axios.interceptors.response.use(function (response) {
     }
 
     if (errorMessage) {
-        alert(errorMessage);
+        app.$message.error(errorMessage);
         throw new Error(errorMessage);
     }
     return response;
@@ -34,8 +36,8 @@ axios.interceptors.response.use(function (response) {
         } else if (error.response.status === 419) {//csrf token invalid
             location.reload();
         } else {
-            let message = error.response.data.message ? error.response.data.message : error.response.statusText;
-            alert(message);
+            let errorMessage = error.response.data.message ? error.response.data.message : error.response.statusText;
+            app.$message.error(errorMessage);
         }
     }
     return Promise.reject(error);
@@ -82,7 +84,7 @@ const store = window.store = new Vuex.Store({
             axios.get(api.taxonomyAllData).then(function (res) {
                 state.taxonomy = res.data.data;
             })
-        }
+        },
     }
 });
 

@@ -66,7 +66,8 @@ const routes = [
             {path: 'user', component: require('./pages/User.vue')},
             {path: 'account/report', component: require('./pages/AccountReport.vue')},
             {path: 'account', component: require('./pages/Account.vue')},
-            {path: 'index/page', component: require('./pages/IndexPage')},
+            {path: 'site/index-page', component: require('./pages/IndexPage')},
+            {path: 'site/pop-window', component: require('./pages/PopWindow')},
             {path: 'system/site', component: require('./pages/Site.vue')},
             {path: 'system/admin', component: require('./pages/Admin.vue')},
         ]

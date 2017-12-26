@@ -30,6 +30,11 @@ class IndexController extends Controller
         return view('index', compact('page'));
     }
 
+    public function popWindow()
+    {
+        return ['data' => Config::getSitePopWindow()];
+    }
+
     public function search()
     {
         request()->query->set('ip_hide', 1);

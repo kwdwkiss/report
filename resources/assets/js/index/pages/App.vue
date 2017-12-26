@@ -1,5 +1,7 @@
 <template>
     <div>
+        <pop-window></pop-window>
+
         <div class="row ad">
             <div class="col-xs-6" v-for="item in page.ad_top">
                 <a target="_blank" :href="item.url">
@@ -21,19 +23,21 @@
                     <img src="/images/logo.jpg">
                 </a>
             </div>
-            <div class="service-qq">
-                <ul>
-                    <li class="col-xs-12">客服QQ：</li>
-                    <li class="col-xs-6" v-for="item in page.service_qq">{{item.name}}</li>
-                </ul>
-            </div>
-            <div class="service-wx">
-                <ul>
-                    <li>客服微信：</li>
-                    <li v-for="item in page.service_wx">
-                        <img :src="item.name" alt="">
-                    </li>
-                </ul>
+            <div class="col-xs-6">
+                <div class="service-qq">
+                    <ul>
+                        <li class="col-xs-12">客服QQ：</li>
+                        <li class="col-xs-6" v-for="item in page.service_qq">{{item.name}}</li>
+                    </ul>
+                </div>
+                <div class="service-wx">
+                    <ul>
+                        <li>客服微信：</li>
+                        <li v-for="item in page.service_wx">
+                            <img :src="item.name" alt="">
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -65,7 +69,8 @@
         <div class="row copyright">
             <div>
                 <p>
-                    <a href="http://www.cnzz.com/stat/website.php?web_id=1271314784" target="_blank" title="站长统计">站长统计</a>
+                    <a href="http://www.cnzz.com/stat/website.php?web_id=1271314784" target="_blank"
+                       title="站长统计">站长统计</a>
                     |
                     Copyright©2015-2020 www.tbpzw.com .All Rights Reserved ICP证：桂ICP备14007039号
                 </p>
@@ -75,7 +80,10 @@
 </template>
 
 <script>
+    import PopWindow from '../components/PopWindow'
+
     export default {
+        components: {PopWindow},
         name: "app",
         data: function () {
             return {
@@ -158,8 +166,8 @@
     }
 
     .service-qq {
-        float: left;
-        width: 220px;
+        float: right;
+        width: 210px;
         color: green;
         font-size: 16px;
         font-weight: 600;
