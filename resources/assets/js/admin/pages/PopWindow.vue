@@ -10,6 +10,7 @@
                     <VueUEditor ueditorPath="/ueditor/" @ready="editorReady" style="line-height: 20px"></VueUEditor>
                 </el-form-item>
                 <el-form-item>
+                    <el-button type="primary" @click="doPreview">预览</el-button>
                     <el-button type="success" @click="doSave">保存</el-button>
                 </el-form-item>
             </el-form>
@@ -36,6 +37,12 @@
             this.loadData();
         },
         methods: {
+            editorReady: function (ue) {
+                this.editor = ue;
+                if (this.data.content) {
+                    this.editor.setContent(this.data.content);
+                }
+            },
             loadData: function () {
                 let self = this;
                 axios.get(api.indexPopWindow).then(function (res) {
@@ -45,18 +52,20 @@
                     }
                 });
             },
+            doPreview: function () {
+                this.$alert(this.data.content, this.data.title, {
+                    confirmButtonText: '确定',
+                    dangerouslyUseHTMLString: true,
+                    callback: action => {
+                    }
+                });
+            },
             doSave: function () {
                 let self = this;
                 self.data.content = self.editor.getContent();
                 axios.post(api.sitePopWindow, self.data).then(function () {
                     self.$message.success('成功');
                 })
-            },
-            editorReady: function (ue) {
-                this.editor = ue;
-                if (this.data.content) {
-                    this.editor.setContent(this.data.content);
-                }
             },
         }
     }
