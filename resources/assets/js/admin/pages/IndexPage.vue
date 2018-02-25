@@ -176,6 +176,7 @@
                 </div>
             </div>
         </el-tab-pane>
+        <input class="input-file" style="display: none" type="file" name="file" @change="uploadChange">
     </el-tabs>
 </template>
 
@@ -211,8 +212,21 @@
                 subItem.created_at = new Date().toLocaleDateString().replace(/\//g, '-');
             },
             uploadImage: function (item) {
-                this.$message('功能还未实现');
-            }
+                $('.input-file').data('target', item).click();
+            },
+            uploadChange: function () {
+                let self = this;
+                let formData = new FormData();
+                let inputFile = $('.input-file');
+                formData.append('file', inputFile.get(0).files[0]);
+                axios.post('/admin/upload', formData, {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                }).then(function (res) {
+                    self.$message.success('成功');
+                    inputFile.data('target').img_src = res.data.data;
+                    inputFile.val('');
+                });
+            },
         }
     }
 </script>

@@ -44,7 +44,8 @@ class Test extends Command
      */
     public function handle()
     {
-        $result=preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', '13336');
-        var_dump($result);
+        $path = 'upload/201802/25/FRfJH8Z11Qdx7ynL9zaozzZW9OdanOf0lMKq2WLD.pdf';
+        var_dump(asset('storage/' . $path));
+        var_dump(\Storage::disk('public')->url($path));
     }
 }

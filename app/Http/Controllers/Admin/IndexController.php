@@ -65,4 +65,15 @@ class IndexController extends Controller
         ]);
         return [];
     }
+
+    public function upload()
+    {
+        $dir = 'upload/' . date('Ym', time()) . '/' . date('d', time());
+
+        $path = request()->file('file')->store($dir, 'public');
+
+        $url = asset('storage/' . $path);
+
+        return ['data' => $url];
+    }
 }
