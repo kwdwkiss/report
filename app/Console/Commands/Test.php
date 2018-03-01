@@ -44,8 +44,6 @@ class Test extends Command
      */
     public function handle()
     {
-        $path = 'upload/201802/25/FRfJH8Z11Qdx7ynL9zaozzZW9OdanOf0lMKq2WLD.pdf';
-        var_dump(asset('storage/' . $path));
-        var_dump(\Storage::disk('public')->url($path));
+        var_dump(preg_match('/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}+$/', 'kwdwkiss'));
     }
 }
