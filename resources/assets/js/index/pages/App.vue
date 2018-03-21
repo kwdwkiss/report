@@ -1,79 +1,194 @@
 <template>
     <div>
-        <pop-window></pop-window>
-
-        <div class="row ad">
-            <div class="col-xs-6" v-for="item in page.ad_top">
-                <a target="_blank" :href="item.url">
-                    <img :src="item.img_src">
-                </a>
-            </div>
-        </div>
-        <div class="row ad">
-            <div class="col-xs-3" v-for="item in page.ad_second">
-                <a target="_blank" :href="item.url">
-                    <img :src="item.img_src">
-                </a>
-            </div>
-        </div>
-
-        <div class="row logo">
-            <div class="col-xs-6">
-                <a href="">
-                    <img src="/images/logo.jpg">
-                </a>
-            </div>
-            <div class="col-xs-6">
-                <div class="service-qq">
-                    <ul>
-                        <li class="col-xs-12">客服QQ：</li>
-                        <li class="col-xs-6" v-for="item in page.service_qq">{{item.name}}</li>
-                    </ul>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">宏海网络</a>
                 </div>
-                <div class="service-wx">
-                    <ul>
-                        <li>客服微信：</li>
-                        <li v-for="item in page.service_wx">
-                            <img :src="item.name" alt="">
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <!--<li><a href="#">账号查询</a></li>-->
+                        <!--<li><a href="#">电商导航</a></li>-->
+                        <!--<li><a href="#">网络兼职</a></li>-->
+                        <!--<li><a href="#">电商干货</a></li>-->
+                        <!--<li><a href="#">电商服务</a></li>-->
+                        <!--<li><a href="#">关于我们</a></li>-->
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li v-if="!user"><a href="javascript:" @click="login">登录</a></li>
+                        <li v-if="!user"><a href="javascript:" @click="register">注册</a></li>
+                        <li v-if="user" class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">{{user.mobile}} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <!--<li><a href="#">Action</a></li>-->
+                                <!--<li role="separator" class="divider"></li>-->
+                                <li><a href="javascript:" @click="doLogout">注销</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
+        </nav>
 
-        <div class="row nav">
-            <ul>
-                <a :href="item.url" v-for="item in page.menu">
-                    <li>{{item.name}}</li>
-                </a>
-            </ul>
-        </div>
-
-        <div class="row notice">
-            <span>公告：{{page.notice.title}}</span>
-            <span><a :href="page.notice.moreUrl">更多</a></span>
-        </div>
-
-        <router-view></router-view>
-
-        <div class="row ad">
-            <div class="col-xs-3" v-for="item in page.ad_foot">
-                <a target="_blank" :href="item.url">
-                    <img :src="item.img_src">
-                </a>
+        <div class="modal fade" id="login-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form v-if="loginStatus=='login'" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">手机号</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入手机号" name="mobile"
+                                           v-model="loginForm.mobile">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">密码</label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" placeholder="请输入密码" name="password"
+                                           v-model="loginForm.password">
+                                    <a href="javascript:" @click="register">忘记密码</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <a class="btn btn-primary" @click="doLogin">登录</a>
+                                    <a class="btn btn-default" @click="register">注册</a>
+                                </div>
+                            </div>
+                        </form>
+                        <form v-if="loginStatus=='register'" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">手机号</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入手机号" name="mobile"
+                                           v-model="registerForm.mobile">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">密码</label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control"
+                                           placeholder="密码必须包含字母、数字、符号两种组合且长度为8-16" name="password"
+                                           v-model="registerForm.password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">短信验证码</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" placeholder="请输入短信验证码"
+                                           v-model="registerForm.code">
+                                </div>
+                                <span class="col-sm-3">
+                                    <button type="button" class="btn btn-success" @click="sendSms"
+                                            v-bind:disabled="smsDisable">{{smsText}}</button>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <a class="btn btn-primary" @click="doRegister">提交</a>
+                                    <a class="btn btn-default" @click="loginStatus='login'">返回</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <hr>
+        <div class="container old-root">
+            <pop-window></pop-window>
 
-        <div class="row copyright">
-            <div>
-                <p>
-                    <a href="http://www.cnzz.com/stat/website.php?web_id=1271314784" target="_blank"
-                       title="站长统计">站长统计</a>
-                    |
-                    Copyright©2015-2020 www.tbpzw.com .All Rights Reserved ICP证：桂ICP备14007039号
-                </p>
+            <div class="row hidden-xs hidden-sm ad">
+                <div class="col-md-6" v-for="item in page.ad_top">
+                    <a target="_blank" :href="item.url">
+                        <img :src="item.img_src">
+                    </a>
+                </div>
+            </div>
+            <div class="row hidden-xs hidden-sm ad">
+                <div class="col-md-3" v-for="item in page.ad_second">
+                    <a target="_blank" :href="item.url">
+                        <img :src="item.img_src">
+                    </a>
+                </div>
+            </div>
+
+            <div class="row logo">
+                <div class="col-xs-6">
+                    <a href="">
+                        <img src="/images/logo.jpg">
+                    </a>
+                </div>
+                <div class="col-xs-6">
+                    <div class="service-qq">
+                        <ul>
+                            <li class="col-xs-12">QQ客服：</li>
+                            <li class="col-xs-6" v-for="item in page.service_qq">{{item.name}}</li>
+                        </ul>
+                    </div>
+                    <div class="service-wx">
+                        <ul>
+                            <li>微信<br/>客服：</li>
+                            <li v-for="item in page.service_wx">
+                                <img :src="item.name" alt="">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row old-nav">
+                <ul>
+                    <a :href="item.url" v-for="item in page.menu">
+                        <li>{{item.name}}</li>
+                    </a>
+                </ul>
+            </div>
+
+            <div class="row notice">
+                <span>公告：{{page.notice.title}}</span>
+                <span><a :href="page.notice.moreUrl">更多</a></span>
+            </div>
+
+            <router-view></router-view>
+
+            <div class="row hidden-xs hidden-sm ad">
+                <div class="col-xs-3" v-for="item in page.ad_foot">
+                    <a target="_blank" :href="item.url">
+                        <img :src="item.img_src">
+                    </a>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row copyright">
+                <div>
+                    <p>
+                        <a href="http://www.cnzz.com/stat/website.php?web_id=1271314784" target="_blank"
+                           title="站长统计">站长统计</a>
+                        |
+                        Copyright©2015-2020 www.tbpzw.com .All Rights Reserved ICP证：桂ICP备14007039号
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -87,7 +202,85 @@
         name: "app",
         data: function () {
             return {
-                page: store.state.page,
+                smsText: '发送短信',
+                smsDisable: false,
+                smsTimer: 60,
+                smsHandle: null,
+                loginStatus: null,
+                registerForm: {
+                    mobile: '',
+                    password: '',
+                    code: '',
+                },
+                loginForm: {
+                    mobile: '',
+                    password: '',
+                },
+            }
+        },
+        computed: {
+            page: function () {
+                return this.$store.state.page;
+            },
+            user: function () {
+                return this.$store.state.user;
+            }
+        },
+        methods: {
+            login: function () {
+                $("#login-dialog").modal('show');
+                this.loginStatus = 'login';
+            },
+            doLogin: function () {
+                let self = this;
+                axios.post(api.userLogin, self.loginForm).then(function (res) {
+                    self.$store.commit('user');
+                    $("#login-dialog").modal('hide');
+                });
+            },
+            doLogout: function () {
+                let self = this;
+                axios.get(api.userLogout).then(function (res) {
+                    self.$store.commit('user');
+                });
+            },
+            register: function () {
+                $("#login-dialog").modal('show');
+                this.loginStatus = 'register';
+            },
+            registerInit: function () {
+                this.registerForm.mobile = '';
+                this.registerForm.password = '';
+                this.registerForm.code = '';
+            },
+            doRegister: function () {
+                let self = this;
+                axios.post(api.userRegister, self.registerForm).then(function (res) {
+                    self.$message.success('成功');
+                    $("#login-dialog").modal('hide');
+                    self.registerInit();
+                    self.$store.commit('user');
+                });
+            },
+            smsInit: function () {
+                clearInterval(self.smsHandle);
+                this.smsText = '发送短信';
+                this.smsTimer = 60;
+                this.smsDisable = false;
+            },
+            sendSms: function () {
+                let self = this;
+                axios.post(api.userSms, self.registerForm).then(function (res) {
+                    self.smsDisable = true;
+                    self.smsHandle = setInterval(function () {
+                        if (self.smsTimer > 0) {
+                            self.smsText = '还有' + self.smsTimer + '秒';
+                            self.smsTimer--;
+                        } else {
+                            self.smsInit();
+                        }
+                    }, 1000);
+                });
             }
         }
     }
@@ -96,34 +289,38 @@
 <style>
     body {
         margin: 0 auto;
-        width: 1000px;
+        width: 970px;
         min-height: 400px;
         background-color: #fff;
         color: #222
     }
 
-    ul {
+    .old-root {
+        padding-top: 51px;
+    }
+
+    .old-root ul {
         padding-left: 0;
         margin-bottom: 0;
     }
 
-    li {
+    .old-root li {
         list-style: none;
     }
 
-    th, td {
+    .old-root th, td {
         text-align: center;
     }
 
-    p {
+    .old-root p {
         margin-bottom: 0;
     }
 
-    input {
+    .old-root input {
         line-height: normal;
     }
 
-    a {
+    .old-root a {
         color: #222;
     }
 
@@ -140,7 +337,7 @@
         height: 80px;
     }
 
-    .nav {
+    .old-nav {
         background-color: #e6e6e6;
         color: #505050;
         line-height: 40px;
@@ -148,13 +345,13 @@
         font-weight: 600;
     }
 
-    .nav li {
+    .old-nav li {
         display: inline-block;
         float: left;
         padding: 0 35px;
     }
 
-    .nav li:hover {
+    .old-nav li:hover {
         background-color: #41A51D;
         color: #fff;
     }
@@ -175,6 +372,7 @@
 
     .service-wx {
         float: right;
+        width: 250px;
         color: green;
         font-size: 16px;
         font-weight: 600;
