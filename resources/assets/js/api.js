@@ -1,7 +1,7 @@
 module.exports = {
     login: '/admin/login',
     logout: '/admin/logout',
-    userInfo: '/admin/info',
+    adminInfo: '/admin/info',
     register: '/admin/register',
     modifyPassword: '/admin/modify-password',
 
@@ -55,4 +55,12 @@ module.exports = {
 
     indexArticleList: '/index/article/list',
     indexArticleShow: '/index/article/show',
+
+    //>>>>>>>>>>user
+    userLogin: '/user/login',
+    userLogout: '/user/logout',
+    userInfo: '/user/info',
+    userRegister: 'user/register',
+    userModifyPassword: '/user/modify-password',
+    userSms: '/user/sms'
 };

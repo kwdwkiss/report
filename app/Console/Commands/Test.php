@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Aliyun\Sms;
 use App\Account;
 use App\AccountReport;
 use App\Admin;
@@ -44,6 +45,8 @@ class Test extends Command
      */
     public function handle()
     {
-        var_dump(preg_match('/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}+$/', 'kwdwkiss'));
+        //var_dump(preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', 18677303808));
+        $res = app('aliyun.sms')->send(18677303808, 1000);
+        var_dump($res);
     }
 }

@@ -24,8 +24,10 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/taxonomy/all/data', 'Index\TaxonomyController@allData');
     Route::get('/taxonomy/all/display', 'Index\TaxonomyController@allDisplay');
 
-    Route::get('/user/logout', 'User\IndexController@logout');
-    Route::post('/user/login', 'User\IndexController@login');
+    Route::get('/user/logout', 'User\UserController@logout');
+    Route::post('/user/login', 'User\UserController@login');
+    Route::post('/user/register', 'User\UserController@register');
+    Route::post('/user/sms', 'User\UserController@sms');
 
     Route::get('/admin', 'Admin\IndexController@index');
     Route::get('/admin/logout', 'Admin\IndexController@logout');
@@ -33,7 +35,7 @@ Route::middleware(['csrf'])->group(function () {
 });
 
 Route::middleware(['auth:user', 'csrf'])->group(function () {
-
+    Route::get('/user/info', 'User\UserController@info');
 });
 
 Route::middleware(['auth:admin'])->group(function () {

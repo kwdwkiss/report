@@ -36,9 +36,6 @@
             let self = this;
             return {
                 title: '系统后台',
-                user: {
-                    name: ''
-                },
                 modifyPasswordVisible: false,
                 form: {
                     password: '',
@@ -69,16 +66,15 @@
                 }
             }
         },
+        computed: {
+            user: function () {
+                return this.$store.state.user
+            }
+        },
         created: function () {
-            let self = this;
-            axios.get(api.userInfo).then(function (res) {
-                self.user = res.data.data;
-            })
+            this.$store.commit('user');
         },
         methods: {
-            info: function () {
-
-            },
             modifyPassword: function () {
                 let self = this;
                 this.$refs.form.validate((valid) => {

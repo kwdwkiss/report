@@ -32,7 +32,7 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
     if (error.response) {
         if (error.response.status === 401) {//Unauthorized
-            app.$router.push('/login');
+            //app.$router.push('/login');
         } else if (error.response.status === 419) {//csrf token invalid
             location.reload();
         } else {
@@ -75,6 +75,7 @@ const store = window.store = new Vuex.Store({
             account: {},
             type: 0,//type 0-不显示 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
         },
+        user: null
     },
     mutations: {
         searchResult(state, data) {
@@ -85,8 +86,16 @@ const store = window.store = new Vuex.Store({
                 state.taxonomy = res.data.data;
             })
         },
+        user(state) {
+            axios.get(api.userInfo).then(function (res) {
+                state.user = res.data.data;
+            }).catch(function () {
+                state.user = null;
+            });
+        }
     }
 });
+store.commit('user');
 
 window.app = new Vue({
     el: '#app',

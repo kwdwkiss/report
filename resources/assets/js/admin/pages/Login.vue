@@ -40,15 +40,9 @@
                 this.$refs.form.validate((valid) => {
                     if (valid) {
                         self.loading = true;
-                        axios.post(api.login, {
-                            username: self.form.username,
-                            password: self.form.password
-                        }).then(function (res) {
+                        axios.post(api.login, self.form).then(function (res) {
                             self.loading = false;
-                            if (res.data.code === 0) {
-                                app.$data.user = res.data.user;
-                                app.$router.push('/');
-                            }
+                            app.$router.push('/');
                         }).catch(function () {
                             self.loading = false;
                         });
