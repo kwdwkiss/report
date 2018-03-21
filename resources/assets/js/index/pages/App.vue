@@ -29,7 +29,8 @@
                         <li v-if="!user"><a href="javascript:" @click="register">注册</a></li>
                         <li v-if="user" class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">{{user.mobile}} <span class="caret"></span></a>
+                               aria-haspopup="true" aria-expanded="false">{{user.mobile}} <span
+                                    class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <!--<li><a href="#">Action</a></li>-->
                                 <!--<li role="separator" class="divider"></li>-->
@@ -49,6 +50,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             &times;
                         </button>
+                        <h4 class="modal-title">{{dialogTitle}}</h4>
                     </div>
                     <div class="modal-body">
                         <form v-if="loginStatus=='login'" class="form-horizontal" role="form">
@@ -69,8 +71,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <a class="btn btn-primary" @click="doLogin">登录</a>
-                                    <a class="btn btn-default" @click="register">注册</a>
+                                    <a class="btn btn-success" @click="doLogin">登录</a>
+                                    <a class="btn btn-primary" @click="register">注册</a>
                                 </div>
                             </div>
                         </form>
@@ -103,8 +105,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <a class="btn btn-primary" @click="doRegister">提交</a>
-                                    <a class="btn btn-default" @click="loginStatus='login'">返回</a>
+                                    <a class="btn btn-primary" @click="doRegister">确认</a>
+                                    <a class="btn btn-success" @click="login">返回登录</a>
                                 </div>
                             </div>
                         </form>
@@ -202,6 +204,7 @@
         name: "app",
         data: function () {
             return {
+                dialogTitle: '登录',
                 smsText: '发送短信',
                 smsDisable: false,
                 smsTimer: 60,
@@ -230,6 +233,7 @@
             login: function () {
                 $("#login-dialog").modal('show');
                 this.loginStatus = 'login';
+                this.dialogTitle = '登录';
             },
             doLogin: function () {
                 let self = this;
@@ -247,6 +251,7 @@
             register: function () {
                 $("#login-dialog").modal('show');
                 this.loginStatus = 'register';
+                this.dialogTitle = '注册&找回密码';
             },
             registerInit: function () {
                 this.registerForm.mobile = '';
