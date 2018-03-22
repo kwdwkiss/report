@@ -151,8 +151,11 @@ class UserController extends Controller
 
         $code = random_int(1000, 9999);
 
-        $result = app('aliyun.sms')->send($mobile, $code);
-        //$result = ['success' => true];//调试
+        if (env('ALIYUN_SMS_SEND_ENABLE', true)) {
+            $result = app('aliyun.sms')->send($mobile, $code);
+        }else{
+            $result = ['success' => true];//调试，开发时不发送短信
+        }
 
         if ($result['success']) {
             $sms = Sms::create([
