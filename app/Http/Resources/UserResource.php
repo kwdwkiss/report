@@ -15,7 +15,7 @@ class UserResource extends Resource
     public function toArray($request)
     {
         $data = parent::toArray($request);
-        $data['type_label'] = $this->resource->_type->name;
+        $data['type_label'] = $this->resource->_type ? $this->resource->_type->name : '';
         $data['tags'] = $this->_tags->modelKeys();
         unset($data['_tags']);
         $data['_profile'] = new UserProfileResource($this->resource->_profile);
