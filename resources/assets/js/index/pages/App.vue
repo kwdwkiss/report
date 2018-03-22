@@ -92,7 +92,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">密码</label>
+                                <label class="col-sm-3 control-label">新密码</label>
                                 <div class="col-sm-9">
                                     <input type="password" class="form-control"
                                            placeholder="密码必须包含字母、数字、符号两种组合且长度为8-16" name="password"
@@ -248,6 +248,7 @@
                 let self = this;
                 axios.post(api.userLogin, self.loginForm).then(function (res) {
                     self.$store.commit('user');
+                    self.registerInit();
                     $("#login-dialog").modal('hide');
                 });
             },
