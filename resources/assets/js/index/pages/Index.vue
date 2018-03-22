@@ -186,7 +186,7 @@
 
     .article-data .article-title {
         display: inline-block;
-        width: 380px;
+        width: 370px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
