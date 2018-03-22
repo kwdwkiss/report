@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Account;
 use App\AccountReport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AccountReportResource;
@@ -78,10 +79,13 @@ class AccountReportController extends Controller
     public function delete()
     {
         \DB::transaction(function () {
-            $accountReport = AccountReport::with('_account')->find(request('id'));
+            $accountReport = AccountReport::find(request('id'));
             if ($accountReport) {
                 $accountReport->delete();
-                $accountReport->_account->decrement('report_count');
+                $account = Account::where('name', $accountReport->account_name)
+                    ->where('type', $accountReport->account_type)
+                    ->first();
+                $account->decrement('report_count');
             }
         });
 
