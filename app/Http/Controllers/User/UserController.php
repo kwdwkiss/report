@@ -25,7 +25,7 @@ class UserController extends Controller
         if (\Auth::guard('user')->attempt([
             'mobile' => request('mobile'),
             'password' => request('password')
-        ])) {
+        ], request('remember'))) {
             return [];
         }
         return [

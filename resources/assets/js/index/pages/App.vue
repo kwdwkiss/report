@@ -66,12 +66,19 @@
                                 <div class="col-sm-9">
                                     <input type="password" class="form-control" placeholder="请输入密码" name="password"
                                            v-model="loginForm.password">
-                                    <a href="javascript:" @click="register">忘记密码</a>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" :checked="loginForm.remember"> 记住我
+                                        </label>
+                                        &nbsp;
+                                        <a href="javascript:" @click="register">忘记密码</a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <a class="btn btn-success" @click="doLogin">登录</a>
+                                    &nbsp;
                                     <a class="btn btn-primary" @click="register">注册</a>
                                 </div>
                             </div>
@@ -106,6 +113,7 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <a class="btn btn-primary" @click="doRegister">确认</a>
+                                    &nbsp;
                                     <a class="btn btn-success" @click="login">返回登录</a>
                                 </div>
                             </div>
@@ -115,7 +123,7 @@
             </div>
         </div>
 
-        <div class="container old-root">
+        <div class="old-root">
             <pop-window></pop-window>
 
             <div class="row hidden-xs hidden-sm ad">
@@ -218,6 +226,7 @@
                 loginForm: {
                     mobile: '',
                     password: '',
+                    remember: true
                 },
             }
         },
