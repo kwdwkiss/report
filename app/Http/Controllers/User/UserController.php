@@ -94,7 +94,17 @@ class UserController extends Controller
 
         $sms->update(['status' => 1]);
 
-        $user = User::updateOrCreate(['mobile' => $mobile], ['password' => bcrypt($password)]);
+        $user = User::where('mobile', $mobile)->first();
+
+        if ($user) {
+            $user->update(['password' => bcrypt($password)]);
+        } else {
+            $user = User::create([
+                'mobile' => $mobile,
+                'type' => 401,
+                'password' => bcrypt($password)
+            ]);
+        }
 
         \Auth::guard('user')->login($user);
 
