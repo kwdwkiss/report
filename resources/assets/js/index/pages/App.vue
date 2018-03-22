@@ -248,7 +248,6 @@
                 let self = this;
                 axios.post(api.userLogin, self.loginForm).then(function (res) {
                     self.$store.commit('user');
-                    self.registerInit();
                     $("#login-dialog").modal('hide');
                 });
             },
@@ -262,23 +261,24 @@
                 $("#login-dialog").modal('show');
                 this.loginStatus = 'register';
                 this.dialogTitle = '注册&找回密码';
+                self.registerInit();
             },
             registerInit: function () {
                 this.registerForm.mobile = '';
                 this.registerForm.password = '';
                 this.registerForm.code = '';
+                this.smsInit();
             },
             doRegister: function () {
                 let self = this;
                 axios.post(api.userRegister, self.registerForm).then(function (res) {
                     self.$message.success('成功');
                     $("#login-dialog").modal('hide');
-                    self.registerInit();
                     self.$store.commit('user');
                 });
             },
             smsInit: function () {
-                clearInterval(self.smsHandle);
+                clearInterval(this.smsHandle);
                 this.smsText = '发送短信';
                 this.smsTimer = 60;
                 this.smsDisable = false;

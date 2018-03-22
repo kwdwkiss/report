@@ -151,7 +151,7 @@
                         <template v-for="item in data.service_wx">
                             <el-form-item label="微信">
                                 <el-input v-model="item.name"></el-input>
-                                <el-button type="primary" @click="uploadImage(item)">上传</el-button>
+                                <el-button type="primary" @click="uploadImage(item,'name')">上传</el-button>
                             </el-form-item>
                         </template>
                         <el-form-item>
@@ -211,8 +211,11 @@
             refreshDate: function (subItem) {
                 subItem.created_at = new Date().toLocaleDateString().replace(/\//g, '-');
             },
-            uploadImage: function (item) {
-                $('.input-file').data('target', item).click();
+            uploadImage: function (item, key) {
+                let inputFile = $('.input-file');
+                key = key ? key : 'img_src';
+                inputFile.data('key', key);
+                inputFile.data('target', item).click();
             },
             uploadChange: function () {
                 let self = this;
@@ -223,7 +226,8 @@
                     headers: {'Content-Type': 'multipart/form-data'}
                 }).then(function (res) {
                     self.$message.success('成功');
-                    inputFile.data('target').img_src = res.data.data;
+                    let key = inputFile.data('key');
+                    inputFile.data('target')[key] = res.data.data;
                     inputFile.val('');
                 });
             },
