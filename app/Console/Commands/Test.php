@@ -10,6 +10,7 @@ use App\Config;
 use App\Tag;
 use App\Taxonomy;
 use App\UserProfile;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class Test extends Command
@@ -46,7 +47,8 @@ class Test extends Command
     public function handle()
     {
         //var_dump(preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', 18677303808));
-        $res = app('aliyun.sms')->send(18677303808, 1000);
-        var_dump($res);
+        $result = Carbon::now()->startOfMonth();
+        var_dump($result);
+        $temp = '';
     }
 }

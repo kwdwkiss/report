@@ -43,6 +43,8 @@ Route::middleware(['auth:admin'])->group(function () {
 });
 
 Route::middleware(['auth:admin', 'csrf'])->group(function () {
+    Route::get('/admin/statement', 'Admin\IndexController@statement');
+
     Route::get('/admin/info', 'Admin\IndexController@info');
     Route::post('/admin/modify-password', 'Admin\IndexController@modifyPassword');
 

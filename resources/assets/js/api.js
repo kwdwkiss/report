@@ -1,4 +1,6 @@
 module.exports = {
+    adminStatement: '/admin/statement',
+
     login: '/admin/login',
     logout: '/admin/logout',
     adminInfo: '/admin/info',
