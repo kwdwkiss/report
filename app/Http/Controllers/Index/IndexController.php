@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Index;
 
 use App\Account;
 use App\AccountReport;
+use App\AccountSearch;
 use App\Config;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
@@ -37,17 +38,42 @@ class IndexController extends Controller
 
     public function search()
     {
+        $user = \Auth::guard('user')->user();
+
         request()->query->set('ip_hide', 1);
         $account_type = request('account_type');
         $name = request('name');
 
-        Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
-        if ($account_type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {
-            throw new JsonException('QQ号码格式错误');
+        try {
+            Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
+            if ($account_type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {
+                throw new JsonException('QQ号码格式错误');
+            }
+            if ($account_type == 203 && !preg_match('/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}+$/', $name)) {
+                throw new JsonException('微信号码格式错误');
+            }
+            if ($account_type == 204 && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $name)) {
+                throw new JsonException('手机号码格式错误');
+            }
+        } catch (JsonException $e) {
+            AccountSearch::create([
+                'user_id' => $user ? $user->id : 0,
+                'type' => $account_type,
+                'name' => $name,
+                'ip' => request()->getClientIp(),
+                'success' => 0,
+                'result' => $e->getMessage()
+            ]);
+            throw $e;
         }
-        if ($account_type == 204 && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $name)) {
-            throw new JsonException('手机号码格式错误');
-        }
+        AccountSearch::create([
+            'user_id' => $user ? $user->id : 0,
+            'type' => $account_type,
+            'name' => $name,
+            'ip' => request()->getClientIp(),
+            'success' => 1,
+            'result' => ''
+        ]);
 
         $account = Account::where('type', $account_type)->where('name', $name)->first();
 

@@ -25,16 +25,16 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-3">
-                        今日：{{statement.report.today}}
+                        今日：{{statement.accountReport.today}}
                     </div>
                     <div class="col-md-3">
-                        昨日：{{statement.report.yesterday}}
+                        昨日：{{statement.accountReport.yesterday}}
                     </div>
                     <div class="col-md-3">
-                        本月：{{statement.report.month}}
+                        本月：{{statement.accountReport.month}}
                     </div>
                     <div class="col-md-3">
-                        上月：{{statement.report.lastMonth}}
+                        上月：{{statement.accountReport.lastMonth}}
                     </div>
                 </div>
             </div>
@@ -45,16 +45,16 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-3">
-                        今日：{{statement.search.today}}
+                        今日：{{statement.accountSearch.today}}
                     </div>
                     <div class="col-md-3">
-                        昨日：{{statement.search.yesterday}}
+                        昨日：{{statement.accountSearch.yesterday}}
                     </div>
                     <div class="col-md-3">
-                        本月：{{statement.search.month}}
+                        本月：{{statement.accountSearch.month}}
                     </div>
                     <div class="col-md-3">
-                        上月：{{statement.search.lastMonth}}
+                        上月：{{statement.accountSearch.lastMonth}}
                     </div>
                 </div>
             </div>
@@ -69,8 +69,8 @@
             return {
                 statement: {
                     userRegister: {},
-                    report: {},
-                    search: {}
+                    accountReport: {},
+                    accountSearch: {}
                 }
             }
         },

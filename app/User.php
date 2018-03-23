@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -65,5 +66,32 @@ class User extends Authenticatable
         }
 
         return (array)$value;
+    }
+
+    public static function statement()
+    {
+        $data = \Cache::remember('statement.user.register', 10, function () {
+            $today = static::query()
+                ->where('created_at', '>', Carbon::today())
+                ->count();
+
+            $yesterday = static::query()
+                ->where('created_at', '>', Carbon::yesterday())
+                ->where('created_at', '<', Carbon::today())
+                ->count();
+
+            $month = static::query()
+                ->where('created_at', '>', Carbon::now()->startOfMonth())
+                ->count();
+
+            $lastMonth = static::query()
+                ->where('created_at', '>', Carbon::now()->subMonths(1)->startOfMonth())
+                ->where('created_at', '<', Carbon::now()->startOfMonth())
+                ->count();
+
+            return compact('today', 'yesterday', 'month', 'lastMonth');
+        });
+
+        return $data;
     }
 }

@@ -8,11 +8,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\AccountReport;
+use App\AccountSearch;
 use App\Config;
 use App\Http\Controllers\Controller;
 use App\Taxonomy;
 use App\User;
-use Carbon\Carbon;
 
 class IndexController extends Controller
 {
@@ -81,27 +82,11 @@ class IndexController extends Controller
 
     public function statement()
     {
-        $today = User::query()
-            ->where('created_at', '>', Carbon::today())
-            ->count();
-
-        $yesterday = User::query()
-            ->where('created_at', '>', Carbon::yesterday())
-            ->where('created_at', '<', Carbon::today())
-            ->count();
-
-        $month = User::query()
-            ->where('created_at', '>', Carbon::now()->startOfMonth())
-            ->count();
-
-        $lastMonth = User::query()
-            ->where('created_at', '>', Carbon::now()->subMonths(1)->startOfMonth())
-            ->where('created_at', '<', Carbon::now()->startOfMonth())
-            ->count();
-
         return [
             'data' => [
-                'userRegister' => compact('today', 'yesterday', 'week', 'lastWeek', 'month', 'lastMonth')
+                'userRegister' => User::statement(),
+                'accountReport' => AccountReport::statement(),
+                'accountSearch' => AccountSearch::statement()
             ]
         ];
     }
