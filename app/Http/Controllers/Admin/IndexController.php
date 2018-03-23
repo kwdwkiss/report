@@ -95,7 +95,7 @@ class IndexController extends Controller
             ->count();
 
         $lastMonth = User::query()
-            ->where('created_at', '>', Carbon::now()->subMonths(1))
+            ->where('created_at', '>', Carbon::now()->subMonths(1)->startOfMonth())
             ->where('created_at', '<', Carbon::now()->startOfMonth())
             ->count();
 
