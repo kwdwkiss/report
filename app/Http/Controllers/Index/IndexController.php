@@ -171,6 +171,17 @@ class IndexController extends Controller
     {
         $uploadFile = request()->file('file');
 
+        $size = $uploadFile->getSize();//byte
+
+        $limit = 500;
+
+        if ($size / 1024 > $limit) {
+            return [
+                'code' => -1,
+                'message' => "上传文件不能超过{$limit}KB"
+            ];
+        }
+
         $user = \Auth::guard('admin')->user();
 
         return Attachment::createForOss($uploadFile, $user);
