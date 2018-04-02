@@ -227,7 +227,10 @@
                 }).then(function (res) {
                     self.$message.success('成功');
                     let key = inputFile.data('key');
-                    inputFile.data('target')[key] = res.data.data;
+                    //inputFile.data('target')['attachment'] = res.data.data;
+                    inputFile.data('target')[key] = res.data.data.url;
+                    inputFile.val('');
+                }).catch(function () {
                     inputFile.val('');
                 });
             },

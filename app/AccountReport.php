@@ -21,9 +21,15 @@ class AccountReport extends Model
         return $this->hasOne(Taxonomy::class, 'id', 'type');
     }
 
-    public static function report($account_type, $name, $report_type, $ip)
+    public function _attachments()
     {
-        \DB::transaction(function () use ($account_type, $name, $report_type, $ip
+        return $this->belongsToMany(Attachment::class, 'account_report_attachment', 'account_report_id')
+            ->withTimestamps();
+    }
+
+    public static function report($account_type, $name, $report_type, $ip, $description, $attachment = null)
+    {
+        \DB::transaction(function () use ($account_type, $name, $report_type, $ip, $description, $attachment
         ) {
             Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
             Taxonomy::where('pid', Taxonomy::REPORT_TYPE)->findOrFail($report_type);
@@ -41,12 +47,18 @@ class AccountReport extends Model
             }
             $account->increment('report_count');
 
-            AccountReport::create([
+            $accountReport = AccountReport::create([
                 'account_type' => $account_type,
                 'account_name' => $name,
                 'type' => $report_type,
-                'ip' => $ip
+                'ip' => $ip,
+                'description' => $description
             ]);
+
+            //添加附件
+            if ($attachment) {
+                $accountReport->_attachments()->attach($attachment);
+            }
         });
     }
 

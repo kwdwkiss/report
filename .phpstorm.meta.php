@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2018-03-21.
+    * Generated on 2018-03-26.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -42,6 +42,7 @@ namespace PHPSTORM_META {
         'image' => \Intervention\Image\ImageManager::class,
         'captcha' => \Mews\Captcha\Captcha::class,
         'aliyun.sms' => \Aliyun\Sms::class,
+        'aliyun.oss' => \Aliyun\Oss::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'translation.loader' => \Illuminate\Translation\FileLoader::class,
@@ -174,6 +175,7 @@ namespace PHPSTORM_META {
         'image' => \Intervention\Image\ImageManager::class,
         'captcha' => \Mews\Captcha\Captcha::class,
         'aliyun.sms' => \Aliyun\Sms::class,
+        'aliyun.oss' => \Aliyun\Oss::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'translation.loader' => \Illuminate\Translation\FileLoader::class,
@@ -306,6 +308,7 @@ namespace PHPSTORM_META {
         'image' => \Intervention\Image\ImageManager::class,
         'captcha' => \Mews\Captcha\Captcha::class,
         'aliyun.sms' => \Aliyun\Sms::class,
+        'aliyun.oss' => \Aliyun\Oss::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'translation.loader' => \Illuminate\Translation\FileLoader::class,
@@ -438,6 +441,7 @@ namespace PHPSTORM_META {
         'image' => \Intervention\Image\ImageManager::class,
         'captcha' => \Mews\Captcha\Captcha::class,
         'aliyun.sms' => \Aliyun\Sms::class,
+        'aliyun.oss' => \Aliyun\Oss::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'translation.loader' => \Illuminate\Translation\FileLoader::class,
@@ -570,6 +574,7 @@ namespace PHPSTORM_META {
         'image' => \Intervention\Image\ImageManager::class,
         'captcha' => \Mews\Captcha\Captcha::class,
         'aliyun.sms' => \Aliyun\Sms::class,
+        'aliyun.oss' => \Aliyun\Oss::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'translation.loader' => \Illuminate\Translation\FileLoader::class,
@@ -702,6 +707,7 @@ namespace PHPSTORM_META {
         'image' => \Intervention\Image\ImageManager::class,
         'captcha' => \Mews\Captcha\Captcha::class,
         'aliyun.sms' => \Aliyun\Sms::class,
+        'aliyun.oss' => \Aliyun\Oss::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'translation.loader' => \Illuminate\Translation\FileLoader::class,
@@ -834,6 +840,7 @@ namespace PHPSTORM_META {
         'image' => \Intervention\Image\ImageManager::class,
         'captcha' => \Mews\Captcha\Captcha::class,
         'aliyun.sms' => \Aliyun\Sms::class,
+        'aliyun.oss' => \Aliyun\Oss::class,
         'blade.compiler' => \Illuminate\View\Compilers\BladeCompiler::class,
         'validation.presence' => \Illuminate\Validation\DatabasePresenceVerifier::class,
         'translation.loader' => \Illuminate\Translation\FileLoader::class,

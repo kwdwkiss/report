@@ -50,6 +50,7 @@ module.exports = {
     taxonomyAllData: '/taxonomy/all/data',
     taxonomyAllDisplay: '/taxonomy/all/display',
     captcha: '/captcha/default',
+    uploadOss: '/index/upload-oss',
 
     indexSearch: '/index/search',
     indexReport: '/index/report',

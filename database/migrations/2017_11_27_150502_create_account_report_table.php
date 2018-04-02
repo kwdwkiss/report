@@ -20,6 +20,7 @@ class CreateAccountReportTable extends Migration
             $table->string('ip');
             $table->integer('type');
             $table->tinyInteger('display')->default(1);
+            $table->text('description');//描述
             $table->string('remark');
             $table->timestamps();
 

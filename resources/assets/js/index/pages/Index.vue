@@ -1,16 +1,97 @@
 <template>
     <div>
         <div class="row search">
-            <div class="col-xs-6">
+            <div class="col-xs-8">
                 <select v-model="searchParams.account_type">
                     <option v-for="item in $store.state.taxonomy.account_type" :value="item.id">{{item.name}}
                     </option>
                 </select>
                 <input v-model="searchParams.name" name="name" type="text" placeholder="请输入账号">
                 <button @click="doSearch" class="btn btn-success">查询</button>
+                <button @click="report" class="btn btn-danger">投诉举报</button>
             </div>
-            <div class="col-xs-6 member-num">
+            <div class="col-xs-4 member-num">
                 <p>网站实名认证会员：<span>{{page.auth_member_num}}</span>名会员</p>
+            </div>
+        </div>
+
+        <div class="modal fade" id="report-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">投诉举报</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">账号类型</label>
+                                <div class="col-sm-9">
+                                    <select v-model="reportParams.account_type" name="account_type"
+                                            class="form-control">
+                                        <option v-for="item in $store.state.taxonomy.account_type" :value="item.id">
+                                            {{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">投诉账号</label>
+                                <div class="col-sm-9">
+                                    <input v-model="reportParams.name" name="name" type="text" class="form-control"
+                                           placeholder="投诉账号">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">投诉类型</label>
+                                <div class="col-sm-9">
+                                    <select v-model="reportParams.report_type" name="report_type" class="form-control">
+                                        <option v-for="item in $store.state.taxonomy.report_type" :value="item.id">
+                                            {{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">上传图片</label>
+                                <div class="col-sm-9">
+                                    <button @click="uploadImage(reportParams.image)" type="button"
+                                            class="btn btn-primary">上传图片
+                                    </button>
+                                    <input class="input-file" style="display: none" type="file" @change="uploadChange">
+                                </div>
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <img :src="reportParams.image.attachment.url" alt="" style="max-height: 200px">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">情况描述</label>
+                                <div class="col-sm-9">
+                                    <textarea cols="30" rows="4" class="form-control" placeholder="如实描述举报内容，恶意举报将封停账号"
+                                              v-model="reportParams.description"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">验证码</label>
+                                <div class="col-sm-6">
+                                    <input v-model="reportParams.captcha" name="captcha" type="text"
+                                           class="form-control" placeholder="请输入验证码">
+                                </div>
+                                <div class="col-sm-3">
+                                    <img :src="captcha_src" alt="" @click="doCaptcha">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="button" class="btn btn-danger" @click="doReport">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -41,24 +122,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="row report-form">
-            <div>
-                <span>账号类型</span>
-                <select v-model="reportParams.account_type" name="account_type">
-                    <option v-for="item in $store.state.taxonomy.account_type" :value="item.id">{{item.name}}
-                    </option>
-                </select>
-                <input v-model="reportParams.name" name="name" type="text" placeholder="投诉账号">
-                <span>投诉类型</span>
-                <select v-model="reportParams.report_type" name="report_type">
-                    <option v-for="item in $store.state.taxonomy.report_type" :value="item.id">{{item.name}}</option>
-                </select>
-                <img :src="captcha_src" alt="" @click="doCaptcha">
-                <input v-model="reportParams.captcha" name="captcha" type="text" placeholder="请输入验证码">
-                <button @click="doReport" class="btn btn-danger">投诉举报</button>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -73,19 +136,30 @@
         data: function () {
             return {
                 searchParams: {
-                    account_type: store.state.taxonomy.account_type[0].id,
+                    account_type: this.$store.state.taxonomy.account_type[0].id,
                     name: ''
                 },
-                reportParams: {
-                    account_type: store.state.taxonomy.account_type[0].id,
-                    report_type: store.state.taxonomy.report_type[0].id,
-                    name: '',
-                    captcha: ''
-                },
+                reportParams: null,
                 captcha_src: api.captcha + '?' + Date.parse(new Date())
             }
         },
+        created: function () {
+            this.initReportParams();
+        },
         methods: {
+            initReportParams: function () {
+                this.reportParams = {
+                    account_type: this.$store.state.taxonomy.account_type[0].id,
+                    report_type: this.$store.state.taxonomy.report_type[0].id,
+                    name: '',
+                    image: {
+                        attachment: {}
+                    },
+                    description: '',
+                    captcha: ''
+                };
+                this.doCaptcha();
+            },
             doCaptcha: function () {
                 this.captcha_src = api.captcha + '?' + Date.parse(new Date());
             },
@@ -98,17 +172,36 @@
                     self.$router.push('/');
                 });
             },
+            report: function () {
+                $("#report-dialog").modal('show');
+            },
             doReport: function () {
                 let self = this;
                 axios.post(api.indexReport, self.reportParams).then(function () {
-                    self.reportParams = {
-                        account_type: store.state.taxonomy.account_type[0].id,
-                        report_type: store.state.taxonomy.report_type[0].id
-                    };
-                    self.doCaptcha();
+                    self.initReportParams();
                     self.$message.success('成功');
+                    $("#report-dialog").modal('hide');
                 }).catch(function () {
                     self.doCaptcha();
+                });
+            },
+            uploadImage: function (item) {
+                let inputFile = $('.input-file');
+                inputFile.data('target', item).click();
+            },
+            uploadChange: function () {
+                let self = this;
+                let formData = new FormData();
+                let inputFile = $('.input-file');
+                formData.append('file', inputFile.get(0).files[0]);
+                axios.post(api.uploadOss, formData, {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                }).then(function (res) {
+                    self.$message.success('成功');
+                    inputFile.data('target')['attachment'] = res.data.data;
+                    inputFile.val('');
+                }).catch(function () {
+                    inputFile.val('');
                 });
             },
         }
@@ -136,7 +229,7 @@
     }
 
     .search button {
-        width: 60px;
+        width: 80px;
     }
 
     .member-num {

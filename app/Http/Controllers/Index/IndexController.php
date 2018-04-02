@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Index;
 use App\Account;
 use App\AccountReport;
 use App\AccountSearch;
+use App\Attachment;
 use App\Config;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
@@ -43,6 +44,10 @@ class IndexController extends Controller
         request()->query->set('ip_hide', 1);
         $account_type = request('account_type');
         $name = request('name');
+
+        if (!$user) {
+            throw new JsonException('用户未登录，请登录后再查询');
+        }
 
         try {
             Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
@@ -127,6 +132,10 @@ class IndexController extends Controller
         $name = trim(request('name'));
         $report_type = request('report_type');
         $captcha = request('captcha');
+        $description = request('description');
+        $attachmentData = request('image');
+
+        $attachment = Attachment::find(array_get($attachmentData, 'attachment.id'));
 
         if (!captcha_check($captcha)) {
             throw new JsonException('验证码错误');
@@ -153,8 +162,17 @@ class IndexController extends Controller
             throw new JsonException('每天对同一账号类型只能举报一次');
         }
 
-        AccountReport::report($account_type, $name, $report_type, request()->getClientIp());
+        AccountReport::report($account_type, $name, $report_type, request()->getClientIp(), $description, $attachment);
 
         return [];
+    }
+
+    public function uploadOss()
+    {
+        $uploadFile = request()->file('file');
+
+        $user = \Auth::guard('admin')->user();
+
+        return Attachment::createForOss($uploadFile, $user);
     }
 }

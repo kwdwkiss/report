@@ -10,8 +10,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\AccountReport;
 use App\AccountSearch;
+use App\Attachment;
 use App\Config;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AttachmentResource;
 use App\Taxonomy;
 use App\User;
 
@@ -71,13 +73,11 @@ class IndexController extends Controller
 
     public function upload()
     {
-        $dir = 'upload/' . date('Ym', time()) . '/' . date('d', time());
+        $uploadFile = request()->file('file');
 
-        $path = request()->file('file')->store($dir, 'public');
-
-        $url = asset('storage/' . $path);
-
-        return ['data' => $url];
+        $user = \Auth::guard('admin')->user();
+        
+        return Attachment::createForLocal($uploadFile, $user);
     }
 
     public function statement()
