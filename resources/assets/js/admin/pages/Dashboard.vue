@@ -4,17 +4,20 @@
             <div class="panel-heading">新用户注册统计</div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         今日：{{statement.userRegister.today}}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         昨日：{{statement.userRegister.yesterday}}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         本月：{{statement.userRegister.month}}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         上月：{{statement.userRegister.lastMonth}}
+                    </div>
+                    <div class="col-md-2">
+                        总计：{{statement.userRegister.total}}
                     </div>
                 </div>
             </div>

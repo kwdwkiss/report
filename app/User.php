@@ -71,6 +71,8 @@ class User extends Authenticatable
     public static function statement()
     {
         $data = \Cache::remember('statement.user.register', 10, function () {
+            $total = static::query()->count();
+
             $today = static::query()
                 ->where('created_at', '>', Carbon::today())
                 ->count();
@@ -89,7 +91,7 @@ class User extends Authenticatable
                 ->where('created_at', '<', Carbon::now()->startOfMonth())
                 ->count();
 
-            return compact('today', 'yesterday', 'month', 'lastMonth');
+            return compact('total', 'today', 'yesterday', 'month', 'lastMonth');
         });
 
         return $data;
