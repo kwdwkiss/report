@@ -82,7 +82,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">图片</label>
                                 <div class="col-sm-9">
-                                    <a v-if="reportData.attachment" href="reportData.attachment.url" target="_blank">
+                                    <a v-if="reportData.attachment" :href="reportData.attachment.url" target="_blank">
                                         <img :src="reportData.attachment.url" alt=""
                                              style="max-height: 200px;max-width: 400px">
                                     </a>
