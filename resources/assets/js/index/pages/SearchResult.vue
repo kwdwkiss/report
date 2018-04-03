@@ -11,6 +11,7 @@
                     <th>举报类型</th>
                     <th>举报者IP</th>
                     <th>举报时间</th>
+                    <th>详情</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -20,6 +21,9 @@
                     <td>{{item.type_label}}</td>
                     <td>{{item.ip}}</td>
                     <td>{{item.created_at}}</td>
+                    <td>
+                        <button class="btn btn-primary" @click="detail(item)">查看</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -38,6 +42,66 @@
                 <h1 class="col-xs-6">危险！</h1>
             </div>
         </div>
+
+        <div class="modal fade search-result-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">举报详情</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">账号类型</label>
+                                <div class="col-sm-9">
+                                    <span class="">{{reportData.account_type_label}}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">投诉账号</label>
+                                <div class="col-sm-9">
+                                    <span>{{reportData.account_name}}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">投诉类型</label>
+                                <div class="col-sm-9">
+                                    <span>{{reportData.type_label}}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">ip</label>
+                                <div class="col-sm-9">
+                                    <span>{{reportData.ip}}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">图片</label>
+                                <div class="col-sm-9">
+                                    <img v-if="reportData.attachment" :src="reportData.attachment.url" alt=""
+                                         style="max-height: 200px">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">情况描述</label>
+                                <div class="col-sm-9">
+                                    <span>{{reportData.description}}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="button" class="btn btn-primary" @click="close">关闭</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -47,6 +111,20 @@
         computed: {
             searchResult: function () {
                 return this.$store.state.searchResult
+            }
+        },
+        data: function () {
+            return {
+                reportData: {},
+            }
+        },
+        methods: {
+            detail: function (item) {
+                this.reportData = item;
+                $(".search-result-dialog").modal('show');
+            },
+            close: function () {
+                $(".search-result-dialog").modal('hide');
             }
         }
     }
@@ -60,5 +138,9 @@
 
     .search-data p {
         margin: 5px 0;
+    }
+
+    .search-result-dialog .form-group > div {
+        padding-top: 7px;
     }
 </style>

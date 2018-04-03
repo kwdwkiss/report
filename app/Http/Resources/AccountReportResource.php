@@ -17,6 +17,12 @@ class AccountReportResource extends Resource
         $data = parent::toArray($request);
         $data['account_type_label'] = $this->_accountType->name;
         $data['type_label'] = $this->_type->name;
+
+        $attachments = $this->_attachments;
+        if (isset($attachments[0])) {
+            $data['attachment'] = new AttachmentResource($attachments[0]);
+        }
+
         if ($request->has('ip_hide')) {
             $data['ip'] = preg_replace('/(\d+\.\d+)\.\d+\.\d+/', '$1.*.*', $data['ip']);
         }

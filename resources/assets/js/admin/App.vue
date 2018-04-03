@@ -31,13 +31,13 @@
 
     .main-sidebar {
         height: 100%;
-        width: 180px;
+        width: 160px;
     }
 
     .content-wrapper {
         position: absolute;
         top: 0;
-        left: 180px;
+        left: 160px;
         bottom: 0;
         right: 0;
         padding: 10px;

@@ -33,18 +33,27 @@
 
         <el-row>
             <el-table :data="dataList.data" stripe>
-                <el-table-column prop="account_type_label" label="账号类型" min-width="100"></el-table-column>
+                <el-table-column prop="account_type_label" label="账号类型" min-width="80"></el-table-column>
                 <el-table-column prop="account_name" label="账号" min-width="150"></el-table-column>
-                <el-table-column prop="type_label" label="举报类型" min-width="100"></el-table-column>
-                <el-table-column prop="ip" label="IP" min-width="150"></el-table-column>
+                <el-table-column prop="type_label" label="举报类型" min-width="80"></el-table-column>
+                <el-table-column prop="ip" label="IP" min-width="120"></el-table-column>
                 <el-table-column prop="created_at" label="举报时间" min-width="180"></el-table-column>
-                <el-table-column label="显示" min-width="100">
+                <el-table-column label="显示" min-width="80">
                     <template slot-scope="scope">
                         <el-switch v-model="scope.row.display" :active-value="1" :inactive-value="0"
                                    @change="switchDisplay(scope.row)">
                         </el-switch>
                     </template>
                 </el-table-column>
+                <el-table-column label="图片" min-width="100">
+                    <template slot-scope="scope">
+                        <a v-if="scope.row.attachment" target="_blank" :href="scope.row.attachment.url">
+                            <img :src="scope.row.attachment.url" alt=""
+                                 style="max-height: 80px">
+                        </a>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="description" label="描述" min-width="200"></el-table-column>
                 <el-table-column prop="remark" label="备注" min-width="200"></el-table-column>
                 <el-table-column label="操作" min-width="200">
                     <template slot-scope="scope">
@@ -83,6 +92,16 @@
                 </el-form-item>
                 <el-form-item prop="created_at" label="举报时间" labelWidth="100px">
                     <span>{{dialogUpdate.data.created_at}}</span>
+                </el-form-item>
+                <el-form-item v-if="dialogUpdate.data.attachment" prop="attachment" label="图片" labelWidth="100px">
+                    <span>
+                        <a target="_blank" :href="dialogUpdate.data.attachment.url">
+                            <img :src="dialogUpdate.data.attachment.url" alt="" style="max-height: 200px">
+                        </a>
+                    </span>
+                </el-form-item>
+                <el-form-item prop="description" label="描述" labelWidth="100px">
+                    <span>{{dialogUpdate.data.description}}</span>
                 </el-form-item>
                 <el-form-item prop="remark" label="备注" labelWidth="100px">
                     <el-input v-model="dialogUpdate.data.remark"></el-input>

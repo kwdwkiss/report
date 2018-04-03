@@ -90,6 +90,6 @@
     }
 
     .el-menu-item {
-        min-width: 180px;
+        min-width: 160px;
     }
 </style>
