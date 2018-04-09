@@ -25,24 +25,101 @@
                         <!--<li><a href="#">关于我们</a></li>-->
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li v-if="!user"><a href="javascript:" @click="login">登录</a></li>
-                        <li v-if="!user"><a href="javascript:" @click="register">注册</a></li>
-                        <li v-if="user" class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">{{user.mobile}} <span
-                                    class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <!--<li><a href="#">Action</a></li>-->
-                                <!--<li role="separator" class="divider"></li>-->
-                                <li><a href="javascript:" @click="doLogout">注销</a></li>
-                            </ul>
-                        </li>
+                        <template v-if="!user">
+                            <li><a href="javascript:" @click="login">登录</a></li>
+                            <li><a href="javascript:" @click="register">注册</a></li>
+                        </template>
+                        <template v-if="user">
+                            <li><a href="javascript:"
+                                   @click="notificationList">通知
+                                <template v-if="unreadNotification.meta.total">
+                                    （未读{{unreadNotification.meta.total}}）
+                                </template>
+                            </a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-haspopup="true" aria-expanded="false">{{user.mobile}} <span
+                                        class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <!--<li><a href="#">Action</a></li>-->
+                                    <!--<li role="separator" class="divider"></li>-->
+                                    <li><a href="javascript:" @click="doLogout">注销</a></li>
+                                </ul>
+                            </li>
+                        </template>
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <div class="modal fade" id="login-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        <div class="modal fade notification-dialog" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">系统通知</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-responsive table-striped">
+                            <thead>
+                            <tr>
+                                <th style="width: 60%">通知</th>
+                                <th style="width: 10%">查阅</th>
+                                <th style="width: 30%">时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in notification.data">
+                                <td><a href="javascript:" @click="notificationDetail(item)">{{item.data.name}}</a></td>
+                                <td>
+                                    <template v-if="item.read_at">
+                                        已读
+                                    </template>
+                                    <template v-else>
+                                        未读
+                                    </template>
+                                </td>
+                                <td>{{item.created_at}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <el-pagination layout="prev, pager, next"
+                                       :total="notification.meta.total"
+                                       :page-size="notification.meta.per_page"
+                                       @current-change="notificationPaginate"></el-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade notification-detail-dialog" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">通知详情</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <h4 class="text-center">{{notificationItem.data.name}}</h4>
+                        </div>
+                        <div class="row">
+                            {{notificationItem.data.content}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade login-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -57,14 +134,16 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">手机号</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" placeholder="请输入手机号" name="mobile"
+                                    <input type="text" class="form-control" placeholder="请输入手机号"
+                                           name="mobile"
                                            v-model="loginForm.mobile">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">密码</label>
                                 <div class="col-sm-9">
-                                    <input type="password" class="form-control" placeholder="请输入密码" name="password"
+                                    <input type="password" class="form-control" placeholder="请输入密码"
+                                           name="password"
                                            v-model="loginForm.password">
                                     <div class="checkbox">
                                         <label>
@@ -87,7 +166,8 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">手机号</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" placeholder="请输入手机号" name="mobile"
+                                    <input type="text" class="form-control" placeholder="请输入手机号"
+                                           name="mobile"
                                            v-model="registerForm.mobile">
                                 </div>
                             </div>
@@ -228,6 +308,7 @@
                     password: '',
                     remember: true
                 },
+                notificationItem: {data: {}}
             }
         },
         computed: {
@@ -236,11 +317,25 @@
             },
             user: function () {
                 return this.$store.state.user;
+            },
+            unreadNotification: function () {
+                return this.$store.state.unreadNotification;
+            },
+            notification: function () {
+                return this.$store.state.notification;
             }
+        },
+        created: function () {
+            this.$store.commit('notification');
+            this.$store.commit('unreadNotification', {
+                callback: function () {
+                    $('.notification-dialog').modal('show');
+                }
+            });
         },
         methods: {
             login: function () {
-                $("#login-dialog").modal('show');
+                $(".login-dialog").modal('show');
                 this.loginStatus = 'login';
                 this.dialogTitle = '登录';
             },
@@ -248,7 +343,7 @@
                 let self = this;
                 axios.post(api.userLogin, self.loginForm).then(function (res) {
                     self.$store.commit('user');
-                    $("#login-dialog").modal('hide');
+                    $(".login-dialog").modal('hide');
                 });
             },
             doLogout: function () {
@@ -258,7 +353,7 @@
                 });
             },
             register: function () {
-                $("#login-dialog").modal('show');
+                $(".login-dialog").modal('show');
                 this.loginStatus = 'register';
                 this.dialogTitle = '注册&找回密码';
                 self.registerInit();
@@ -273,7 +368,7 @@
                 let self = this;
                 axios.post(api.userRegister, self.registerForm).then(function (res) {
                     self.$message.success('成功');
-                    $("#login-dialog").modal('hide');
+                    $(".login-dialog").modal('hide');
                     self.$store.commit('user');
                 });
             },
@@ -295,6 +390,21 @@
                             self.smsInit();
                         }
                     }, 1000);
+                });
+            },
+            notificationPaginate: function (page) {
+                this.$store.commit('notification', {page: page});
+            },
+            notificationList: function () {
+                $('.notification-dialog').modal('show');
+            },
+            notificationDetail: function (item) {
+                $('.notification-detail-dialog').modal('show');
+                this.notificationItem = item;
+
+                let self = this;
+                axios.post(api.userReadNotification, item).then(function (res) {
+                    self.$store.commit('notification');
                 });
             }
         }
@@ -323,7 +433,7 @@
         list-style: none;
     }
 
-    .old-root th, td {
+    .old-root th, .old-root td {
         text-align: center;
     }
 

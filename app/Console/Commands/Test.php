@@ -8,10 +8,14 @@ use App\AccountReport;
 use App\Admin;
 use App\Attachment;
 use App\Config;
+use App\Jobs\SendNotification;
+use App\Message;
+use App\Notifications\SiteMessage;
 use App\Tag;
 use App\Taxonomy;
 use App\UserProfile;
 use Carbon\Carbon;
+use Illuminate\Bus\Dispatcher;
 use Illuminate\Console\Command;
 
 class Test extends Command
@@ -47,9 +51,12 @@ class Test extends Command
      */
     public function handle()
     {
+
         //var_dump(preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', 18677303808));
-        $result = date('Ym/d', time());
-        var_dump($result);
+
+//        $result = date('Ym/d', time());
+//        var_dump($result);
+
         $temp = '';
     }
 }

@@ -46,6 +46,9 @@ module.exports = {
     articleUpdate: '/admin/article/update',
     articleDelete: '/admin/article/delete',
 
+    messageList: '/admin/message/list',
+    messageCreate: '/admin/message/create',
+
     //>>>>>>>>>>index
     taxonomyAllData: '/taxonomy/all/data',
     taxonomyAllDisplay: '/taxonomy/all/display',
@@ -65,5 +68,9 @@ module.exports = {
     userInfo: '/user/info',
     userRegister: 'user/register',
     userModifyPassword: '/user/modify-password',
-    userSms: '/user/sms'
+    userSms: '/user/sms',
+
+    userNotificationList: '/user/notification',
+    userUnreadNotificationList: '/user/unread-notification',
+    userReadNotification: '/user/read-notification',
 };

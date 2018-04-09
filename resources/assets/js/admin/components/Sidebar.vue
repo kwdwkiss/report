@@ -61,6 +61,10 @@
                         path: '/site/pop-window',
                     },
                     {
+                        title: '系统通知',
+                        path: '/message',
+                    },
+                    {
                         title: '系统设置',
                         path: '/system',
                         children: [

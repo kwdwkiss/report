@@ -153,7 +153,7 @@ class UserController extends Controller
 
         if (env('ALIYUN_SMS_SEND_ENABLE', true)) {
             $result = app('aliyun.sms')->send($mobile, $code);
-        }else{
+        } else {
             $result = ['success' => true];//调试，开发时不发送短信
         }
 

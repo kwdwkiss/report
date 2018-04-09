@@ -135,18 +135,22 @@
         },
         data: function () {
             return {
-                searchParams: {
-                    account_type: this.$store.state.taxonomy.account_type[0].id,
-                    name: ''
-                },
-                reportParams: null,
+                searchParams: {},
+                reportParams: {},
                 captcha_src: api.captcha + '?' + Date.parse(new Date())
             }
         },
         created: function () {
+            this.initSearchParams();
             this.initReportParams();
         },
         methods: {
+            initSearchParams: function () {
+                this.searchParams = {
+                    account_type: this.$store.state.taxonomy.account_type[0].id,
+                    name: ''
+                };
+            },
             initReportParams: function () {
                 this.reportParams = {
                     account_type: this.$store.state.taxonomy.account_type[0].id,

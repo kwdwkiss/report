@@ -11,7 +11,6 @@
 |
 */
 
-//>>>>>>>>>admin
 Route::middleware(['csrf'])->group(function () {
     Route::get('/', 'Index\IndexController@index');
     Route::get('/index/pop-window', 'Index\IndexController@popWindow');
@@ -37,8 +36,13 @@ Route::middleware(['csrf'])->group(function () {
 
 Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::get('/user/info', 'User\UserController@info');
+
+    Route::get('/user/notification', 'User\NotificationController@notificationList');
+    Route::get('/user/unread-notification', 'User\NotificationController@unreadNotificationList');
+    Route::post('/user/read-notification', 'User\NotificationController@readNotification');
 });
 
+//>>>>>>>>>admin
 Route::middleware(['auth:admin'])->group(function () {
     Route::post('/admin/upload', 'Admin\IndexController@upload');
 });
@@ -89,4 +93,7 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/article/create', 'Admin\ArticleController@create');
     Route::post('/admin/article/update', 'Admin\ArticleController@update');
     Route::post('/admin/article/delete', 'Admin\ArticleController@delete');
+
+    Route::get('/admin/message/list', 'Admin\MessageController@list');
+    Route::post('/admin/message/create', 'Admin\MessageController@create');
 });

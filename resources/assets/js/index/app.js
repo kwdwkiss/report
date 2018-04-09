@@ -75,7 +75,9 @@ const store = window.store = new Vuex.Store({
             account: {},
             type: 0,//type 0-不显示 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
         },
-        user: null
+        user: null,
+        notification: {data: [], meta: {}, links: {}},
+        unreadNotification: {data: [], meta: {}, links: {}}
     },
     mutations: {
         searchResult(state, data) {
@@ -91,6 +93,19 @@ const store = window.store = new Vuex.Store({
                 state.user = res.data.data;
             }).catch(function () {
                 state.user = null;
+            });
+        },
+        notification(state, payload) {
+            axios.get(api.userNotificationList, {params: payload}).then(function (res) {
+                state.notification = res.data;
+            });
+        },
+        unreadNotification(state, payload) {
+            axios.get(api.userUnreadNotificationList).then(function (res) {
+                state.unreadNotification = res.data;
+                if (res.data.meta.total && payload.callback) {
+                    payload.callback();
+                }
             });
         }
     }

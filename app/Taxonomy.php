@@ -56,4 +56,9 @@ class Taxonomy extends Model
         }
         return $data;
     }
+
+    public static function userTypes()
+    {
+        return static::where('pid', 4)->get()->pluck('id')->toArray();
+    }
 }

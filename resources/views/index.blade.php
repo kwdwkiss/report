@@ -11,7 +11,7 @@
     <title>宏海网络</title>
 
     <script>
-        window.laravel = JSON.parse('{!! json_encode($page) !!}');
+        window.laravel = {!! json_encode($page) !!};
     </script>
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">

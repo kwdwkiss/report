@@ -70,6 +70,7 @@ const routes = [
             {path: 'site/pop-window', component: require('./pages/PopWindow')},
             {path: 'system/site', component: require('./pages/Site.vue')},
             {path: 'system/admin', component: require('./pages/Admin.vue')},
+            {path: 'message', component: require('./pages/Message')},
         ]
     }
 ];
