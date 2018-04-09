@@ -51,6 +51,9 @@ class IndexController extends Controller
 
         try {
             Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
+            if (!$name) {
+                throw new JsonException('查询账号为空');
+            }
             if ($account_type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {
                 throw new JsonException('QQ号码格式错误');
             }
