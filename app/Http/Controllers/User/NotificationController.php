@@ -49,7 +49,9 @@ class NotificationController extends Controller
         $id = request('id');
 
         $notification = DatabaseNotification::where('notifiable_id', $user->id)->findOrFail($id);
-        $notification->markAsRead();
+        if ($notification->unread()) {
+            $notification->markAsRead();
+        }
 
         return [];
     }
