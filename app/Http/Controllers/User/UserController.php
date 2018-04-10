@@ -186,7 +186,7 @@ class UserController extends Controller
             ]);
 
             return [
-                'code' => 0,
+                'code' => -1,
                 'message' => '发送验证码失败，请稍后再试，如果多次尝试未能成功，请联系客服。',
                 'data' => [
                     'mobile' => $sms->mobile,
