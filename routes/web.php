@@ -12,7 +12,7 @@
 */
 
 Route::middleware(['csrf'])->group(function () {
-    Route::get('/', 'Index\IndexController@index');
+    Route::get('/', 'Index\IndexController@index')->name('login');
     Route::get('/index/pop-window', 'Index\IndexController@popWindow');
     Route::post('/index/search', 'Index\IndexController@search');
     Route::post('/index/report', 'Index\IndexController@report');
