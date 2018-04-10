@@ -381,6 +381,7 @@
             sendSms: function () {
                 let self = this;
                 axios.post(api.userSms, self.registerForm).then(function (res) {
+                    self.$message.success('短信发送成功，请耐心等候，如有疑问请联系客服');
                     self.smsDisable = true;
                     self.smsHandle = setInterval(function () {
                         if (self.smsTimer > 0) {
@@ -405,6 +406,7 @@
                 let self = this;
                 axios.post(api.userReadNotification, item).then(function (res) {
                     self.$store.commit('notification');
+                    self.$store.commit('unreadNotification');
                 });
             }
         }
