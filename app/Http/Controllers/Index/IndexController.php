@@ -137,11 +137,14 @@ class IndexController extends Controller
         $captcha = request('captcha');
         $description = request('description');
         $attachmentData = request('image');
-
+        $ip = request()->getClientIp();
         $attachment = Attachment::find(array_get($attachmentData, 'attachment.id'));
 
         if (!captcha_check($captcha)) {
             throw new JsonException('验证码错误');
+        }
+        if (is_null($name)) {
+            throw new JsonException('账号不能为空');
         }
         if ($account_type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {
             throw new JsonException('QQ号码格式错误');
@@ -152,10 +155,10 @@ class IndexController extends Controller
         if ($account_type == 204 && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $name)) {
             throw new JsonException('手机号码格式错误');
         }
-        if (is_null($name)) {
-            throw new JsonException('账号不能为空');
-        }
+        Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
+        Taxonomy::where('pid', Taxonomy::REPORT_TYPE)->findOrFail($report_type);
 
+        //同一账号每天限制举报
         $todayDate = date('Y-m-d', time());
         $todayReport = AccountReport::where('account_type', $account_type)
             ->where('account_name', $name)
@@ -165,7 +168,31 @@ class IndexController extends Controller
             throw new JsonException('每天对同一账号类型只能举报一次');
         }
 
-        AccountReport::report($account_type, $name, $report_type, request()->getClientIp(), $description, $attachment);
+        \DB::transaction(function () use ($account_type, $name, $report_type, $ip, $description, $attachment
+        ) {
+            $account = Account::where('type', $account_type)->where('name', $name)->first();
+            if (!$account) {
+                $account = Account::create([
+                    'type' => $account_type,
+                    'name' => $name,
+                    'status' => 102
+                ]);
+            }
+            $account->increment('report_count');
+
+            $accountReport = AccountReport::create([
+                'account_type' => $account_type,
+                'account_name' => $name,
+                'type' => $report_type,
+                'ip' => $ip,
+                'description' => $description
+            ]);
+
+            //添加附件
+            if ($attachment) {
+                $accountReport->_attachments()->attach($attachment);
+            }
+        });
 
         return [];
     }
