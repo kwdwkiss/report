@@ -192,6 +192,13 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
+                                    <label>
+                                        <input type="checkbox" :checked="registerForm.remember"> 记住我
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
                                     <a class="btn btn-primary" @click="doRegister">确认</a>
                                     &nbsp;
                                     <a class="btn btn-success" @click="login">返回登录</a>
@@ -302,6 +309,7 @@
                     mobile: '',
                     password: '',
                     code: '',
+                    remember: true
                 },
                 loginForm: {
                     mobile: '',

@@ -63,6 +63,7 @@ class UserController extends Controller
         $mobile = request('mobile');
         $password = request('password');
         $code = request('code');
+        $remember = request('remember');
 
         if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $mobile)) {
             return [
@@ -106,7 +107,7 @@ class UserController extends Controller
             ]);
         }
 
-        \Auth::guard('user')->login($user);
+        \Auth::guard('user')->login($user, $remember);
 
         return [
             'code' => 0,
