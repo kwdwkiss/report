@@ -6,9 +6,12 @@ import {
     Pagination,
 } from 'element-ui'
 
-Vue.component(Message.name, Message)
-Vue.component(MessageBox.name, MessageBox)
-Vue.component(Pagination.name,Pagination)
+var cly_message = Message;
+var cly_pagination = Pagination;
+
+Vue.component('Message', Message)
+Vue.component('MessageBox', MessageBox)
+Vue.component(Pagination.name, Pagination)
 
 Vue.prototype.$msgbox = MessageBox
 Vue.prototype.$alert = MessageBox.alert

@@ -52,6 +52,8 @@ if (token) {
 //     key: 'your-pusher-key'
 // });
 
+require('babel-polyfill');//兼容ie11，Promise报错
+
 window.Vue = require('vue');
 
 window.api = require('./api.js');
