@@ -30,6 +30,7 @@
                             <li><a href="javascript:" @click="register">注册</a></li>
                         </template>
                         <template v-if="user">
+                            <!--<li><a href="javascript:">账户:{{user._profile.amount}}</a></li>-->
                             <li><a href="javascript:"
                                    @click="notificationList">通知
                                 <template v-if="unreadNotification.meta.total">

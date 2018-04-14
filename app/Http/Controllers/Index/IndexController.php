@@ -201,6 +201,13 @@ class IndexController extends Controller
     {
         $uploadFile = request()->file('file');
 
+        if (!$uploadFile) {
+            throw new JsonException('上传文件失败，请稍后再次尝试');
+        }
+        if ($uploadFile->isValid()) {
+            throw new JsonException('上传文件失败，请稍后再次尝试');
+        }
+
         $size = $uploadFile->getSize();//byte
 
         $limit = 500;

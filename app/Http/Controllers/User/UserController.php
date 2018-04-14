@@ -9,23 +9,28 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Sms;
 use App\User;
+use App\UserProfile;
 use Carbon\Carbon;
 
 class UserController extends Controller
 {
     public function info()
     {
-        return ['data' => \Auth::guard('user')->user()];
+        $user = \Auth::guard('user')->user();
+        return new UserResource($user);
     }
 
     public function login()
     {
+        $remember = request('remember');
+
         if (\Auth::guard('user')->attempt([
             'mobile' => request('mobile'),
             'password' => request('password')
-        ], request('remember'))) {
+        ], false)) {
             return [];
         }
         return [
@@ -100,14 +105,19 @@ class UserController extends Controller
         if ($user) {
             $user->update(['password' => bcrypt($password)]);
         } else {
-            $user = User::create([
-                'mobile' => $mobile,
-                'type' => 401,
-                'password' => bcrypt($password)
-            ]);
+            \DB::transaction(function () use ($mobile, $password) {
+                $user = User::create([
+                    'mobile' => $mobile,
+                    'type' => 401,
+                    'password' => bcrypt($password)
+                ]);
+                UserProfile::create([
+                    'user_id' => $user->id
+                ]);
+            });
         }
 
-        \Auth::guard('user')->login($user, $remember);
+        \Auth::guard('user')->login($user, false);
 
         return [
             'code' => 0,

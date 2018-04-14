@@ -29,6 +29,8 @@ Route::middleware(['csrf'])->group(function () {
     Route::post('/user/register', 'User\UserController@register');
     Route::post('/user/sms', 'User\UserController@sms');
 
+    Route::get('/user/recharge/callback', 'User\RechargeController@recharge');
+
     Route::get('/admin', 'Admin\IndexController@index');
     Route::get('/admin/logout', 'Admin\IndexController@logout');
     Route::post('/admin/login', 'Admin\IndexController@login');
@@ -40,6 +42,8 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::get('/user/notification', 'User\NotificationController@notificationList');
     Route::get('/user/unread-notification', 'User\NotificationController@unreadNotificationList');
     Route::post('/user/read-notification', 'User\NotificationController@readNotification');
+
+    Route::get('/user/recharge/create', 'User\RechargeController@create');
 });
 
 //>>>>>>>>>admin

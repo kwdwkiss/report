@@ -12,6 +12,7 @@ use App\AccountReport;
 use App\AccountSearch;
 use App\Attachment;
 use App\Config;
+use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AttachmentResource;
 use App\Taxonomy;
@@ -74,6 +75,13 @@ class IndexController extends Controller
     public function upload()
     {
         $uploadFile = request()->file('file');
+
+        if (!$uploadFile) {
+            throw new JsonException('上传文件失败，请稍后再次尝试');
+        }
+        if ($uploadFile->isValid()) {
+            throw new JsonException('上传文件失败，请稍后再次尝试');
+        }
 
         $user = \Auth::guard('admin')->user();
         

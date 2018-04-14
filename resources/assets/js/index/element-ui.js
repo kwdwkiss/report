@@ -6,9 +6,6 @@ import {
     Pagination,
 } from 'element-ui'
 
-var cly_message = Message;
-var cly_pagination = Pagination;
-
 Vue.component('Message', Message)
 Vue.component('MessageBox', MessageBox)
 Vue.component(Pagination.name, Pagination)
