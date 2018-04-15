@@ -40,14 +40,14 @@ class IndexController extends Controller
     public function search()
     {
         $user = \Auth::guard('user')->user();
+        if (!$user) {
+            throw new JsonException('用户未登录，请登录后再查询');
+        }
 
         request()->query->set('ip_hide', 1);
         $account_type = request('account_type');
         $name = request('name');
 
-        if (!$user) {
-            throw new JsonException('用户未登录，请登录后再查询');
-        }
         if (!$name) {
             throw new JsonException('查询账号为空');
         }
@@ -131,6 +131,11 @@ class IndexController extends Controller
 
     public function report()
     {
+        $user = \Auth::guard('user')->user();
+        if (!$user) {
+            throw new JsonException('用户未登录，请登录后再举报');
+        }
+
         $account_type = request('account_type');
         $name = trim(request('name'));
         $report_type = request('report_type');
