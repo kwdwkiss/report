@@ -30,7 +30,7 @@ class UserController extends Controller
         if (\Auth::guard('user')->attempt([
             'mobile' => request('mobile'),
             'password' => request('password')
-        ], false)) {
+        ], $remember)) {
             return [];
         }
         return [
@@ -117,7 +117,7 @@ class UserController extends Controller
                 ]);
             });
         }
-        \Auth::guard('user')->login($user, false);
+        \Auth::guard('user')->login($user, $remember);
 
         return [
             'code' => 0,

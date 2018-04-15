@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Aliyun\Oss;
 use Aliyun\Sms;
+use Cly\Session\SessionGuard;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +17,29 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Schema::defaultStringLength(191);
+
+        \Auth::extend('cly_session', function ($app, $name, $config) {
+            $provider = \Auth::createUserProvider($config['provider'] ?? null);
+
+            $guard = new SessionGuard($name, $provider, $app['session.store']);
+
+            // When using the remember me functionality of the authentication services we
+            // will need to be set the encryption instance of the guard, which allows
+            // secure, encrypted cookie values to get generated for those cookies.
+            if (method_exists($guard, 'setCookieJar')) {
+                $guard->setCookieJar($app['cookie']);
+            }
+
+            if (method_exists($guard, 'setDispatcher')) {
+                $guard->setDispatcher($app['events']);
+            }
+
+            if (method_exists($guard, 'setRequest')) {
+                $guard->setRequest($app->refresh('request', $guard, 'setRequest'));
+            }
+
+            return $guard;
+        });
     }
 
     /**

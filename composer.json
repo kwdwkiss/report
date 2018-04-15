@@ -31,7 +31,8 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Aliyun\\":"app/aliyun"
+            "Aliyun\\":"app/aliyun",
+            "Cly\\":"app/cly"
         }
     },
     "autoload-dev": {

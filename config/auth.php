@@ -47,12 +47,12 @@ return [
 //        ],
 
         'user' => [
-            'driver' => 'session',
+            'driver' => 'cly_session',
             'provider' => 'users'
         ],
 
         'admin' => [
-            'driver' => 'session',
+            'driver' => 'cly_session',
             'provider' => 'admin'
         ],
     ],
