@@ -105,7 +105,8 @@ class UserController extends Controller
         if ($user) {
             $user->update(['password' => bcrypt($password)]);
         } else {
-            \DB::transaction(function () use ($mobile, $password) {
+            $user = null;
+            \DB::transaction(function () use ($mobile, $password, &$user) {
                 $user = User::create([
                     'mobile' => $mobile,
                     'type' => 401,
@@ -117,7 +118,9 @@ class UserController extends Controller
             });
         }
 
-        \Auth::guard('user')->login($user, false);
+        if ($user) {
+            \Auth::guard('user')->login($user, false);
+        }
 
         return [
             'code' => 0,
