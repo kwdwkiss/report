@@ -170,7 +170,7 @@ class IndexController extends Controller
             ->where('created_at', '>', $todayDate)
             ->first();
         if ($todayReport) {
-            throw new JsonException('每天对同一账号类型只能举报一次');
+            throw new JsonException('每天对同一账号只能举报一次');
         }
 
         \DB::transaction(function () use ($user, $account_type, $name, $report_type, $ip, $description, $attachment
