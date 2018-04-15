@@ -15,6 +15,7 @@ class CreateAccountReportTable extends Migration
     {
         Schema::create('account_report', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->string('account_name');
             $table->integer('account_type');
             $table->string('ip');

@@ -173,7 +173,7 @@ class IndexController extends Controller
             throw new JsonException('每天对同一账号类型只能举报一次');
         }
 
-        \DB::transaction(function () use ($account_type, $name, $report_type, $ip, $description, $attachment
+        \DB::transaction(function () use ($user, $account_type, $name, $report_type, $ip, $description, $attachment
         ) {
             $account = Account::where('type', $account_type)->where('name', $name)->first();
             if (!$account) {
@@ -186,6 +186,7 @@ class IndexController extends Controller
             $account->increment('report_count');
 
             $accountReport = AccountReport::create([
+                'user_id' => $user ? $user->id : 0,
                 'account_type' => $account_type,
                 'account_name' => $name,
                 'type' => $report_type,
@@ -204,12 +205,17 @@ class IndexController extends Controller
 
     public function uploadOss()
     {
+        $user = \Auth::guard('user')->user();
+        if (!$user) {
+            throw new JsonException('用户未登录，请登录后再上传图片');
+        }
+
         $uploadFile = request()->file('file');
 
         if (!$uploadFile) {
             throw new JsonException('上传文件失败，请稍后再次尝试');
         }
-        if ($uploadFile->isValid()) {
+        if (!$uploadFile->isValid()) {
             throw new JsonException('上传文件失败，请稍后再次尝试');
         }
 
