@@ -117,10 +117,7 @@ class UserController extends Controller
                 ]);
             });
         }
-
-        if ($user) {
-            \Auth::guard('user')->login($user, false);
-        }
+        \Auth::guard('user')->login($user, false);
 
         return [
             'code' => 0,
