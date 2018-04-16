@@ -43,7 +43,7 @@ class TaxonomySeeder extends Seeder
                 ['id' => 304, 'pid' => 3, 'name' => '差评'],
                 ['id' => 305, 'pid' => 3, 'name' => '假址'],
                 ['id' => 306, 'pid' => 3, 'name' => '卖号'],
-                ['id' => 307, 'pid' => 3, 'name' => '淘客'],
+                ['id' => 307, 'pid' => 3, 'name' => '返利'],
                 ['id' => 308, 'pid' => 3, 'name' => '闹事'],
                 ['id' => 309, 'pid' => 3, 'name' => '恶意商家'],
                 ['id' => 310, 'pid' => 3, 'name' => '其他'],

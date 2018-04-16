@@ -11,6 +11,10 @@ class AccountReport extends Model
 
     protected $guarded = [];
 
+    public static $imageLimit = [
+        202 => [301, 302, 304, 307]
+    ];
+
     public function _accountType()
     {
         return $this->hasOne(Taxonomy::class, 'id', 'account_type');

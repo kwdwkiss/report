@@ -160,8 +160,14 @@ class IndexController extends Controller
         if ($account_type == 204 && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $name)) {
             throw new JsonException('手机号码格式错误');
         }
-        Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
-        Taxonomy::where('pid', Taxonomy::REPORT_TYPE)->findOrFail($report_type);
+        $accountType = Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
+        $reportType = Taxonomy::where('pid', Taxonomy::REPORT_TYPE)->findOrFail($report_type);
+
+        //检查举报字段合法性
+        $imageLimit = array_get(AccountReport::$imageLimit, $account_type);
+        if (in_array($report_type, $imageLimit) && !$attachment) {
+            throw new JsonException("为了提高举报数据真实性，{$accountType->name}{$reportType->name}，需要上传图片证据。");
+        }
 
         //同一账号每天限制举报
         $todayDate = date('Y-m-d', time());
