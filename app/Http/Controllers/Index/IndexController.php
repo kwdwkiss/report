@@ -164,7 +164,7 @@ class IndexController extends Controller
         $reportType = Taxonomy::where('pid', Taxonomy::REPORT_TYPE)->findOrFail($report_type);
 
         //检查举报字段合法性
-        $imageLimit = array_get(AccountReport::$imageLimit, $account_type);
+        $imageLimit = array_get(AccountReport::$imageLimit, $account_type, []);
         if (in_array($report_type, $imageLimit) && !$attachment) {
             throw new JsonException("为了提高举报数据真实性，{$accountType->name}{$reportType->name}，需要上传图片证据。");
         }
