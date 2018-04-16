@@ -43,7 +43,7 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::get('/user/unread-notification', 'User\NotificationController@unreadNotificationList');
     Route::post('/user/read-notification', 'User\NotificationController@readNotification');
 
-    Route::get('/user/recharge/create', 'User\RechargeController@create');
+    Route::get('/user/recharge/index', 'User\RechargeController@index');
 });
 
 //>>>>>>>>>admin

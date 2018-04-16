@@ -77,7 +77,8 @@ const store = window.store = new Vuex.Store({
         },
         user: null,
         notification: {data: [], meta: {}, links: {}},
-        unreadNotification: {data: [], meta: {}, links: {}}
+        unreadNotification: {data: [], meta: {}, links: {}},
+        recharge: {data: [], meta: {}, links: {}},
     },
     mutations: {
         searchResult(state, data) {
@@ -106,6 +107,11 @@ const store = window.store = new Vuex.Store({
                 if (res.data.meta.total && payload.callback) {
                     payload.callback();
                 }
+            });
+        },
+        recharge(state, payload) {
+            axios.get(api.userRechargeList, {params: payload}).then(function (res) {
+                state.recharge = res.data;
             });
         }
     }

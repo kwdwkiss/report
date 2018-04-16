@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserAmountBillTable extends Migration
+class CreateRechargeBillTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateUserAmountBillTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_amount_bill', function (Blueprint $table) {
+        Schema::create('recharge_bill', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->string('bill_no')->unique();
-            $table->tinyInteger('type');//0-收入 1-支出
-            $table->integer('amount');
-            $table->integer('biz_id');//业务账单id
-            $table->integer('biz_type');//0-充值
+            $table->integer('pay_type');//0-人工 1-支付宝 2-微信
+            $table->string('pay_no');
+            $table->decimal('money');
+            $table->tinyInteger('status');//-1-已关闭 0-待充值 1-已到账
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateUserAmountBillTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_amount_bill');
+        Schema::dropIfExists('recharge_bill');
     }
 }

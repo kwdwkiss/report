@@ -35,8 +35,8 @@
                                    <!--aria-haspopup="true" aria-expanded="false">积分:{{user._profile.amount}}<span-->
                                         <!--class="caret"></span></a>-->
                                 <!--<ul class="dropdown-menu">-->
-                                    <!--<li><a href="javascript:" @click="">充值</a></li>-->
-                                    <!--<li><a href="javascript:" @click="">充值记录</a></li>-->
+                                    <!--<li><a href="javascript:" @click="rechargeDialog">充值</a></li>-->
+                                    <!--<li><a href="javascript:" @click="rechargeList">充值记录</a></li>-->
                                 <!--</ul>-->
                             <!--</li>-->
                             <li><a href="javascript:"
@@ -60,6 +60,90 @@
                 </div>
             </div>
         </nav>
+
+        <div v-if="user" class="modal fade recharge-dialog" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">积分充值</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">充值说明</label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <span>1、1元=100积分，最低充值金额1元，请用支付宝扫描下方二维码，<span class="text-danger">备注写{{user.id}}（否则不能自动到账）。</span></span>
+                                    </div>
+                                    <div class="row">
+                                        <span>2、完成支付宝转账后，请点击充值完成按钮，耐心等待积分到账。</span>
+                                    </div>
+                                    <div class="row">
+                                        <span>若5分钟后未能到账，请联系客服！</span>
+                                    </div>
+                                    <div class="row">
+                                        <img style="width: 200px" src="/images/tbpzw_alipay.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <a class="btn btn-success" @click="doRecharge">充值完成</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="user" class="modal fade recharge-list-dialog" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" style="width: 850px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">充值记录</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-responsive table-striped">
+                            <thead>
+                            <tr>
+                                <th style="width: 130px">系统订单号</th>
+                                <th style="width: 90px">支付类型</th>
+                                <th style="width: 260px">外部订单号</th>
+                                <th style="width: 100px">金额（元）</th>
+                                <th style="width: 70px">状态</th>
+                                <th style="width: 180px">创建时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in recharge.data">
+                                <td>{{item.bill_no}}</td>
+                                <td>{{item.pay_type_label}}</td>
+                                <td>{{item.pay_no}}</td>
+                                <td>{{item.money}}</td>
+                                <td>{{item.status_label}}</td>
+                                <td>{{item.created_at}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <el-pagination layout="prev, pager, next"
+                                       :total="recharge.meta.total"
+                                       :page-size="recharge.meta.per_page"
+                                       @current-change="rechargePaginate"></el-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="modal fade notification-dialog" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel"
@@ -325,6 +409,9 @@
                     password: '',
                     remember: true
                 },
+                rechargeForm: {
+                    mount: '',
+                },
                 notificationItem: {data: {}}
             }
         },
@@ -340,13 +427,16 @@
             },
             notification: function () {
                 return this.$store.state.notification;
+            },
+            recharge: function () {
+                return this.$store.state.recharge;
             }
         },
         created: function () {
-            this.$store.commit('notification');
+            let self = this;
             this.$store.commit('unreadNotification', {
                 callback: function () {
-                    $('.notification-dialog').modal('show');
+                    self.notificationList();
                 }
             });
         },
@@ -415,6 +505,7 @@
             },
             notificationList: function () {
                 $('.notification-dialog').modal('show');
+                this.$store.commit('notification');
             },
             notificationDetail: function (item) {
                 $('.notification-detail-dialog').modal('show');
@@ -425,7 +516,31 @@
                     self.$store.commit('notification');
                     self.$store.commit('unreadNotification');
                 });
-            }
+            },
+            rechargeDialog: function () {
+                $('.recharge-dialog').modal('show');
+            },
+            doRecharge: function () {
+                $('.recharge-dialog').modal('hide');
+                let self = this;
+                let count = 5;
+                self.$store.commit('user');
+                let handle = setInterval(function () {
+                    if (count <= 0) {
+                        clearInterval(handle);
+                    } else {
+                        self.$store.commit('user');
+                        count--;
+                    }
+                }, 10000);
+            },
+            rechargeList: function () {
+                $('.recharge-list-dialog').modal('show');
+                this.$store.commit('recharge');
+            },
+            rechargePaginate: function () {
+
+            },
         }
     }
 </script>

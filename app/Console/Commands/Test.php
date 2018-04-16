@@ -51,13 +51,13 @@ class Test extends Command
      */
     public function handle()
     {
-        $account = Account::where('type', 202)->where('name', '柯柯')->first();
+        $user = \App\User::find(12516);
+        $recharges = $user->_recharge;
 
         //var_dump(preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', 18677303808));
 
 //        $result = date('Ym/d', time());
 //        var_dump($result);
-
         $temp = '';
     }
 }
