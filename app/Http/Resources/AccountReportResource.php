@@ -27,7 +27,7 @@ class AccountReportResource extends Resource
             $data['ip'] = preg_replace('/(\d+\.\d+)\.\d+\.\d+/', '$1.*.*', $data['ip']);
         }
 
-        if ($data['_user']) {
+        if (isset($data['_user'])) {
             $data['user_mobile'] = $data['_user']['mobile'];
         }
 
