@@ -63,6 +63,7 @@ const routes = [
             {path: 'taxonomy', component: require('./pages/Taxonomy.vue')},
             {path: 'tag', component: require('./pages/Tag.vue')},
             {path: 'article', component: require('./pages/Article.vue')},
+            {path: 'recharge', component: require('./pages/Recharge.vue')},
             {path: 'user', component: require('./pages/User.vue')},
             {path: 'account/report', component: require('./pages/AccountReport.vue')},
             {path: 'account', component: require('./pages/Account.vue')},

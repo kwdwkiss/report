@@ -12,6 +12,6 @@ class AmountBill extends Model
 
     public static function generateBillNo($userId)
     {
-        return time() . str_pad($userId, 4, '0', STR_PAD_LEFT);
+        return date('ymdHis', time()) . str_pad($userId, 4, '0', STR_PAD_LEFT);
     }
 }

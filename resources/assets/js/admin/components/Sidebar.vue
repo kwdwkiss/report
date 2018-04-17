@@ -53,6 +53,10 @@
                         path: '/account/report',
                     },
                     {
+                        title: '充值记录',
+                        path: '/recharge',
+                    },
+                    {
                         title: '首页设置',
                         path: '/site/index-page',
                     },

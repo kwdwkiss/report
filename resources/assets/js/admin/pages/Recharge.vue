@@ -2,15 +2,23 @@
     <div>
         <div v-show="action=='list'">
             <el-row class="search">
-                <el-select v-model="search.type" placeholder="文章类型">
-                    <el-option v-for="item in articleTypeList" :key="item.id" :value="item.id"
-                               :label="item.name"></el-option>
-                </el-select>
-                <el-input v-model="search.title" placeholder="标题"></el-input>
+                <el-input v-model="search.mobile" placeholder="用户手机号"></el-input>
+                <el-input v-model="search.pay_no" placeholder="外部订单号"></el-input>
+                <el-date-picker
+                        v-model="search.created_at"
+                        type="daterange"
+                        align="right"
+                        unlink-panels
+                        range-separator="-"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期"
+                        value-format="yyyy-MM-dd"
+                        :picker-options="datePickerOptions">
+                </el-date-picker>
 
                 <el-button type="primary" @click="loadData">搜索</el-button>
                 <el-button type="warning" @click="reset">重置</el-button>
-                <el-button type="success" @click="openCreateDialog">添加</el-button>
+                <el-button type="success" @click="openCreateDialog">人工充值</el-button>
 
                 <el-pagination layout="prev, pager, next"
                                :total="dataList.meta.total"
@@ -26,24 +34,15 @@
                     <!--<a target="_blank" :href="scope.row.url">查看</a>-->
                     <!--</template>-->
                     <!--</el-table-column>-->
-                    <el-table-column prop="article_type" label="文章类型" min-width="100"></el-table-column>
-                    <el-table-column prop="title" label="标题" min-width="200"></el-table-column>
-                    <el-table-column prop="remark" label="备注" min-width="160"></el-table-column>
-                    <el-table-column label="显示" min-width="100">
-                        <template slot-scope="scope">
-                            <el-switch v-model="scope.row.display" :active-value="1" :inactive-value="0"
-                                       @change="switchDisplay(scope.row)">
-                            </el-switch>
-                        </template>
-                    </el-table-column>
+                    <el-table-column prop="_user.mobile" label="用户" min-width="110"></el-table-column>
+                    <el-table-column prop="bill_no" label="系统订单号" min-width="140"></el-table-column>
+                    <el-table-column prop="pay_type_label" label="支付类型" min-width="80"></el-table-column>
+                    <el-table-column prop="pay_no" label="外部订单号" min-width="280"></el-table-column>
+                    <el-table-column prop="money" label="金额" min-width="80"></el-table-column>
+                    <el-table-column prop="status_label" label="订单状态" min-width="80"></el-table-column>
                     <el-table-column prop="created_at" label="创建时间" min-width="160"></el-table-column>
                     <el-table-column label="操作" min-width="400">
                         <template slot-scope="scope">
-                            <el-button type="primary" class="btn-copy" :data-clipboard-text="scope.row.url">复制链接
-                            </el-button>
-                            <el-button type="success" @click="preview(scope)">预览</el-button>
-                            <el-button type="warning" @click="openUpdateDialog(scope)">修改</el-button>
-                            <el-button type="danger" @click="doDelete(scope)">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -51,26 +50,23 @@
         </div>
         <div v-show="action=='create'">
             <div class="panel">
-                <div class="panel-heading">创建文章</div>
+                <div class="panel-heading">人工充值</div>
                 <div class="panel-body">
                     <el-form ref="createForm" :model="dialogCreate.data" :rules="rules">
-                        <el-form-item prop="type" label="文章类型" labelWidth="100px">
-                            <el-select v-model="dialogCreate.data.type">
-                                <el-option v-for="item in articleTypeList" :key="item.id" :value="item.id"
-                                           :label="item.name"></el-option>
+                        <el-form-item prop="mobile" label="用户手机号" labelWidth="100px">
+                            <el-input v-model="dialogCreate.data.mobile"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="pay_no" label="支付类型" labelWidth="100px">
+                            <el-select v-model="dialogCreate.data.pay_type">
+                                <el-option key="1" value="1" label="支付宝"></el-option>
+                                <el-option key="2" value="2" label="微信"></el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item prop="title" label="标题" labelWidth="100px">
-                            <el-input v-model="dialogCreate.data.title"></el-input>
+                        <el-form-item prop="pay_no" label="外部订单号" labelWidth="100px">
+                            <el-input v-model="dialogCreate.data.pay_no"></el-input>
                         </el-form-item>
-                        <el-form-item prop="remark" label="备注" labelWidth="100px">
-                            <el-input v-model="dialogCreate.data.remark"></el-input>
-                        </el-form-item>
-                        <el-form-item class="editor-form-item" prop="content" label="内容" labelWidth="100px">
-                            <VueUEditor v-if="action=='create'" ueditorPath="/ueditor/"
-                                        @ready="createEditorReady"
-                                        style="line-height: 20px">
-                            </VueUEditor>
+                        <el-form-item prop="money" label="金额" labelWidth="100px">
+                            <el-input v-model="dialogCreate.data.money"></el-input>
                         </el-form-item>
                         <el-form-item labelWidth="100px">
                             <el-button type="primary" @click="action='list'">返回</el-button>
@@ -86,10 +82,6 @@
                 <div class="panel-body">
                     <el-form ref="createForm" :model="dialogUpdate.data" :rules="rules">
                         <el-form-item prop="type" label="文章类型" labelWidth="100px">
-                            <el-select v-model="dialogUpdate.data.type">
-                                <el-option v-for="item in articleTypeList" :key="item.id" :value="item.id"
-                                           :label="item.name"></el-option>
-                            </el-select>
                         </el-form-item>
                         <el-form-item prop="title" label="标题" labelWidth="100px">
                             <el-input v-model="dialogUpdate.data.title"></el-input>
@@ -98,10 +90,6 @@
                             <el-input v-model="dialogUpdate.data.remark"></el-input>
                         </el-form-item>
                         <el-form-item prop="content" label="内容" labelWidth="100px">
-                            <VueUEditor v-if="action=='update'" ueditorPath="/ueditor/"
-                                        @ready="updateEditorReady"
-                                        style="line-height: 20px">
-                            </VueUEditor>
                         </el-form-item>
                         <el-form-item labelWidth="100px">
                             <el-button type="primary" @click="action='list'">返回</el-button>
@@ -115,18 +103,41 @@
 </template>
 
 <script>
-    import VueUEditor from 'vue-ueditor';
-    import Clipboard from 'clipboard';
-
     export default {
-        components: {VueUEditor},
         data: function () {
             return {
+                datePickerOptions: {
+                    shortcuts: [{
+                        text: '最近一周',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近一个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近三个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }]
+                },
                 action: 'list',
-                apiList: api.articleList,
-                apiCreate: api.articleCreate,
-                apiUpdate: api.articleUpdate,
-                apiDelete: api.articleDelete,
+                apiList: api.rechargeList,
+                apiCreate: api.rechargeCreate,
+                apiUpdate: '',
+                apiDelete: '',
                 dataList: {
                     meta: {},
                 },
@@ -143,26 +154,15 @@
                 editor: {}
             }
         },
-        computed: {
-            articleTypeList: function () {
-                return this.$store.state.taxonomy.article_type
-            }
-        },
         created: function () {
             this.loadData();
-        },
-        mounted: function () {
-            let clipboard = new Clipboard('.btn-copy');
-            clipboard.on('success', function (e) {
-                e.clearSelection();
-            });
         },
         methods: {
             createEditorReady: function (ue) {
                 this.editor.create = ue;
             },
             updateEditorReady: function (ue) {
-                this.editor.update = ue;
+                this.editordialogCreate.update = ue;
                 this.editor.update.setContent(this.dialogUpdate.data.content);
             },
             loadData: function () {
@@ -180,8 +180,7 @@
                 this.loadData();
             },
             openCreateDialog: function () {
-                let type = this.articleTypeList.length && this.articleTypeList[0].id;
-                this.dialogCreate.data = {type: type, title: '', remark: '', content: ''};
+                this.data = {type: '', title: '', remark: '', content: ''};
                 this.action = 'create';
             },
             doCreate: function () {

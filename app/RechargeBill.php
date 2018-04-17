@@ -10,8 +10,13 @@ class RechargeBill extends Model
 
     protected $guarded = [];
 
+    public function _user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public static function generateBillNo($userId)
     {
-        return time() . str_pad($userId, 4, '0', STR_PAD_LEFT);
+        return date('ymdHis', time()) . str_pad($userId, 4, '0', STR_PAD_LEFT);
     }
 }

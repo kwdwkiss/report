@@ -35,6 +35,7 @@
             <el-table :data="dataList.data" stripe>
                 <el-table-column prop="account_type_label" label="账号类型" min-width="80"></el-table-column>
                 <el-table-column prop="account_name" label="账号" min-width="150"></el-table-column>
+                <el-table-column prop="user_mobile" label="举报者" min-width="110"></el-table-column>
                 <el-table-column prop="type_label" label="举报类型" min-width="80"></el-table-column>
                 <el-table-column prop="ip" label="IP" min-width="120"></el-table-column>
                 <el-table-column prop="created_at" label="举报时间" min-width="180"></el-table-column>

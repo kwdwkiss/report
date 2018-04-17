@@ -49,6 +49,9 @@ module.exports = {
     messageList: '/admin/message/list',
     messageCreate: '/admin/message/create',
 
+    rechargeList: '/admin/recharge/list',
+    rechargeCreate: '/admin/recharge/create',
+
     //>>>>>>>>>>index
     taxonomyAllData: '/taxonomy/all/data',
     taxonomyAllDisplay: '/taxonomy/all/display',

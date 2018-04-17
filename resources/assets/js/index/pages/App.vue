@@ -15,7 +15,7 @@
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse in" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <!--<li><a href="#">账号查询</a></li>-->
                         <!--<li><a href="#">电商导航</a></li>-->
@@ -78,7 +78,7 @@
                                 <label class="col-sm-3 control-label">充值说明</label>
                                 <div class="col-sm-9">
                                     <div class="row">
-                                        <span>1、1元=100积分，最低充值金额1元，请用支付宝扫描下方二维码，<span class="text-danger">备注写{{user.id}}（否则不能自动到账）。</span></span>
+                                        <span>1、1元=100积分，最低充值金额1元，请用支付宝扫描下方二维码，<span class="text-danger">备注填写注册手机号：{{user.mobile}}（否则不能自动到账）。</span></span>
                                     </div>
                                     <div class="row">
                                         <span>2、完成支付宝转账后，请点击充值完成按钮，耐心等待积分到账。</span>

@@ -15,6 +15,11 @@ class AccountReport extends Model
         202 => [301, 302, 304, 307]
     ];
 
+    public function _user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public function _accountType()
     {
         return $this->hasOne(Taxonomy::class, 'id', 'account_type');

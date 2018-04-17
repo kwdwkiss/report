@@ -26,6 +26,11 @@ class AccountReportResource extends Resource
         if ($request->has('ip_hide')) {
             $data['ip'] = preg_replace('/(\d+\.\d+)\.\d+\.\d+/', '$1.*.*', $data['ip']);
         }
+
+        if ($data['_user']) {
+            $data['user_mobile'] = $data['_user']['mobile'];
+        }
+
         return $data;
     }
 }
