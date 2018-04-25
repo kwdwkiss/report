@@ -273,6 +273,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-3 control-label">邀请人</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control"
+                                           placeholder="填写邀请人注册手机号" name="inviter"
+                                           v-model="registerForm.inviter">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-3 control-label">短信验证码</label>
                                 <div class="col-sm-6">
                                     <input class="form-control" placeholder="请输入短信验证码"

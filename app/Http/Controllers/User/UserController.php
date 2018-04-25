@@ -68,6 +68,7 @@ class UserController extends Controller
     {
         $mobile = request('mobile');
         $password = request('password');
+        $inviter = request('inviter');
         $code = request('code');
         $remember = request('remember');
 
@@ -75,6 +76,13 @@ class UserController extends Controller
             return [
                 'code' => -1,
                 'message' => '手机号码格式错误'
+            ];
+        }
+
+        if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $inviter)) {
+            return [
+                'code' => -1,
+                'message' => '邀请人手机号码格式错误'
             ];
         }
 
@@ -107,7 +115,7 @@ class UserController extends Controller
             $user->update(['password' => bcrypt($password)]);
         } else {
             $user = null;
-            \DB::transaction(function () use ($mobile, $password, &$user) {
+            \DB::transaction(function () use ($mobile, $password, $inviter, &$user) {
                 $user = User::create([
                     'mobile' => $mobile,
                     'type' => 401,
@@ -126,9 +134,26 @@ class UserController extends Controller
                     'description' => "新用户注册赠送${amount}积分"
                 ]);
 
+                //邀请人发放100积分
+                $inviterUser = User::with('_profile')->where('mobile', $inviter)->first();
+                if ($inviterUser) {
+                    $inviterAmount = 100;
+                    $inviterUser->_profile->increment('amount', $inviterAmount);
+                    AmountBill::create([
+                        'user_id' => $inviterUser->id,
+                        'bill_no' => AmountBill::generateBillNo($inviterUser->id),
+                        'type' => 0,
+                        'amount' => $inviterAmount,
+                        'biz_type' => 0,
+                        'biz_id' => 2,
+                        'description' => "邀请新用户注册赠送${inviterAmount}积分"
+                    ]);
+                }
+
                 UserProfile::create([
                     'user_id' => $user->id,
-                    'amount' => $amount
+                    'amount' => $amount,
+                    'inviter' => $inviter
                 ]);
             });
         }

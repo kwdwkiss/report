@@ -28,6 +28,9 @@
                                 <el-form-item label="积分">
                                     <span>{{ props.row._profile.amount }}</span>
                                 </el-form-item>
+                                <el-form-item label="邀请人">
+                                    <span>{{ props.row._profile.inviter }}</span>
+                                </el-form-item>
                                 <el-form-item label="姓名">
                                     <span>{{ props.row._profile.name }}</span>
                                 </el-form-item>

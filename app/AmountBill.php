@@ -11,7 +11,8 @@ class AmountBill extends Model
     protected $guarded = [];
 
     public $sysGiveAmount = [
-        1 => '新用户注册赠送200积分'
+        1 => '新用户注册赠送200积分',
+        2 => '邀请新用户注册赠送100积分'
     ];
 
     public static function generateBillNo($userId)

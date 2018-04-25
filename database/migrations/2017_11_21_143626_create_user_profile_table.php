@@ -24,6 +24,7 @@ class CreateUserProfileTable extends Migration
             $table->string('province');
             $table->string('city');
             $table->string('alipay');//支付宝账号
+            $table->string('inviter');//邀请人
             $table->string('remark');
             $table->timestamps();
         });
