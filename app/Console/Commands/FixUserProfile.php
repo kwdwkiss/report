@@ -38,7 +38,7 @@ class FixUserProfile extends Command
      */
     public function handle()
     {
-        \App\User::query()->with('_profile')->doesntHave('_profile')->chunk(1000, function ($users) {
+        \App\User::query()->with('_profile')->chunk(1000, function ($users) {
             foreach ($users as $user) {
                 if (!$user->_profile) {
                     UserProfile::create([

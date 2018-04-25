@@ -48,6 +48,7 @@ module.exports = {
 
     messageList: '/admin/message/list',
     messageCreate: '/admin/message/create',
+    messageDelete: '/admin/message/delete',
 
     rechargeList: '/admin/recharge/list',
     rechargeCreate: '/admin/recharge/create',

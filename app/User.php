@@ -31,6 +31,11 @@ class User extends Authenticatable
         return $this->hasOne(UserProfile::class, 'user_id', 'id');
     }
 
+    public function _amountBill()
+    {
+        return $this->hasMany(AmountBill::class, 'user_id', 'id');
+    }
+
     public function _recharge()
     {
         return $this->hasMany(RechargeBill::class, 'user_id', 'id');

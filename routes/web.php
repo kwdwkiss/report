@@ -34,6 +34,8 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/admin', 'Admin\IndexController@index');
     Route::get('/admin/logout', 'Admin\IndexController@logout');
     Route::post('/admin/login', 'Admin\IndexController@login');
+
+    Route::get('/mobile', 'Index\IndexController@mobile');
 });
 
 Route::middleware(['auth:user', 'csrf'])->group(function () {
@@ -100,9 +102,8 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
 
     Route::get('/admin/message/list', 'Admin\MessageController@list');
     Route::post('/admin/message/create', 'Admin\MessageController@create');
+    Route::post('/admin/message/delete', 'Admin\MessageController@delete');
 
     Route::get('/admin/recharge/list', 'Admin\RechargeController@list');
     Route::post('/admin/recharge/create', 'Admin\RechargeController@create');
-    Route::post('/admin/recharge/update', 'Admin\RechargeController@update');
-    Route::post('/admin/recharge/delete', 'Admin\RechargeController@delete');
 });

@@ -25,6 +25,9 @@
                     <el-table-column type="expand">
                         <template slot-scope="props">
                             <el-form label-position="left" inline class="demo-table-expand">
+                                <el-form-item label="积分">
+                                    <span>{{ props.row._profile.amount }}</span>
+                                </el-form-item>
                                 <el-form-item label="姓名">
                                     <span>{{ props.row._profile.name }}</span>
                                 </el-form-item>

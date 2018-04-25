@@ -6,6 +6,7 @@ use Aliyun\Sms;
 use App\Account;
 use App\AccountReport;
 use App\Admin;
+use App\AmountBill;
 use App\Attachment;
 use App\Config;
 use App\Jobs\SendNotification;
@@ -51,7 +52,9 @@ class Test extends Command
      */
     public function handle()
     {
-        $result = date('ymdHis', time());
+        $userIds = AmountBill::select('user_id')->where('biz_type', 0)->where('biz_id', 1)->get()->pluck('user_id');
+        $users = \App\User::with('_amountBill', '_profile')->whereNotIn('id', $userIds)->count();
+        $result = $users;
         var_dump($result);
         $temp = '';
     }

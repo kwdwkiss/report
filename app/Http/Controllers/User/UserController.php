@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\AmountBill;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Sms;
@@ -112,8 +113,22 @@ class UserController extends Controller
                     'type' => 401,
                     'password' => bcrypt($password)
                 ]);
+
+                //新用户注册发放200积分
+                $amount = 200;
+                AmountBill::create([
+                    'user_id' => $user->id,
+                    'bill_no' => AmountBill::generateBillNo($user->id),
+                    'type' => 0,
+                    'amount' => $amount,
+                    'biz_type' => 0,
+                    'biz_id' => 1,
+                    'description' => "新用户注册赠送${amount}积分"
+                ]);
+
                 UserProfile::create([
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
+                    'amount' => $amount
                 ]);
             });
         }

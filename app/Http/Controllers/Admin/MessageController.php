@@ -18,6 +18,7 @@ use App\Message;
 use App\Notifications\SiteMessage;
 use App\Taxonomy;
 use App\User;
+use Illuminate\Notifications\DatabaseNotification;
 
 class MessageController extends Controller
 {
@@ -83,6 +84,21 @@ class MessageController extends Controller
             'remark' => $remark
         ]);
         dispatch(new SendUserNotification($userSelect, $data, new SiteMessage($message)));
+
+        return [];
+    }
+
+    public function delete()
+    {
+        $id = request('id');
+
+        $message = Message::findOrFail($id);
+
+        \DB::transaction(function () use ($message) {
+            $message->delete();
+
+            DatabaseNotification::where('data', 'like', '%"id":' . $message->id . '%')->delete();
+        });
 
         return [];
     }

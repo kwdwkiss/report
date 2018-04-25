@@ -17,19 +17,37 @@ use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AccountReportResource;
 use App\Http\Resources\AccountResource;
+use App\Http\Resources\UserResource;
 use App\Taxonomy;
+use Detection\MobileDetect;
 
 class IndexController extends Controller
 {
     public function index()
     {
+//        $detect = new MobileDetect();
+//        if ($detect->isMobile()) {
+//            return redirect('/mobile');
+//        }
+
         $page = [];
-        \DB::transaction(function () use (&$page, &$taxonomy) {
+        \DB::transaction(function () use (&$page) {
             $page = array_merge([
                 'taxonomy' => Taxonomy::allDisplay(),
             ], Config::getSiteIndex(), Config::getSiteStatics());
         });
         return view('index', compact('page'));
+    }
+
+    public function mobile()
+    {
+        $page = [];
+        \DB::transaction(function () use (&$page) {
+            $page = array_merge([
+                'taxonomy' => Taxonomy::allDisplay(),
+            ], Config::getSiteIndex(), Config::getSiteStatics());
+        });
+        return view('mobile', compact('page'));
     }
 
     public function popWindow()

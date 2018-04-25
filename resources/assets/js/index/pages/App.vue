@@ -30,15 +30,15 @@
                             <li><a href="javascript:" @click="register">注册</a></li>
                         </template>
                         <template v-if="user">
-                            <!--<li class="dropdown">-->
-                                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"-->
-                                   <!--aria-haspopup="true" aria-expanded="false">积分:{{user._profile.amount}}<span-->
-                                        <!--class="caret"></span></a>-->
-                                <!--<ul class="dropdown-menu">-->
-                                    <!--<li><a href="javascript:" @click="rechargeDialog">充值</a></li>-->
-                                    <!--<li><a href="javascript:" @click="rechargeList">充值记录</a></li>-->
-                                <!--</ul>-->
-                            <!--</li>-->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-haspopup="true" aria-expanded="false">积分:{{user._profile.amount}}<span
+                                        class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:" @click="rechargeDialog">充值</a></li>
+                                    <li><a href="javascript:" @click="rechargeList">充值记录</a></li>
+                                </ul>
+                            </li>
                             <li><a href="javascript:"
                                    @click="notificationList">通知
                                 <template v-if="unreadNotification.meta.total">

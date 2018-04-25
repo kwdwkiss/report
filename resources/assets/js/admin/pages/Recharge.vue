@@ -35,7 +35,7 @@
                     <!--</template>-->
                     <!--</el-table-column>-->
                     <el-table-column prop="_user.mobile" label="用户" min-width="110"></el-table-column>
-                    <el-table-column prop="bill_no" label="系统订单号" min-width="140"></el-table-column>
+                    <el-table-column prop="bill_no" label="系统订单号" min-width="150"></el-table-column>
                     <el-table-column prop="pay_type_label" label="支付类型" min-width="80"></el-table-column>
                     <el-table-column prop="pay_no" label="外部订单号" min-width="280"></el-table-column>
                     <el-table-column prop="money" label="金额" min-width="80"></el-table-column>
@@ -58,8 +58,8 @@
                         </el-form-item>
                         <el-form-item prop="pay_no" label="支付类型" labelWidth="100px">
                             <el-select v-model="dialogCreate.data.pay_type">
-                                <el-option key="1" value="1" label="支付宝"></el-option>
-                                <el-option key="2" value="2" label="微信"></el-option>
+                                <el-option :key="1" :value="1" label="支付宝"></el-option>
+                                <el-option :key="2" :value="2" label="微信"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item prop="pay_no" label="外部订单号" labelWidth="100px">
@@ -180,14 +180,13 @@
                 this.loadData();
             },
             openCreateDialog: function () {
-                this.data = {type: '', title: '', remark: '', content: ''};
+                this.dialogCreate.data = {pay_type: 1, mobile: '', pay_no: '', money: ''};
                 this.action = 'create';
             },
             doCreate: function () {
                 let self = this;
                 self.$refs.createForm.validate((valid) => {
                     if (valid) {
-                        self.dialogCreate.data.content = self.editor.create.getContent();
                         axios.post(self.apiCreate, [self.dialogCreate.data]).then(function () {
                             self.action = 'list';
                             self.$message.success('成功');

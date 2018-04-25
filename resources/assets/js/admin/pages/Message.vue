@@ -106,6 +106,7 @@
                 action: 'list',
                 apiList: api.messageList,
                 apiCreate: api.messageCreate,
+                apiDelete: api.messageDelete,
                 dataList: {
                     meta: {},
                 },
