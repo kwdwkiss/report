@@ -135,7 +135,7 @@ class UserController extends Controller
                 ]);
 
                 //邀请人发放100积分
-                $inviterUser = User::with('_profile')->where('mobile', $inviter)->first();
+                $inviterUser = User::with('_profile')->where('mobile', $inviter)->whereNot('user_id', $user->id)->first();
                 if ($inviterUser) {
                     $inviterAmount = 100;
                     $inviterUser->_profile->increment('amount', $inviterAmount);
