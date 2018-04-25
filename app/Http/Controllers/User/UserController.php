@@ -135,19 +135,21 @@ class UserController extends Controller
                 ]);
 
                 //邀请人发放100积分
-                $inviterUser = User::with('_profile')->where('mobile', $inviter)->whereNot('user_id', $user->id)->first();
-                if ($inviterUser) {
-                    $inviterAmount = 100;
-                    $inviterUser->_profile->increment('amount', $inviterAmount);
-                    AmountBill::create([
-                        'user_id' => $inviterUser->id,
-                        'bill_no' => AmountBill::generateBillNo($inviterUser->id),
-                        'type' => 0,
-                        'amount' => $inviterAmount,
-                        'biz_type' => 0,
-                        'biz_id' => 2,
-                        'description' => "邀请新用户注册赠送${inviterAmount}积分"
-                    ]);
+                if ($mobile != $inviter) {
+                    $inviterUser = User::with('_profile')->where('mobile', $inviter)->first();
+                    if ($inviterUser) {
+                        $inviterAmount = 100;
+                        $inviterUser->_profile->increment('amount', $inviterAmount);
+                        AmountBill::create([
+                            'user_id' => $inviterUser->id,
+                            'bill_no' => AmountBill::generateBillNo($inviterUser->id),
+                            'type' => 0,
+                            'amount' => $inviterAmount,
+                            'biz_type' => 0,
+                            'biz_id' => 2,
+                            'description' => "邀请新用户注册赠送${inviterAmount}积分"
+                        ]);
+                    }
                 }
 
                 UserProfile::create([
