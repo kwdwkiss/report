@@ -471,7 +471,7 @@
                 $(".login-dialog").modal('show');
                 this.loginStatus = 'register';
                 this.dialogTitle = '注册&找回密码';
-                self.registerInit();
+                this.registerInit();
             },
             registerInit: function () {
                 this.registerForm.mobile = '';
