@@ -140,8 +140,8 @@ class UserController extends Controller
         if ($user) {
             $user->update(['password' => bcrypt($password)]);
         } else {//注册
-            $inviter = request('inviter');
-            if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $inviter)) {
+            $inviter = request('inviter', '');
+            if ($inviter && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $inviter)) {
                 return [
                     'code' => -1,
                     'message' => '邀请人手机号码格式错误'

@@ -172,13 +172,6 @@
                     name: 'search',
                     params: {account_type: this.searchParams.account_type, name: this.searchParams.name}
                 });
-
-                // axios.post(api.indexSearch, self.searchParams).then(function (res) {
-                //     self.$store.commit('searchResult', res.data.data);
-                //     self.$router.push('/search');
-                // }).catch(function () {
-                //     self.$router.push('/');
-                // });
             },
             report: function () {
                 $("#report-dialog").modal('show');
