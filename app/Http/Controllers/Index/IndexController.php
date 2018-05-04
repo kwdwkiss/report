@@ -39,17 +39,6 @@ class IndexController extends Controller
         return view('index', compact('page'));
     }
 
-    public function mobile()
-    {
-        $page = [];
-        \DB::transaction(function () use (&$page) {
-            $page = array_merge([
-                'taxonomy' => Taxonomy::allDisplay(),
-            ], Config::getSiteIndex(), Config::getSiteStatics());
-        });
-        return view('mobile', compact('page'));
-    }
-
     public function popWindow()
     {
         return ['data' => Config::getSitePopWindow()];
@@ -61,6 +50,9 @@ class IndexController extends Controller
         if (!$user) {
             throw new JsonException('用户未登录，请登录后再查询');
         }
+        if (!$user->_profile) {
+            throw new JsonException('用户数据异常，请联系客服');
+        }
 
         request()->query->set('ip_hide', 1);
         $account_type = request('account_type');
@@ -70,28 +62,22 @@ class IndexController extends Controller
             throw new JsonException('查询账号为空');
         }
 
-        try {
-            Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
-            if ($account_type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {
-                throw new JsonException('QQ号码格式错误');
-            }
-            if ($account_type == 203 && !preg_match('/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}+$/', $name)) {
-                throw new JsonException('微信号码格式错误');
-            }
-            if ($account_type == 204 && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $name)) {
-                throw new JsonException('手机号码格式错误');
-            }
-        } catch (JsonException $e) {
-            AccountSearch::create([
-                'user_id' => $user ? $user->id : 0,
-                'type' => $account_type,
-                'name' => $name,
-                'ip' => request()->getClientIp(),
-                'success' => 0,
-                'result' => $e->getMessage()
-            ]);
-            throw $e;
+        Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
+        if ($account_type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {
+            throw new JsonException('QQ号码格式错误');
         }
+        if ($account_type == 203 && !preg_match('/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}+$/', $name)) {
+            throw new JsonException('微信号码格式错误');
+        }
+        if ($account_type == 204 && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $name)) {
+            throw new JsonException('手机号码格式错误');
+        }
+
+        if ($user->_profile->amount < 2) {
+            throw new JsonException('用户积分不足，请充值');
+        }
+        $user->_profile->decrement('amount', 2);
+
         AccountSearch::create([
             'user_id' => $user ? $user->id : 0,
             'type' => $account_type,

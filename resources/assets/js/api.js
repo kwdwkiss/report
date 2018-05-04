@@ -66,11 +66,15 @@ module.exports = {
     indexArticleList: '/index/article/list',
     indexArticleShow: '/index/article/show',
 
+    //>>>>>>>>>>mobile
+    mobileSearch: '/mobile/search',
+
     //>>>>>>>>>>user
     userLogin: '/user/login',
     userLogout: '/user/logout',
     userInfo: '/user/info',
     userRegister: 'user/register',
+    userForgetPassword: 'user/forget-password',
     userModifyPassword: '/user/modify-password',
     userSms: '/user/sms',
 

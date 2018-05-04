@@ -1,15 +1,31 @@
 <template>
     <div>
         <div @keyup.enter="doSearch">
-            <mt-search v-model="searchParams.name" style="height: 100%"></mt-search>
+            <mt-search v-model="name" style="height: 100%"></mt-search>
         </div>
-        <mt-cell title="网站会员" :value="member"></mt-cell>
-        <mt-cell title="举报总数" :value="reportTotal"></mt-cell>
-        <mt-cell title="最近24小时举报" :value="lastReportNum"></mt-cell>
-        <mt-cell title="最新举报"></mt-cell>
-        <template v-for="(item,index) in lastReport">
-            <mt-cell :title="item.account_name" :value="item.created_at" is-link :key="index"></mt-cell>
-        </template>
+        <div class="row">
+            <div class="col-xs-6">网站会员</div>
+            <div class="col-xs-6">{{member}}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">举报总数</div>
+            <div class="col-xs-6">{{reportTotal}}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">最近24小时举报</div>
+            <div class="col-xs-6">{{lastReportNum}}</div>
+        </div>
+        <hr>
+        <div class="row" v-for="(item,index) in lastReport" :key="index" @click="detail(item)">
+            <div class="row">
+                <span>{{item.account_type_label}}</span>
+                <span class="pull-right">{{item.account_name}}</span>
+            </div>
+            <div class="row">
+                <span>{{item.type_label}}</span>
+                <span class="pull-right">{{item.created_at}}</span>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -18,9 +34,7 @@
         name: "Index",
         data: function () {
             return {
-                searchParams: {
-                    name: ''
-                },
+                name: ''
             }
         },
         computed: {
@@ -39,8 +53,10 @@
         },
         methods: {
             doSearch: function () {
-                this.$store.commit('searchResult', this.searchParams);
-                this.$router.push('searchResult');
+                this.$router.push({name: 'search', params: {name: this.name}});
+            },
+            detail: function () {
+
             }
         }
     }

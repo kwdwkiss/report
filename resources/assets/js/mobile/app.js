@@ -9,7 +9,6 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 import './mint-ui'
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -49,8 +48,13 @@ const routes = [
         component: require('./pages/App.vue'),
         children: [
             {path: '', component: require('./pages/Index.vue')},
+            {path: 'register', component: require('./pages/Register.vue')},
+            {path: 'login', component: require('./pages/Login.vue')},
+            {path: 'forget/password', component: require('./pages/ForgetPassword.vue')},
             {path: 'user', component: require('./pages/User.vue')},
             {path: 'article', component: require('./pages/Article.vue')},
+            {path: 'report', component: require('./pages/Report.vue')},
+            {name: 'search', path: 'search/:name', component: require('./pages/Search.vue')},
         ]
     }
 ];
@@ -71,13 +75,24 @@ const store = window.store = new Vuex.Store({
         },
     },
     mutations: {
+        user(state, playload) {
+            axios.get(api.userInfo).then(function (res) {
+                state.user = res.data.data;
+                if (playload.callback instanceof Function) {
+                    playload.callback();
+                }
+            }).catch(function () {
+                state.user = null
+            });
+        },
         searchResult(state, data) {
-            axios.post(api.indexSearch, data).then(function (res) {
+            axios.post(api.mobileSearch, data).then(function (res) {
                 state.searchResult = res.data.data;
             });
         },
     }
 });
+store.commit('user');
 
 window.app = new Vue({
     el: '#app',

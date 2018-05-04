@@ -26,6 +26,7 @@ Route::middleware(['csrf'])->group(function () {
 
     Route::get('/user/logout', 'User\UserController@logout');
     Route::post('/user/login', 'User\UserController@login');
+    Route::post('/user/forget-password', 'User\UserController@forgetPassword');
     Route::post('/user/register', 'User\UserController@register');
     Route::post('/user/sms', 'User\UserController@sms');
 
@@ -35,7 +36,7 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/admin/logout', 'Admin\IndexController@logout');
     Route::post('/admin/login', 'Admin\IndexController@login');
 
-    Route::get('/mobile', 'Index\IndexController@mobile');
+    Route::get('/mobile', 'Index\MobileController@index');
 });
 
 Route::middleware(['auth:user', 'csrf'])->group(function () {
@@ -46,6 +47,8 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::post('/user/read-notification', 'User\NotificationController@readNotification');
 
     Route::get('/user/recharge/index', 'User\RechargeController@index');
+
+    Route::post('/mobile/search', 'Index\MobileController@search');
 });
 
 //>>>>>>>>>admin

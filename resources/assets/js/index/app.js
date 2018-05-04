@@ -53,7 +53,11 @@ const routes = [
                 component: require('./pages/Index.vue'),
                 children: [
                     {path: '', component: require('./pages/ReportData')},
-                    {path: 'search', component: require('./pages/SearchResult.vue')},
+                    {
+                        name: 'search',
+                        path: 'search/:account_type/:name',
+                        component: require('./pages/SearchResult.vue')
+                    },
                 ]
             },
             {path: 'article/:id', component: require('./pages/Article.vue')},
@@ -81,8 +85,13 @@ const store = window.store = new Vuex.Store({
         recharge: {data: [], meta: {}, links: {}},
     },
     mutations: {
-        searchResult(state, data) {
-            state.searchResult = data;
+        searchResult(state, payload) {
+            axios.post(api.indexSearch, payload).then(function (res) {
+                state.searchResult = res.data.data;
+                if (payload.callback instanceof Function) {
+                    payload.callback();
+                }
+            });
         },
         taxonomy(state) {
             axios.get(api.taxonomyAllData).then(function (res) {

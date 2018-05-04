@@ -120,7 +120,25 @@
                 reportData: {},
             }
         },
+        created: function () {
+            this.search();
+        },
+        watch: {
+            '$route'(to, from) {
+                this.search();
+            }
+        },
         methods: {
+            search: function () {
+                let self = this;
+                let account_type = this.$route.params.account_type;
+                let name = this.$route.params.name;
+                this.$store.commit('searchResult', {
+                    account_type: account_type, name: name, callback: function () {
+                        self.$store.commit('user');
+                    }
+                });
+            },
             detail: function (item) {
                 this.reportData = item;
                 $(".search-result-dialog").modal('show');

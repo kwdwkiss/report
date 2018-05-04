@@ -6,6 +6,9 @@
             <mt-tab-item id="/">
                 首页
             </mt-tab-item>
+            <mt-tab-item id="/report">
+                举报
+            </mt-tab-item>
             <mt-tab-item id="/article">
                 资讯
             </mt-tab-item>
@@ -33,6 +36,9 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    .row {
+        margin: 10px 0;
+        padding: 0 10px;
+    }
 </style>

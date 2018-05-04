@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\User;
 
 use App\AmountBill;
+use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Sms;
@@ -64,33 +65,19 @@ class UserController extends Controller
         return [];
     }
 
-    public function register()
+    public function forgetPassword()
     {
         $mobile = request('mobile');
         $password = request('password');
-        $inviter = request('inviter');
         $code = request('code');
         $remember = request('remember');
 
         if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $mobile)) {
-            return [
-                'code' => -1,
-                'message' => '手机号码格式错误'
-            ];
-        }
-
-        if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $inviter)) {
-            return [
-                'code' => -1,
-                'message' => '邀请人手机号码格式错误'
-            ];
+            throw new JsonException('手机号码格式错误');
         }
 
         if (!preg_match('/^(?![0-9]+$)(?![a-zA-Z]+$)(?![^a-zA-Z^\d]+$).{8,16}$/', $password)) {
-            return [
-                'code' => -1,
-                'message' => '密码必须包含字母、数字、符号两种组合且长度为8-16'
-            ];
+            throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
         }
 
         //未使用，未过期的code
@@ -101,19 +88,66 @@ class UserController extends Controller
             ->first();
 
         if (!$sms) {
-            return [
-                'code' => -1,
-                'message' => '验证码错误'
-            ];
+            new JsonException('验证码错误');
         }
 
         $sms->update(['status' => 1]);
 
         $user = User::where('mobile', $mobile)->first();
 
+        if (!$user) {
+            throw new JsonException('用户不存在');
+        }
+
+        $user->update(['password' => bcrypt($password)]);
+
+        \Auth::guard('user')->login($user, $remember);
+
+        return [];
+    }
+
+    public function register()
+    {
+        $mobile = request('mobile');
+        $password = request('password');
+        $code = request('code');
+        $remember = request('remember');
+
+        if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $mobile)) {
+            throw new JsonException('手机号码格式错误');
+        }
+
+        if (!preg_match('/^(?![0-9]+$)(?![a-zA-Z]+$)(?![^a-zA-Z^\d]+$).{8,16}$/', $password)) {
+            throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
+        }
+
+        //未使用，未过期的code
+        $sms = Sms::where('mobile', $mobile)
+            ->where('status', 0)
+            ->where('code', $code)
+            ->where('expired_at', '>', Carbon::now())
+            ->first();
+
+        if (!$sms) {
+            throw new JsonException('验证码错误');
+        }
+
+        $sms->update(['status' => 1]);
+
+        $user = User::where('mobile', $mobile)->first();
+
+        //忘记密码
         if ($user) {
             $user->update(['password' => bcrypt($password)]);
-        } else {
+        } else {//注册
+            $inviter = request('inviter');
+            if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $inviter)) {
+                return [
+                    'code' => -1,
+                    'message' => '邀请人手机号码格式错误'
+                ];
+            }
+
             $user = null;
             \DB::transaction(function () use ($mobile, $password, $inviter, &$user) {
                 $user = User::create([

@@ -240,7 +240,7 @@
                                            v-model="loginForm.password">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" :checked="loginForm.remember"> 记住我
+                                            <input type="checkbox" v-model="loginForm.remember"> 记住我
                                         </label>
                                         &nbsp;
                                         <a href="javascript:" @click="register">忘记密码</a>
@@ -294,7 +294,7 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <label>
-                                        <input type="checkbox" :checked="registerForm.remember"> 记住我
+                                        <input type="checkbox" v-model="registerForm.remember"> 记住我
                                     </label>
                                 </div>
                             </div>
