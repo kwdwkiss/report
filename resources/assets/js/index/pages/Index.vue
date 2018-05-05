@@ -168,9 +168,14 @@
                 this.captcha_src = api.captcha + '?' + Date.parse(new Date());
             },
             doSearch: function () {
-                this.$router.push({
-                    name: 'search',
-                    params: {account_type: this.searchParams.account_type, name: this.searchParams.name}
+                let self = this;
+                let account_type = this.searchParams.account_type;
+                let name = this.searchParams.name;
+                this.$store.commit('searchResult', {
+                    account_type: account_type, name: name, callback: function () {
+                        self.$store.commit('user');
+                        self.$router.push('/search');
+                    }
                 });
             },
             report: function () {

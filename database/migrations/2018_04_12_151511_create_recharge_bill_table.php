@@ -22,6 +22,8 @@ class CreateRechargeBillTable extends Migration
             $table->decimal('money');
             $table->tinyInteger('status');//-1-已关闭 0-待充值 1-已到账
             $table->timestamps();
+
+            $table->unique(['pay_type', 'pay_no']);
         });
     }
 

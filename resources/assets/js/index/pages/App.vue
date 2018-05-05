@@ -84,7 +84,7 @@
                                         <span>2、完成支付宝转账后，请点击充值完成按钮，耐心等待积分到账。</span>
                                     </div>
                                     <div class="row">
-                                        <span>若5分钟后未能到账，请联系客服！</span>
+                                        <span>3、若5分钟后未能到账，或忘记备注手机号，请联系充值客服，微信号：ywh171337832。</span>
                                     </div>
                                     <div class="row">
                                         <img style="width: 200px" src="/images/tbpzw_alipay.png" alt="">

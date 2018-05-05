@@ -53,11 +53,7 @@ const routes = [
                 component: require('./pages/Index.vue'),
                 children: [
                     {path: '', component: require('./pages/ReportData')},
-                    {
-                        name: 'search',
-                        path: 'search/:account_type/:name',
-                        component: require('./pages/SearchResult.vue')
-                    },
+                    {path: 'search', component: require('./pages/SearchResult.vue')},
                 ]
             },
             {path: 'article/:id', component: require('./pages/Article.vue')},
