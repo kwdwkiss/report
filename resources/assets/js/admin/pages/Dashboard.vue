@@ -62,6 +62,26 @@
                 </div>
             </div>
         </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">充值统计</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        今日：{{statement.rechargeBill.today}}
+                    </div>
+                    <div class="col-md-3">
+                        昨日：{{statement.rechargeBill.yesterday}}
+                    </div>
+                    <div class="col-md-3">
+                        本月：{{statement.rechargeBill.month}}
+                    </div>
+                    <div class="col-md-3">
+                        上月：{{statement.rechargeBill.lastMonth}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </template>

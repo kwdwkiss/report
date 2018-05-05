@@ -15,6 +15,7 @@ use App\Config;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AttachmentResource;
+use App\RechargeBill;
 use App\Taxonomy;
 use App\User;
 
@@ -84,7 +85,7 @@ class IndexController extends Controller
         }
 
         $user = \Auth::guard('admin')->user();
-        
+
         return Attachment::createForLocal($uploadFile, $user);
     }
 
@@ -94,7 +95,8 @@ class IndexController extends Controller
             'data' => [
                 'userRegister' => User::statement(),
                 'accountReport' => AccountReport::statement(),
-                'accountSearch' => AccountSearch::statement()
+                'accountSearch' => AccountSearch::statement(),
+                'rechargeBill' => RechargeBill::statement()
             ]
         ];
     }
