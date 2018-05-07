@@ -19,9 +19,9 @@ class CreateUserTable extends Migration
             $table->string('name')->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('mobile')->unique()->nullable();
-            $table->string('wx')->unique()->nullable();//微信
-            $table->string('qq')->unique()->nullable();//qq
-            $table->string('ww')->unique()->nullable();//旺旺
+            $table->string('wx');//微信
+            $table->string('qq');//qq
+            $table->string('ww');//旺旺
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

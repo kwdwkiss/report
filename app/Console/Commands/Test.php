@@ -12,6 +12,7 @@ use App\Config;
 use App\Jobs\SendNotification;
 use App\Message;
 use App\Notifications\SiteMessage;
+use App\RechargeBill;
 use App\Tag;
 use App\Taxonomy;
 use App\UserProfile;
@@ -52,9 +53,7 @@ class Test extends Command
      */
     public function handle()
     {
-        $userIds = AmountBill::select('user_id')->where('biz_type', 0)->where('biz_id', 1)->get()->pluck('user_id');
-        $users = \App\User::with('_amountBill', '_profile')->whereNotIn('id', $userIds)->count();
-        $result = $users;
+        $result  = \Cache::forget('statement.recharge.bill');
         var_dump($result);
         $temp = '';
     }

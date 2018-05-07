@@ -188,30 +188,26 @@ class UserController extends Controller
             }
             $user->mobile = $mobile;
 
-            if ($qq) {
-                if (!preg_match('/^[1-9][0-9]{4,14}$/', $qq)) {
-                    throw new JsonException('QQ号错误');
-                }
-                $exists = User::where('qq', $qq)->first();
-                if ($exists && $exists->id != $user->id) {
-                    throw new JsonException('QQ已存在');
-                }
-                $user->qq = $qq;
+            if ($qq && !preg_match('/^[1-9][0-9]{4,14}$/', $qq)) {
+                throw new JsonException('QQ号错误');
             }
-            if ($wx) {
-                $exists = User::where('wx', $wx)->first();
-                if ($exists && $exists->id != $user->id) {
-                    throw new JsonException('微信已存在');
-                }
-                $user->wx = $wx;
+            $exists = User::where('qq', $qq)->first();
+            if ($exists && $exists->id != $user->id) {
+                throw new JsonException('QQ已存在');
             }
-            if ($ww) {
-                $exists = User::where('ww', $ww)->first();
-                if ($exists && $exists->id != $user->id) {
-                    throw new JsonException('旺旺已存在');
-                }
-                $user->ww = $ww;
+            $user->qq = $qq;
+
+            $exists = User::where('wx', $wx)->first();
+            if ($exists && $exists->id != $user->id) {
+                throw new JsonException('微信已存在');
             }
+            $user->wx = $wx;
+
+            $exists = User::where('ww', $ww)->first();
+            if ($exists && $exists->id != $user->id) {
+                throw new JsonException('旺旺已存在');
+            }
+            $user->ww = $ww;
 
             if ($name) {
                 $userProfile->name = $name;
