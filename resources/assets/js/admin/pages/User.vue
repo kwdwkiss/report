@@ -99,9 +99,6 @@
                         <el-form-item prop="ww" label="旺旺" labelWidth="100px">
                             <el-input v-model="createData.ww"></el-input>
                         </el-form-item>
-                        <el-form-item prop="remark" label="备注" labelWidth="100px">
-                            <el-input v-model="createData._profile.remark"></el-input>
-                        </el-form-item>
                         <el-form-item prop="remark" label="支付宝" labelWidth="100px">
                             <el-input v-model="createData._profile.alipay"></el-input>
                         </el-form-item>
@@ -131,6 +128,9 @@
                                 <el-option v-for="item in cities" :key="item" :value="item" :label="item"></el-option>
                             </el-select>
                         </el-form-item>
+                        <el-form-item prop="remark" label="备注" labelWidth="100px">
+                            <el-input v-model="createData._profile.remark"></el-input>
+                        </el-form-item>
                         <el-form-item labelWidth="100px">
                             <el-button type="primary" @click="action='list'">返回</el-button>
                             <el-button type="success" @click="doCreate">提交</el-button>
@@ -142,7 +142,7 @@
 
         <div v-show="action=='update'">
             <div class="panel">
-                <div class="panel-heading">更新分类</div>
+                <div class="panel-heading">更新</div>
                 <div class="panel-body">
                     <el-form>
                         <el-form-item prop="type" label="会员类型" labelWidth="100px">
@@ -162,9 +162,6 @@
                         </el-form-item>
                         <el-form-item label="旺旺" labelWidth="100px">
                             <el-input v-model="updateData.ww"></el-input>
-                        </el-form-item>
-                        <el-form-item prop="remark" label="备注" labelWidth="100px">
-                            <el-input v-model="updateData._profile.remark"></el-input>
                         </el-form-item>
                         <el-form-item prop="remark" label="支付宝" labelWidth="100px">
                             <el-input v-model="updateData._profile.alipay"></el-input>
@@ -187,15 +184,18 @@
                         </el-form-item>
 
                         <el-form-item label="省" labelWidth="100px">
-                            <el-select v-model="updateData._profile.province" @change="provinceSelect">
+                            <select v-model="updateData._profile.province" @change="provinceSelect">
                                 <el-option v-for="item in provinces" :key="item" :value="item"
                                            :label="item"></el-option>
-                            </el-select>
+                            </select>
                         </el-form-item>
                         <el-form-item label="市" labelWidth="100px">
-                            <el-select v-model="updateData._profile.city">
+                            <select v-model="updateData._profile.city">
                                 <el-option v-for="item in cities" :key="item" :value="item" :label="item"></el-option>
-                            </el-select>
+                            </select>
+                        </el-form-item>
+                        <el-form-item prop="remark" label="备注" labelWidth="100px">
+                            <el-input v-model="updateData._profile.remark"></el-input>
                         </el-form-item>
                         <el-form-item labelWidth="100px">
                             <el-button type="primary" @click="action='list'">返回</el-button>

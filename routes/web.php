@@ -41,12 +41,12 @@ Route::middleware(['csrf'])->group(function () {
 
 Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::get('/user/info', 'User\UserController@info');
-
     Route::get('/user/notification', 'User\NotificationController@notificationList');
     Route::get('/user/unread-notification', 'User\NotificationController@unreadNotificationList');
-    Route::post('/user/read-notification', 'User\NotificationController@readNotification');
-
     Route::get('/user/recharge/index', 'User\RechargeController@index');
+
+    Route::post('/user/read-notification', 'User\NotificationController@readNotification');
+    Route::post('/user/modify', 'User\UserController@modify');
 
     Route::post('/mobile/search', 'Index\MobileController@search');
 });

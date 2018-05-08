@@ -13,6 +13,7 @@ use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Sms;
+use App\Taxonomy;
 use App\User;
 use App\UserProfile;
 use Carbon\Carbon;
@@ -201,6 +202,84 @@ class UserController extends Controller
             'code' => 0,
             'message' => '成功'
         ];
+    }
+
+    public function modify()
+    {
+        \DB::transaction(function () {
+            $qq = request('qq');
+            $wx = request('wx');
+            $ww = request('ww');
+
+            $profileData = request('_profile');
+            $name = array_get($profileData, 'name', '');
+            $age = array_get($profileData, 'age', '');
+            $gender = array_get($profileData, 'gender', 0);
+            $occupation = array_get($profileData, 'occupation', '');
+            $province = array_get($profileData, 'province', '');
+            $city = array_get($profileData, 'city', '');
+            $alipay = array_get($profileData, 'alipay', '');
+
+            $user = \Auth::guard('user')->user();
+
+            if ($qq) {
+                if (!preg_match('/^[1-9][0-9]{4,14}$/', $qq)) {
+                    throw new JsonException('QQ号码格式错误');
+                }
+                if (!preg_match('/^[1-9][0-9]{4,14}$/', $qq)) {
+                    throw new JsonException('QQ号错误');
+                }
+                $exists = User::where('qq', $qq)->first();
+                if ($exists && $exists->id != $user->id) {
+                    throw new JsonException('QQ已存在，请联系客服处理');
+                }
+            } else {
+                $qq = null;
+            }
+
+            if ($wx) {
+                if (!preg_match('/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}+$/', $wx)) {
+                    throw new JsonException('微信号码格式错误');
+                }
+                $exists = User::where('wx', $wx)->first();
+                if ($exists && $exists->id != $user->id) {
+                    throw new JsonException('微信已存在，请联系客服处理');
+                }
+            } else {
+                $wx = null;
+            }
+
+            if ($ww) {
+                $exists = User::where('ww', $ww)->first();
+                if ($exists && $exists->id != $user->id) {
+                    throw new JsonException('旺旺已存在，请联系客服处理');
+                }
+            } else {
+                $ww = null;
+            }
+
+            if (!in_array($gender, [0, 1, 2,])) {
+                throw new JsonException('性别错误');
+            }
+
+            $user->update([
+                'qq' => $qq,
+                'wx' => $wx,
+                'ww' => $ww,
+            ]);
+
+            $user->_profile->update([
+                'name' => $name,
+                'age' => $age,
+                'gender' => $gender,
+                'occupation' => $occupation,
+                'province' => $province,
+                'city' => $city,
+                'alipay' => $alipay,
+            ]);
+        });
+
+        return [];
     }
 
     public function sms()

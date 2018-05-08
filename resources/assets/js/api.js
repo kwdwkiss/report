@@ -77,6 +77,7 @@ module.exports = {
     userForgetPassword: 'user/forget-password',
     userModifyPassword: '/user/modify-password',
     userSms: '/user/sms',
+    userModify: '/user/modify',
 
     userNotificationList: '/user/notification',
     userUnreadNotificationList: '/user/unread-notification',

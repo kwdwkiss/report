@@ -52,6 +52,7 @@
                                 <ul class="dropdown-menu">
                                     <!--<li><a href="#">Action</a></li>-->
                                     <!--<li role="separator" class="divider"></li>-->
+                                    <li><a href="javascript:" @click="userModify">修改资料</a></li>
                                     <li><a href="javascript:" @click="doLogout">注销</a></li>
                                 </ul>
                             </li>
@@ -311,6 +312,112 @@
             </div>
         </div>
 
+        <div class="modal fade user-modify-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">修改资料</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">会员类型</label>
+                                <div class="col-sm-9">
+                                    <label class="control-label pull-left">{{userModifyForm.type_label}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">QQ</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入QQ号"
+                                           v-model="userModifyForm.qq">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">微信</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入微信号"
+                                           v-model="userModifyForm.wx">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">旺旺</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入旺旺号"
+                                           v-model="userModifyForm.ww">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">支付宝</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入支付宝"
+                                           v-model="userModifyForm._profile.alipay">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">姓名</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入姓名"
+                                           v-model="userModifyForm._profile.name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">年龄</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入年龄"
+                                           v-model="userModifyForm._profile.age">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">性别</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" v-model="userModifyForm._profile.gender">
+                                        <option value="0">未知</option>
+                                        <option value="1">男</option>
+                                        <option value="2">女</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">职业</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入职业"
+                                           name="mobile"
+                                           v-model="userModifyForm._profile.occupation">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">省</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" v-model="userModifyForm._profile.province"
+                                            @change="provinceSelect">
+                                        <option v-for="item in provinces" :key="item" :value="item">{{item}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">市</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" v-model="userModifyForm._profile.city">
+                                        <option v-for="item in cities" :key="item" :value="item">{{item}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <a class="btn btn-success" @click="doUserModify">提交</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="old-root">
             <pop-window></pop-window>
 
@@ -394,6 +501,7 @@
 
 <script>
     import PopWindow from '../components/PopWindow'
+    import cityData from '../../city.json'
 
     export default {
         components: {PopWindow},
@@ -420,7 +528,10 @@
                 rechargeForm: {
                     mount: '',
                 },
-                notificationItem: {data: {}}
+                notificationItem: {data: {}},
+                userModifyForm: {_profile: {}},
+                provinces: Object.keys(cityData),
+                cities: [],
             }
         },
         computed: {
@@ -449,6 +560,13 @@
             });
         },
         methods: {
+            initCities: function (province) {
+                this.cities = Object.keys(cityData[province]);
+            },
+            provinceSelect: function (event) {
+                this.initCities(event.target.value);
+                this.userModifyForm._profile.city = this.cities[0];
+            },
             login: function () {
                 $(".login-dialog").modal('show');
                 this.loginStatus = 'login';
@@ -549,6 +667,19 @@
             rechargePaginate: function () {
 
             },
+            userModify: function () {
+                this.initCities(this.user._profile.province);
+                $(".user-modify-dialog").modal('show');
+                this.userModifyForm = this.$store.state.user;
+            },
+            doUserModify: function () {
+                let self = this;
+                axios.post(api.userModify, self.userModifyForm).then(function (res) {
+                    self.$message.success('成功');
+                    self.$store.commit('user');
+                    $(".user-modify-dialog").modal('hide');
+                });
+            }
         }
     }
 </script>
