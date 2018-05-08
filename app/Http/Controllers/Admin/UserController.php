@@ -11,11 +11,9 @@ namespace App\Http\Controllers\Admin;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use App\Tag;
 use App\Taxonomy;
 use App\User;
 use App\UserProfile;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -56,14 +54,15 @@ class UserController extends Controller
             $wx = request('wx');
             $ww = request('ww');
 
-            $name = request('_profile.name', '');
-            $age = request('_profile.age', '');
-            $gender = request('_profile.gender', 0);
-            $occupation = request('_profile.occupation', '');
-            $province = request('_profile.province', '');
-            $city = request('_profile.city', '');
-            $remark = request('_profile.remark', '');
-            $alipay = request('_profile.alipay', '');
+            $profileData = request('_profile');
+            $name = array_get($profileData, 'name', '');
+            $age = array_get($profileData, 'age', '');
+            $gender = array_get($profileData, 'gender', 0);
+            $occupation = array_get($profileData, 'occupation', '');
+            $province = array_get($profileData, 'province', '');
+            $city = array_get($profileData, 'city', '');
+            $remark = array_get($profileData, 'remark', '');
+            $alipay = array_get($profileData, 'alipay', '');
 
             Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($type);
 
@@ -146,14 +145,15 @@ class UserController extends Controller
             $wx = request('wx');
             $ww = request('ww');
 
-            $name = request('_profile.name', '');
-            $age = request('_profile.age', '');
-            $gender = request('_profile.gender', 0);
-            $occupation = request('_profile.occupation', '');
-            $province = request('_profile.province', '');
-            $city = request('_profile.city', '');
-            $remark = request('_profile.remark', '');
-            $alipay = request('_profile.alipay', '');
+            $profileData = request('_profile');
+            $name = array_get($profileData, 'name', '');
+            $age = array_get($profileData, 'age', '');
+            $gender = array_get($profileData, 'gender', 0);
+            $occupation = array_get($profileData, 'occupation', '');
+            $province = array_get($profileData, 'province', '');
+            $city = array_get($profileData, 'city', '');
+            $remark = array_get($profileData, 'remark', '');
+            $alipay = array_get($profileData, 'alipay', '');
 
             $user = User::with('_profile')->findOrFail(request('id'));
 
