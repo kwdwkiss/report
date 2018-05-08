@@ -561,7 +561,7 @@
         },
         methods: {
             initCities: function (province) {
-                this.cities = Object.keys(cityData[province]);
+                this.cities = Object.keys(_.get(cityData, province, []));
             },
             provinceSelect: function (event) {
                 this.initCities(event.target.value);
