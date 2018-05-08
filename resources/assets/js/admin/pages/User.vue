@@ -184,15 +184,15 @@
                         </el-form-item>
 
                         <el-form-item label="省" labelWidth="100px">
-                            <select v-model="updateData._profile.province" @change="provinceSelect">
+                            <el-select v-model="updateData._profile.province" @change="provinceSelect">
                                 <el-option v-for="item in provinces" :key="item" :value="item"
                                            :label="item"></el-option>
-                            </select>
+                            </el-select>
                         </el-form-item>
                         <el-form-item label="市" labelWidth="100px">
-                            <select v-model="updateData._profile.city">
+                            <el-select v-model="updateData._profile.city">
                                 <el-option v-for="item in cities" :key="item" :value="item" :label="item"></el-option>
-                            </select>
+                            </el-select>
                         </el-form-item>
                         <el-form-item prop="remark" label="备注" labelWidth="100px">
                             <el-input v-model="updateData._profile.remark"></el-input>
