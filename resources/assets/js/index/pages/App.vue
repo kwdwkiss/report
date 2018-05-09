@@ -52,7 +52,8 @@
                                 <ul class="dropdown-menu">
                                     <!--<li><a href="#">Action</a></li>-->
                                     <!--<li role="separator" class="divider"></li>-->
-                                    <li><a href="javascript:" @click="userModify">修改资料</a></li>
+                                    <li><a href="javascript:" @click="userModify">个人资料</a></li>
+                                    <li><a href="javascript:" @click="userMerchantModify">商铺资料</a></li>
                                     <li><a href="javascript:" @click="doLogout">注销</a></li>
                                 </ul>
                             </li>
@@ -320,7 +321,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             &times;
                         </button>
-                        <h4 class="modal-title">修改资料</h4>
+                        <h4 class="modal-title">个人资料</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" role="form">
@@ -410,6 +411,74 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <a class="btn btn-success" @click="doUserModify">提交</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade user-merchant-modify-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">商户资料</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">店铺类型</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" v-model="userMerchantForm.type">
+                                        <option value="1">天猫店</option>
+                                        <option value="2">企业淘宝店</option>
+                                        <option value="3">个人淘宝店</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">店铺名称</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入店铺名称"
+                                           v-model="userMerchantForm.name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">商品类型</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入商品类型"
+                                           v-model="userMerchantForm.goods_type">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">店铺网址</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入店铺网址"
+                                           v-model="userMerchantForm.url">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">店铺信誉</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入店铺信誉"
+                                           v-model="userMerchantForm.credit">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">掌柜</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入掌柜信息"
+                                           v-model="userMerchantForm.manager">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <a class="btn btn-success" @click="doUserMerchantModify">提交</a>
                                 </div>
                             </div>
                         </form>
@@ -532,6 +601,7 @@
                 userModifyForm: {_profile: {}},
                 provinces: Object.keys(cityData),
                 cities: [],
+                userMerchantForm: {}
             }
         },
         computed: {
@@ -678,6 +748,18 @@
                     self.$message.success('成功');
                     self.$store.commit('user');
                     $(".user-modify-dialog").modal('hide');
+                });
+            },
+            userMerchantModify: function () {
+                this.userMerchantForm = _.assign({}, _.cloneDeep(this.$store.state.user._merchant));
+                $(".user-merchant-modify-dialog").modal('show');
+            },
+            doUserMerchantModify: function () {
+                let self = this;
+                axios.post(api.userMerchantModify, self.userMerchantForm).then(function (res) {
+                    self.$message.success('成功');
+                    self.$store.commit('user');
+                    $(".user-merchant-modify-dialog").modal('hide');
                 });
             }
         }

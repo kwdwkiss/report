@@ -56,6 +56,35 @@
                                     <span>{{ props.row._profile.remark }}</span>
                                 </el-form-item>
                             </el-form>
+                            <template v-if="props.row._merchant">
+                                <hr>
+                                <el-form label-position="left" inline class="demo-table-expand">
+                                    <el-form-item label="店铺类型">
+                                        <span>{{ props.row._merchant.type_label }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="店铺名称">
+                                        <span>{{ props.row._merchant.name }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="商品类型">
+                                        <span>{{ props.row._merchant.goods_type }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="店铺网址">
+                                        <span>{{ props.row._merchant.url }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="店铺信誉">
+                                        <span>{{ props.row._merchant.credit }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="店铺掌柜">
+                                        <span>{{ props.row._merchant.manager }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="店铺资料锁定">
+                                        <el-switch v-model="props.row._merchant.user_lock" :active-value="1"
+                                                   :inactive-value="0"
+                                                   @change="doMerchantModify(props.row)">
+                                        </el-switch>
+                                    </el-form-item>
+                                </el-form>
+                            </template>
                         </template>
                     </el-table-column>
                     <el-table-column prop="id" label="ID" min-width="100"></el-table-column>
@@ -80,62 +109,67 @@
             <div class="panel">
                 <div class="panel-heading">创建</div>
                 <div class="panel-body">
-                    <el-form ref="createForm" :model="createData" :rules="rules">
-                        <el-form-item prop="type" label="会员类型" labelWidth="100px">
-                            <el-select v-model="createData.type">
-                                <el-option v-for="item in userTypeList" :key="item.id" :value="item.id"
-                                           :label="item.name"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item prop="mobile" label="手机号" labelWidth="100px">
-                            <el-input v-model="createData.mobile"></el-input>
-                        </el-form-item>
-                        <el-form-item prop="qq" label="QQ" labelWidth="100px">
-                            <el-input v-model="createData.qq"></el-input>
-                        </el-form-item>
-                        <el-form-item prop="wx" label="微信" labelWidth="100px">
-                            <el-input v-model="createData.wx"></el-input>
-                        </el-form-item>
-                        <el-form-item prop="ww" label="旺旺" labelWidth="100px">
-                            <el-input v-model="createData.ww"></el-input>
-                        </el-form-item>
-                        <el-form-item prop="remark" label="支付宝" labelWidth="100px">
-                            <el-input v-model="createData._profile.alipay"></el-input>
-                        </el-form-item>
-                        <el-form-item prop="name" label="姓名" labelWidth="100px">
-                            <el-input v-model="createData._profile.name"></el-input>
-                        </el-form-item>
-                        <el-form-item prop="age" label="年龄" labelWidth="100px">
-                            <el-input v-model.number="createData._profile.age"></el-input>
-                        </el-form-item>
-                        <el-form-item label="性别" labelWidth="100px">
-                            <el-select v-model="createData._profile.gender">
-                                <el-option value="1" label="男"></el-option>
-                                <el-option value="2" label="女"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="职业" labelWidth="100px">
-                            <el-input v-model="createData._profile.occupation"></el-input>
-                        </el-form-item>
-                        <el-form-item label="省" labelWidth="100px">
-                            <el-select v-model="createData._profile.province" @change="provinceSelect">
-                                <el-option v-for="item in provinces" :key="item" :value="item"
-                                           :label="item"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="市" labelWidth="100px">
-                            <el-select v-model="createData._profile.city">
-                                <el-option v-for="item in cities" :key="item" :value="item" :label="item"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item prop="remark" label="备注" labelWidth="100px">
-                            <el-input v-model="createData._profile.remark"></el-input>
-                        </el-form-item>
-                        <el-form-item labelWidth="100px">
-                            <el-button type="primary" @click="action='list'">返回</el-button>
-                            <el-button type="success" @click="doCreate">提交</el-button>
-                        </el-form-item>
-                    </el-form>
+                    <el-tabs v-model="updateActiveName">
+                        <el-tab-pane label="个人资料" name="1">
+                            <el-form ref="createForm" :model="createData" :rules="rules">
+                                <el-form-item prop="type" label="会员类型" labelWidth="100px">
+                                    <el-select v-model="createData.type">
+                                        <el-option v-for="item in userTypeList" :key="item.id" :value="item.id"
+                                                   :label="item.name"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item prop="mobile" label="手机号" labelWidth="100px">
+                                    <el-input v-model="createData.mobile"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="qq" label="QQ" labelWidth="100px">
+                                    <el-input v-model="createData.qq"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="wx" label="微信" labelWidth="100px">
+                                    <el-input v-model="createData.wx"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="ww" label="旺旺" labelWidth="100px">
+                                    <el-input v-model="createData.ww"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="remark" label="支付宝" labelWidth="100px">
+                                    <el-input v-model="createData._profile.alipay"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="name" label="姓名" labelWidth="100px">
+                                    <el-input v-model="createData._profile.name"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="age" label="年龄" labelWidth="100px">
+                                    <el-input v-model.number="createData._profile.age"></el-input>
+                                </el-form-item>
+                                <el-form-item label="性别" labelWidth="100px">
+                                    <el-select v-model="createData._profile.gender">
+                                        <el-option value="1" label="男"></el-option>
+                                        <el-option value="2" label="女"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="职业" labelWidth="100px">
+                                    <el-input v-model="createData._profile.occupation"></el-input>
+                                </el-form-item>
+                                <el-form-item label="省" labelWidth="100px">
+                                    <el-select v-model="createData._profile.province" @change="provinceSelect">
+                                        <el-option v-for="item in provinces" :key="item" :value="item"
+                                                   :label="item"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="市" labelWidth="100px">
+                                    <el-select v-model="createData._profile.city">
+                                        <el-option v-for="item in cities" :key="item" :value="item"
+                                                   :label="item"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item prop="remark" label="备注" labelWidth="100px">
+                                    <el-input v-model="createData._profile.remark"></el-input>
+                                </el-form-item>
+                                <el-form-item labelWidth="100px">
+                                    <el-button type="primary" @click="action='list'">返回</el-button>
+                                    <el-button type="success" @click="doCreate">提交</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </el-tab-pane>
+                    </el-tabs>
                 </div>
             </div>
         </div>
@@ -144,64 +178,104 @@
             <div class="panel">
                 <div class="panel-heading">更新</div>
                 <div class="panel-body">
-                    <el-form>
-                        <el-form-item prop="type" label="会员类型" labelWidth="100px">
-                            <el-select v-model="updateData.type">
-                                <el-option v-for="item in userTypeList" :key="item.id" :value="item.id"
-                                           :label="item.name"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="手机号" labelWidth="100px">
-                            <el-input v-model="updateData.mobile"></el-input>
-                        </el-form-item>
-                        <el-form-item label="QQ" labelWidth="100px">
-                            <el-input v-model="updateData.qq"></el-input>
-                        </el-form-item>
-                        <el-form-item label="微信" labelWidth="100px">
-                            <el-input v-model="updateData.wx"></el-input>
-                        </el-form-item>
-                        <el-form-item label="旺旺" labelWidth="100px">
-                            <el-input v-model="updateData.ww"></el-input>
-                        </el-form-item>
-                        <el-form-item prop="remark" label="支付宝" labelWidth="100px">
-                            <el-input v-model="updateData._profile.alipay"></el-input>
-                        </el-form-item>
-                        <el-form-item label="姓名" labelWidth="100px">
-                            <el-input v-model="updateData._profile.name"></el-input>
-                        </el-form-item>
-                        <el-form-item label="年龄" labelWidth="100px">
-                            <el-input v-model="updateData._profile.age"></el-input>
-                        </el-form-item>
-                        <el-form-item label="性别" labelWidth="100px">
-                            <el-select v-model="updateData._profile.gender">
-                                <el-option :value="0" label="未知"></el-option>
-                                <el-option :value="1" label="男"></el-option>
-                                <el-option :value="2" label="女"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="职业" labelWidth="100px">
-                            <el-input v-model="updateData._profile.occupation"></el-input>
-                        </el-form-item>
+                    <el-tabs v-model="updateActiveName">
+                        <el-tab-pane label="个人资料" name="1">
+                            <el-form>
+                                <el-form-item prop="type" label="会员类型" labelWidth="100px">
+                                    <el-select v-model="updateData.type">
+                                        <el-option v-for="item in userTypeList" :key="item.id" :value="item.id"
+                                                   :label="item.name"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="手机号" labelWidth="100px">
+                                    <el-input v-model="updateData.mobile"></el-input>
+                                </el-form-item>
+                                <el-form-item label="QQ" labelWidth="100px">
+                                    <el-input v-model="updateData.qq"></el-input>
+                                </el-form-item>
+                                <el-form-item label="微信" labelWidth="100px">
+                                    <el-input v-model="updateData.wx"></el-input>
+                                </el-form-item>
+                                <el-form-item label="旺旺" labelWidth="100px">
+                                    <el-input v-model="updateData.ww"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="remark" label="支付宝" labelWidth="100px">
+                                    <el-input v-model="updateData._profile.alipay"></el-input>
+                                </el-form-item>
+                                <el-form-item label="姓名" labelWidth="100px">
+                                    <el-input v-model="updateData._profile.name"></el-input>
+                                </el-form-item>
+                                <el-form-item label="年龄" labelWidth="100px">
+                                    <el-input v-model="updateData._profile.age"></el-input>
+                                </el-form-item>
+                                <el-form-item label="性别" labelWidth="100px">
+                                    <el-select v-model="updateData._profile.gender">
+                                        <el-option :value="0" label="未知"></el-option>
+                                        <el-option :value="1" label="男"></el-option>
+                                        <el-option :value="2" label="女"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="职业" labelWidth="100px">
+                                    <el-input v-model="updateData._profile.occupation"></el-input>
+                                </el-form-item>
 
-                        <el-form-item label="省" labelWidth="100px">
-                            <el-select v-model="updateData._profile.province" @change="provinceSelect">
-                                <el-option v-for="item in provinces" :key="item" :value="item"
-                                           :label="item"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="市" labelWidth="100px">
-                            <el-select v-model="updateData._profile.city">
-                                <el-option v-for="item in cities" :key="item" :value="item" :label="item"></el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item prop="remark" label="备注" labelWidth="100px">
-                            <el-input v-model="updateData._profile.remark"></el-input>
-                        </el-form-item>
-                        <el-form-item labelWidth="100px">
-                            <el-button type="primary" @click="action='list'">返回</el-button>
-                            <el-button type="success" @click="doUpdate">提交</el-button>
-                        </el-form-item>
-                    </el-form>
+                                <el-form-item label="省" labelWidth="100px">
+                                    <el-select v-model="updateData._profile.province" @change="provinceSelect">
+                                        <el-option v-for="item in provinces" :key="item" :value="item"
+                                                   :label="item"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="市" labelWidth="100px">
+                                    <el-select v-model="updateData._profile.city">
+                                        <el-option v-for="item in cities" :key="item" :value="item"
+                                                   :label="item"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item prop="remark" label="备注" labelWidth="100px">
+                                    <el-input v-model="updateData._profile.remark"></el-input>
+                                </el-form-item>
+                                <el-form-item labelWidth="100px">
+                                    <el-button type="primary" @click="action='list'">返回</el-button>
+                                    <el-button type="success" @click="doUpdate">提交</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </el-tab-pane>
+                        <el-tab-pane label="店铺资料" name="2">
+                            <el-form>
+                                <el-form-item label="店铺类型" labelWidth="100px">
+                                    <el-select v-model="updateData._merchant.type">
+                                        <el-option :value="1" label="天猫店"></el-option>
+                                        <el-option :value="2" label="企业淘宝店"></el-option>
+                                        <el-option :value="3" label="个人淘宝店"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="店铺名称" labelWidth="100px">
+                                    <el-input v-model="updateData._merchant.name"></el-input>
+                                </el-form-item>
+                                <el-form-item label="商品类型" labelWidth="100px">
+                                    <el-input v-model="updateData._merchant.goods_type"></el-input>
+                                </el-form-item>
+                                <el-form-item label="店铺网址" labelWidth="100px">
+                                    <el-input v-model="updateData._merchant.url"></el-input>
+                                </el-form-item>
+                                <el-form-item label="店铺信誉" labelWidth="100px">
+                                    <el-input v-model="updateData._merchant.credit"></el-input>
+                                </el-form-item>
+                                <el-form-item label="店铺掌柜" labelWidth="100px">
+                                    <el-input v-model="updateData._merchant.manager"></el-input>
+                                </el-form-item>
+                                <el-form-item label="店铺资料锁定" labelWidth="100px">
+                                    <el-switch v-model="updateData._merchant.user_lock" :active-value="1"
+                                               :inactive-value="0">
+                                    </el-switch>
+                                </el-form-item>
+                                <el-form-item labelWidth="100px">
+                                    <el-button type="primary" @click="action='list'">返回</el-button>
+                                    <el-button type="success" @click="doMerchantModify(updateData)">提交</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </el-tab-pane>
+                    </el-tabs>
                 </div>
             </div>
         </div>
@@ -227,13 +301,15 @@
                     meta: {},
                 },
                 search: {},
-                createData: {tags: [], city: '', type: 0, _profile: {}},
-                updateData: {tags: [], city: '', type: 0, _profile: {}},
+                createData: {tags: [], city: '', type: 0, _profile: {}, _merchant: {}},
+                updateData: {tags: [], city: '', type: 0, _profile: {}, _merchant: {}},
                 rules: {
                     mobile: [
                         {required: true, message: '手机号不能为空', trigger: 'blur'},
                     ],
-                }
+                },
+                createActiveName: '1',
+                updateActiveName: '1'
             }
         },
         created: function () {
@@ -268,7 +344,7 @@
             },
             openCreateDialog: function () {
                 let type = this.userTypeList.length > 0 ? this.userTypeList[0].id : 0;
-                this.createData = {tags: [], city: '', type: type, _profile: {}};
+                this.createData = {tags: [], city: '', type: type, _profile: {}, _merchant: {type: 0}};
                 this.action = 'create';
             },
             doCreate: function () {
@@ -287,6 +363,7 @@
             },
             openUpdateDialog: function (scope) {
                 this.updateData = _.cloneDeep(scope.row);
+                this.updateData._merchant = this.updateData._merchant ? this.updateData._merchant : {};
                 this.action = 'update';
             },
             doUpdate: function () {
@@ -309,6 +386,14 @@
                         self.loadData();
                     });
                 }).catch(() => {
+                });
+            },
+            doMerchantModify: function (item) {
+                let self = this;
+                axios.post(api.adminUserMerchantModify, item).then(function () {
+                    self.action = 'list';
+                    self.$message.success('成功');
+                    self.loadData();
                 });
             }
         }

@@ -30,6 +30,7 @@ module.exports = {
     userCreate: '/admin/user/create',
     userUpdate: '/admin/user/update',
     userDelete: '/admin/user/delete',
+    adminUserMerchantModify: '/admin/user/merchant/modify',
 
     accountList: '/admin/account/list',
     accountCreate: '/admin/account/create',
@@ -78,6 +79,7 @@ module.exports = {
     userModifyPassword: '/user/modify-password',
     userSms: '/user/sms',
     userModify: '/user/modify',
+    userMerchantModify: '/user/merchant/modify',
 
     userNotificationList: '/user/notification',
     userUnreadNotificationList: '/user/unread-notification',

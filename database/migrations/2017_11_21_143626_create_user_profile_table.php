@@ -26,6 +26,7 @@ class CreateUserProfileTable extends Migration
             $table->string('alipay');//支付宝账号
             $table->string('inviter');//邀请人
             $table->string('remark');
+            $table->tinyInteger('user_lock');//用户锁 0-解锁 1-上锁
             $table->timestamps();
         });
     }

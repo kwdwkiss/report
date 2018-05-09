@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Taxonomy;
 use App\User;
+use App\UserMerchant;
 use App\UserProfile;
 
 class UserController extends Controller
@@ -25,7 +26,7 @@ class UserController extends Controller
         $wx = request('wx');
         $ww = request('ww');
 
-        $query = User::with('_profile', '_type')->orderBy('created_at', 'desc');
+        $query = User::with('_profile', '_type', '_merchant')->orderBy('created_at', 'desc');
         if ($type) {
             $query->where('type', $type);
         }
@@ -234,6 +235,55 @@ class UserController extends Controller
             $user->_profile->delete();
             $user->delete();
         });
+
+        return [];
+    }
+
+    public function merchantModify()
+    {
+        $id = request('id');
+
+        $merchantData = request('_merchant');
+        $type = array_get($merchantData, 'type');
+        $name = array_get($merchantData, 'name', '');
+        $goods_type = array_get($merchantData, 'goods_type', '');
+        $url = array_get($merchantData, 'url', '');
+        $credit = array_get($merchantData, 'credit', '');
+        $manager = array_get($merchantData, 'manager', '');
+        $user_lock = array_get($merchantData, 'user_lock', 0);
+
+        if (!in_array($type, [1, 2, 3])) {
+            throw new JsonException('店铺类型错误');
+        }
+        if (!in_array($user_lock, [0, 1])) {
+            throw new JsonException('锁错误');
+        }
+
+        $user = User::findOrFail($id);
+
+        $merchant = $user->_merchant;
+        if ($merchant) {
+            $merchant->update([
+                'type' => $type,
+                'name' => $name,
+                'goods_type' => $goods_type,
+                'url' => $url,
+                'credit' => $credit,
+                'manager' => $manager,
+                'user_lock' => $user_lock,
+            ]);
+        } else {
+            UserMerchant::create([
+                'user_id' => $user->id,
+                'type' => $type,
+                'name' => $name,
+                'goods_type' => $goods_type,
+                'url' => $url,
+                'credit' => $credit,
+                'manager' => $manager,
+                'user_lock' => $user_lock,
+            ]);
+        }
 
         return [];
     }

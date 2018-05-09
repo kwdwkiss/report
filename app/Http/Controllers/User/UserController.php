@@ -15,6 +15,7 @@ use App\Http\Resources\UserResource;
 use App\Sms;
 use App\Taxonomy;
 use App\User;
+use App\UserMerchant;
 use App\UserProfile;
 use Carbon\Carbon;
 
@@ -278,6 +279,49 @@ class UserController extends Controller
                 'alipay' => $alipay,
             ]);
         });
+
+        return [];
+    }
+
+    public function merchantModify()
+    {
+        $type = request('type');
+        $name = request('name', '');
+        $goods_type = request('goods_type', '');
+        $url = request('url', '');
+        $credit = request('credit', '');
+        $manager = request('manager', '');
+
+        if (!in_array($type, [1, 2, 3])) {
+            throw new JsonException('店铺类型错误');
+        }
+
+        $user = \Auth::guard('user')->user();
+        $merchant = $user->_merchant;
+
+        if ($merchant) {
+            if ($merchant->user_lock) {
+                throw new JsonException('资料已锁定，若需修改，请联系客服');
+            }
+            $merchant->update([
+                'type' => $type,
+                'name' => $name,
+                'goods_type' => $goods_type,
+                'url' => $url,
+                'credit' => $credit,
+                'manager' => $manager
+            ]);
+        } else {
+            UserMerchant::create([
+                'user_id' => $user->id,
+                'type' => $type,
+                'name' => $name,
+                'goods_type' => $goods_type,
+                'url' => $url,
+                'credit' => $credit,
+                'manager' => $manager
+            ]);
+        }
 
         return [];
     }
