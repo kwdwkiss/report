@@ -93,7 +93,8 @@
                 statement: {
                     userRegister: {},
                     accountReport: {},
-                    accountSearch: {}
+                    accountSearch: {},
+                    rechargeBill: {}
                 }
             }
         },

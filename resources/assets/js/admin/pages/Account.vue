@@ -180,7 +180,7 @@
                 });
             },
             openUpdateDialog: function (scope) {
-                this.dialogUpdate.data = Object.assign({}, scope.row);
+                this.dialogUpdate.data = _.cloneDeep(scope.row);
                 this.dialogUpdate.display = true;
             },
             doUpdate: function () {
@@ -198,7 +198,7 @@
                 });
             },
             openDeleteDialog: function (scope) {
-                this.dialogDelete.data = Object.assign({}, scope.row);
+                this.dialogDelete.data = _.cloneDeep(scope.row);
                 this.dialogDelete.display = true;
             },
             doDelete: function (scope) {

@@ -286,7 +286,7 @@
                 });
             },
             openUpdateDialog: function (scope) {
-                this.updateData = Object.assign({}, scope.row);
+                this.updateData = _.cloneDeep(scope.row);
                 this.action = 'update';
             },
             doUpdate: function () {

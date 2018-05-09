@@ -669,8 +669,8 @@
             },
             userModify: function () {
                 this.initCities(this.user._profile.province);
+                this.userModifyForm = _.cloneDeep(this.$store.state.user);
                 $(".user-modify-dialog").modal('show');
-                this.userModifyForm = this.$store.state.user;
             },
             doUserModify: function () {
                 let self = this;

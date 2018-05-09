@@ -100,7 +100,7 @@
                 })
             },
             openUpdateDialog: function (scope) {
-                this.dialogUpdate.data = Object.assign({}, scope.row);
+                this.dialogUpdate.data = _.cloneDeep(scope.row);
                 this.dialogUpdate.display = true;
             },
             doUpdate: function () {
