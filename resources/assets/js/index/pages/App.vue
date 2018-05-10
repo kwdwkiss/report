@@ -53,7 +53,7 @@
                                     <!--<li><a href="#">Action</a></li>-->
                                     <!--<li role="separator" class="divider"></li>-->
                                     <li><a href="javascript:" @click="userModify">个人资料</a></li>
-                                    <li><a href="javascript:" @click="userMerchantModify">商铺资料</a></li>
+                                    <li><a href="javascript:" @click="userMerchantModify">店铺 资料</a></li>
                                     <li><a href="javascript:" @click="doLogout">注销</a></li>
                                 </ul>
                             </li>
@@ -410,7 +410,10 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <a class="btn btn-success" @click="doUserModify">提交</a>
+                                    <label v-if="userModifyForm._profile.user_lock"
+                                           class="text-warning">个人资料锁定，修改请联系客服</label>
+                                    <a v-if="!userModifyForm._profile.user_lock" class="btn btn-success"
+                                       @click="doUserModify">提交</a>
                                 </div>
                             </div>
                         </form>
@@ -478,7 +481,9 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <a class="btn btn-success" @click="doUserMerchantModify">提交</a>
+                                    <label v-if="userMerchantForm.user_lock" class="text-warning">店铺资料锁定，修改请联系客服</label>
+                                    <a v-if="!userMerchantForm.user_lock" class="btn btn-success"
+                                       @click="doUserMerchantModify">提交</a>
                                 </div>
                             </div>
                         </form>

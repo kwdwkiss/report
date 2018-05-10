@@ -155,6 +155,7 @@ class UserController extends Controller
             $city = array_get($profileData, 'city', '');
             $remark = array_get($profileData, 'remark', '');
             $alipay = array_get($profileData, 'alipay', '');
+            $user_lock = array_get($profileData, 'user_lock', 0);
 
             $user = User::with('_profile')->findOrFail(request('id'));
 
@@ -220,7 +221,8 @@ class UserController extends Controller
                 'province' => $province,
                 'city' => $city,
                 'alipay' => $alipay,
-                'remark' => $remark
+                'remark' => $remark,
+                'user_lock' => $user_lock
             ]);
         });
 

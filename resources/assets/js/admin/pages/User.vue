@@ -55,6 +55,12 @@
                                 <el-form-item label="备注">
                                     <span>{{ props.row._profile.remark }}</span>
                                 </el-form-item>
+                                <el-form-item label="个人资料锁定">
+                                    <el-switch v-model="props.row._profile.user_lock" :active-value="1"
+                                               :inactive-value="0"
+                                               @change="doUpdateRow(props.row)">
+                                    </el-switch>
+                                </el-form-item>
                             </el-form>
                             <template v-if="props.row._merchant">
                                 <hr>
@@ -234,6 +240,11 @@
                                 <el-form-item prop="remark" label="备注" labelWidth="100px">
                                     <el-input v-model="updateData._profile.remark"></el-input>
                                 </el-form-item>
+                                <el-form-item label="个人资料锁定" labelWidth="100px">
+                                    <el-switch v-model="updateData._profile.user_lock" :active-value="1"
+                                               :inactive-value="0">
+                                    </el-switch>
+                                </el-form-item>
                                 <el-form-item labelWidth="100px">
                                     <el-button type="primary" @click="action='list'">返回</el-button>
                                     <el-button type="success" @click="doUpdate">提交</el-button>
@@ -369,6 +380,14 @@
             doUpdate: function () {
                 let self = this;
                 axios.post(self.apiUpdate, self.updateData).then(function () {
+                    self.action = 'list';
+                    self.$message.success('成功');
+                    self.loadData();
+                });
+            },
+            doUpdateRow: function (item) {
+                let self = this;
+                axios.post(self.apiUpdate, item).then(function () {
                     self.action = 'list';
                     self.$message.success('成功');
                     self.loadData();

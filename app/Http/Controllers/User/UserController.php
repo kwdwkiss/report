@@ -222,6 +222,13 @@ class UserController extends Controller
             $alipay = array_get($profileData, 'alipay', '');
 
             $user = \Auth::guard('user')->user();
+            $profile = $user->_profile;
+            if (!$profile) {
+                throw new JsonException('user_profile数据异常，请联系客服');
+            }
+            if ($profile->user_lock) {
+                throw new JsonException('个人资料锁定，修改请联系客服');
+            }
 
             if ($qq) {
                 if (!preg_match('/^[1-9][0-9]{4,14}$/', $qq)) {
@@ -269,7 +276,7 @@ class UserController extends Controller
                 'ww' => $ww,
             ]);
 
-            $user->_profile->update([
+            $profile->update([
                 'name' => $name,
                 'age' => $age,
                 'gender' => $gender,
