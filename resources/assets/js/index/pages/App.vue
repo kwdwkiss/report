@@ -53,7 +53,7 @@
                                     <!--<li><a href="#">Action</a></li>-->
                                     <!--<li role="separator" class="divider"></li>-->
                                     <li><a href="javascript:" @click="userModify">个人资料</a></li>
-                                    <li><a href="javascript:" @click="userMerchantModify">店铺 资料</a></li>
+                                    <li><a href="javascript:" @click="userMerchantModify">店铺资料</a></li>
                                     <li><a href="javascript:" @click="doLogout">注销</a></li>
                                 </ul>
                             </li>
@@ -468,14 +468,14 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">店铺信誉</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" placeholder="请输入店铺信誉"
+                                    <input type="text" class="form-control" placeholder="个人淘宝店才需要填写"
                                            v-model="userMerchantForm.credit">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">掌柜</label>
+                                <label class="col-sm-3 control-label">掌柜旺旺</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" placeholder="请输入掌柜信息"
+                                    <input type="text" class="form-control" placeholder="请输入掌柜旺旺号"
                                            v-model="userMerchantForm.manager">
                                 </div>
                             </div>
