@@ -80,7 +80,7 @@ class IndexController extends Controller
         if (!$uploadFile) {
             throw new JsonException('上传文件失败，请稍后再次尝试');
         }
-        if ($uploadFile->isValid()) {
+        if (!$uploadFile->isValid()) {
             throw new JsonException('上传文件失败，请稍后再次尝试');
         }
 
