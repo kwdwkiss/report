@@ -18,10 +18,9 @@
             };
         },
         props: ['id'],
-        mounted: function () {
+        created: function () {
             let self = this;
-            let id = this.id ? this.id : this.$route.params.id;
-            axios.get(api.indexArticleShow, {params: {id: id}}).then(function (res) {
+            axios.get(api.indexArticleShow, {params: {id: this.id}}).then(function (res) {
                 self.articleData = res.data.data;
             });
         }

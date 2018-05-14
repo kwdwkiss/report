@@ -569,7 +569,7 @@
             </div>
         </div>
 
-        <div v-if="user" class="container" style="padding-top:51px">
+        <div v-show="user" class="container" style="padding-top:51px">
 
             <div class="row hidden-xs hidden-sm ad">
                 <div class="col-md-6" v-for="(item, index) in page.ad_top" :key="index">
@@ -648,7 +648,7 @@
             </div>
         </div>
 
-        <div class="container" v-if="!user" style="padding-top: 51px">
+        <div class="container" v-show="!user" style="padding-top: 51px">
             <article-detail :id="page.index_blog_article"></article-detail>
         </div>
     </div>
