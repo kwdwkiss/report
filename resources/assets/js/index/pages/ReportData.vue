@@ -99,6 +99,11 @@
                 reportData: {},
             }
         },
+        computed: {
+            user: function () {
+                return this.$store.state.user;
+            }
+        },
         methods: {
             detail: function (item) {
                 this.reportData = item;

@@ -85,6 +85,7 @@ class IndexController extends Controller
 
         return [
             'data' => [
+                'name' => $name,
                 'accounts' => AccountResource::collection($accounts),
                 'account_reports' => AccountReportResource::collection($accountReports)
             ]

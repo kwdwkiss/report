@@ -128,6 +128,9 @@
         computed: {
             page: function () {
                 return this.$store.state.page;
+            },
+            user: function () {
+                return this.$store.state.user;
             }
         },
         data: function () {

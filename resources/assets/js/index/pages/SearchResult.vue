@@ -2,19 +2,21 @@
     <div class="row search-data">
         <div>
             <div v-if="accounts.length==0">
-                <p class="col-xs-12" style="color: blue">无{{accounts.name}}账号信息，如果确认是恶意号码，请到下方添加！</p>
+                <h3 class="col-xs-12 text-primary">
+                    查询结果：无<span class="text-warning">{{name}}</span>账号信息，如果确认是恶意号码，请投诉举报！
+                </h3>
             </div>
             <div v-if="accounts.length>0" class="row" v-for="item in accounts">
-                <div v-if="item.status==103" style="color: green">
+                <div v-if="item.status==103" class="text-success">
                     <p class="col-xs-6">{{item.type_label}}账号:{{item.name}}</p>
-                    <p class="col-xs-6" style="color:blue">认证:{{item.status_label}}</p>
+                    <p class="col-xs-6 text-primary">认证:{{item.status_label}}</p>
                     <p class="col-xs-6">认证时间:{{item.created_at}}</p>
                     <p class="col-xs-6">建议合作金额:{{item.auth_cash}}</p>
                     <p class="col-xs-6">常用地址:{{item.address}}</p>
                     <p class="col-xs-6">备注:{{item.remark}}</p>
                     <p class="col-xs-6">如发现此账号有恶意行为，请用户立即联系网站客服处理</p>
                 </div>
-                <div v-if="item.status==104" style="color: red">
+                <div v-if="item.status==104" class="text-danger">
                     <p class="col-xs-6">{{item.type_label}}账号：{{item.name}}</p>
                     <p class="col-xs-6">已被多数用户举报为恶意号码，请用户谨慎合作，危险！</p>
                     <p class="col-xs-6">备注:{{item.remark}}</p>
@@ -114,6 +116,9 @@
     export default {
         name: "search",
         computed: {
+            name: function () {
+                return this.$store.state.searchResult.name;
+            },
             accounts: function () {
                 return this.$store.state.searchResult.accounts
             },
