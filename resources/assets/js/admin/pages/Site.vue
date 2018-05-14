@@ -12,6 +12,9 @@
                     <el-form-item label="名称">
                         <el-input v-model="dataList.name"></el-input>
                     </el-form-item>
+                    <el-form-item label="首页博客文章">
+                        <el-input v-model="dataList.index_blog_article" placeholder="请输入文章id"></el-input>
+                    </el-form-item>
                     <el-form-item label="关闭注册">
                         <el-switch v-model="dataList.close_register" :active-value="1" :inactive-value="0">
                         </el-switch>

@@ -56,7 +56,7 @@ const routes = [
                     {path: 'search', component: require('./pages/SearchResult.vue')},
                 ]
             },
-            {path: 'article/:id', component: require('./pages/Article.vue')},
+            {path: 'article/:id', component: require('./pages/ArticleDetail.vue')},
             {path: 'article/list/:id', component: require('./pages/ArticleList.vue')},
         ]
     }

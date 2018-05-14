@@ -29,10 +29,10 @@ class IndexController extends Controller
 //        if ($detect->isMobile()) {
 //            return redirect('/mobile');
 //        }
-
         $page = [];
         \DB::transaction(function () use (&$page) {
             $page = array_merge([
+                'index_blog_article'=>Config::get('site.index_blog_article'),
                 'taxonomy' => Taxonomy::allDisplay(),
             ], Config::getSiteIndex(), Config::getSiteStatics());
         });

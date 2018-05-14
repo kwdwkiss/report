@@ -9,7 +9,7 @@
 
 <script>
     export default {
-        name: "article",
+        name: "article-detail",
         data: function () {
             return {
                 articleData: {
@@ -17,9 +17,11 @@
                 }
             };
         },
+        props: ['id'],
         mounted: function () {
             let self = this;
-            axios.get(api.indexArticleShow, {params: {id: this.$route.params.id}}).then(function (res) {
+            let id = this.id ? this.id : this.$route.params.id;
+            axios.get(api.indexArticleShow, {params: {id: id}}).then(function (res) {
                 self.articleData = res.data.data;
             });
         }

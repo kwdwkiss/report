@@ -16,7 +16,8 @@ class SiteController extends Controller
     protected $basicList = [
         'domain',
         'name',
-        'close_register'
+        'close_register',
+        'index_blog_article'
     ];
 
     public function getBasic()
