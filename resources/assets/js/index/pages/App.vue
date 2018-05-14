@@ -222,10 +222,10 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             &times;
                         </button>
-                        <h4 class="modal-title">{{dialogTitle}}</h4>
+                        <h4 class="modal-title">登录</h4>
                     </div>
                     <div class="modal-body">
-                        <form v-if="loginStatus=='login'" class="form-horizontal" role="form">
+                        <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">手机号</label>
                                 <div class="col-sm-9">
@@ -245,7 +245,7 @@
                                             <input type="checkbox" v-model="loginForm.remember"> 记住我
                                         </label>
                                         &nbsp;
-                                        <a href="javascript:" @click="register">忘记密码</a>
+                                        <a href="javascript:" @click="forgetPassword">忘记密码</a>
                                     </div>
                                 </div>
                             </div>
@@ -257,7 +257,23 @@
                                 </div>
                             </div>
                         </form>
-                        <form v-if="loginStatus=='register'" class="form-horizontal" role="form">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade register-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">注册</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">手机号</label>
                                 <div class="col-sm-9">
@@ -303,6 +319,65 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <a class="btn btn-primary" @click="doRegister">确认</a>
+                                    &nbsp;
+                                    <a class="btn btn-success" @click="login">返回登录</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade forget-password-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">忘记密码</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">手机号</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="请输入手机号"
+                                           name="mobile"
+                                           v-model="forgetPasswordForm.mobile">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">新密码</label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control"
+                                           placeholder="密码必须包含字母、数字、符号两种组合且长度为8-16" name="password"
+                                           v-model="forgetPasswordForm.password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">短信验证码</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" placeholder="请输入短信验证码"
+                                           v-model="forgetPasswordForm.code">
+                                </div>
+                                <span class="col-sm-3">
+                                    <button type="button" class="btn btn-success" @click="sendSms"
+                                            v-bind:disabled="smsDisable">{{smsText}}</button>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <label>
+                                        <input type="checkbox" v-model="forgetPasswordForm.remember"> 记住我
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <a class="btn btn-primary" @click="doForgetPassword">确认</a>
                                     &nbsp;
                                     <a class="btn btn-success" @click="login">返回登录</a>
                                 </div>
@@ -492,9 +567,9 @@
             </div>
         </div>
 
-        <div class="old-root">
-            <pop-window></pop-window>
+        <pop-window></pop-window>
 
+        <div class="old-root" v-if="user">
             <div class="row hidden-xs hidden-sm ad">
                 <div class="col-md-6" v-for="item in page.ad_top">
                     <a target="_blank" :href="item.url">
@@ -570,6 +645,186 @@
                 </div>
             </div>
         </div>
+
+        <div class="container" v-if="!user" style="padding-top: 51px">
+            <div class="row">
+                <div data-v-6fe0ffc4="" class="article"><h2 data-v-6fe0ffc4="" class="title">新版直通车关键词优化诀窍——牢记三句金律</h2>
+                    <div data-v-6fe0ffc4="" class="article-bar">2018-04-10</div>
+                    <hr data-v-6fe0ffc4="">
+                    <div data-v-6fe0ffc4=""><p><span style="font-family:宋体">关键词优化是直通车推广中最核心的工作，它直接关系到宝贝的点击率、转换率、</span>ROI<span
+                            style="font-family:宋体">等核心指标，宝贝直通车推广的成败在于关键词的优化效果，小黑哥针对直通车关键词优化总结了“三句金律”，并总结了直通车不同推广阶段的优化策略。</span>
+                    </p>
+                        <p><span style="font-family:宋体"><br></span></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体">本文你将收获的内容：</span></span>
+                        </p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体">（</span>1</span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span
+                                style="font-family:宋体">）、三句金律内容</span></span></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体">（</span>2</span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体">）、直通车不同推广阶段的优化策略</span></span>
+                        </p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体">（</span>3</span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体">）、</span>5</span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体">种关键词优化操作及优化原则</span></span>
+                        </p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体">（</span>4</span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体">）、直通车推广前期、中期、后期的关键词优化实操技巧</span></span>
+                        </p>
+                        <p><br></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体"><span
+                                style="color:#0000ff">一、三句金律</span></span></span></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="color:red"><span
+                                style="font-family:宋体">第一句：三高词（点击率、转化率、</span></span><span style="color:red">ROI</span></span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="color:red"><span
+                                style="font-family:宋体">高）提价，三低词（点击率、转化率低、</span></span><span
+                                style="color:red">ROI</span></span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="color:red"><span
+                                style="font-family:宋体">）降价</span></span></span></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="color:red"><span
+                                style="font-family:宋体">第二句：三高词（飚升词、高转化词组的相关词、高转换词组的下拉提示词）加词，</span></span><span
+                                style="color:red">&nbsp;</span></span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="color:red"><span
+                                style="font-family:宋体">三无词（无展现、无点击、无转换）删词</span></span></span></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="color:red"><span
+                                style="font-family:宋体">第三句：匹配调整，精词改泛，泛词改精，大促全泛</span></span></span></p>
+                        <p><br></p>
+                        <p><br><br></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span
+                                style="font-family:宋体">三句金律的说明：</span></span></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span
+                                style="font-family:宋体"><br></span></span></p>
+                        <p>1<span
+                                style="font-family:宋体">、什么样词算高，什么样词算低，需要自己制定一个基准线，比如点击率，一般以整个计划的平均点击率为基准线来优化，转化率和</span>ROI<span
+                                style="font-family:宋体">一般根据自己产品的毛利润和点击成本，高于盈利的词为高，低于盈利的词为低。</span></p>
+                        <p><br></p>
+                        <p>2<span style="font-family:宋体">、三句金律是优化关键词的主线，但并不是一层不变，严格按此执行，有时候具体情况需要具体分析和对待，比如针对点击率，有时候点击率特别高，但是转化效果特别差，这时候需要降低出价以减少损失，针对转化率和</span>ROI<span
+                                style="font-family:宋体">，在推广的前期，需要冲销量阶段，哪怕转化率和</span>ROI<span style="font-family:宋体">低到亏损线以下，我们还需要提高出价以冲击更高的销量，所以不同的推广阶段，不同的情况需要特殊对待，灵活运用，在常规情况下一般按这三条金律执行即可。</span>
+                        </p>
+                        <p><br></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体"><span
+                                style="color:#0000ff">二、关键词优化的总体思维策略</span></span></span></p>
+                        <p><span style="font-family:宋体">总体优化策略：</span></p>
+                        <p><span style="font-family:宋体"><span style="color:#ff0000">前期：以优化点击率为中心</span></span></p>
+                        <p><span style="color:#ff0000"></span></p>
+                        <p><span style="font-family:宋体"><span style="color:#ff0000">中期：优化转换率为中心</span></span></p>
+                        <p><span style="color:#ff0000"></span></p>
+                        <p><span style="color:#ff0000"><span style="font-family:宋体">后期：优化</span>ROI<span
+                                style="font-family:宋体">为中心</span></span></p>
+                        <p><br></p>
+                        <p><span style="font-family:宋体">提示：站在直通车的大局下的优化思路与站在整店总产出下的优化思路又是不同的，还需考虑直通车总花费与总产出的渐变关系，寻找利润置高点，后期小黑哥会有深入的分析文章。</span>
+                        </p>
+                        <p><br></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="color:#0000ff"><span
+                                style="font-family:宋体">三、</span>5</span></span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体"><span
+                                style="color:#0000ff">种关键词优化操作及优化原则</span></span></span></p>
+                        <p><span style="font-family:宋体">关键词的</span>5<span style="font-family:宋体">种优化操作：提价，降价，册词，加词，改词（匹配方式）</span>
+                        </p>
+                        <p><span style="font-family:宋体"><br></span></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span
+                                style="color:#ff0000">1</span></span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体"><span
+                                style="color:#ff0000">、提价、降价的优化原则：</span></span></span></p>
+                        <p><span style="font-family:宋体">点击率高的词，提高出价，获取更多的精准流量</span></p>
+                        <p><span style="font-family:宋体">转换率高的词，提高出价，获取更多的成交</span></p>
+                        <p><span style="font-family:宋体">点击率低的词，降低出价，降低点击成本</span></p>
+                        <p><span style="font-family:宋体">转换率低的词，降低出价，降低推广成本</span></p>
+                        <p><br></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span
+                                style="color:#ff0000">2</span></span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体"><span
+                                style="color:#ff0000">、删词、加词的优化原则：</span></span></span></p>
+                        <p><span style="font-family:宋体">无展现词、无点击词，质量得分低无点击词、无成交词，都删除</span></p>
+                        <p><span style="font-family:宋体">飚升词、高转换词组的相关词、高转换词组的下拉提示词，都添加进去</span></p>
+                        <p><br></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span
+                                style="color:#ff0000">3</span></span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体"><span
+                                style="color:#ff0000">、改词（匹配方式）的优化原则：</span></span></span></p>
+                        <p><span style="font-family:宋体">直通车前期，建议全部用精准匹配</span></p>
+                        <p><span style="font-family:宋体">关键词本身是精准词，建议改成中心匹配或广泛匹配，关键词本身是宽泛词，建议用精准匹配</span></p>
+                        <p><span style="font-family:宋体">活动、大促时，比如双</span>11<span style="font-family:宋体">、双</span>12<span
+                                style="font-family:宋体">，建议全部改成广泛匹配，全方位引流</span></p>
+                        <p><br></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体"><span
+                                style="color:#0000ff">四、直通车不同阶段的优化方案</span></span></span></p>
+                        <p><br></p>
+                        <p><span style="color:#ff0000"><span style="word-wrap: break-word; font-weight: 700;">（一）&nbsp; &nbsp;&nbsp;&nbsp;</span></span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span
+                                style="color:#ff0000">前期</span></span></p>
+                        <p><br></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体"><span
+                                style="color:#ff0000">优化原则：优化点击率为主，提高整体精准流量</span></span></span></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span
+                                style="font-family:宋体">优化周期：</span>15</span><span
+                                style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体">天内</span></span>
+                        </p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span
+                                style="font-family:宋体"><br></span></span></p>
+                        <p><span style="color:#0000ff">1<span style="font-family:宋体">、提高出价</span></span></p>
+                        <p><span style="font-family:宋体">低展现、高点击率的词；</span></p>
+                        <p><span style="font-family:宋体">低展现、高转化率（高投入产出）的词；</span></p>
+                        <p><span style="font-family:宋体">点击率高、展现少的词</span></p>
+                        <p><span style="font-family:宋体">质量得分高，点击率低的词</span></p>
+                        <p><br></p>
+                        <p><span style="color:#0000ff">2<span style="font-family:宋体">、降低出价</span></span></p>
+                        <p><span style="font-family:宋体">高展现、低点击率的词；</span></p>
+                        <p><span style="font-family:宋体">高展现、低转化率（低投入产出）的词；</span></p>
+                        <p><span style="font-family:宋体"><br></span></p>
+                        <p><span style="color:#0000ff">3<span style="font-family:宋体">、删除关键词</span></span></p>
+                        <p><span style="font-family:宋体">过去</span>7<span style="font-family:宋体">天无展现的关键词；</span></p>
+                        <p><span style="font-family:宋体">过去</span>30<span style="font-family:宋体">天无点击的关键词；</span></p>
+                        <p><span style="font-family:宋体">低投入产出的词，先压价观察，若投入产出还是很低，则果断删</span></p>
+                        <p><br></p>
+                        <p><span style="color:#0000ff">4<span style="font-family:宋体">、添加关键词</span></span></p>
+                        <p><span style="font-family:宋体">飚升词（</span>TOP<span style="font-family:宋体">与数据魔方）</span></p>
+                        <p><span style="font-family:宋体">淘宝首页搜索框下面的推荐词</span></p>
+                        <p><span style="font-family:宋体">高转换词组的相关关键词</span></p>
+                        <p><br></p>
+                        <p><span style="color:#0000ff">5<span style="font-family:宋体">、调整匹配方式</span></span></p>
+                        <p><span style="font-family:宋体">前期精准词，中期广泛词，后期根据转换情况</span></p>
+                        <p><span style="font-family:宋体">双</span>11<span style="font-family:宋体">、双</span>12<span
+                                style="font-family:宋体">活动期间广泛匹配引流</span></p>
+                        <p><br></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体"><span
+                                style="color:#ff0000">（二）、中期</span></span></span></p>
+                        <p><br></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体"><span
+                                style="color:#ff0000">优化原则：稳住点击率，以优化转换率为核心</span></span></span></p>
+                        <p><br></p>
+                        <p><span style="font-family:宋体">分析周期：</span>15<span style="font-family:宋体">天、</span>30<span
+                                style="font-family:宋体">天时间段</span></p>
+                        <p><span style="font-family:宋体">转换率高的词，赚钱词，提高出价</span></p>
+                        <p><span style="font-family:宋体">转换率低的词，亏钱词，降低出价</span></p>
+                        <p>15<span style="font-family:宋体">天、</span>30<span
+                                style="font-family:宋体">天无转换的词，亏钱词，删除关键词</span></p>
+                        <p><br></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="font-family:宋体"><span
+                                style="color:#ff0000">（三）、后期</span></span></span></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="color:#ff0000"><span
+                                style="font-family:宋体">优化原则：稳住点击率和转化率，以优化</span>ROI<span
+                                style="font-family:宋体">为核心</span></span></span></p>
+                        <p><span style="word-wrap: break-word; font-weight: 700;"><span style="color:#ff0000"><span
+                                style="font-family:宋体"><br></span></span></span></p>
+                        <p><span style="font-family:宋体">分析周期：</span>15<span style="font-family:宋体">天、</span>30<span
+                                style="font-family:宋体">天</span></p>
+                        <p><span style="font-family:宋体">在后期，要以盈利为主，所以要控制好</span>ROI<span style="font-family:宋体">，保证盈利，设定一个</span>ROI<span
+                                style="font-family:宋体">值</span></p>
+                        <p><span style="font-family:宋体">要实现直通车不亏本，也就是直通车的花费刚好产品的毛利润</span></p>
+                        <p><span style="font-family:宋体">所以</span>ROI<span style="font-family:宋体">〉</span>(<span
+                                style="font-family:宋体">客单价</span>/<span style="font-family:宋体">毛利润</span>)&nbsp;<span
+                                style="font-family:宋体">才能实现直通车的盈利。</span></p>
+                        <p><br></p>
+                        <p>ROI<span style="font-family:宋体">〉</span>(<span style="font-family:宋体">客单价</span>/<span
+                                style="font-family:宋体">毛利润</span>)<span style="font-family:宋体">的词，针对盈利词，提高出价</span></p>
+                        <p>ROI<span style="font-family:宋体">〈</span>(<span style="font-family:宋体">客单价</span>/<span
+                                style="font-family:宋体">毛利润</span>)<span style="font-family:宋体">的词，亏本词，降低出价</span></p>
+                        <p>ROI<span style="font-family:宋体">＝</span>0<span style="font-family:宋体">的词，无成交词，删除关键词</span>
+                        </p>
+                        <p><br></p></div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -582,26 +837,15 @@
         name: "app",
         data: function () {
             return {
-                dialogTitle: '登录',
+                smsForm: {},
                 smsText: '发送短信',
                 smsDisable: false,
                 smsTimer: 60,
                 smsHandle: null,
-                loginStatus: null,
-                registerForm: {
-                    mobile: '',
-                    password: '',
-                    code: '',
-                    remember: true
-                },
-                loginForm: {
-                    mobile: '',
-                    password: '',
-                    remember: true
-                },
-                rechargeForm: {
-                    mount: '',
-                },
+                registerForm: {},
+                loginForm: {},
+                forgetPasswordForm: {},
+                rechargeForm: {mount: '',},
                 notificationItem: {data: {}},
                 userModifyForm: {_profile: {}},
                 provinces: Object.keys(cityData),
@@ -642,41 +886,67 @@
                 this.initCities(event.target.value);
                 this.userModifyForm._profile.city = this.cities[0];
             },
-            login: function () {
-                $(".login-dialog").modal('show');
-                this.loginStatus = 'login';
-                this.dialogTitle = '登录';
-            },
-            doLogin: function () {
-                let self = this;
-                axios.post(api.userLogin, self.loginForm).then(function (res) {
-                    self.$store.commit('user');
-                    $(".login-dialog").modal('hide');
-                });
-            },
             doLogout: function () {
                 let self = this;
                 axios.get(api.userLogout).then(function (res) {
                     self.$store.commit('user');
                 });
             },
-            register: function () {
+            login: function () {
+                $(".modal").modal('hide');
                 $(".login-dialog").modal('show');
-                this.loginStatus = 'register';
-                this.dialogTitle = '注册&找回密码';
-                this.registerInit();
+                this.loginForm = {
+                    mobile: '',
+                    password: '',
+                    remember: true
+                };
             },
-            registerInit: function () {
-                this.registerForm.mobile = '';
-                this.registerForm.password = '';
-                this.registerForm.code = '';
+            doLogin: function () {
+                let self = this;
+                axios.post(api.userLogin, self.loginForm).then(function (res) {
+                    self.$message.success('成功');
+                    $(".modal").modal('hide');
+                    self.$store.commit('user');
+                });
+            },
+            register: function () {
+                $(".modal").modal('hide');
+                $(".register-dialog").modal('show');
+                this.registerForm = {
+                    mobile: '',
+                    password: '',
+                    inviter: '',
+                    code: '',
+                    remember: true
+                };
+                this.smsForm = this.registerForm;
                 this.smsInit();
             },
             doRegister: function () {
                 let self = this;
                 axios.post(api.userRegister, self.registerForm).then(function (res) {
                     self.$message.success('成功');
-                    $(".login-dialog").modal('hide');
+                    $(".modal").modal('hide');
+                    self.$store.commit('user');
+                });
+            },
+            forgetPassword: function () {
+                $(".modal").modal('hide');
+                $(".forget-password-dialog").modal('show');
+                this.forgetPasswordForm = {
+                    mobile: '',
+                    password: '',
+                    code: '',
+                    remember: true
+                };
+                this.smsForm = this.forgetPasswordForm;
+                this.smsInit();
+            },
+            doForgetPassword: function () {
+                let self = this;
+                axios.post(api.userForgetPassword, self.forgetPasswordForm).then(function (res) {
+                    self.$message.success('成功');
+                    $(".modal").modal('hide');
                     self.$store.commit('user');
                 });
             },
@@ -688,7 +958,7 @@
             },
             sendSms: function () {
                 let self = this;
-                axios.post(api.userSms, self.registerForm).then(function (res) {
+                axios.post(api.userSms, {mobile: self.smsForm.mobile}).then(function (res) {
                     self.$message.success('短信发送成功，请耐心等候，如有疑问请联系客服');
                     self.smsDisable = true;
                     self.smsHandle = setInterval(function () {

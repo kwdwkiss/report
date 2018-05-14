@@ -7,7 +7,7 @@
         <el-form-item prop="password">
             <el-input type="password" v-model="form.password" placeholder="密码"></el-input>
         </el-form-item>
-        <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox>
+        <el-checkbox v-model="form.remember" class="remember">记住密码</el-checkbox>
         <el-form-item>
             <el-button type="primary" @click.native.prevent="login" :loading="loading">登录</el-button>
         </el-form-item>
@@ -21,7 +21,8 @@
                 loading: false,
                 form: {
                     username: '',
-                    password: ''
+                    password: '',
+                    remember: true,
                 },
                 rules: {
                     username: [

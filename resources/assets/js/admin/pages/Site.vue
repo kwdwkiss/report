@@ -12,6 +12,10 @@
                     <el-form-item label="名称">
                         <el-input v-model="dataList.name"></el-input>
                     </el-form-item>
+                    <el-form-item label="关闭注册">
+                        <el-switch v-model="dataList.close_register" :active-value="1" :inactive-value="0">
+                        </el-switch>
+                    </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="submit">提交</el-button>
                     </el-form-item>
