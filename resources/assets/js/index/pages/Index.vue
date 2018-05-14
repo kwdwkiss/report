@@ -282,7 +282,7 @@
 
     .article-data .article-title {
         display: inline-block;
-        width: 370px;
+        width: 360px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
