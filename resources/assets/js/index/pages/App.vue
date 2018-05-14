@@ -278,7 +278,7 @@
                                 <label class="col-sm-3 control-label">邀请人</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control"
-                                           placeholder="填写邀请人注册手机号" name="inviter"
+                                           placeholder="填写邀请人注册手机号，若无则不用填写" name="inviter"
                                            v-model="registerForm.inviter">
                                 </div>
                             </div>

@@ -2,10 +2,7 @@
     <div>
         <div class="row search">
             <div class="col-xs-8">
-                <select v-model="searchParams.account_type">
-                    <option v-for="item in $store.state.taxonomy.account_type" :value="item.id">{{item.name}}
-                    </option>
-                </select>
+                <label>查询账号</label>
                 <input v-model="searchParams.name" name="name" type="text" placeholder="请输入账号">
                 <button @click="doSearch" class="btn btn-success">查询</button>
                 <button @click="report" class="btn btn-danger">投诉举报</button>
@@ -146,10 +143,7 @@
         },
         methods: {
             initSearchParams: function () {
-                this.searchParams = {
-                    account_type: this.$store.state.taxonomy.account_type[0].id,
-                    name: ''
-                };
+                this.searchParams = {name: ''};
             },
             initReportParams: function () {
                 this.reportParams = {

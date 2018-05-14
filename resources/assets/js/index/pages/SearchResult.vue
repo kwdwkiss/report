@@ -1,9 +1,26 @@
 <template>
     <div class="row search-data">
         <div>
-            <p class="col-xs-12" v-if="searchResult.type===1" style="color: blue">
-                无{{$store.state.searchResult.name}}账号信息，如果确认是恶意号码，请到下方添加！</p>
-            <table class="table table-striped table-hover" v-if="searchResult.type===2">
+            <div v-if="accounts.length==0">
+                <p class="col-xs-12" style="color: blue">无{{accounts.name}}账号信息，如果确认是恶意号码，请到下方添加！</p>
+            </div>
+            <div v-if="accounts.length>0" class="row" v-for="item in accounts">
+                <div v-if="item.status==103" style="color: green">
+                    <p class="col-xs-6">{{item.type_label}}账号:{{item.name}}</p>
+                    <p class="col-xs-6" style="color:blue">认证:{{item.status_label}}</p>
+                    <p class="col-xs-6">认证时间:{{item.created_at}}</p>
+                    <p class="col-xs-6">建议合作金额:{{item.auth_cash}}</p>
+                    <p class="col-xs-6">常用地址:{{item.address}}</p>
+                    <p class="col-xs-6">备注:{{item.remark}}</p>
+                    <p class="col-xs-6">如发现此账号有恶意行为，请用户立即联系网站客服处理</p>
+                </div>
+                <div v-if="item.status==104" style="color: red">
+                    <p class="col-xs-6">{{item.type_label}}账号：{{item.name}}</p>
+                    <p class="col-xs-6">已被多数用户举报为恶意号码，请用户谨慎合作，危险！</p>
+                    <p class="col-xs-6">备注:{{item.remark}}</p>
+                </div>
+            </div>
+            <table class="table table-striped table-hover" v-if="account_reports.length>0">
                 <thead>
                 <tr>
                     <th>账号类型</th>
@@ -15,7 +32,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in searchResult.account_reports" style="color: red">
+                <tr v-for="item in account_reports" style="color: red">
                     <td>{{item.account_type_label}}</td>
                     <td>{{item.account_name}}</td>
                     <td>{{item.type_label}}</td>
@@ -27,20 +44,6 @@
                 </tr>
                 </tbody>
             </table>
-            <div v-if="searchResult.type===3" style="color: green">
-                <p class="col-xs-6">账号:{{searchResult.account.name}}</p>
-                <p class="col-xs-6" style="color:blue">认证:{{searchResult.account.status_label}}</p>
-                <p class="col-xs-6">认证时间:{{searchResult.account.created_at}}</p>
-                <p class="col-xs-6">建议合作金额:{{searchResult.account.auth_cash}}</p>
-                <p class="col-xs-6">常用地址:{{searchResult.account.address}}</p>
-                <p class="col-xs-6">备注:{{searchResult.account.remark}}</p>
-                <p class="col-xs-6">如发现此账号有恶意行为，请用户立即联系网站客服处理</p>
-            </div>
-            <div v-if="searchResult.type===4" style="color: red">
-                <p class="col-xs-12">{{searchResult.name}}已被多数用户举报为恶意号码，请用户谨慎合作</p>
-                <p class="col-xs-6">备注:{{searchResult.account.remark}}</p>
-                <h1 class="col-xs-6">危险！</h1>
-            </div>
         </div>
 
         <div class="modal fade search-result-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -111,8 +114,11 @@
     export default {
         name: "search",
         computed: {
-            searchResult: function () {
-                return this.$store.state.searchResult
+            accounts: function () {
+                return this.$store.state.searchResult.accounts
+            },
+            account_reports: function () {
+                return this.$store.state.searchResult.account_reports
             }
         },
         data: function () {

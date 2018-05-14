@@ -53,7 +53,7 @@ class Test extends Command
      */
     public function handle()
     {
-        $result  = \Cache::forget('statement.recharge.bill');
+        $result = '';
         var_dump($result);
         $temp = '';
     }
