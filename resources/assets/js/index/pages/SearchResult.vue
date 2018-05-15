@@ -6,39 +6,40 @@
                     查询结果：无<span class="text-warning">{{name}}</span>账号信息，如果确认是恶意号码，请投诉举报！
                 </h3>
             </div>
-            <div v-if="accounts.length>0" class="row" v-for="item in accounts">
+            <div v-if="accounts.length>0" class="row" v-for="(item,index) in accounts" :key="index">
                 <div v-if="item.status==103" class="text-success">
-                    <p class="col-xs-6">{{item.type_label}}账号:{{item.name}}</p>
-                    <p class="col-xs-6 text-primary">认证:{{item.status_label}}</p>
-                    <p class="col-xs-6">认证时间:{{item.created_at}}</p>
-                    <p class="col-xs-6">建议合作金额:{{item.auth_cash}}</p>
-                    <p class="col-xs-6">常用地址:{{item.address}}</p>
-                    <p class="col-xs-6">备注:{{item.remark}}</p>
-                    <p class="col-xs-6">如发现此账号有恶意行为，请用户立即联系网站客服处理</p>
+                    <p class="col-sm-6">{{item.type_label}}账号:{{item.name}}</p>
+                    <p class="col-sm-6 text-primary">认证:{{item.status_label}}</p>
+                    <p class="col-sm-6">认证时间:{{item.created_at}}</p>
+                    <p class="col-sm-6">建议合作金额:{{item.auth_cash}}</p>
+                    <p class="col-sm-6">常用地址:{{item.address}}</p>
+                    <p class="col-sm-6">备注:{{item.remark}}</p>
+                    <p class="col-sm-6">如发现此账号有恶意行为，请用户立即联系网站客服处理</p>
                 </div>
                 <div v-if="item.status==104" class="text-danger">
-                    <p class="col-xs-6">{{item.type_label}}账号：{{item.name}}</p>
-                    <p class="col-xs-6">已被多数用户举报为恶意号码，请用户谨慎合作，危险！</p>
-                    <p class="col-xs-6">备注:{{item.remark}}</p>
+                    <p class="col-sm-6">{{item.type_label}}账号：{{item.name}}</p>
+                    <p class="col-sm-6">已被多数用户举报为恶意号码，请用户谨慎合作，危险！</p>
+                    <p class="col-sm-6">备注:{{item.remark}}</p>
                 </div>
             </div>
+            <div class="table-responsive">
             <table class="table table-striped table-hover" v-if="account_reports.length>0">
                 <thead>
                 <tr>
                     <th>账号类型</th>
                     <th>账号</th>
                     <th>举报类型</th>
-                    <th>举报者IP</th>
+                    <th class="hidden-xs">举报者IP</th>
                     <th>举报时间</th>
                     <th>详情</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in account_reports" style="color: red">
+                <tr v-for="(item,index) in account_reports" :key="index" style="color: red">
                     <td>{{item.account_type_label}}</td>
                     <td>{{item.account_name}}</td>
                     <td>{{item.type_label}}</td>
-                    <td>{{item.ip}}</td>
+                    <td class="hidden-xs">{{item.ip}}</td>
                     <td>{{item.created_at}}</td>
                     <td>
                         <button class="btn btn-primary" @click="detail(item)">查看</button>
@@ -46,6 +47,7 @@
                 </tr>
                 </tbody>
             </table>
+            </div>
         </div>
 
         <div class="modal fade search-result-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -113,47 +115,62 @@
 </template>
 
 <script>
-    export default {
-        name: "search",
-        computed: {
-            name: function () {
-                return this.$store.state.searchResult.name;
-            },
-            accounts: function () {
-                return this.$store.state.searchResult.accounts
-            },
-            account_reports: function () {
-                return this.$store.state.searchResult.account_reports
-            }
-        },
-        data: function () {
-            return {
-                reportData: {},
-            }
-        },
-        methods: {
-            detail: function (item) {
-                this.reportData = item;
-                $(".search-result-dialog").modal('show');
-            },
-            close: function () {
-                $(".search-result-dialog").modal('hide');
-            }
-        }
+export default {
+  name: "search",
+  computed: {
+    name: function() {
+      return this.$store.state.searchResult.name;
+    },
+    accounts: function() {
+      return this.$store.state.searchResult.accounts;
+    },
+    account_reports: function() {
+      return this.$store.state.searchResult.account_reports;
     }
+  },
+  data: function() {
+    return {
+      reportData: {}
+    };
+  },
+  methods: {
+    detail: function(item) {
+      this.reportData = item;
+      $(".search-result-dialog").modal("show");
+    },
+    close: function() {
+      $(".search-result-dialog").modal("hide");
+    }
+  }
+};
 </script>
 
 <style scoped>
-    .search-data {
-        font-size: 16px;
-        font-weight: 600;
-    }
+@media (min-width: 768px) {
+  .search-data {
+    font-size: 16px;
+  }
+}
+@media (max-width: 768px) {
+  .search-data {
+    font-size: 12px;
+  }
+}
 
-    .search-data p {
-        margin: 5px 0;
-    }
+.search-data {
+  font-weight: 600;
+}
 
-    .search-result-dialog .form-group > div {
-        padding-top: 7px;
-    }
+.search-data p {
+  margin: 5px 0;
+}
+
+.search-result-dialog .form-group > div {
+  padding-top: 7px;
+}
+
+th,
+td {
+  text-align: center;
+}
 </style>

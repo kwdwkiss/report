@@ -1,14 +1,29 @@
 <template>
     <div>
-        <div class="row search">
-            <div class="col-sm-12 col-md-6">
-                <label>查询账号</label>
-                <input v-model="searchParams.name" name="name" type="text" placeholder="请输入账号">
-                <button @click="doSearch" class="btn btn-success">查询</button>
-                <button @click="report" class="btn btn-danger">投诉举报</button>
+        <div class="row hidden-xs dashboard">
+            <div class="col-sm-4">
+                <p>网站会员：<span class="text-success">{{page.auth_member_num}}</span></p>
             </div>
-            <div class="col-sm-12 col-md-6 member-num">
-                <p>网站实名认证会员：<span>{{page.auth_member_num}}</span>名会员</p>
+            <div class="col-sm-4">
+                <p>恶意账号：<span class="text-warning">{{page.report_num}}</span></p>
+            </div>
+            <div class="col-sm-4">
+                <p>最新举报：<span class="text-danger">{{page.last_24_report_num}}</span></p>
+            </div>
+        </div>
+
+        <div class="row search">
+            <div class="hidden-xs hidden-sm col-md-2">
+                <label><a class="text-primary" href="/#/">账号查询</a></label>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <input class="form-control" v-model="searchParams.name" name="name" type="text" placeholder="请输入账号">
+            </div>
+            <div class="col-xs-6 col-md-2">
+                <button @click="doSearch" class="form-control btn btn-success">查询</button>
+            </div>
+            <div class="col-xs-6 col-md-2">
+                <button @click="report" class="form-control btn btn-danger">投诉举报</button>
             </div>
         </div>
 
@@ -92,12 +107,6 @@
             </div>
         </div>
 
-        <div class="row report-num">
-            <p>
-                本站目前已有<span>{{page.report_num}}</span>条恶意账号数据，最近24小时危险监测更新<span>{{page.last_24_report_num}}</span>条数据
-            </p>
-        </div>
-
         <router-view></router-view>
 
         <div class="row hidden-xs hidden-sm ad">
@@ -111,7 +120,7 @@
         <div class="row hidden-xs hidden-sm article-data">
             <div class="col-xs-6" v-for="(item,index) in page.article_data" :key="index">
                 <div>
-                    <p>{{item.type}}<a :href="item.url">更多</a></p>
+                    <p>{{item.type}}<a class="pull-right" :href="item.url">更多</a></p>
                     <p v-for="(subItem,subIndex) in item.data" :key="index+'-'+subIndex">
                         <a class="article-title" target="_blank" :href="subItem.url">{{subItem.title}}</a>
                         <span class="pull-right">{{subItem.created_at}}</span>
@@ -220,38 +229,27 @@ export default {
 </script>
 
 <style scoped>
-.search {
-  background-color: #f5f5f5;
-  line-height: 60px;
-  font-size: 16px;
-}
-
-.search > div:first-child > * {
-  margin: 0 3px;
-  height: 35px;
-}
-
-.search input {
-  min-width: 220px;
-}
-
-.member-num {
-  font-size: 16px;
-  font-weight: 600;
+.dashboard {
+  padding: 10px 0;
+  font-size: 20px;
+  font-weight: bold;
   text-align: center;
 }
 
-.member-num span {
-  color: green;
+.search > div {
+  margin: 10px 0;
 }
 
-.report-num {
-  font-size: 16px;
-  font-weight: 600;
+.search {
+  text-align: center;
 }
 
-.report-num span {
-  color: red;
+.search label {
+  margin: 0;
+  line-height: 36px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .report-data {
@@ -273,41 +271,11 @@ export default {
   height: 32px;
 }
 
-.article-data p:first-child {
-  background-color: #f5f5f5;
-}
-
-.article-data p:first-child > a {
-  float: right;
-}
-
 .article-data .article-title {
   display: inline-block;
   width: 360px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.report-form {
-  background-color: #f5f5f5;
-  line-height: 60px;
-}
-
-.report-form > div > * {
-  margin: 0 5px;
-  height: 35px;
-}
-
-.report-form select {
-  width: 100px;
-}
-
-.report-form input[name="name"] {
-  width: 200px;
-}
-
-.report-form input[name="captcha"] {
-  width: 100px;
 }
 </style>

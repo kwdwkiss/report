@@ -1,5 +1,150 @@
 <template>
     <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/#/">宏海网络</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse in" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav" v-show="user">
+                        <li><a href="/#/">账号查询</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-haspopup="true" aria-expanded="false">文章资讯<span
+                                        class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/#/article/list/502">电商导航</a></li>
+                                <li><a href="/#/article/list/504">电商干货</a></li>
+                                <li><a href="/#/article/list/505">电商服务</a></li>
+                                <li><a href="/#/article/list/503">网络兼职</a></li>
+                            </ul>
+                        </li>
+                        <!--<li><a href="#">电商导航</a></li>-->
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <template v-if="!user">
+                            <li><a href="javascript:" @click="login">登录</a></li>
+                            <li><a href="javascript:" @click="register">注册</a></li>
+                        </template>
+                        <template v-if="user">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-haspopup="true" aria-expanded="false">积分:{{user._profile.amount}}<span
+                                        class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:" @click="rechargeDialog">充值</a></li>
+                                    <li><a href="javascript:" @click="rechargeList">充值记录</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="javascript:"
+                                   @click="notificationList">通知
+                                <template v-if="unreadNotification.meta.total">
+                                    （未读{{unreadNotification.meta.total}}）
+                                </template>
+                            </a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-haspopup="true" aria-expanded="false">{{user.mobile}} <span
+                                        class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <!--<li><a href="#">Action</a></li>-->
+                                    <!--<li role="separator" class="divider"></li>-->
+                                    <li><a href="javascript:" @click="userModify">个人资料</a></li>
+                                    <li><a href="javascript:" @click="userMerchantModify">店铺资料</a></li>
+                                    <li><a href="javascript:" @click="doLogout">注销</a></li>
+                                </ul>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div v-show="user" class="container" style="padding-top:51px">
+
+            <div class="row hidden-xs hidden-sm ad">
+                <div class="col-md-6" v-for="(item, index) in page.ad_top" :key="index">
+                    <a target="_blank" :href="item.url">
+                        <img :src="item.img_src">
+                    </a>
+                </div>
+            </div>
+
+            <div class="row hidden-xs hidden-sm ad">
+                <div class="col-md-3" v-for="(item, index) in page.ad_second" :key="index">
+                    <a target="_blank" :href="item.url">
+                        <img :src="item.img_src">
+                    </a>
+                </div>
+            </div>
+
+            <div class="row logo hidden-xs hidden-sm">
+                <div class="col-sm-12 col-md-6 hidden-xs">
+                    <a href="">
+                        <img src="/images/logo.jpg">
+                    </a>
+                </div>
+                <div class="service-qq col-xs-12 col-md-3">
+                    <ul>
+                        <li class="col-xs-12">QQ客服：</li>
+                        <li class="col-xs-6" v-for="(item, index) in page.service_qq" :key="index">{{item.name}}</li>
+                    </ul>
+                </div>
+                <div class="service-wx col-xs-12 col-md-3">
+                    <ul>
+                        <li>微信<br/>客服：</li>
+                        <li v-for="(item, index) in page.service_wx" :key="index">
+                            <img :src="item.name" alt="">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row notice">
+                <div>
+                    <span>公告：{{page.notice.title}}</span>
+                    <span><a :href="page.notice.moreUrl">更多</a></span>
+                </div>
+            </div>
+
+            <router-view></router-view>
+
+            <div class="row hidden-xs hidden-sm ad">
+                <div class="col-xs-3" v-for="(item, index) in page.ad_foot" :key="index">
+                    <a target="_blank" :href="item.url">
+                        <img :src="item.img_src">
+                    </a>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row copyright">
+                <div>
+                    <p>
+                        <a href="http://www.cnzz.com/stat/website.php?web_id=1271314784" target="_blank"
+                           title="站长统计">站长统计</a>
+                        |
+                        Copyright©2015-2020 www.tbpzw.com .All Rights Reserved ICP证：桂ICP备14007039号
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" v-show="!user" style="padding-top: 51px">
+            <article-detail :id="page.index_blog_article"></article-detail>
+        </div>
+
         <pop-window></pop-window>
 
         <div v-if="user" class="modal fade recharge-dialog" tabindex="-1" role="dialog"
@@ -505,150 +650,6 @@
                 </div>
             </div>
         </div>
-
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">宏海网络</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse in" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <!--<li><a href="#">账号查询</a></li>-->
-                        <!--<li><a href="#">电商导航</a></li>-->
-                        <!--<li><a href="#">网络兼职</a></li>-->
-                        <!--<li><a href="#">电商干货</a></li>-->
-                        <!--<li><a href="#">电商服务</a></li>-->
-                        <!--<li><a href="#">关于我们</a></li>-->
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <template v-if="!user">
-                            <li><a href="javascript:" @click="login">登录</a></li>
-                            <li><a href="javascript:" @click="register">注册</a></li>
-                        </template>
-                        <template v-if="user">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-haspopup="true" aria-expanded="false">积分:{{user._profile.amount}}<span
-                                        class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:" @click="rechargeDialog">充值</a></li>
-                                    <li><a href="javascript:" @click="rechargeList">充值记录</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:"
-                                   @click="notificationList">通知
-                                <template v-if="unreadNotification.meta.total">
-                                    （未读{{unreadNotification.meta.total}}）
-                                </template>
-                            </a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-haspopup="true" aria-expanded="false">{{user.mobile}} <span
-                                        class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <!--<li><a href="#">Action</a></li>-->
-                                    <!--<li role="separator" class="divider"></li>-->
-                                    <li><a href="javascript:" @click="userModify">个人资料</a></li>
-                                    <li><a href="javascript:" @click="userMerchantModify">店铺资料</a></li>
-                                    <li><a href="javascript:" @click="doLogout">注销</a></li>
-                                </ul>
-                            </li>
-                        </template>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <div v-show="user" class="container" style="padding-top:51px">
-
-            <div class="row hidden-xs hidden-sm ad">
-                <div class="col-md-6" v-for="(item, index) in page.ad_top" :key="index">
-                    <a target="_blank" :href="item.url">
-                        <img :src="item.img_src">
-                    </a>
-                </div>
-            </div>
-
-            <div class="row hidden-xs hidden-sm ad">
-                <div class="col-md-3" v-for="(item, index) in page.ad_second" :key="index">
-                    <a target="_blank" :href="item.url">
-                        <img :src="item.img_src">
-                    </a>
-                </div>
-            </div>
-
-            <div class="row logo">
-                <div class="col-sm-12 col-md-6 hidden-xs hidden-sm">
-                    <a href="">
-                        <img src="/images/logo.jpg">
-                    </a>
-                </div>
-                <div class="service-qq col-xs-6 col-md-3">
-                    <ul>
-                        <li class="col-xs-12">QQ客服：</li>
-                        <li class="col-xs-6" v-for="(item, index) in page.service_qq" :key="index">{{item.name}}</li>
-                    </ul>
-                </div>
-                <div class="service-wx col-xs-6 col-md-3">
-                    <ul>
-                        <li>微信<br/>客服：</li>
-                        <li v-for="(item, index) in page.service_wx" :key="index">
-                            <img :src="item.name" alt="">
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="row old-nav">
-                <ul>
-                    <a :href="item.url" v-for="(item, index) in page.menu" :key="index">
-                        <li class="col-xs-4 col-sm-2 text-center">{{item.name}}</li>
-                    </a>
-                </ul>
-            </div>
-
-            <div class="row notice">
-                <span>公告：{{page.notice.title}}</span>
-                <span><a :href="page.notice.moreUrl">更多</a></span>
-            </div>
-
-            <router-view></router-view>
-
-            <div class="row hidden-xs hidden-sm ad">
-                <div class="col-xs-3" v-for="(item, index) in page.ad_foot" :key="index">
-                    <a target="_blank" :href="item.url">
-                        <img :src="item.img_src">
-                    </a>
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="row copyright">
-                <div>
-                    <p>
-                        <a href="http://www.cnzz.com/stat/website.php?web_id=1271314784" target="_blank"
-                           title="站长统计">站长统计</a>
-                        |
-                        Copyright©2015-2020 www.tbpzw.com .All Rights Reserved ICP证：桂ICP备14007039号
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="container" v-show="!user" style="padding-top: 51px">
-            <article-detail :id="page.index_blog_article"></article-detail>
-        </div>
     </div>
 </template>
 
@@ -880,18 +881,6 @@ export default {
   }
 }
 
-/* @media (min-width: 0px){
-.navbar-right {
-    float: right !important;
-    margin-right: -15px;
-}
-
-@media (min-width: 0px){
-.navbar-nav {
-    float: left;
-    margin: 0;
-} */
-
 body {
   background-color: #fff;
   color: #222;
@@ -906,23 +895,8 @@ li {
   list-style: none;
 }
 
-.old-root {
-  margin: 0 auto;
-  width: 970px;
-  min-height: 400px;
-}
-
-th,
-td {
-  text-align: center;
-}
-
 p {
   margin-bottom: 0;
-}
-
-input {
-  line-height: normal;
 }
 
 a {
@@ -941,19 +915,6 @@ a {
 .logo img {
   width: 100%;
   height: 80px;
-}
-
-.old-nav {
-  background-color: #e6e6e6;
-  color: #505050;
-  line-height: 40px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.old-nav li:hover {
-  background-color: #41a51d;
-  color: #fff;
 }
 
 .notice {
