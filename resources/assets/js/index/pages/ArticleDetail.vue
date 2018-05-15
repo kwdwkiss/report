@@ -1,9 +1,17 @@
 <template>
-    <div class="article">
-        <h2 class="title">{{articleData.title}}</h2>
-        <div class="article-bar">{{articleData.updated_at.split(' ')[0]}}</div>
-        <hr>
-        <div v-html="articleData.content"></div>
+    <div>
+        <top-ad></top-ad>
+
+        <my-logo></my-logo>
+
+        <my-notice></my-notice>
+
+        <div class="article">
+            <h2 class="title">{{articleData.title}}</h2>
+            <div class="article-bar">{{articleData.updated_at.split(' ')[0]}}</div>
+            <hr>
+            <div v-html="articleData.content"></div>
+        </div>
     </div>
 </template>
 

@@ -1,5 +1,11 @@
 <template>
     <div>
+        <top-ad></top-ad>
+
+        <my-logo></my-logo>
+
+        <my-notice></my-notice>
+
         <div class="row hidden-xs dashboard">
             <div class="col-sm-4">
                 <p>网站会员：<span class="text-success">{{page.auth_member_num}}</span></p>
@@ -109,25 +115,11 @@
 
         <router-view></router-view>
 
-        <div class="row hidden-xs hidden-sm ad">
-            <div class="col-xs-6" v-for="(item,index) in page.ad_third" :key="index">
-                <a target="_blank" :href="item.url">
-                    <img :src="item.img_src">
-                </a>
-            </div>
-        </div>
+        <middle-ad></middle-ad>
 
-        <div class="row hidden-xs hidden-sm article-data">
-            <div class="col-xs-6" v-for="(item,index) in page.article_data" :key="index">
-                <div>
-                    <p>{{item.type}}<a class="pull-right" :href="item.url">更多</a></p>
-                    <p v-for="(subItem,subIndex) in item.data" :key="index+'-'+subIndex">
-                        <a class="article-title" target="_blank" :href="subItem.url">{{subItem.title}}</a>
-                        <span class="pull-right">{{subItem.created_at}}</span>
-                    </p>
-                </div>
-            </div>
-        </div>
+        <article-data></article-data>
+
+        <bottom-ad></bottom-ad>
     </div>
 </template>
 
@@ -250,32 +242,5 @@ export default {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-}
-
-.report-data {
-  font-size: 16px;
-}
-
-.article-data > div {
-  margin: 5px 0;
-}
-
-.article-data > div > div {
-  border: 1px solid #9d9d9d;
-  border-radius: 3px;
-  height: 160px;
-}
-
-.article-data p {
-  padding: 5px 10px;
-  height: 32px;
-}
-
-.article-data .article-title {
-  display: inline-block;
-  width: 360px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 </style>

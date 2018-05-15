@@ -31,8 +31,10 @@ class IndexController extends Controller
 //        }
         $page = [];
         \DB::transaction(function () use (&$page) {
+            $user = \Auth::guard('user')->user();
             $page = array_merge([
-                'index_blog_article'=>Config::get('site.index_blog_article'),
+                'user' => $user ? new UserResource($user) : null,
+                'index_blog_article' => Config::get('site.index_blog_article'),
                 'taxonomy' => Taxonomy::allDisplay(),
             ], Config::getSiteIndex(), Config::getSiteStatics());
         });

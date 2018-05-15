@@ -1,23 +1,31 @@
 <template>
-    <div class="article">
-        <div class="row title"><h3>{{taxonomy}}</h3></div>
+    <div>
+        <top-ad></top-ad>
 
-        <div class="row">
-            <ul>
-                <li v-for="item in dataList.data">
-                    <a :href="item.url">{{item.title}}</a>
-                    <span class="pull-right">{{item.updated_at.split(' ')[0]}}</span>
-                </li>
-            </ul>
-        </div>
+        <my-logo></my-logo>
 
-        <hr>
+        <my-notice></my-notice>
 
-        <div class="row">
-            <el-pagination layout="prev, pager, next"
-                           :total="dataList.meta.total"
-                           :page-size="dataList.meta.per_page"
-                           @current-change="paginate"></el-pagination>
+        <div class="article">
+            <div class="row title"><h3>{{taxonomy}}</h3></div>
+
+            <div class="row">
+                <ul>
+                    <li v-for="(item,index) in dataList.data" :key="index">
+                        <a :href="item.url">{{item.title}}</a>
+                        <span class="pull-right">{{item.updated_at.split(' ')[0]}}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <el-pagination layout="prev, pager, next"
+                            :total="dataList.meta.total"
+                            :page-size="dataList.meta.per_page"
+                            @current-change="paginate"></el-pagination>
+            </div>
         </div>
     </div>
 </template>

@@ -8,7 +8,7 @@
                 <th>账号</th>
                 <th>举报类型</th>
                 <th class="hidden-xs">举报者IP</th>
-                <th>举报时间</th>
+                <th class="hidden-xs">举报时间</th>
                 <th>详情</th>
             </tr>
             </thead>
@@ -18,7 +18,7 @@
                 <td>{{item.account_name}}</td>
                 <td>{{item.type_label}}</td>
                 <td class="hidden-xs">{{item.ip}}</td>
-                <td>{{item.created_at}}</td>
+                <td class="hidden-xs">{{item.created_at}}</td>
                 <td>
                     <button class="btn btn-primary" @click="detail(item)">查看</button>
                 </td>
