@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="row search">
-            <div class="col-xs-8">
+            <div class="col-sm-12 col-md-6">
                 <label>查询账号</label>
                 <input v-model="searchParams.name" name="name" type="text" placeholder="请输入账号">
                 <button @click="doSearch" class="btn btn-success">查询</button>
                 <button @click="report" class="btn btn-danger">投诉举报</button>
             </div>
-            <div class="col-xs-4 member-num">
+            <div class="col-sm-12 col-md-6 member-num">
                 <p>网站实名认证会员：<span>{{page.auth_member_num}}</span>名会员</p>
             </div>
         </div>
@@ -29,7 +29,7 @@
                                 <div class="col-sm-9">
                                     <select v-model="reportParams.account_type" name="account_type"
                                             class="form-control">
-                                        <option v-for="item in $store.state.taxonomy.account_type" :value="item.id">
+                                        <option v-for="(item,index) in $store.state.taxonomy.account_type" :value="item.id" :key="index">
                                             {{item.name}}
                                         </option>
                                     </select>
@@ -46,7 +46,7 @@
                                 <label class="col-sm-3 control-label">投诉类型</label>
                                 <div class="col-sm-9">
                                     <select v-model="reportParams.report_type" name="report_type" class="form-control">
-                                        <option v-for="item in $store.state.taxonomy.report_type" :value="item.id">
+                                        <option v-for="(item,index) in $store.state.taxonomy.report_type" :value="item.id" :key="index">
                                             {{item.name}}
                                         </option>
                                     </select>
@@ -101,7 +101,7 @@
         <router-view></router-view>
 
         <div class="row hidden-xs hidden-sm ad">
-            <div class="col-xs-6" v-for="item in page.ad_third">
+            <div class="col-xs-6" v-for="(item,index) in page.ad_third" :key="index">
                 <a target="_blank" :href="item.url">
                     <img :src="item.img_src">
                 </a>
@@ -109,10 +109,10 @@
         </div>
 
         <div class="row hidden-xs hidden-sm article-data">
-            <div class="col-xs-6" v-for="item in page.article_data">
+            <div class="col-xs-6" v-for="(item,index) in page.article_data" :key="index">
                 <div>
                     <p>{{item.type}}<a :href="item.url">更多</a></p>
-                    <p v-for="subItem in item.data">
+                    <p v-for="(subItem,subIndex) in item.data" :key="index+'-'+subIndex">
                         <a class="article-title" target="_blank" :href="subItem.url">{{subItem.title}}</a>
                         <span class="pull-right">{{subItem.created_at}}</span>
                     </p>
@@ -123,190 +123,191 @@
 </template>
 
 <script>
-    export default {
-        name: "index",
-        computed: {
-            page: function () {
-                return this.$store.state.page;
-            },
-            user: function () {
-                return this.$store.state.user;
-            }
-        },
-        data: function () {
-            return {
-                searchParams: {},
-                reportParams: {},
-                captcha_src: api.captcha + '?' + Date.parse(new Date())
-            }
-        },
-        created: function () {
-            this.initSearchParams();
-            this.initReportParams();
-        },
-        methods: {
-            initSearchParams: function () {
-                this.searchParams = {name: ''};
-            },
-            initReportParams: function () {
-                this.reportParams = {
-                    account_type: this.$store.state.taxonomy.account_type[0].id,
-                    report_type: this.$store.state.taxonomy.report_type[0].id,
-                    name: '',
-                    image: {
-                        attachment: {}
-                    },
-                    description: '',
-                    captcha: ''
-                };
-                this.doCaptcha();
-            },
-            doCaptcha: function () {
-                this.captcha_src = api.captcha + '?' + Date.parse(new Date());
-            },
-            doSearch: function () {
-                let self = this;
-                let account_type = this.searchParams.account_type;
-                let name = this.searchParams.name;
-                this.$store.commit('searchResult', {
-                    account_type: account_type, name: name, callback: function () {
-                        self.$store.commit('user');
-                        self.$router.push('/search');
-                    }
-                });
-            },
-            report: function () {
-                $("#report-dialog").modal('show');
-            },
-            doReport: function () {
-                let self = this;
-                axios.post(api.indexReport, self.reportParams).then(function () {
-                    self.initReportParams();
-                    self.$message.success('成功');
-                    $("#report-dialog").modal('hide');
-                }).catch(function () {
-                    self.doCaptcha();
-                });
-            },
-            uploadImage: function (item) {
-                let inputFile = $('.input-file');
-                inputFile.data('target', item).click();
-            },
-            uploadChange: function () {
-                let self = this;
-                let formData = new FormData();
-                let inputFile = $('.input-file');
-                formData.append('file', inputFile.get(0).files[0]);
-                axios.post(api.uploadOss, formData, {
-                    headers: {'Content-Type': 'multipart/form-data'}
-                }).then(function (res) {
-                    self.$message.success('成功');
-                    inputFile.data('target')['attachment'] = res.data.data;
-                    inputFile.val('');
-                }).catch(function () {
-                    inputFile.val('');
-                });
-            },
-        }
+export default {
+  name: "index",
+  computed: {
+    page: function() {
+      return this.$store.state.page;
+    },
+    user: function() {
+      return this.$store.state.user;
     }
+  },
+  data: function() {
+    return {
+      searchParams: {},
+      reportParams: {},
+      captcha_src: api.captcha + "?" + Date.parse(new Date())
+    };
+  },
+  created: function() {
+    this.initSearchParams();
+    this.initReportParams();
+  },
+  methods: {
+    initSearchParams: function() {
+      this.searchParams = { name: "" };
+    },
+    initReportParams: function() {
+      this.reportParams = {
+        account_type: this.$store.state.taxonomy.account_type[0].id,
+        report_type: this.$store.state.taxonomy.report_type[0].id,
+        name: "",
+        image: {
+          attachment: {}
+        },
+        description: "",
+        captcha: ""
+      };
+      this.doCaptcha();
+    },
+    doCaptcha: function() {
+      this.captcha_src = api.captcha + "?" + Date.parse(new Date());
+    },
+    doSearch: function() {
+      let self = this;
+      let account_type = this.searchParams.account_type;
+      let name = this.searchParams.name;
+      this.$store.commit("searchResult", {
+        account_type: account_type,
+        name: name,
+        callback: function() {
+          self.$store.commit("user");
+          self.$router.push("/search");
+        }
+      });
+    },
+    report: function() {
+      $("#report-dialog").modal("show");
+    },
+    doReport: function() {
+      let self = this;
+      axios
+        .post(api.indexReport, self.reportParams)
+        .then(function() {
+          self.initReportParams();
+          self.$message.success("成功");
+          $("#report-dialog").modal("hide");
+        })
+        .catch(function() {
+          self.doCaptcha();
+        });
+    },
+    uploadImage: function(item) {
+      let inputFile = $(".input-file");
+      inputFile.data("target", item).click();
+    },
+    uploadChange: function() {
+      let self = this;
+      let formData = new FormData();
+      let inputFile = $(".input-file");
+      formData.append("file", inputFile.get(0).files[0]);
+      axios
+        .post(api.uploadOss, formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        })
+        .then(function(res) {
+          self.$message.success("成功");
+          inputFile.data("target")["attachment"] = res.data.data;
+          inputFile.val("");
+        })
+        .catch(function() {
+          inputFile.val("");
+        });
+    }
+  }
+};
 </script>
 
 <style scoped>
-    .search {
-        background-color: #f5f5f5;
-        line-height: 60px;
-        font-size: 16px;
-    }
+.search {
+  background-color: #f5f5f5;
+  line-height: 60px;
+  font-size: 16px;
+}
 
-    .search > div:first-child > * {
-        margin: 0 5px;
-        height: 35px;
-    }
+.search > div:first-child > * {
+  margin: 0 3px;
+  height: 35px;
+}
 
-    .search select {
-        width: 100px;
-    }
+.search input {
+  min-width: 220px;
+}
 
-    .search input[name=name] {
-        width: 250px;
-    }
+.member-num {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
 
-    .search button {
-        width: 80px;
-    }
+.member-num span {
+  color: green;
+}
 
-    .member-num {
-        font-size: 16px;
-        font-weight: 600;
-    }
+.report-num {
+  font-size: 16px;
+  font-weight: 600;
+}
 
-    .member-num span {
-        color: green;
-    }
+.report-num span {
+  color: red;
+}
 
-    .report-num {
-        font-size: 16px;
-        font-weight: 600;
-    }
+.report-data {
+  font-size: 16px;
+}
 
-    .report-num span {
-        color: red;
-    }
+.article-data > div {
+  margin: 5px 0;
+}
 
-    .report-data {
-        font-size: 16px;
-    }
+.article-data > div > div {
+  border: 1px solid #9d9d9d;
+  border-radius: 3px;
+  height: 160px;
+}
 
-    .article-data > div {
-        margin: 5px 0;
-    }
+.article-data p {
+  padding: 5px 10px;
+  height: 32px;
+}
 
-    .article-data > div > div {
-        border: 1px solid #9d9d9d;
-        border-radius: 3px;
-        height: 160px;
-    }
+.article-data p:first-child {
+  background-color: #f5f5f5;
+}
 
-    .article-data p {
-        padding: 5px 10px;
-        height: 32px;
-    }
+.article-data p:first-child > a {
+  float: right;
+}
 
-    .article-data p:first-child {
-        background-color: #f5f5f5;
-    }
+.article-data .article-title {
+  display: inline-block;
+  width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-    .article-data p:first-child > a {
-        float: right;
-    }
+.report-form {
+  background-color: #f5f5f5;
+  line-height: 60px;
+}
 
-    .article-data .article-title {
-        display: inline-block;
-        width: 360px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+.report-form > div > * {
+  margin: 0 5px;
+  height: 35px;
+}
 
-    .report-form {
-        background-color: #f5f5f5;
-        line-height: 60px;
-    }
+.report-form select {
+  width: 100px;
+}
 
-    .report-form > div > * {
-        margin: 0 5px;
-        height: 35px;
-    }
+.report-form input[name="name"] {
+  width: 200px;
+}
 
-    .report-form select {
-        width: 100px;
-    }
-
-    .report-form input[name=name] {
-        width: 200px;
-    }
-
-    .report-form input[name=captcha] {
-        width: 100px;
-    }
+.report-form input[name="captcha"] {
+  width: 100px;
+}
 </style>

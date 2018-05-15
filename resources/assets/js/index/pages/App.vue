@@ -1,68 +1,5 @@
 <template>
     <div>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">宏海网络</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse in" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <!--<li><a href="#">账号查询</a></li>-->
-                        <!--<li><a href="#">电商导航</a></li>-->
-                        <!--<li><a href="#">网络兼职</a></li>-->
-                        <!--<li><a href="#">电商干货</a></li>-->
-                        <!--<li><a href="#">电商服务</a></li>-->
-                        <!--<li><a href="#">关于我们</a></li>-->
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <template v-if="!user">
-                            <li><a href="javascript:" @click="login">登录</a></li>
-                            <li><a href="javascript:" @click="register">注册</a></li>
-                        </template>
-                        <template v-if="user">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-haspopup="true" aria-expanded="false">积分:{{user._profile.amount}}<span
-                                        class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:" @click="rechargeDialog">充值</a></li>
-                                    <li><a href="javascript:" @click="rechargeList">充值记录</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:"
-                                   @click="notificationList">通知
-                                <template v-if="unreadNotification.meta.total">
-                                    （未读{{unreadNotification.meta.total}}）
-                                </template>
-                            </a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-haspopup="true" aria-expanded="false">{{user.mobile}} <span
-                                        class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <!--<li><a href="#">Action</a></li>-->
-                                    <!--<li role="separator" class="divider"></li>-->
-                                    <li><a href="javascript:" @click="userModify">个人资料</a></li>
-                                    <li><a href="javascript:" @click="userMerchantModify">店铺资料</a></li>
-                                    <li><a href="javascript:" @click="doLogout">注销</a></li>
-                                </ul>
-                            </li>
-                        </template>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
         <pop-window></pop-window>
 
         <div v-if="user" class="modal fade recharge-dialog" tabindex="-1" role="dialog"
@@ -569,6 +506,69 @@
             </div>
         </div>
 
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">宏海网络</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse in" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <!--<li><a href="#">账号查询</a></li>-->
+                        <!--<li><a href="#">电商导航</a></li>-->
+                        <!--<li><a href="#">网络兼职</a></li>-->
+                        <!--<li><a href="#">电商干货</a></li>-->
+                        <!--<li><a href="#">电商服务</a></li>-->
+                        <!--<li><a href="#">关于我们</a></li>-->
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <template v-if="!user">
+                            <li><a href="javascript:" @click="login">登录</a></li>
+                            <li><a href="javascript:" @click="register">注册</a></li>
+                        </template>
+                        <template v-if="user">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-haspopup="true" aria-expanded="false">积分:{{user._profile.amount}}<span
+                                        class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:" @click="rechargeDialog">充值</a></li>
+                                    <li><a href="javascript:" @click="rechargeList">充值记录</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="javascript:"
+                                   @click="notificationList">通知
+                                <template v-if="unreadNotification.meta.total">
+                                    （未读{{unreadNotification.meta.total}}）
+                                </template>
+                            </a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-haspopup="true" aria-expanded="false">{{user.mobile}} <span
+                                        class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <!--<li><a href="#">Action</a></li>-->
+                                    <!--<li role="separator" class="divider"></li>-->
+                                    <li><a href="javascript:" @click="userModify">个人资料</a></li>
+                                    <li><a href="javascript:" @click="userMerchantModify">店铺资料</a></li>
+                                    <li><a href="javascript:" @click="doLogout">注销</a></li>
+                                </ul>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
         <div v-show="user" class="container" style="padding-top:51px">
 
             <div class="row hidden-xs hidden-sm ad">
@@ -588,33 +588,31 @@
             </div>
 
             <div class="row logo">
-                <div class="col-xs-6">
+                <div class="col-sm-12 col-md-6 hidden-xs hidden-sm">
                     <a href="">
                         <img src="/images/logo.jpg">
                     </a>
                 </div>
-                <div class="col-xs-6">
-                    <div class="service-qq">
-                        <ul>
-                            <li class="col-xs-12">QQ客服：</li>
-                            <li class="col-xs-6" v-for="(item, index) in page.service_qq" :key="index">{{item.name}}</li>
-                        </ul>
-                    </div>
-                    <div class="service-wx">
-                        <ul>
-                            <li>微信<br/>客服：</li>
-                            <li v-for="(item, index) in page.service_wx" :key="index">
-                                <img :src="item.name" alt="">
-                            </li>
-                        </ul>
-                    </div>
+                <div class="service-qq col-xs-6 col-md-3">
+                    <ul>
+                        <li class="col-xs-12">QQ客服：</li>
+                        <li class="col-xs-6" v-for="(item, index) in page.service_qq" :key="index">{{item.name}}</li>
+                    </ul>
+                </div>
+                <div class="service-wx col-xs-6 col-md-3">
+                    <ul>
+                        <li>微信<br/>客服：</li>
+                        <li v-for="(item, index) in page.service_wx" :key="index">
+                            <img :src="item.name" alt="">
+                        </li>
+                    </ul>
                 </div>
             </div>
 
             <div class="row old-nav">
                 <ul>
                     <a :href="item.url" v-for="(item, index) in page.menu" :key="index">
-                        <li>{{item.name}}</li>
+                        <li class="col-xs-4 col-sm-2 text-center">{{item.name}}</li>
                     </a>
                 </ul>
             </div>
@@ -655,337 +653,338 @@
 </template>
 
 <script>
-    import PopWindow from "../components/PopWindow";
-    import ArticleDetail from "./ArticleDetail";
-    import cityData from "../../city.json";
+import PopWindow from "../components/PopWindow";
+import ArticleDetail from "./ArticleDetail";
+import cityData from "../../city.json";
 
-    export default {
-        components: {PopWindow,ArticleDetail},
-        name: "app",
-        data: function () {
-            return {
-                smsForm: {},
-                smsText: "发送短信",
-                smsDisable: false,
-                smsTimer: 60,
-                smsHandle: null,
-                registerForm: {},
-                loginForm: {},
-                forgetPasswordForm: {},
-                rechargeForm: {mount: ""},
-                notificationItem: {data: {}},
-                userModifyForm: {_profile: {}},
-                provinces: Object.keys(cityData),
-                cities: [],
-                userMerchantForm: {}
-            };
-        },
-        computed: {
-            page: function () {
-                return this.$store.state.page;
-            },
-            user: function () {
-                return this.$store.state.user;
-            },
-            unreadNotification: function () {
-                return this.$store.state.unreadNotification;
-            },
-            notification: function () {
-                return this.$store.state.notification;
-            },
-            recharge: function () {
-                return this.$store.state.recharge;
-            }
-        },
-        created: function () {
-            let self = this;
-            this.$store.commit("unreadNotification", {
-                callback: function () {
-                    self.notificationList();
-                }
-            });
-        },
-        methods: {
-            initCities: function (province) {
-                this.cities = Object.keys(_.get(cityData, province, []));
-            },
-            provinceSelect: function (event) {
-                this.initCities(event.target.value);
-                this.userModifyForm._profile.city = this.cities[0];
-            },
-            doLogout: function () {
-                let self = this;
-                axios.get(api.userLogout).then(function (res) {
-                    self.$store.commit("user");
-                });
-            },
-            login: function () {
-                $(".modal").modal("hide");
-                $(".login-dialog").modal("show");
-                this.loginForm = {
-                    mobile: "",
-                    password: "",
-                    remember: true
-                };
-            },
-            doLogin: function () {
-                let self = this;
-                axios.post(api.userLogin, self.loginForm).then(function (res) {
-                    self.$message.success("成功");
-                    $(".modal").modal("hide");
-                    self.$store.commit("user");
-                });
-            },
-            register: function () {
-                $(".modal").modal("hide");
-                $(".register-dialog").modal("show");
-                this.registerForm = {
-                    mobile: "",
-                    password: "",
-                    inviter: "",
-                    code: "",
-                    remember: true
-                };
-                this.smsForm = this.registerForm;
-                this.smsInit();
-            },
-            doRegister: function () {
-                let self = this;
-                axios.post(api.userRegister, self.registerForm).then(function (res) {
-                    self.$message.success("成功");
-                    $(".modal").modal("hide");
-                    self.$store.commit("user");
-                });
-            },
-            forgetPassword: function () {
-                $(".modal").modal("hide");
-                $(".forget-password-dialog").modal("show");
-                this.forgetPasswordForm = {
-                    mobile: "",
-                    password: "",
-                    code: "",
-                    remember: true
-                };
-                this.smsForm = this.forgetPasswordForm;
-                this.smsInit();
-            },
-            doForgetPassword: function () {
-                let self = this;
-                axios
-                    .post(api.userForgetPassword, self.forgetPasswordForm)
-                    .then(function (res) {
-                        self.$message.success("成功");
-                        $(".modal").modal("hide");
-                        self.$store.commit("user");
-                    });
-            },
-            smsInit: function () {
-                clearInterval(this.smsHandle);
-                this.smsText = "发送短信";
-                this.smsTimer = 60;
-                this.smsDisable = false;
-            },
-            sendSms: function () {
-                let self = this;
-                axios
-                    .post(api.userSms, {mobile: self.smsForm.mobile})
-                    .then(function (res) {
-                        self.$message.success("短信发送成功，请耐心等候，如有疑问请联系客服");
-                        self.smsDisable = true;
-                        self.smsHandle = setInterval(function () {
-                            if (self.smsTimer > 0) {
-                                self.smsText = "还有" + self.smsTimer + "秒";
-                                self.smsTimer--;
-                            } else {
-                                self.smsInit();
-                            }
-                        }, 1000);
-                    });
-            },
-            notificationPaginate: function (page) {
-                this.$store.commit("notification", {page: page});
-            },
-            notificationList: function () {
-                $(".notification-dialog").modal("show");
-                this.$store.commit("notification");
-            },
-            notificationDetail: function (item) {
-                $(".notification-detail-dialog").modal("show");
-                this.notificationItem = item;
-
-                let self = this;
-                axios.post(api.userReadNotification, item).then(function (res) {
-                    self.$store.commit("notification");
-                    self.$store.commit("unreadNotification");
-                });
-            },
-            rechargeDialog: function () {
-                $(".recharge-dialog").modal("show");
-            },
-            doRecharge: function () {
-                $(".recharge-dialog").modal("hide");
-                let self = this;
-                let count = 5;
-                self.$store.commit("user");
-                let handle = setInterval(function () {
-                    if (count <= 0) {
-                        clearInterval(handle);
-                    } else {
-                        self.$store.commit("user");
-                        count--;
-                    }
-                }, 10000);
-            },
-            rechargeList: function () {
-                $(".recharge-list-dialog").modal("show");
-                this.$store.commit("recharge");
-            },
-            rechargePaginate: function () {
-            },
-            userModify: function () {
-                this.initCities(this.user._profile.province);
-                this.userModifyForm = _.cloneDeep(this.$store.state.user);
-                $(".user-modify-dialog").modal("show");
-            },
-            doUserModify: function () {
-                let self = this;
-                axios.post(api.userModify, self.userModifyForm).then(function (res) {
-                    self.$message.success("成功");
-                    self.$store.commit("user");
-                    $(".user-modify-dialog").modal("hide");
-                });
-            },
-            userMerchantModify: function () {
-                this.userMerchantForm = _.assign(
-                    {},
-                    _.cloneDeep(this.$store.state.user._merchant)
-                );
-                $(".user-merchant-modify-dialog").modal("show");
-            },
-            doUserMerchantModify: function () {
-                let self = this;
-                axios
-                    .post(api.userMerchantModify, self.userMerchantForm)
-                    .then(function (res) {
-                        self.$message.success("成功");
-                        self.$store.commit("user");
-                        $(".user-merchant-modify-dialog").modal("hide");
-                    });
-            }
-        }
+export default {
+  components: { PopWindow, ArticleDetail },
+  name: "app",
+  data: function() {
+    return {
+      smsForm: {},
+      smsText: "发送短信",
+      smsDisable: false,
+      smsTimer: 60,
+      smsHandle: null,
+      registerForm: {},
+      loginForm: {},
+      forgetPasswordForm: {},
+      rechargeForm: { mount: "" },
+      notificationItem: { data: {} },
+      userModifyForm: { _profile: {} },
+      provinces: Object.keys(cityData),
+      cities: [],
+      userMerchantForm: {}
     };
+  },
+  computed: {
+    page: function() {
+      return this.$store.state.page;
+    },
+    user: function() {
+      return this.$store.state.user;
+    },
+    unreadNotification: function() {
+      return this.$store.state.unreadNotification;
+    },
+    notification: function() {
+      return this.$store.state.notification;
+    },
+    recharge: function() {
+      return this.$store.state.recharge;
+    }
+  },
+  created: function() {
+    let self = this;
+    this.$store.commit("unreadNotification", {
+      callback: function() {
+        self.notificationList();
+      }
+    });
+  },
+  methods: {
+    initCities: function(province) {
+      this.cities = Object.keys(_.get(cityData, province, []));
+    },
+    provinceSelect: function(event) {
+      this.initCities(event.target.value);
+      this.userModifyForm._profile.city = this.cities[0];
+    },
+    doLogout: function() {
+      let self = this;
+      axios.get(api.userLogout).then(function(res) {
+        self.$store.commit("user");
+      });
+    },
+    login: function() {
+      $(".modal").modal("hide");
+      $(".login-dialog").modal("show");
+      this.loginForm = {
+        mobile: "",
+        password: "",
+        remember: true
+      };
+    },
+    doLogin: function() {
+      let self = this;
+      axios.post(api.userLogin, self.loginForm).then(function(res) {
+        self.$message.success("成功");
+        $(".modal").modal("hide");
+        self.$store.commit("user");
+      });
+    },
+    register: function() {
+      $(".modal").modal("hide");
+      $(".register-dialog").modal("show");
+      this.registerForm = {
+        mobile: "",
+        password: "",
+        inviter: "",
+        code: "",
+        remember: true
+      };
+      this.smsForm = this.registerForm;
+      this.smsInit();
+    },
+    doRegister: function() {
+      let self = this;
+      axios.post(api.userRegister, self.registerForm).then(function(res) {
+        self.$message.success("成功");
+        $(".modal").modal("hide");
+        self.$store.commit("user");
+      });
+    },
+    forgetPassword: function() {
+      $(".modal").modal("hide");
+      $(".forget-password-dialog").modal("show");
+      this.forgetPasswordForm = {
+        mobile: "",
+        password: "",
+        code: "",
+        remember: true
+      };
+      this.smsForm = this.forgetPasswordForm;
+      this.smsInit();
+    },
+    doForgetPassword: function() {
+      let self = this;
+      axios
+        .post(api.userForgetPassword, self.forgetPasswordForm)
+        .then(function(res) {
+          self.$message.success("成功");
+          $(".modal").modal("hide");
+          self.$store.commit("user");
+        });
+    },
+    smsInit: function() {
+      clearInterval(this.smsHandle);
+      this.smsText = "发送短信";
+      this.smsTimer = 60;
+      this.smsDisable = false;
+    },
+    sendSms: function() {
+      let self = this;
+      axios
+        .post(api.userSms, { mobile: self.smsForm.mobile })
+        .then(function(res) {
+          self.$message.success("短信发送成功，请耐心等候，如有疑问请联系客服");
+          self.smsDisable = true;
+          self.smsHandle = setInterval(function() {
+            if (self.smsTimer > 0) {
+              self.smsText = "还有" + self.smsTimer + "秒";
+              self.smsTimer--;
+            } else {
+              self.smsInit();
+            }
+          }, 1000);
+        });
+    },
+    notificationPaginate: function(page) {
+      this.$store.commit("notification", { page: page });
+    },
+    notificationList: function() {
+      $(".notification-dialog").modal("show");
+      this.$store.commit("notification");
+    },
+    notificationDetail: function(item) {
+      $(".notification-detail-dialog").modal("show");
+      this.notificationItem = item;
+
+      let self = this;
+      axios.post(api.userReadNotification, item).then(function(res) {
+        self.$store.commit("notification");
+        self.$store.commit("unreadNotification");
+      });
+    },
+    rechargeDialog: function() {
+      $(".recharge-dialog").modal("show");
+    },
+    doRecharge: function() {
+      $(".recharge-dialog").modal("hide");
+      let self = this;
+      let count = 5;
+      self.$store.commit("user");
+      let handle = setInterval(function() {
+        if (count <= 0) {
+          clearInterval(handle);
+        } else {
+          self.$store.commit("user");
+          count--;
+        }
+      }, 10000);
+    },
+    rechargeList: function() {
+      $(".recharge-list-dialog").modal("show");
+      this.$store.commit("recharge");
+    },
+    rechargePaginate: function() {},
+    userModify: function() {
+      this.initCities(this.user._profile.province);
+      this.userModifyForm = _.cloneDeep(this.$store.state.user);
+      $(".user-modify-dialog").modal("show");
+    },
+    doUserModify: function() {
+      let self = this;
+      axios.post(api.userModify, self.userModifyForm).then(function(res) {
+        self.$message.success("成功");
+        self.$store.commit("user");
+        $(".user-modify-dialog").modal("hide");
+      });
+    },
+    userMerchantModify: function() {
+      this.userMerchantForm = _.assign(
+        {},
+        _.cloneDeep(this.$store.state.user._merchant)
+      );
+      $(".user-merchant-modify-dialog").modal("show");
+    },
+    doUserMerchantModify: function() {
+      let self = this;
+      axios
+        .post(api.userMerchantModify, self.userMerchantForm)
+        .then(function(res) {
+          self.$message.success("成功");
+          self.$store.commit("user");
+          $(".user-merchant-modify-dialog").modal("hide");
+        });
+    }
+  }
+};
 </script>
 
 <style>
-    @media (min-width: 1200px) {
-        .container {
-            width: 970px;
-        }
-    }
+@media (min-width: 1200px) {
+  .container {
+    width: 970px;
+  }
+}
 
-    body {
-        background-color: #fff;
-        color: #222;
-    }
+/* @media (min-width: 0px){
+.navbar-right {
+    float: right !important;
+    margin-right: -15px;
+}
 
-    ul {
-        padding-left: 0;
-        margin-bottom: 0;
-    }
+@media (min-width: 0px){
+.navbar-nav {
+    float: left;
+    margin: 0;
+} */
 
-    li {
-        list-style: none;
-    }
+body {
+  background-color: #fff;
+  color: #222;
+}
 
-    .old-root {
-        margin: 0 auto;
-        width: 970px;
-        min-height: 400px;
-    }
+ul {
+  padding-left: 0;
+  margin-bottom: 0;
+}
 
-    th,
-    td {
-        text-align: center;
-    }
+li {
+  list-style: none;
+}
 
-    p {
-        margin-bottom: 0;
-    }
+.old-root {
+  margin: 0 auto;
+  width: 970px;
+  min-height: 400px;
+}
 
-    input {
-        line-height: normal;
-    }
+th,
+td {
+  text-align: center;
+}
 
-    a {
-        color: #222;
-    }
+p {
+  margin-bottom: 0;
+}
 
-    .row {
-        margin: 10px 0;
-    }
+input {
+  line-height: normal;
+}
 
-    .row > div {
-        padding: 0 5px;
-    }
+a {
+  color: #222;
+}
 
-    .ad img,
-    .logo img {
-        width: 100%;
-        height: 80px;
-    }
+.row {
+  margin: 10px 0;
+}
 
-    .old-nav {
-        background-color: #e6e6e6;
-        color: #505050;
-        line-height: 40px;
-        font-size: 16px;
-        font-weight: 600;
-    }
+.row > div {
+  padding: 0 5px;
+}
 
-    .old-nav li {
-        display: inline-block;
-        float: left;
-        padding: 0 35px;
-    }
+.ad img,
+.logo img {
+  width: 100%;
+  height: 80px;
+}
 
-    .old-nav li:hover {
-        background-color: #41a51d;
-        color: #fff;
-    }
+.old-nav {
+  background-color: #e6e6e6;
+  color: #505050;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: 600;
+}
 
-    .notice {
-        font-size: 16px;
-        font-weight: 600;
-        color: red;
-    }
+.old-nav li:hover {
+  background-color: #41a51d;
+  color: #fff;
+}
 
-    .service-qq {
-        float: right;
-        width: 210px;
-        color: green;
-        font-size: 16px;
-        font-weight: 600;
-    }
+.notice {
+  font-size: 16px;
+  font-weight: 600;
+  color: red;
+}
 
-    .service-wx {
-        float: right;
-        width: 250px;
-        color: green;
-        font-size: 16px;
-        font-weight: 600;
-    }
+.service-qq {
+  color: green;
+  font-size: 16px;
+  font-weight: 600;
+}
 
-    .service-wx li {
-        margin: 0 5px;
-        float: left;
-    }
+.service-wx {
+  color: green;
+  font-size: 16px;
+  font-weight: 600;
+}
 
-    .service-wx img {
-        height: 80px;
-        width: 80px;
-    }
+.service-wx li {
+  margin: 0 2px;
+  float: left;
+}
 
-    .copyright {
-        text-align: center;
-    }
+.service-wx img {
+  height: 80px;
+  width: 80px;
+}
+
+.copyright {
+  text-align: center;
+}
 </style>
