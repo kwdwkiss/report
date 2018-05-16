@@ -132,10 +132,7 @@ class UserController extends Controller
         }
 
         if ($inviterMobile && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $inviterMobile)) {
-            return [
-                'code' => -1,
-                'message' => '邀请人手机号码格式错误'
-            ];
+            throw new JsonException('邀请人手机号码格式错误');
         }
 
         //未使用，未过期的code
@@ -151,7 +148,13 @@ class UserController extends Controller
 
         $sms->update(['status' => 1]);
 
-        $user = null;
+        $user=User::where('mobile',$mobile)->first();
+        if($user){
+            $user->update([
+                'password'=>bcrypt($password)
+            ]);
+        }else{
+            $user = null;
         \DB::transaction(function () use ($mobile, $password, $inviterMobile, &$user) {
             $user = User::create([
                 'mobile' => $mobile,
@@ -198,6 +201,8 @@ class UserController extends Controller
                 'inviter' => $inviterMobile
             ]);
         });
+        }
+        
         \Auth::guard('user')->login($user, $remember);
 
         return [
