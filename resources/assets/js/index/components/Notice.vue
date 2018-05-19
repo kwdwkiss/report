@@ -1,5 +1,5 @@
 <template>
-    <div class="row notice">
+    <div class="row notice hidden-xs">
         <div>
             <span>公告：{{page.notice.title}}</span>
             <span><a :href="page.notice.moreUrl">更多</a></span>
@@ -10,8 +10,8 @@
 <script>
     export default {
         name: "Notice",
-        computed:{
-            page:function(){
+        computed: {
+            page: function () {
                 return this.$store.state.page;
             }
         }

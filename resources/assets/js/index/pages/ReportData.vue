@@ -1,30 +1,30 @@
 <template>
     <div class="row report-data">
         <div class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-                <th>账号类型</th>
-                <th>账号</th>
-                <th>举报类型</th>
-                <th class="hidden-xs">举报者IP</th>
-                <th class="hidden-xs">举报时间</th>
-                <th>详情</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="(item,index) in $store.state.page.last_4_report_data" :key="index">
-                <td>{{item.account_type_label}}</td>
-                <td>{{item.account_name}}</td>
-                <td>{{item.type_label}}</td>
-                <td class="hidden-xs">{{item.ip}}</td>
-                <td class="hidden-xs">{{item.created_at}}</td>
-                <td>
-                    <button class="btn btn-primary" @click="detail(item)">查看</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>账号类型</th>
+                    <th>账号</th>
+                    <th>举报类型</th>
+                    <th class="hidden-xs">举报者IP</th>
+                    <th class="hidden-xs">举报时间</th>
+                    <th>详情</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in $store.state.page.last_4_report_data" :key="index">
+                    <td>{{item.account_type_label}}</td>
+                    <td>{{item.account_name}}</td>
+                    <td>{{item.type_label}}</td>
+                    <td class="hidden-xs">{{item.ip}}</td>
+                    <td class="hidden-xs">{{item.created_at}}</td>
+                    <td>
+                        <button class="btn btn-primary" @click="detail(item)">查看</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="modal fade report-data-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -92,48 +92,45 @@
 </template>
 
 <script>
-export default {
-  name: "report-data",
-  data: function() {
-    return {
-      reportData: {}
+    export default {
+        name: "report-data",
+        data: function () {
+            return {
+                reportData: {}
+            };
+        },
+        computed: {
+            user: function () {
+                return this.$store.state.user;
+            }
+        },
+        methods: {
+            detail: function (item) {
+                this.reportData = item;
+            },
+        }
     };
-  },
-  computed: {
-    user: function() {
-      return this.$store.state.user;
-    }
-  },
-  methods: {
-    detail: function(item) {
-      this.reportData = item;
-      $(".report-data-dialog").modal("show");
-    },
-    close: function() {
-      $(".report-data-dialog").modal("hide");
-    }
-  }
-};
 </script>
 
 <style scoped>
-@media (min-width: 768px) {
-  .report-data {
-    font-size: 16px;
-  }
-}
-@media (max-width: 768px) {
-  .report-data {
-    font-size: 12px;
-  }
-}
+    @media (min-width: 768px) {
+        .report-data {
+            font-size: 16px;
+        }
+    }
 
-.report-data-dialog .form-group > div {
-  padding-top: 7px;
-}
+    @media (max-width: 768px) {
+        .report-data {
+            font-size: 12px;
+        }
+    }
 
-th,
-td {
-  text-align: center;
-}
+    .report-data-dialog .form-group > div {
+        padding-top: 7px;
+    }
+
+    th,
+    td {
+        text-align: center;
+    }
 </style>

@@ -4,6 +4,14 @@
 
         <div class="container" style="padding-top:51px">
 
+            <top-ad></top-ad>
+
+            <my-logo></my-logo>
+
+            <my-notice></my-notice>
+
+            <!--<my-breadcrumb></my-breadcrumb>-->
+
             <router-view></router-view>
 
             <hr>
@@ -26,12 +34,6 @@
     @media (min-width: 1200px) {
         .container {
             width: 970px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        body {
-            font-size: 12px;
         }
     }
 

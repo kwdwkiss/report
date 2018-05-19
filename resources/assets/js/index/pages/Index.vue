@@ -1,11 +1,5 @@
 <template>
     <div>
-        <top-ad></top-ad>
-
-        <my-logo></my-logo>
-
-        <my-notice></my-notice>
-
         <div class="row hidden-xs dashboard">
             <div class="col-sm-4">
                 <p>网站会员：<span class="text-success">{{page.auth_member_num}}</span></p>
@@ -50,7 +44,8 @@
                                 <div class="col-sm-9">
                                     <select v-model="reportParams.account_type" name="account_type"
                                             class="form-control">
-                                        <option v-for="(item,index) in $store.state.taxonomy.account_type" :value="item.id" :key="index">
+                                        <option v-for="(item,index) in $store.state.taxonomy.account_type"
+                                                :value="item.id" :key="index">
                                             {{item.name}}
                                         </option>
                                     </select>
@@ -67,7 +62,8 @@
                                 <label class="col-sm-3 control-label">投诉类型</label>
                                 <div class="col-sm-9">
                                     <select v-model="reportParams.report_type" name="report_type" class="form-control">
-                                        <option v-for="(item,index) in $store.state.taxonomy.report_type" :value="item.id" :key="index">
+                                        <option v-for="(item,index) in $store.state.taxonomy.report_type"
+                                                :value="item.id" :key="index">
                                             {{item.name}}
                                         </option>
                                     </select>
@@ -124,123 +120,123 @@
 </template>
 
 <script>
-export default {
-  name: "index",
-  computed: {
-    page: function() {
-      return this.$store.state.page;
-    },
-    user: function() {
-      return this.$store.state.user;
-    }
-  },
-  data: function() {
-    return {
-      searchParams: {},
-      reportParams: {},
-      captcha_src: api.captcha + "?" + Date.parse(new Date())
-    };
-  },
-  created: function() {
-    this.initSearchParams();
-    this.initReportParams();
-  },
-  methods: {
-    initSearchParams: function() {
-      this.searchParams = { name: "" };
-    },
-    initReportParams: function() {
-      this.reportParams = {
-        account_type: this.$store.state.taxonomy.account_type[0].id,
-        report_type: this.$store.state.taxonomy.report_type[0].id,
-        name: "",
-        image: {
-          attachment: {}
+    export default {
+        name: "index",
+        computed: {
+            page: function () {
+                return this.$store.state.page;
+            },
+            user: function () {
+                return this.$store.state.user;
+            }
         },
-        description: "",
-        captcha: ""
-      };
-      this.doCaptcha();
-    },
-    doCaptcha: function() {
-      this.captcha_src = api.captcha + "?" + Date.parse(new Date());
-    },
-    doSearch: function() {
-      let self = this;
-      let account_type = this.searchParams.account_type;
-      let name = this.searchParams.name;
-      this.$store.commit("searchResult", {
-        account_type: account_type,
-        name: name,
-        callback: function() {
-          self.$store.commit("user");
-          self.$router.push("/search");
+        data: function () {
+            return {
+                searchParams: {},
+                reportParams: {},
+                captcha_src: api.captcha + "?" + Date.parse(new Date())
+            };
+        },
+        created: function () {
+            this.initSearchParams();
+            this.initReportParams();
+        },
+        methods: {
+            initSearchParams: function () {
+                this.searchParams = {name: ""};
+            },
+            initReportParams: function () {
+                this.reportParams = {
+                    account_type: this.$store.state.taxonomy.account_type[0].id,
+                    report_type: this.$store.state.taxonomy.report_type[0].id,
+                    name: "",
+                    image: {
+                        attachment: {}
+                    },
+                    description: "",
+                    captcha: ""
+                };
+                this.doCaptcha();
+            },
+            doCaptcha: function () {
+                this.captcha_src = api.captcha + "?" + Date.parse(new Date());
+            },
+            doSearch: function () {
+                let self = this;
+                let account_type = this.searchParams.account_type;
+                let name = this.searchParams.name;
+                this.$store.commit("searchResult", {
+                    account_type: account_type,
+                    name: name,
+                    callback: function () {
+                        self.$store.commit("user");
+                        self.$router.push("/search");
+                    }
+                });
+            },
+            report: function () {
+                $("#report-dialog").modal("show");
+            },
+            doReport: function () {
+                let self = this;
+                axios
+                    .post(api.indexReport, self.reportParams)
+                    .then(function () {
+                        self.initReportParams();
+                        self.$message.success("成功");
+                        $("#report-dialog").modal("hide");
+                    })
+                    .catch(function () {
+                        self.doCaptcha();
+                    });
+            },
+            uploadImage: function (item) {
+                let inputFile = $(".input-file");
+                inputFile.data("target", item).click();
+            },
+            uploadChange: function () {
+                let self = this;
+                let formData = new FormData();
+                let inputFile = $(".input-file");
+                formData.append("file", inputFile.get(0).files[0]);
+                axios
+                    .post(api.uploadOss, formData, {
+                        headers: {"Content-Type": "multipart/form-data"}
+                    })
+                    .then(function (res) {
+                        self.$message.success("成功");
+                        inputFile.data("target")["attachment"] = res.data.data;
+                        inputFile.val("");
+                    })
+                    .catch(function () {
+                        inputFile.val("");
+                    });
+            }
         }
-      });
-    },
-    report: function() {
-      $("#report-dialog").modal("show");
-    },
-    doReport: function() {
-      let self = this;
-      axios
-        .post(api.indexReport, self.reportParams)
-        .then(function() {
-          self.initReportParams();
-          self.$message.success("成功");
-          $("#report-dialog").modal("hide");
-        })
-        .catch(function() {
-          self.doCaptcha();
-        });
-    },
-    uploadImage: function(item) {
-      let inputFile = $(".input-file");
-      inputFile.data("target", item).click();
-    },
-    uploadChange: function() {
-      let self = this;
-      let formData = new FormData();
-      let inputFile = $(".input-file");
-      formData.append("file", inputFile.get(0).files[0]);
-      axios
-        .post(api.uploadOss, formData, {
-          headers: { "Content-Type": "multipart/form-data" }
-        })
-        .then(function(res) {
-          self.$message.success("成功");
-          inputFile.data("target")["attachment"] = res.data.data;
-          inputFile.val("");
-        })
-        .catch(function() {
-          inputFile.val("");
-        });
-    }
-  }
-};
+    };
 </script>
 
 <style scoped>
-.dashboard {
-  padding: 10px 0;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-}
+    .dashboard {
+        padding: 10px 0;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+    }
 
-.search > div {
-  margin: 10px 0;
-}
+    .search > div {
+        margin: 10px 0;
+    }
 
-.search {
-  text-align: center;
-}
+    .search {
+        text-align: center;
+    }
 
-.search label {
-  margin: 0;
-  line-height: 36px;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-}
+    .search label {
+        margin: 0;
+        line-height: 36px;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+    }
 </style>

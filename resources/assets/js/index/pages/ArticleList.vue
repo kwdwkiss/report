@@ -1,11 +1,5 @@
 <template>
     <div>
-        <top-ad></top-ad>
-
-        <my-logo></my-logo>
-
-        <my-notice></my-notice>
-
         <div class="article">
             <div class="row title"><h3>{{taxonomy}}</h3></div>
 
@@ -22,9 +16,9 @@
 
             <div class="row">
                 <el-pagination layout="prev, pager, next"
-                            :total="dataList.meta.total"
-                            :page-size="dataList.meta.per_page"
-                            @current-change="paginate"></el-pagination>
+                               :total="dataList.meta.total"
+                               :page-size="dataList.meta.per_page"
+                               @current-change="paginate"></el-pagination>
             </div>
         </div>
     </div>
@@ -45,11 +39,6 @@
         },
         mounted: function () {
             this.loadData();
-        },
-        watch: {
-            '$route'(to, from) {
-                this.loadData();
-            }
         },
         methods: {
             loadTaxonomy: function () {

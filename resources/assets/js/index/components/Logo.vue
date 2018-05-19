@@ -21,48 +21,48 @@
                 </li>
             </ul>
         </div>
-    </div>    
+    </div>
 </template>
 
 <script>
-export default {
-  name: "Logo",
-  computed: {
-    user: function() {
-      return this.$store.state.user;
-    },
-    page: function() {
-      return this.$store.state.page;
-    }
-  }
-};
+    export default {
+        name: "Logo",
+        computed: {
+            user: function () {
+                return this.$store.state.user;
+            },
+            page: function () {
+                return this.$store.state.page;
+            }
+        }
+    };
 </script>
 
 <style scoped>
-.logo img {
-  width: 100%;
-  height: 80px;
-}
+    .logo img {
+        width: 100%;
+        height: 80px;
+    }
 
-.service-qq {
-  color: green;
-  font-size: 16px;
-  font-weight: 600;
-}
+    .service-qq {
+        color: green;
+        font-size: 16px;
+        font-weight: 600;
+    }
 
-.service-wx {
-  color: green;
-  font-size: 16px;
-  font-weight: 600;
-}
+    .service-wx {
+        color: green;
+        font-size: 16px;
+        font-weight: 600;
+    }
 
-.service-wx li {
-  margin: 0 2px;
-  float: left;
-}
+    .service-wx li {
+        margin: 0 2px;
+        float: left;
+    }
 
-.service-wx img {
-  height: 80px;
-  width: 80px;
-}
+    .service-wx img {
+        height: 80px;
+        width: 80px;
+    }
 </style>

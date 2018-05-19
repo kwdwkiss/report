@@ -1,17 +1,9 @@
 <template>
-    <div>
-        <top-ad></top-ad>
-
-        <my-logo></my-logo>
-
-        <my-notice></my-notice>
-
-        <div class="article">
-            <h2 class="title">{{articleData.title}}</h2>
-            <div class="article-bar">{{articleData.updated_at.split(' ')[0]}}</div>
-            <hr>
-            <div v-html="articleData.content"></div>
-        </div>
+    <div class="article">
+        <h2 class="title">{{articleData.title}}</h2>
+        <div class="article-bar">{{articleData.updated_at.split(' ')[0]}}</div>
+        <hr>
+        <div v-html="articleData.content"></div>
     </div>
 </template>
 
@@ -30,6 +22,10 @@
             let self = this;
             axios.get(api.indexArticleShow, {params: {id: this.id}}).then(function (res) {
                 self.articleData = res.data.data;
+                // self.$store.commit('breadcrumb', {
+                //     articleType: self.articleData.type,
+                //     articleTypeLabel: self.articleData.type_label,
+                // });
             });
         }
     }

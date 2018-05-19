@@ -11,8 +11,8 @@
 <script>
     export default {
         name: "MiddleAd",
-        computed:{
-            page:function(){
+        computed: {
+            page: function () {
                 return this.$store.state.page;
             }
         }
