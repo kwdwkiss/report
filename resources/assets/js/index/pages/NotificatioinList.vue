@@ -86,6 +86,7 @@
             },
             detail: function (item) {
                 this.notificationItem = item;
+                $('.notification-detail-dialog').modal('show');
 
                 let self = this;
                 axios.post(api.userReadNotification, item).then(function (res) {

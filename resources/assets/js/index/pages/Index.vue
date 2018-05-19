@@ -2,13 +2,13 @@
     <div>
         <div class="row hidden-xs dashboard">
             <div class="col-sm-4">
-                <p>网站会员：<span class="text-success">{{page.auth_member_num}}</span></p>
-            </div>
-            <div class="col-sm-4">
                 <p>恶意账号：<span class="text-warning">{{page.report_num}}</span></p>
             </div>
             <div class="col-sm-4">
                 <p>最新举报：<span class="text-danger">{{page.last_24_report_num}}</span></p>
+            </div>
+            <div class="col-sm-4">
+                <p>网站会员：<span class="text-success">{{page.auth_member_num}}</span></p>
             </div>
         </div>
 
@@ -17,7 +17,8 @@
                 <label><a class="text-primary" href="/#/">账号查询</a></label>
             </div>
             <div class="col-xs-12 col-md-6">
-                <input class="form-control" v-model="searchParams.name" name="name" type="text" placeholder="请输入账号">
+                <input class="form-control" v-model="searchParams.name" name="name" type="text"
+                       placeholder="请输入QQ、旺旺、微信、IS等各类账号">
             </div>
             <div class="col-xs-6 col-md-2">
                 <button @click="doSearch" class="form-control btn btn-success">查询</button>
@@ -166,13 +167,12 @@
                 let account_type = this.searchParams.account_type;
                 let name = this.searchParams.name;
                 this.$store.commit("searchResult", {
-                    account_type: account_type,
-                    name: name,
+                    account_type: account_type, name: name,
                     callback: function () {
                         self.$store.commit("user");
-                        self.$router.push("/search");
                     }
                 });
+                self.$router.push({name: 'searchResult'});
             },
             report: function () {
                 $("#report-dialog").modal("show");

@@ -80,7 +80,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="button" class="btn btn-primary" @click="close">关闭</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
                                 </div>
                             </div>
                         </form>
@@ -107,6 +107,7 @@
         methods: {
             detail: function (item) {
                 this.reportData = item;
+                $('.report-data-dialog').modal('show');
             },
         }
     };

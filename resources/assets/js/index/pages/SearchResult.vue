@@ -1,14 +1,17 @@
 <template>
     <div class="row search-data">
         <div>
-            <div v-if="accounts.length==0">
-                <h3 class="col-xs-12 text-primary">
-                    查询结果：无<span class="text-warning">{{name}}</span>账号信息，如果确认是恶意号码，请投诉举报！
-                </h3>
+            <div class="row">
+                <div class="col-md-12 text-warning">查询结果：</div>
+            </div>
+            <div class="row" v-if="accounts.length==0">
+                <p class="col-md-12 text-primary">
+                    无<span class="text-warning">{{name}}</span>账号信息，如果确认是恶意号码，请投诉举报！
+                </p>
             </div>
             <div v-if="accounts.length>0" class="row" v-for="(item,index) in accounts" :key="index">
-                <div v-if="item.status==103" class="text-success">
-                    <p class="col-sm-6">{{item.type_label}}账号:{{item.name}}</p>
+                <div v-if="[103,105,106].indexOf(item.status)>-1" class="text-success">
+                    <p class="col-sm-6">{{item.type_label}}账号:<span class="text-warning">{{item.name}}</span></p>
                     <p class="col-sm-6 text-primary">认证:{{item.status_label}}</p>
                     <p class="col-sm-6">认证时间:{{item.created_at}}</p>
                     <p class="col-sm-6">建议合作金额:{{item.auth_cash}}</p>
@@ -20,6 +23,16 @@
                     <p class="col-sm-6">{{item.type_label}}账号：{{item.name}}</p>
                     <p class="col-sm-6">已被多数用户举报为恶意号码，请用户谨慎合作，危险！</p>
                     <p class="col-sm-6">备注:{{item.remark}}</p>
+                </div>
+                <div v-else-if="item.status==101">
+                    <p class="col-sm-6">
+                        {{item.type_label}}账号:<span class="text-warning">{{item.name}}</span>无记录
+                    </p>
+                </div>
+                <div v-else-if="item.status==102&&account_reports.length<1">
+                    <p class="col-sm-6">
+                        {{item.type_label}}账号:<span class="text-warning">{{item.name}}</span>无记录
+                    </p>
                 </div>
             </div>
             <div class="table-responsive">
@@ -50,7 +63,7 @@
             </div>
         </div>
 
-        <div class="modal fade search-result-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        <div class="modal fade search-detail-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -103,7 +116,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="button" class="btn btn-primary" @click="close">关闭</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
                                 </div>
                             </div>
                         </form>
@@ -136,6 +149,7 @@
         methods: {
             detail: function (item) {
                 this.reportData = item;
+                $('.search-detail-dialog').modal('show');
             },
         }
     };

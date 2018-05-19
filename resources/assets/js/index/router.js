@@ -14,7 +14,7 @@ const router = window.router = new VueRouter({
                     path: '', component: require('./pages/Index'),
                     children: [
                         {name: 'index', path: '', component: require('./pages/ReportData')},
-                        {name: 'searchResult', path: 'search', component: require('./pages/SearchResult')},
+                        {name: 'searchResult', path: 'search/result', component: require('./pages/SearchResult')},
                     ]
                 },
                 {name: 'register', path: 'register', component: require('./pages/Register')},
