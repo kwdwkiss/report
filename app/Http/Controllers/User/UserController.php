@@ -83,7 +83,7 @@ class UserController extends Controller
         }
 
         $user = null;
-        \DB::transaction(function (&$user, $mobile, $password, $code) {
+        \DB::transaction(function () use (&$user, $mobile, $password, $code) {
             //未使用，未过期的code
             $sms = Sms::where('mobile', $mobile)
                 ->where('status', 0)
