@@ -53,6 +53,8 @@ Vue.component('top-ad', require('./components/TopAd'));
 Vue.component('middle-ad', require('./components/MiddleAd'));
 Vue.component('bottom-ad', require('./components/BottomAd'));
 
+require('jquery-qrcode');
+
 window.app = new Vue({
     el: '#app',
     template: '<router-view></router-view>',

@@ -44,6 +44,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="collapse-hide" href="javascript:" @click="recharge">充值</a></li>
                                     <li><a class="collapse-hide" href="javascript:" @click="rechargeList">充值记录</a></li>
+                                    <li><a class="collapse-hide" href="javascript:" @click="inviterLink">推广赚积分</a></li>
                                 </ul>
                             </li>
                             <li><a class="collapse-hide" href="javascript:" @click="notificationList">通知
@@ -137,6 +138,9 @@
             userMerchant: function () {
                 this.$router.push({name: 'userMerchant'});
             },
+            inviterLink: function () {
+                this.$router.push({name: 'inviterLink'});
+            }
         }
     };
 </script>

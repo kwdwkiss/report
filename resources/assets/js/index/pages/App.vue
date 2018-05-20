@@ -37,6 +37,12 @@
         }
     }
 
+    @media (max-width: 768px) {
+        .el-message {
+            min-width: 300px;
+        }
+    }
+
     body {
         background-color: #fff;
         color: #222;

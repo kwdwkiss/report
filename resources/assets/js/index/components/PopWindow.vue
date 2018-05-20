@@ -1,4 +1,20 @@
 <template>
+    <div class="modal fade pop-window-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">{{notification.title}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{notification.content}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -8,37 +24,25 @@
         name: "pop-window",
         data: function () {
             return {
-                data: {
+                notification: {
                     title: '',
                     content: ''
                 }
             };
         },
         created: function () {
-            this.loadData();
-        },
-        watch: {
-            data: function (data) {
-                let cookie = VueCookie.get('popWindow');
-                if (!cookie && data.title !== '' && data.content !== '') {
-                    this.$alert(data.content, data.title, {
-                        confirmButtonText: '确定',
-                        dangerouslyUseHTMLString: true,
-                        callback: action => {
-                        }
-                    });
-                    VueCookie.set('popWindow', true, 1);
-                }
-            }
-        },
-        methods: {
-            loadData: function () {
-                let self = this;
+            let self = this;
+            let cookie = VueCookie.get('popWindow');
+            if (!cookie) {
                 axios.get(api.indexPopWindow).then(function (res) {
-                    self.data = res.data.data;
-                })
+                    self.notification = res.data.data;
+                    if (self.notification.title !== '' && self.notification.content !== '') {
+                        $('.pop-window-dialog').modal('show');
+                        VueCookie.set('popWindow', true, 1);
+                    }
+                });
             }
-        }
+        },
     }
 </script>
 

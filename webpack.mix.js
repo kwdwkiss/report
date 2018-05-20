@@ -13,16 +13,21 @@ let mix = require('laravel-mix');
 mix
     .webpackConfig({
         module: {
-            rules: [{
-                test: require.resolve('jquery'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'jQuery'
-                }, {
-                    loader: 'expose-loader',
-                    options: '$'
-                }]
-            }]
+            rules: [
+                {
+                    test: require.resolve('jquery'),
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: 'jQuery'
+                        },
+                        {
+                            loader: 'expose-loader',
+                            options: '$'
+                        },
+                    ],
+                }
+            ]
         }
     })
 

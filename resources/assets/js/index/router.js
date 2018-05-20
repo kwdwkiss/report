@@ -28,6 +28,7 @@ const router = window.router = new VueRouter({
 
                 {name: 'recharge', path: 'recharge', component: require('./pages/Recharge')},
                 {name: 'rechargeList', path: 'recharge/list', component: require('./pages/RechargeList')},
+                {name: 'inviterLink', path: 'inviter/link', component: require('./pages/InviterLink')},
 
                 {name: 'notificationList', path: 'notification/list', component: require('./pages/NotificatioinList')},
             ]
@@ -39,7 +40,6 @@ router.beforeEach((to, from, next) => {
     if (store.state.user) {
         switch (to.name) {
             case 'login':
-            case 'register':
             case'forgetPassword':
                 next({name: 'index'});
                 break;
