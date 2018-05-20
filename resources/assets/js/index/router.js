@@ -10,13 +10,9 @@ const router = window.router = new VueRouter({
             path: '/',
             component: require('./pages/App'),
             children: [
-                {
-                    path: '', component: require('./pages/Index'),
-                    children: [
-                        {name: 'index', path: '', component: require('./pages/ReportData')},
-                        {name: 'searchResult', path: 'search/result', component: require('./pages/SearchResult')},
-                    ]
-                },
+                {name: 'index', path: '', component: require('./pages/Index')},
+                {path: 'search', redirect: '/'},
+
                 {name: 'register', path: 'register', component: require('./pages/Register')},
                 {name: 'login', path: 'login', component: require('./pages/Login')},
                 {name: 'forgetPassword', path: 'forget/password', component: require('./pages/ForgetPassword')},
