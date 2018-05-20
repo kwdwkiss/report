@@ -10,7 +10,7 @@
                     <h4 class="modal-title">{{notification.title}}</h4>
                 </div>
                 <div class="modal-body">
-                    <p>{{notification.content}}</p>
+                    <p v-html="notification.content"></p>
                 </div>
             </div>
         </div>
