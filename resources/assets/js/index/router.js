@@ -34,24 +34,16 @@ const router = window.router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (store.state.user) {
-        switch (to.name) {
-            case 'login':
-            case'forgetPassword':
-                next({name: 'index'});
-                break;
-            default:
-                next();
-                break;
+        if (['login', 'forgetPassword'].indexOf(to.name) > -1) {
+            next({name: 'index'});
+        } else {
+            next();
         }
     } else {
-        switch (to.name) {
-            case 'index':
-            case 'searchResult':
-                next({'name': 'articleDetail', params: {id: laravel.index_blog_article}});
-                break;
-            default:
-                next();
-                break;
+        if (['index', 'recharge', 'rechargeList', 'inviterLink'].indexOf(to.name) > -1) {
+            next({'name': 'articleDetail', params: {id: laravel.index_blog_article}});
+        } else {
+            next();
         }
     }
 });

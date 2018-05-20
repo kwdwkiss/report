@@ -33,7 +33,6 @@ mix
 
     .js('resources/assets/js/admin/app.js', 'public/js/admin/')
     .js('resources/assets/js/index/app.js', 'public/js/index/')
-    .js('resources/assets/js/mobile/app.js', 'public/js/mobile/')
     // .extract(['element-ui', 'element-ui/lib/theme-chalk/index.css'], 'js/element')
     // .extract(['lodash', 'jquery', 'bootstrap-sass', 'axios', 'vue', 'vue-router'], 'js/vendor.js')
 

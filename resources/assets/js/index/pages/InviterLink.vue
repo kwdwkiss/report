@@ -23,7 +23,8 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">推广二维码</label>
                         <div class="col-sm-9">
-                            <div class="link-qrcode"></div>
+                            <img class="qrcode-img" :src="qrcode" alt="">
+                            <div class="hidden link-qrcode"></div>
                         </div>
                     </div>
                 </form>
@@ -40,7 +41,7 @@
         data: function () {
             return {
                 url: '',
-                qrcode_url: ''
+                qrcode: '',
             }
         },
         computed: {
@@ -57,7 +58,8 @@
             });
 
             this.url = location.origin + '/#/register?inviter=' + this.user.mobile;
-            $('.link-qrcode').qrcode({width: 128, height: 128, text: this.url});
+            let canvas = $('.link-qrcode').qrcode({width: 128, height: 128, text: this.url}).find('canvas');
+            this.qrcode = canvas.get(0).toDataURL('image/jpg');
         }
     }
 </script>
