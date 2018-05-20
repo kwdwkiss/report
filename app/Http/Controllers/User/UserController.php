@@ -91,7 +91,7 @@ class UserController extends Controller
                 ->where('expired_at', '>', Carbon::now())
                 ->first();
             if (!$sms) {
-                new JsonException('验证码错误');
+                throw new JsonException('验证码错误');
             }
 
             $sms->update(['status' => 1]);
