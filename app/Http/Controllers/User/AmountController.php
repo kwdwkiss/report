@@ -8,7 +8,9 @@
 
 namespace App\Http\Controllers\User;
 
+use App\AmountBill;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AmountBillResource;
 
 class AmountController extends Controller
 {
@@ -16,6 +18,10 @@ class AmountController extends Controller
     {
         $user = \Auth::guard('user')->user();
 
+        $amountBill = AmountBill::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate();
 
+        return AmountBillResource::collection($amountBill);
     }
 }
