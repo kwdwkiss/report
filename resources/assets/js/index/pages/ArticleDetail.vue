@@ -19,14 +19,20 @@
         },
         props: ['id'],
         created: function () {
-            let self = this;
-            axios.get(api.indexArticleShow, {params: {id: this.id}}).then(function (res) {
-                self.articleData = res.data.data;
-                // self.$store.commit('breadcrumb', {
-                //     articleType: self.articleData.type,
-                //     articleTypeLabel: self.articleData.type_label,
-                // });
-            });
+            this.loadData();
+        },
+        watch: {
+            '$route'(to, from) {
+                this.loadData();
+            }
+        },
+        methods: {
+            loadData: function () {
+                let self = this;
+                axios.get(api.indexArticleShow, {params: {id: this.id}}).then(function (res) {
+                    self.articleData = res.data.data;
+                });
+            }
         }
     }
 </script>

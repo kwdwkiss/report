@@ -30,30 +30,35 @@
         data: function () {
             return {
                 taxonomy: '',
-                articleCateList: [],
                 dataList: {
                     data: [],
                     meta: {}
-                }
+                },
+                search: {}
             }
         },
-        mounted: function () {
+        computed: {
+            articleType: function () {
+                return this.$store.state.taxonomy.article_type;
+            }
+        },
+        created: function () {
             this.loadData();
         },
+        watch: {
+            '$route'(to, from) {
+                this.loadData();
+            }
+        },
         methods: {
-            loadTaxonomy: function () {
-                let id = this.$route.params.id;
-                for (let i in store.state.taxonomy.article_type) {
-                    if (store.state.taxonomy.article_type[i].id == id) {
-                        this.taxonomy = store.state.taxonomy.article_type[i].name;
-                        break;
-                    }
-                }
-            },
             loadData: function () {
                 let self = this;
-                self.loadTaxonomy();
-                axios.get(api.indexArticleList, {params: {id: this.$route.params.id}}).then(function (res) {
+                let id = this.$route.params.id;
+                this.taxonomy = _.find(this.articleType, function (item) {
+                    return item.id == id;
+                }).name;
+                this.search.id = id;
+                axios.get(api.indexArticleList, {params: this.search}).then(function (res) {
                     self.dataList = res.data;
                 });
             },

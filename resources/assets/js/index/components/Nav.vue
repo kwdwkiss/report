@@ -17,7 +17,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="my-nav">
                     <ul class="nav navbar-nav">
-                        <li><a data-toggle="collapse" data-target="#my-nav" href="javascript:" @click="index">账号查询</a>
+                        <li><a class="collapse-hide" href="javascript:" @click="index">账号查询</a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -25,17 +25,15 @@
                                     class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li v-if="item.name" v-for="(item,index) in page.menu" :key="index">
-                                    <a data-toggle="collapse" data-target="#my-nav" :href="item.url">{{item.name}}</a>
+                                    <a class="collapse-hide" :href="item.url">{{item.name}}</a>
                                 </li>
                             </ul>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <template v-if="!user">
-                            <li><a data-toggle="collapse" data-target="#my-nav" href="javascript:" @click="login">登录</a>
-                            </li>
-                            <li><a data-toggle="collapse" data-target="#my-nav" href="javascript:"
-                                   @click="register">注册</a></li>
+                            <li><a class="collapse-hide" href="javascript:" @click="login">登录</a></li>
+                            <li><a class="collapse-hide" href="javascript:" @click="register">注册</a></li>
                         </template>
                         <template v-if="user">
                             <li class="dropdown">
@@ -44,16 +42,12 @@
                                     积分:{{user._profile.amount}}<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a data-toggle="collapse" data-target="#my-nav" href="javascript:"
-                                           @click="recharge">充值</a></li>
-                                    <li><a data-toggle="collapse" data-target="#my-nav" href="javascript:"
-                                           @click="rechargeList">充值记录</a></li>
-                                    <li><a data-toggle="collapse" data-target="#my-nav" href="javascript:"
-                                           @click="inviterLink">推广赚积分</a></li>
+                                    <li><a class="collapse-hide" href="javascript:" @click="recharge">充值</a></li>
+                                    <li><a class="collapse-hide" href="javascript:" @click="rechargeList">充值记录</a></li>
+                                    <li><a class="collapse-hide" href="javascript:" @click="inviterLink">推广赚积分</a></li>
                                 </ul>
                             </li>
-                            <li><a data-toggle="collapse" data-target="#my-nav" href="javascript:"
-                                   @click="notificationList">通知
+                            <li><a class="collapse-hide" href="javascript:" @click="notificationList">通知
                                 <template v-if="unreadNotification.meta.total">
                                     （未读{{unreadNotification.meta.total}}）
                                 </template>
@@ -64,12 +58,9 @@
                                         class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <!--<li role="separator" class="divider"></li>-->
-                                    <li><a data-toggle="collapse" data-target="#my-nav" href="javascript:"
-                                           @click="userModify">用户资料</a></li>
-                                    <li><a data-toggle="collapse" data-target="#my-nav" href="javascript:"
-                                           @click="userMerchant">店铺资料</a></li>
-                                    <li><a data-toggle="collapse" data-target="#my-nav" href="javascript:"
-                                           @click="doLogout">退出</a></li>
+                                    <li><a class="collapse-hide" href="javascript:" @click="userModify">用户资料</a></li>
+                                    <li><a class="collapse-hide" href="javascript:" @click="userMerchant">店铺资料</a></li>
+                                    <li><a class="collapse-hide" href="javascript:" @click="doLogout">退出</a></li>
                                 </ul>
                             </li>
                         </template>
@@ -105,6 +96,11 @@
                 callback: function () {
                     self.notificationList();
                 }
+            });
+        },
+        mounted: function () {
+            $('.navbar-collapse').on('click', '.collapse-hide', function () {
+                $('.navbar-collapse').collapse('hide');
             });
         },
         methods: {
