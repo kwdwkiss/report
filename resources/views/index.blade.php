@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <meta name="keywords" content="宏海网络 恶意账号 查询工具 查询骗子"/>
-    <meta name="description" content="宏海网络 恶意账号 查询工具 查询骗子"/>
+    <meta name="keywords" content="{{\App\Config::get('site.seo_keywords')}}"/>
+    <meta name="description" content="{{\App\Config::get('site.seo_description')}}"/>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -19,22 +19,22 @@
 
     <!--[if lt IE 9]>
     <script>
-        if(window.attachEvent){
-            window.attachEvent('onload', function(){
+        if (window.attachEvent) {
+            window.attachEvent('onload', function () {
                 var lowestSupportedIEVersion = 9;
-                if(window.LOWEST_IE_VERSION != undefined){
+                if (window.LOWEST_IE_VERSION != undefined) {
                     lowestSupportedIEVersion = window.LOWEST_IE_VERSION;
                 }
                 var el = document.createElement('div'),
                         elStyle = el.style,
                         docBody = document.getElementsByTagName('body')[0],
                         linkStyle = 'color:#06F;text-decoration: underline;';
-                el.innerHTML =	'尊敬的用户：<br />'+
-                        '使用宏海网络需要安装Internet Explorer更新版本的浏览器，'+
-                        '请<a href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie" style="'+linkStyle+'" target="_blank">下载安装IE' + lowestSupportedIEVersion + '</a>（或更新）。'+
-                        '也可以在其他浏览器，'+
-                        '如<a href="https://www.baidu.com/s?ie=UTF-8&wd=chrome" style="'+linkStyle+'" target="_blank">Chrome</a>'+
-                        '或<a href="http://www.firefox.com.cn/download/" style="'+linkStyle+'" target="_blank">Firefox</a>火狐中打开控制台。';
+                el.innerHTML = '尊敬的用户：<br />' +
+                        '使用宏海网络需要安装Internet Explorer更新版本的浏览器，' +
+                        '请<a href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie" style="' + linkStyle + '" target="_blank">下载安装IE' + lowestSupportedIEVersion + '</a>（或更新）。' +
+                        '也可以在其他浏览器，' +
+                        '如<a href="https://www.baidu.com/s?ie=UTF-8&wd=chrome" style="' + linkStyle + '" target="_blank">Chrome</a>' +
+                        '或<a href="http://www.firefox.com.cn/download/" style="' + linkStyle + '" target="_blank">Firefox</a>火狐中打开控制台。';
                 elStyle.width = '720px';
                 elStyle.color = '#000';
                 elStyle.fontSize = '14px';

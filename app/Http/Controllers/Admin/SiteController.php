@@ -17,7 +17,9 @@ class SiteController extends Controller
         'domain',
         'name',
         'close_register',
-        'index_blog_article'
+        'index_blog_article',
+        'seo_keywords',
+        'seo_description'
     ];
 
     public function getBasic()
