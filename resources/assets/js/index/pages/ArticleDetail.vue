@@ -1,9 +1,9 @@
 <template>
     <div class="article">
-        <h2 class="title">{{articleData.title}}</h2>
-        <div class="article-bar">{{articleData.updated_at.split(' ')[0]}}</div>
+        <h2 class="text-center">{{articleData.title}}</h2>
+        <div class="text-center">{{articleData.updated_at.split(' ')[0]}}</div>
         <hr>
-        <div v-html="articleData.content"></div>
+        <div class="article-content" v-html="articleData.content"></div>
     </div>
 </template>
 
@@ -49,8 +49,9 @@
     hr {
         margin: 10px auto;
     }
-
-    .title, .article-bar {
-        text-align: center;
+</style>
+<style>
+    .article-content img {
+        max-width: 100%;
     }
 </style>
