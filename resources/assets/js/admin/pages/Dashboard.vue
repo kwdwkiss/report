@@ -5,7 +5,8 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-2">
-                        今日：{{statement.userRegister.today}}
+                        <p>今日：{{statement.userRegister.today}}</p>
+                        <p>被邀请：{{statement.userRegister.todayInviter}}</p>
                     </div>
                     <div class="col-md-2">
                         昨日：{{statement.userRegister.yesterday}}

@@ -92,6 +92,13 @@ class User extends Authenticatable
                 ->where('created_at', '>', Carbon::today())
                 ->count();
 
+            $todayInviter = User::query()
+                ->whereHas('_profile', function ($query) {
+                    $query->where('inviter', '!=', '');
+                })
+                ->where('created_at', '>', Carbon::today())
+                ->count();
+            
             $yesterday = static::query()
                 ->where('created_at', '>', Carbon::yesterday())
                 ->where('created_at', '<', Carbon::today())
@@ -106,7 +113,7 @@ class User extends Authenticatable
                 ->where('created_at', '<', Carbon::now()->startOfMonth())
                 ->count();
 
-            return compact('total', 'today', 'yesterday', 'month', 'lastMonth');
+            return compact('total', 'today', 'yesterday', 'month', 'lastMonth','todayInviter');
         });
 
         return $data;

@@ -54,7 +54,13 @@ class Test extends Command
      */
     public function handle()
     {
-        $result = floor(111 * 0.1);
+        $todayUserIds = \App\User::query()
+            ->whereHas('_profile', function ($query) {
+                $query->where('inviter', '!=', '');
+            })
+            ->where('created_at', '>', Carbon::today())
+            ->count();
+        $result = $todayUserIds;
         var_dump($result);
         $temp = '';
     }
