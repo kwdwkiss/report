@@ -12,8 +12,8 @@
                             <th style="min-width: 75px">积分</th>
                             <!--<th class="hidden-xs" style="min-width: 75px">用户积分</th>-->
                             <th class="hidden-xs" style="min-width: 75px">业务类型</th>
-                            <th style="min-width: 200px">内容</th>
-                            <th class="hidden-xs" style="min-width: 170px">创建时间</th>
+                            <th class="hidden-xs" style="min-width: 200px">内容</th>
+                            <th style="min-width: 170px">创建时间</th>
                             <th style="min-width: 75px">详情</th>
                         </tr>
                         </thead>
