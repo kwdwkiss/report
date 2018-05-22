@@ -54,7 +54,7 @@ class Test extends Command
      */
     public function handle()
     {
-        $result = SearchBill::settleDay(Carbon::yesterday()->toDateString());
+        $result = floor(111 * 0.1);
         var_dump($result);
         $temp = '';
     }

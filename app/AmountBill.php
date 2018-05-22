@@ -18,6 +18,7 @@ class AmountBill extends Model
     public static $bizTypes = [
         0 => '系统发放',
         1 => '充值',
+        2 => '充值提成',
         101 => '查询结算',
     ];
 

@@ -52,35 +52,7 @@ class RechargeController
         }
 
         try {
-            \DB::transaction(function () use ($user, $money, $tno) {
-                $userProfile = $user->_profile;
-                if (!$userProfile) {
-                    throw new \Exception('user_profile null');
-                }
-
-                $rechargeBill = RechargeBill::create([
-                    'user_id' => $user->id,
-                    'bill_no' => RechargeBill::generateBillNo($user->id),
-                    'pay_type' => 1,
-                    'pay_no' => $tno,
-                    'money' => $money,
-                    'status' => 1
-                ]);
-
-                $amount = $rechargeBill->money * 100;
-                $userProfile->increment('amount', $amount);
-
-                AmountBill::create([
-                    'user_id' => $user->id,
-                    'bill_no' => AmountBill::generateBillNo($user->id),
-                    'type' => 0,
-                    'amount' => $money,
-                    'user_amount' => $userProfile->amount,
-                    'biz_type' => 1,
-                    'biz_id' => $rechargeBill->id,
-                    'description' => "充值${money}元"
-                ]);
-            });
+            RechargeBill::recharge($user, $money, $tno, 1);
             return 1;
         } catch (\Exception $e) {
             return $e->getMessage();
