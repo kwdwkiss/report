@@ -41,8 +41,6 @@
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <a class="btn btn-primary" @click="doForgetPassword">确认</a>
-                                &nbsp;
-                                <a class="btn btn-success" @click="login">登录</a>
                             </div>
                         </div>
                     </form>
@@ -80,9 +78,6 @@
                     });
                 });
             },
-            login: function () {
-                this.$router.push({name: 'login'});
-            }
         }
     }
 </script>

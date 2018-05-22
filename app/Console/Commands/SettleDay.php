@@ -2,33 +2,18 @@
 
 namespace App\Console\Commands;
 
-use Aliyun\Sms;
-use App\Account;
-use App\AccountReport;
-use App\Admin;
-use App\AmountBill;
-use App\Attachment;
-use App\Config;
-use App\Jobs\SendNotification;
-use App\Message;
-use App\Notifications\SiteMessage;
-use App\RechargeBill;
 use App\SearchBill;
-use App\Tag;
-use App\Taxonomy;
-use App\UserProfile;
 use Carbon\Carbon;
-use Illuminate\Bus\Dispatcher;
 use Illuminate\Console\Command;
 
-class Test extends Command
+class SettleDay extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'test';
+    protected $signature = 'settle_day {date?}';
 
     /**
      * The console command description.
@@ -54,8 +39,8 @@ class Test extends Command
      */
     public function handle()
     {
-        $result = SearchBill::settleDay(Carbon::yesterday()->toDateString());
-        var_dump($result);
-        $temp = '';
+        $date = $this->argument('date');
+
+        SearchBill::settleDay($date);
     }
 }

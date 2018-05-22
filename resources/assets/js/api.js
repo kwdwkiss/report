@@ -86,4 +86,6 @@ module.exports = {
     userReadNotification: '/user/read-notification',
 
     userRechargeList: '/user/recharge/index',
+
+    userAmountList: '/user/amount/index',
 };

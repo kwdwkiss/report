@@ -164,11 +164,18 @@ class UserController extends Controller
 
                 //新用户注册发放200积分
                 $amount = 200;
+
+                $userProfile = UserProfile::create([
+                    'user_id' => $user->id,
+                    'amount' => $amount,
+                ]);
+
                 AmountBill::create([
                     'user_id' => $user->id,
                     'bill_no' => AmountBill::generateBillNo($user->id),
                     'type' => 0,
                     'amount' => $amount,
+                    'user_amount' => $userProfile->amount,
                     'biz_type' => 0,
                     'biz_id' => 1,
                     'description' => "新用户注册赠送${amount}积分"
@@ -187,29 +194,19 @@ class UserController extends Controller
                         'bill_no' => AmountBill::generateBillNo($inviterUser->id),
                         'type' => 0,
                         'amount' => $inviterAmount,
+                        'user_amount' => $inviterUser->_profile->amount,
                         'biz_type' => 0,
                         'biz_id' => 2,
                         'description' => "邀请新用户注册赠送${inviterAmount}积分"
                     ]);
-                } else {
-                    $inviterMobile = '';//邀请人不存在，置空
+                    $userProfile->update(['inviter' => $inviterMobile]);
                 }
-
-                UserProfile::create([
-                    'user_id' => $user->id,
-                    'amount' => $amount,
-                    'inviter' => $inviterMobile
-                ]);
-
             }
         });
 
         \Auth::guard('user')->login($user, $remember);
 
-        return [
-            'code' => 0,
-            'message' => '成功'
-        ];
+        return [];
     }
 
     public function modify()

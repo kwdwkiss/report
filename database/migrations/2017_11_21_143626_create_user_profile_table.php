@@ -17,6 +17,7 @@ class CreateUserProfileTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unique();
             $table->integer('amount');//账户余额，1元=100
+            $table->integer('cash_amount');//可提现额度，1元=100
             $table->string('name');
             $table->integer('age');
             $table->tinyInteger('gender');//0-未知 1-男 2-女

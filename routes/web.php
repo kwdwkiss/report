@@ -44,6 +44,7 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::get('/user/notification', 'User\NotificationController@notificationList');
     Route::get('/user/unread-notification', 'User\NotificationController@unreadNotificationList');
     Route::get('/user/recharge/index', 'User\RechargeController@index');
+    Route::get('/user/amount/index', 'User\AmountController@index');
 
     Route::post('/user/read-notification', 'User\NotificationController@readNotification');
     Route::post('/user/modify', 'User\UserController@modify');

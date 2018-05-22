@@ -31,8 +31,6 @@
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <a class="btn btn-success" @click="doLogin">登录</a>
-                                &nbsp;
-                                <a class="btn btn-primary" @click="register">注册</a>
                             </div>
                         </div>
                     </form>
@@ -73,9 +71,6 @@
             forgetPassword: function () {
                 this.$router.push({name: 'forgetPassword'});
             },
-            register: function () {
-                this.$router.push({name: 'register'});
-            }
         }
     }
 </script>

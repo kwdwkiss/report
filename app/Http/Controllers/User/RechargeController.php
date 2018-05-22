@@ -74,6 +74,8 @@ class RechargeController
                     'user_id' => $user->id,
                     'bill_no' => AmountBill::generateBillNo($user->id),
                     'type' => 0,
+                    'amount' => $money,
+                    'user_amount' => $userProfile->amount,
                     'biz_type' => 1,
                     'biz_id' => $rechargeBill->id,
                     'description' => "充值${money}元"

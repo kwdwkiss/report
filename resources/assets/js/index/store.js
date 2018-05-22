@@ -17,6 +17,7 @@ const store = window.store = new Vuex.Store({
         notification: {data: [], meta: {}, links: {}},
         unreadNotification: {data: [], meta: {}, links: {}},
         recharge: {data: [], meta: {}, links: {}},
+        amount: {data: [], meta: {}, links: {}},
     },
     mutations: {
         breadcrumb(state, payload) {
@@ -65,7 +66,12 @@ const store = window.store = new Vuex.Store({
             axios.get(api.userRechargeList, {params: payload}).then(function (res) {
                 state.recharge = res.data;
             });
-        }
+        },
+        amount(state, payload) {
+            axios.get(api.userAmountList, {params: payload}).then(function (res) {
+                state.amount = res.data;
+            });
+        },
     }
 });
 

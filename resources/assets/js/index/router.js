@@ -24,6 +24,7 @@ const router = window.router = new VueRouter({
 
                 {name: 'recharge', path: 'recharge', component: require('./pages/Recharge')},
                 {name: 'rechargeList', path: 'recharge/list', component: require('./pages/RechargeList')},
+                {name: 'amountList', path: 'amount/list', component: require('./pages/AmountList')},
                 {name: 'inviterLink', path: 'inviter/link', component: require('./pages/InviterLink')},
 
                 {name: 'notificationList', path: 'notification/list', component: require('./pages/NotificatioinList')},
@@ -40,7 +41,13 @@ router.beforeEach((to, from, next) => {
             next();
         }
     } else {
-        if (['index', 'recharge', 'rechargeList', 'inviterLink'].indexOf(to.name) > -1) {
+        if ([
+            'index',
+            'recharge',
+            'rechargeList',
+            'amountList',
+            'inviterLink',
+        ].indexOf(to.name) > -1) {
             next({'name': 'articleDetail', params: {id: laravel.index_blog_article}});
         } else {
             next();

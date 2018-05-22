@@ -17,7 +17,9 @@ class ArticleController extends Controller
     public function list()
     {
         $id = request('id');
-        $query = Article::query()->orderBy('created_at', 'desc');
+        $query = Article::query()->select([
+            'id', 'type', 'title', 'remark', 'created_at', 'updated_at'
+        ])->orderBy('created_at', 'desc');
         if ($id) {
             $query->where('type', $id);
         }

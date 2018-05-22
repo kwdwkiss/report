@@ -44,6 +44,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="collapse-hide" href="javascript:" @click="recharge">充值</a></li>
                                     <li><a class="collapse-hide" href="javascript:" @click="rechargeList">充值记录</a></li>
+                                    <li><a class="collapse-hide" href="javascript:" @click="amountList">积分记录</a></li>
                                     <li><a class="collapse-hide" href="javascript:" @click="inviterLink">推广赚积分</a></li>
                                 </ul>
                             </li>
@@ -128,6 +129,9 @@
             },
             rechargeList: function () {
                 this.$router.push({name: 'rechargeList'});
+            },
+            amountList: function () {
+                this.$router.push({name: 'amountList'});
             },
             recharge: function () {
                 this.$router.push({name: 'recharge'});

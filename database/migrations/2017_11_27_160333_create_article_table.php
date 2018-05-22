@@ -23,6 +23,7 @@ class CreateArticleTable extends Migration
             $table->timestamps();
 
             $table->index('title');
+            $table->index('type');
             $table->index('created_at');
             $table->index('updated_at');
         });

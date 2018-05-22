@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('statics')->everyTenMinutes();
+        $schedule->command('settle_day')->dailyAt('01:30');
     }
 
     /**
