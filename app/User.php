@@ -86,38 +86,38 @@ class User extends Authenticatable
     public static function statement()
     {
         $data = \Cache::remember('statement.user.register', 10, function () {
-            $total = static::query()->count();
+            $total = User::query()->count();
 
-            $today = static::query()
-                ->where('created_at', '>', Carbon::today())
+            $today = User::query()
+                ->whereDate('created_at', Carbon::today()->toDateString())
                 ->count();
 
             $todayInviter = User::query()
                 ->whereHas('_profile', function ($query) {
                     $query->where('inviter', '!=', '');
                 })
-                ->where('created_at', '>', Carbon::today())
+                ->whereDate('created_at', Carbon::today()->toDateString())
                 ->count();
 
             $yesterday = static::query()
-                ->where('created_at', '>', Carbon::yesterday())
-                ->where('created_at', '<', Carbon::today())
+                ->whereDate('created_at', Carbon::yesterday()->toDateString())
                 ->count();
 
             $yesterdayInviter = User::query()
                 ->whereHas('_profile', function ($query) {
                     $query->where('inviter', '!=', '');
                 })
-                ->where('created_at', '>', Carbon::today())
+                ->whereDate('created_at', Carbon::yesterday()->toDateString())
                 ->count();
 
-            $month = static::query()
-                ->where('created_at', '>', Carbon::now()->startOfMonth())
+            $month = User::query()
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->month)
                 ->count();
 
-            $lastMonth = static::query()
-                ->where('created_at', '>', Carbon::now()->subMonths(1)->startOfMonth())
-                ->where('created_at', '<', Carbon::now()->startOfMonth())
+            $lastMonth = User::query()
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
                 ->count();
 
             return compact('total', 'today', 'yesterday', 'month', 'lastMonth',

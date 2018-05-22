@@ -54,13 +54,10 @@ class Test extends Command
      */
     public function handle()
     {
-        $todayUserIds = \App\User::query()
-            ->whereHas('_profile', function ($query) {
-                $query->where('inviter', '!=', '');
-            })
-            ->where('created_at', '>', Carbon::today())
-            ->count();
-        $result = $todayUserIds;
+        $query = \App\User::query()
+            ->whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonths(1)->month);
+        $result = $query->count();
         var_dump($result);
         $temp = '';
     }
