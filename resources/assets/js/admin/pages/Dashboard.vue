@@ -9,7 +9,8 @@
                         <p>被邀请：{{statement.userRegister.todayInviter}}</p>
                     </div>
                     <div class="col-md-2">
-                        昨日：{{statement.userRegister.yesterday}}
+                        <p>昨日：{{statement.userRegister.yesterday}}</p>
+                        <p>被邀请：{{statement.userRegister.yesterdayInviter}}</p>
                     </div>
                     <div class="col-md-2">
                         本月：{{statement.userRegister.month}}
