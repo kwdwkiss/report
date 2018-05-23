@@ -1,10 +1,8 @@
-require('../bootstrap');
-
-import './element-ui'
-
+import '../bootstrap'
 import store from './store'
-
 import router from './router'
+import './element-ui'
+import 'jquery-qrcode'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -52,8 +50,6 @@ Vue.component('my-sms', require('./components/Sms'));
 Vue.component('top-ad', require('./components/TopAd'));
 Vue.component('middle-ad', require('./components/MiddleAd'));
 Vue.component('bottom-ad', require('./components/BottomAd'));
-
-require('jquery-qrcode');
 
 window.app = new Vue({
     el: '#app',

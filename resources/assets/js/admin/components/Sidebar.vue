@@ -57,6 +57,10 @@
                         path: '/recharge',
                     },
                     {
+                        title: '积分记录',
+                        path: '/amount-bill/list',
+                    },
+                    {
                         title: '首页设置',
                         path: '/site/index-page',
                     },

@@ -54,11 +54,14 @@ class Test extends Command
      */
     public function handle()
     {
-        $query = \App\User::query()
-            ->whereYear('created_at', Carbon::now()->year)
-            ->whereMonth('created_at', Carbon::now()->subMonths(1)->month);
-        $result = $query->count();
-        var_dump($result);
+        \DB::enableQueryLog();
+        $subQuery = RechargeBill::query()
+            ->whereIn('user_id', [1])
+            ->groupBy('user_id')
+            ->havingRaw('count(*)=1');
+        $subSql = $subQuery->toSql();
+        $result = \DB::table(\DB::raw("($subSql) as a"))->mergeBindings($subQuery->getQuery())->count();
+        dd(\DB::getQueryLog());
         $temp = '';
     }
 }

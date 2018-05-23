@@ -112,4 +112,6 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
 
     Route::get('/admin/recharge/list', 'Admin\RechargeController@list');
     Route::post('/admin/recharge/create', 'Admin\RechargeController@create');
+
+    Route::get('/admin/amount-bill/list', 'Admin\AmountController@index');
 });

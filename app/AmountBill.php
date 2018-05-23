@@ -33,4 +33,9 @@ class AmountBill extends Model
         $userId = substr($userId, -4);
         return date('ymdHis', time()) . str_pad($userId, 4, '0', STR_PAD_LEFT);
     }
+
+    public function _user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class RechargeBill extends Model
 {
@@ -26,24 +27,37 @@ class RechargeBill extends Model
     {
         $data = \Cache::remember('statement.recharge.bill', 10, function () {
             $today = static::query()
-                ->where('created_at', '>', Carbon::today())
+                ->whereDate('created_at', Carbon::today()->toDateString())
                 ->sum('money');
 
+            $todayUserIds = static::query()
+                ->select('user_id')
+                ->whereDate('created_at', Carbon::today()->toDateString())
+                ->get()->pluck('user_id')->toArray();
+            $subQuery = static::query()
+                ->whereIn('user_id', $todayUserIds)
+                ->groupBy('user_id')
+                ->havingRaw('count(*)=1');
+            $todayOnce = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))->mergeBindings($subQuery->getQuery())->count();
+
             $yesterday = static::query()
-                ->where('created_at', '>', Carbon::yesterday())
-                ->where('created_at', '<', Carbon::today())
+                ->whereDate('created_at', Carbon::yesterday()->toDateString())
                 ->sum('money');
 
             $month = static::query()
-                ->where('created_at', '>', Carbon::now()->startOfMonth())
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->month)
                 ->sum('money');
 
             $lastMonth = static::query()
-                ->where('created_at', '>', Carbon::now()->subMonths(1)->startOfMonth())
-                ->where('created_at', '<', Carbon::now()->startOfMonth())
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
                 ->sum('money');
 
-            return compact('today', 'yesterday', 'month', 'lastMonth');
+            return compact(
+                'today', 'yesterday', 'month', 'lastMonth',
+                'todayOnce'
+            );
         });
 
         return $data;

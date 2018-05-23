@@ -70,7 +70,8 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-3">
-                        今日：{{statement.rechargeBill.today}}
+                        <p>今日：{{statement.rechargeBill.today}}</p>
+                        <p>首充：{{statement.rechargeBill.todayOnce}}</p>
                     </div>
                     <div class="col-md-3">
                         昨日：{{statement.rechargeBill.yesterday}}

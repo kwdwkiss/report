@@ -7,7 +7,7 @@ import {
 } from 'element-ui'
 
 Vue.component('Message', Message);
-Vue.prototype.$message = Message
+Vue.prototype.$message = Message;
 
 Vue.component(Pagination.name, Pagination);
 
