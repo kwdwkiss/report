@@ -15,7 +15,7 @@
                     :picker-options="datePickerOptions">
             </el-date-picker>
 
-            <el-button type="primary" @click="loadData">搜索</el-button>
+            <el-button type="primary" @click="doSearch">搜索</el-button>
             <el-button type="warning" @click="reset">重置</el-button>
 
             <el-pagination layout="prev, pager, next"
@@ -59,18 +59,28 @@
                 search: {},
             }
         },
+        computed: {
+            location: function () {
+
+            }
+        },
         created: function () {
-            this.loadData();
+            this.search = this.$route.query;
+            this.doSearch();
         },
         watch: {
             '$route'(to, from) {
-                this.loadData();
+                this.search = this.$route.query;
+                this.doSearch();
             }
         },
         methods: {
+            doSearch: function () {
+                this.search.page = null;
+                this.loadData();
+            },
             reset: function () {
                 this.search = {};
-                location.href = location.href.replace(/\?.*/, '');
                 this.loadData();
             },
             paginate: function (page) {
@@ -79,7 +89,6 @@
             },
             loadData: function () {
                 let self = this;
-                this.search = _.assign(this.search, this.$route.query);
                 axios.get(self.apiList, {params: self.search}).then(function (res) {
                     self.dataList = res.data;
                 });

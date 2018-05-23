@@ -22,7 +22,7 @@ class AmountController extends Controller
 
         $query = AmountBill::query()
             ->with('_user')
-            ->orderBy('created_at', 'desc');
+            ->orderBy('id', 'desc');
 
         if (!is_null($mobile)) {
             $query->whereHas('_user', function ($query) use ($mobile) {
