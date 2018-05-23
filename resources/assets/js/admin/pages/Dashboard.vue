@@ -6,11 +6,11 @@
                 <div class="row">
                     <div class="col-md-2">
                         <p>今日：{{statement.userRegister.today}}</p>
-                        <p>被邀请：{{statement.userRegister.todayInviter}}</p>
+                        <p>邀请：{{statement.userRegister.todayInviter}}</p>
                     </div>
                     <div class="col-md-2">
                         <p>昨日：{{statement.userRegister.yesterday}}</p>
-                        <p>被邀请：{{statement.userRegister.yesterdayInviter}}</p>
+                        <p>邀请：{{statement.userRegister.yesterdayInviter}}</p>
                     </div>
                     <div class="col-md-2">
                         本月：{{statement.userRegister.month}}

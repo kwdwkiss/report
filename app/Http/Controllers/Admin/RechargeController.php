@@ -48,32 +48,29 @@ class RechargeController extends Controller
     public function create()
     {
         \DB::transaction(function () {
-            $input = json_decode(request()->getContent(), true);
-            foreach ($input as $item) {
-                $pay_type = array_get($item, 'pay_type');
-                $mobile = array_get($item, 'mobile');
-                $pay_no = array_get($item, 'pay_no');
-                $money = array_get($item, 'money');
+            $pay_type = request('pay_type');
+            $mobile = request('mobile');
+            $pay_no = request('pay_no');
+            $money = request('money');
 
-                if (!in_array($pay_type, [1, 2])) {
-                    throw new JsonException('支付类型错误');
-                }
-
-                $user = User::where('mobile', $mobile)->first();
-                if (!$user) {
-                    throw new JsonException('用户不存在');
-                }
-
-                if (is_null($pay_no)) {
-                    throw new JsonException('外部订单号不为空');
-                }
-
-                if (is_null($money)) {
-                    throw new JsonException('金额不为空');
-                }
-
-                RechargeBill::recharge($user, $money, $pay_no, $pay_type);
+            if (!in_array($pay_type, [1, 2])) {
+                throw new JsonException('支付类型错误');
             }
+
+            $user = User::where('mobile', $mobile)->first();
+            if (!$user) {
+                throw new JsonException('用户不存在');
+            }
+
+            if (is_null($pay_no)) {
+                throw new JsonException('外部订单号不为空');
+            }
+
+            if (is_null($money)) {
+                throw new JsonException('金额不为空');
+            }
+
+            RechargeBill::recharge($user, $money, $pay_no, $pay_type);
         });
 
         return [];

@@ -38,11 +38,11 @@
                     // },
                     {
                         title: '文章管理',
-                        path: '/article',
+                        path: '/article/list',
                     },
                     {
                         title: '用户资料',
-                        path: '/user',
+                        path: '/user/list',
                     },
                     {
                         title: '账号信息',
@@ -54,7 +54,7 @@
                     },
                     {
                         title: '充值记录',
-                        path: '/recharge',
+                        path: '/recharge/list',
                     },
                     {
                         title: '积分记录',

@@ -86,10 +86,10 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/tag/delete', 'Admin\TagController@delete');
 
     Route::get('/admin/user/list', 'Admin\UserController@list');
+    Route::get('/admin/user/show', 'Admin\UserController@show');
     Route::post('/admin/user/create', 'Admin\UserController@create');
     Route::post('/admin/user/update', 'Admin\UserController@update');
     Route::post('/admin/user/delete', 'Admin\UserController@delete');
-    Route::post('/admin/user/merchant/modify', 'Admin\UserController@merchantModify');
 
     Route::get('/admin/account/list', 'Admin\AccountController@list');
     Route::post('/admin/account/create', 'Admin\AccountController@create');
@@ -102,6 +102,7 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/account-report/delete', 'Admin\AccountReportController@delete');
 
     Route::get('/admin/article/list', 'Admin\ArticleController@list');
+    Route::get('/admin/article/show', 'Admin\ArticleController@show');
     Route::post('/admin/article/create', 'Admin\ArticleController@create');
     Route::post('/admin/article/update', 'Admin\ArticleController@update');
     Route::post('/admin/article/delete', 'Admin\ArticleController@delete');

@@ -34,37 +34,32 @@ class ArticleController extends Controller
         return ArticleResource::collection($query->paginate());
     }
 
+    public function show()
+    {
+        $article = Article::findOrFail(request('id'));
+
+        return new ArticleResource($article);
+    }
+
     public function create()
     {
         \DB::transaction(function () {
-            $input = json_decode(request()->getContent(), true);
-            foreach ($input as $item) {
-                $type = array_get($item, 'type');
-                $title = array_get($item, 'title');
-                $remark = array_get($item, 'remark');
-                $content = array_get($item, 'content');
+            $type = request('type');
+            $title = request('title');
+            $remark = request('remark');
+            $content = request('content');
 
-                $article = new Article();
-
-                if (!is_null($type)) {
-                    Taxonomy::where('pid', Taxonomy::ARTICLE_TYPE)->findOrFail($type);
-                    $article->type = $type;
-                } else {
-                    throw new JsonException('文章类型不能为空');
-                }
-                if (!is_null($title)) {
-                    $article->title = $title;
-                } else {
-                    throw new JsonException('文章标题不能为空');
-                }
-                if (!is_null($remark)) {
-                    $article->remark = $remark;
-                }
-                if (!is_null($content)) {
-                    $article->content = $content;
-                }
-                $article->save();
+            Taxonomy::where('pid', Taxonomy::ARTICLE_TYPE)->findOrFail($type);
+            if (!$title) {
+                throw new JsonException('文章标题不能为空');
             }
+
+            Article::create([
+                'type' => $type,
+                'title' => $title,
+                'content' => $content,
+                'remark' => $remark
+            ]);
         });
 
         return [];
@@ -73,34 +68,26 @@ class ArticleController extends Controller
     public function update()
     {
         \DB::transaction(function () {
-            $input = json_decode(request()->getContent(), true);
-            foreach ($input as $item) {
-                $type = array_get($item, 'type');
-                $title = array_get($item, 'title');
-                $remark = array_get($item, 'remark');
-                $content = array_get($item, 'content');
-                $display = array_get($item, 'display');
+            $type = request('type');
+            $title = request('title');
+            $remark = request('remark');
+            $content = request('content');
+            $display = request('display');
 
-                $article = Article::findOrFail(array_get($item, 'id'));
+            $article = Article::findOrFail(request('id'));
 
-                if (!is_null($type)) {
-                    Taxonomy::where('pid', Taxonomy::ARTICLE_TYPE)->findOrFail($type);
-                    $article->type = $type;
-                }
-                if (!is_null($title)) {
-                    $article->title = $title;
-                }
-                if (!is_null($remark)) {
-                    $article->remark = $remark;
-                }
-                if (!is_null($content)) {
-                    $article->content = $content;
-                }
-                if (!is_null($display)) {
-                    $article->display = $display;
-                }
-                $article->save();
+            Taxonomy::where('pid', Taxonomy::ARTICLE_TYPE)->findOrFail($type);
+            if (!$title) {
+                throw new JsonException('文章标题不能为空');
             }
+
+            $article->update([
+                'type' => $type,
+                'title' => $title,
+                'content' => $content,
+                'remark' => $remark,
+                'display' => $display
+            ]);
         });
 
         return [];

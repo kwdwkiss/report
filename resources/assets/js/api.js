@@ -27,10 +27,10 @@ module.exports = {
     tagDelete: '/admin/tag/delete',
 
     userList: '/admin/user/list',
+    userShow: '/admin/user/show',
     userCreate: '/admin/user/create',
     userUpdate: '/admin/user/update',
     userDelete: '/admin/user/delete',
-    adminUserMerchantModify: '/admin/user/merchant/modify',
 
     accountList: '/admin/account/list',
     accountCreate: '/admin/account/create',
@@ -43,6 +43,7 @@ module.exports = {
     accountReportDelete: '/admin/account-report/delete',
 
     articleList: '/admin/article/list',
+    articleShow: '/admin/article/show',
     articleCreate: '/admin/article/create',
     articleUpdate: '/admin/article/update',
     articleDelete: '/admin/article/delete',
