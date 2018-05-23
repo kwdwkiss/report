@@ -55,6 +55,7 @@ module.exports = {
     rechargeCreate: '/admin/recharge/create',
 
     amountBillList: '/admin/amount-bill/list',
+    searchBillList: '/admin/search-bill/list',
 
     //>>>>>>>>>>index
     taxonomyAllData: '/taxonomy/all/data',

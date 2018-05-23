@@ -21,6 +21,7 @@ const router = new VueRouter({
                 {path: 'account', component: require('./pages/Account')},
 
                 {path: 'amount-bill/list', component: require('./pages/AmountBill')},
+                {path: 'search-bill/list', component: require('./pages/SearchBill')},
 
                 {path: 'site/index-page', component: require('./pages/IndexPage')},
                 {path: 'site/pop-window', component: require('./pages/PopWindow')},

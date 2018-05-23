@@ -32,10 +32,10 @@
                         title: '分类',
                         path: '/taxonomy',
                     },
-                    {
-                        title: '标签',
-                        path: '/tag',
-                    },
+                    // {
+                    //     title: '标签',
+                    //     path: '/tag',
+                    // },
                     {
                         title: '文章管理',
                         path: '/article',
@@ -59,6 +59,10 @@
                     {
                         title: '积分记录',
                         path: '/amount-bill/list',
+                    },
+                    {
+                        title: '查询汇总',
+                        path: '/search-bill/list',
                     },
                     {
                         title: '首页设置',

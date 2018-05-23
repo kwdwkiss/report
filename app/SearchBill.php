@@ -11,6 +11,11 @@ class SearchBill extends Model
 
     protected $guarded = [];
 
+    public function _user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public static function settleDay($date)
     {
         $date = $date ? Carbon::parse($date)->toDateString() : Carbon::yesterday()->toDateString();
