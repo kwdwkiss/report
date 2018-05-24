@@ -249,7 +249,7 @@ class UserController extends Controller
 
 
             $merchantData = request('_merchant');
-            $merchant_type = array_get($merchantData, 'type');
+            $merchant_type = array_get($merchantData, 'type', 0);
             $merchant_name = array_get($merchantData, 'name', '');
             $merchant_goods_type = array_get($merchantData, 'goods_type', '');
             $merchant_url = array_get($merchantData, 'url', '');
@@ -257,7 +257,7 @@ class UserController extends Controller
             $merchant_manager = array_get($merchantData, 'manager', '');
             $merchant_user_lock = array_get($merchantData, 'user_lock', 0);
 
-            if (!in_array($merchant_type, [1, 2, 3])) {
+            if (!in_array($merchant_type, [0, 1, 2, 3])) {
                 throw new JsonException('店铺类型错误');
             }
             if (!in_array($merchant_user_lock, [0, 1])) {
