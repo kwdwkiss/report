@@ -20,6 +20,7 @@ use App\Http\Resources\AccountResource;
 use App\Http\Resources\NotificationResource;
 use App\Http\Resources\UserResource;
 use App\Taxonomy;
+use Carbon\Carbon;
 use Detection\MobileDetect;
 
 class IndexController extends Controller
@@ -145,13 +146,14 @@ class IndexController extends Controller
         }
 
         //同一账号每天限制举报
-        $todayDate = date('Y-m-d', time());
-        $todayReport = AccountReport::where('account_type', $account_type)
+        $todayReportCount = AccountReport::query()
+            ->where('user_id', $user->id)
+            ->where('account_type', $account_type)
             ->where('account_name', $name)
-            ->where('created_at', '>', $todayDate)
-            ->first();
-        if ($todayReport) {
-            throw new JsonException('每天对同一账号只能举报一次');
+            ->whereDate('created_at', Carbon::today()->toDateString())
+            ->count();
+        if ($todayReportCount > 0) {
+            throw new JsonException('一个用户每天对同一账号只能举报一次');
         }
 
         \DB::transaction(function () use ($user, $account_type, $name, $report_type, $ip, $description, $attachment
