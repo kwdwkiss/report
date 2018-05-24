@@ -11,6 +11,7 @@ class UserMerchant extends Model
     protected $guarded = [];
 
     public static $types = [
+        0 => '未知',
         1 => '天猫店',
         2 => '企业淘宝店',
         3 => '个人淘宝店'
