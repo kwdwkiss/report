@@ -94,6 +94,7 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/user/delete', 'Admin\UserController@delete');
 
     Route::get('/admin/account/list', 'Admin\AccountController@list');
+    Route::get('/admin/account/show', 'Admin\AccountController@show');
     Route::post('/admin/account/create', 'Admin\AccountController@create');
     Route::post('/admin/account/update', 'Admin\AccountController@update');
     Route::post('/admin/account/delete', 'Admin\AccountController@delete');

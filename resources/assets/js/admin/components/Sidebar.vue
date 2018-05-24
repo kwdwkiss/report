@@ -46,7 +46,7 @@
                     },
                     {
                         title: '账号信息',
-                        path: '/account',
+                        path: '/account/list',
                     },
                     {
                         title: '举报信息',

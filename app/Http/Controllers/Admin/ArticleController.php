@@ -46,8 +46,8 @@ class ArticleController extends Controller
         \DB::transaction(function () {
             $type = request('type');
             $title = request('title');
-            $remark = request('remark');
-            $content = request('content');
+            $remark = request('remark', '');
+            $content = request('content', '');
 
             Taxonomy::where('pid', Taxonomy::ARTICLE_TYPE)->findOrFail($type);
             if (!$title) {
