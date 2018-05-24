@@ -55,13 +55,9 @@ class Test extends Command
     public function handle()
     {
         \DB::enableQueryLog();
-        $subQuery = RechargeBill::query()
-            ->whereIn('user_id', [1])
-            ->groupBy('user_id')
-            ->havingRaw('count(*)=1');
-        $subSql = $subQuery->toSql();
-        $result = \DB::table(\DB::raw("($subSql) as a"))->mergeBindings($subQuery->getQuery())->count();
-        dd(\DB::getQueryLog());
-        $temp = '';
+        $today = \App\User::query()
+            ->whereDate('created_at', Carbon::today()->toDateString())
+            ->count();
+        dd(\DB::getQueryLog(), $today);
     }
 }

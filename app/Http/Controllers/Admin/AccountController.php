@@ -22,7 +22,7 @@ class AccountController extends Controller
         $type = request('type');
         $status = request('status');
 
-        $query = Account::query()->with('_type', '_status')->orderBy('created_at', 'desc');
+        $query = Account::query()->with('_type', '_status')->orderBy('id', 'desc');
 
         if (!is_null($name)) {
             $query->where('name', $name);

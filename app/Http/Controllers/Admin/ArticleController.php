@@ -22,7 +22,7 @@ class ArticleController extends Controller
         $type = request('type');
         $title = request('title');
 
-        $query = Article::query()->with('_type')->orderBy('created_at', 'desc');
+        $query = Article::query()->with('_type')->orderBy('id', 'desc');
 
         if (!is_null($type)) {
             $query->where('type', $type);

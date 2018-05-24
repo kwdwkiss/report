@@ -26,7 +26,7 @@ class MessageController extends Controller
     {
         $name = request('name');
 
-        $query = Message::query()->orderBy('created_at', 'desc');
+        $query = Message::query()->orderBy('id', 'desc');
 
         if (!is_null($name)) {
             $query->where('name', $name);

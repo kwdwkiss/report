@@ -24,7 +24,7 @@ class RechargeController extends Controller
         $payNo = request('pay_no');
         $created_at = request('created_at');
 
-        $query = RechargeBill::query()->with('_user')->orderBy('created_at', 'desc');
+        $query = RechargeBill::query()->with('_user')->orderBy('id', 'desc');
 
         if (!is_null($mobile)) {
             $query->whereHas('_user', function ($query) use ($mobile) {

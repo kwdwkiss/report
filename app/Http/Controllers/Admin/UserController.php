@@ -26,7 +26,7 @@ class UserController extends Controller
         $wx = request('wx');
         $ww = request('ww');
 
-        $query = User::with('_profile', '_type', '_merchant')->orderBy('created_at', 'desc');
+        $query = User::with('_profile', '_type', '_merchant')->orderBy('id', 'desc');
         if ($type) {
             $query->where('type', $type);
         }

@@ -23,7 +23,7 @@ class AccountReportController extends Controller
         $report_type = request('report_type');
         $created_at = request('created_at');
 
-        $query = AccountReport::query()->with('_user', '_accountType', '_type')->orderBy('created_at', 'desc');
+        $query = AccountReport::query()->with('_user', '_accountType', '_type')->orderBy('id', 'desc');
 
         if ($account_name) {
             $query->where('account_name', $account_name);
