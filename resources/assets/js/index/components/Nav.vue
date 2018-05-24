@@ -49,8 +49,8 @@
                                 </ul>
                             </li>
                             <li><a class="collapse-hide" href="javascript:" @click="notificationList">通知
-                                <template v-if="unreadNotification.meta.total">
-                                    （未读{{unreadNotification.meta.total}}）
+                                <template v-if="unreadNotification>0">
+                                    （未读{{unreadNotification}}）
                                 </template>
                             </a></li>
                             <li class="dropdown">
@@ -74,7 +74,7 @@
 
 <script>
     export default {
-        name: "nav",
+        name: "my-nav",
         data: function () {
             return {
                 collapseIn: false
@@ -92,12 +92,9 @@
             },
         },
         created: function () {
-            let self = this;
-            this.$store.commit("unreadNotification", {
-                callback: function () {
-                    self.notificationList();
-                }
-            });
+            if (this.unreadNotification > 0) {
+                self.notificationList();
+            }
         },
         mounted: function () {
             $('.navbar-collapse').on('click', '.collapse-hide', function () {

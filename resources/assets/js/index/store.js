@@ -15,7 +15,7 @@ const store = window.store = new Vuex.Store({
         },
         user: laravel.user,
         notification: {data: [], meta: {}, links: {}},
-        unreadNotification: {data: [], meta: {}, links: {}},
+        unreadNotification: laravel.unreadNotification,
         recharge: {data: [], meta: {}, links: {}},
         amount: {data: [], meta: {}, links: {}},
     },
@@ -55,9 +55,9 @@ const store = window.store = new Vuex.Store({
             });
         },
         unreadNotification(state, payload) {
-            axios.get(api.userUnreadNotificationList).then(function (res) {
+            axios.get(api.userUnreadNotificationCount).then(function (res) {
                 state.unreadNotification = res.data;
-                if (res.data.meta.total && payload && payload.callback instanceof Function) {
+                if (payload && payload.callback instanceof Function) {
                     payload.callback();
                 }
             });

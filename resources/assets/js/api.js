@@ -87,6 +87,7 @@ module.exports = {
 
     userNotificationList: '/user/notification',
     userUnreadNotificationList: '/user/unread-notification',
+    userUnreadNotificationCount: '/user/unread-notification/count',
     userReadNotification: '/user/read-notification',
 
     userRechargeList: '/user/recharge/index',

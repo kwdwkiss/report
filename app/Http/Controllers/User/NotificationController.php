@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\User;
 
 
+use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NotificationResource;
 use Illuminate\Notifications\DatabaseNotification;
@@ -18,28 +19,38 @@ class NotificationController extends Controller
     public function notificationList()
     {
         $user = \Auth::guard('user')->user();
-
-        if ($user) {
-            $notifications = $user->notifications()
-                ->orderBy('read_at')
-                ->orderBy('created_at', 'desc')
-                ->paginate();
-            return NotificationResource::collection($notifications);
-        } else {
-            return [];
+        if (!$user) {
+            throw new JsonException('用户未登录');
         }
+
+        $notifications = $user->notifications()
+            ->orderBy('read_at')
+            ->orderBy('created_at', 'desc')
+            ->paginate();
+        return NotificationResource::collection($notifications);
     }
 
     public function unreadNotificationList()
     {
         $user = \Auth::guard('user')->user();
-
-        if ($user) {
-            $unreadNotifications = $user->unreadNotifications()->paginate();
-            return NotificationResource::collection($unreadNotifications);
-        } else {
-            return [];
+        if (!$user) {
+            throw new JsonException('用户未登录');
         }
+
+        $unreadNotifications = $user->unreadNotifications()->paginate();
+        return NotificationResource::collection($unreadNotifications);
+    }
+
+    public function unreadNotificationCount()
+    {
+        $user = \Auth::guard('user')->user();
+        if (!$user) {
+            throw new JsonException('用户未登录');
+        }
+
+        $count = $user->unreadNotifications()->count();
+
+        return ['data' => $count];
     }
 
     public function readNotification()

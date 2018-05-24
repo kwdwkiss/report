@@ -17,6 +17,7 @@ use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AccountReportResource;
 use App\Http\Resources\AccountResource;
+use App\Http\Resources\NotificationResource;
 use App\Http\Resources\UserResource;
 use App\Taxonomy;
 use Detection\MobileDetect;
@@ -32,8 +33,17 @@ class IndexController extends Controller
         $page = [];
         \DB::transaction(function () use (&$page) {
             $user = \Auth::guard('user')->user();
+            if ($user) {
+                $user = new UserResource($user);
+                $unreadNotification = $user->unreadNotifications()->count();
+            } else {
+                $user = null;
+                $unreadNotification = 0;
+            }
             $page = array_merge([
-                'user' => $user ? new UserResource($user) : null,
+                'user' => $user,
+                'unreadNotification' => $unreadNotification,
+
                 'index_blog_article' => Config::get('site.index_blog_article'),
                 'taxonomy' => Taxonomy::allDisplay(),
             ], Config::getSiteIndex(), Config::getSiteStatics());
