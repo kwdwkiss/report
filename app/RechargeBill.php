@@ -44,6 +44,16 @@ class RechargeBill extends Model
                 ->whereDate('created_at', Carbon::yesterday()->toDateString())
                 ->sum('money');
 
+            $yesterdayUserIds = static::query()
+                ->select('user_id')
+                ->whereDate('created_at', Carbon::yesterday()->toDateString())
+                ->get()->pluck('user_id')->toArray();
+            $subQuery = static::query()
+                ->whereIn('user_id', $yesterdayUserIds)
+                ->groupBy('user_id')
+                ->havingRaw('count(*)=1');
+            $yesterdayOnce = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))->mergeBindings($subQuery->getQuery())->count();
+
             $month = static::query()
                 ->whereYear('created_at', Carbon::now()->year)
                 ->whereMonth('created_at', Carbon::now()->month)
@@ -56,7 +66,7 @@ class RechargeBill extends Model
 
             return compact(
                 'today', 'yesterday', 'month', 'lastMonth',
-                'todayOnce'
+                'todayOnce', 'yesterdayOnce'
             );
         });
 

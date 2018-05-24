@@ -74,7 +74,8 @@
                         <p>首充：{{statement.rechargeBill.todayOnce}}</p>
                     </div>
                     <div class="col-md-3">
-                        昨日：{{statement.rechargeBill.yesterday}}
+                        <p>昨日：{{statement.rechargeBill.yesterday}}</p>
+                        <p>首充：{{statement.rechargeBill.yesterdayOnce}}</p>
                     </div>
                     <div class="col-md-3">
                         本月：{{statement.rechargeBill.month}}
