@@ -39,6 +39,7 @@ module.exports = {
     accountDelete: '/admin/account/delete',
 
     accountReportList: '/admin/account-report/list',
+    accountReportShow: '/admin/account-report/show',
     accountReportCreate: '/admin/account-report/create',
     accountReportUpdate: '/admin/account-report/update',
     accountReportDelete: '/admin/account-report/delete',

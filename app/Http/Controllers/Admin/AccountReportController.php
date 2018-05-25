@@ -42,6 +42,13 @@ class AccountReportController extends Controller
         return AccountReportResource::collection($query->paginate());
     }
 
+    public function show()
+    {
+        $accountReport = AccountReport::findOrFail(request('id'));
+
+        return new AccountReportResource($accountReport);
+    }
+
     public function create()
     {
         //管理员无需在后台添加举报信息
@@ -50,27 +57,22 @@ class AccountReportController extends Controller
     public function update()
     {
         \DB::transaction(function () {
-            $input = json_decode(request()->getContent(), true);
-            foreach ($input as $item) {
-                $id = array_get($item, 'id');
-                $type = array_get($item, 'type');
-                $display = array_get($item, 'display');
-                $remark = array_get($item, 'remark');
+            $item = json_decode(request()->getContent(), true);
 
-                $accountReport = AccountReport::findOrFail($id);
+            $id = array_get($item, 'id');
+            $type = array_get($item, 'type');
+            $display = array_get($item, 'display', 0);
+            $remark = array_get($item, 'remark', '');
 
-                if (!is_null($type)) {
-                    Taxonomy::where('pid', Taxonomy::REPORT_TYPE)->findOrFail($type);
-                    $accountReport->type = $type;
-                }
-                if (!is_null($display)) {
-                    $accountReport->display = $display;
-                }
-                if (!is_null($remark)) {
-                    $accountReport->remark = $remark;
-                }
-                $accountReport->save();
-            }
+            $accountReport = AccountReport::findOrFail($id);
+
+            Taxonomy::where('pid', Taxonomy::REPORT_TYPE)->findOrFail($type);
+
+            $accountReport->update([
+                'type' => $type,
+                'display' => $display,
+                'remark' => $remark
+            ]);
         });
 
         return [];

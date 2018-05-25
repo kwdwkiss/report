@@ -100,6 +100,7 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/account/delete', 'Admin\AccountController@delete');
 
     Route::get('/admin/account-report/list', 'Admin\AccountReportController@list');
+    Route::get('/admin/account-report/show', 'Admin\AccountReportController@show');
     Route::post('/admin/account-report/create', 'Admin\AccountReportController@create');
     Route::post('/admin/account-report/update', 'Admin\AccountReportController@update');
     Route::post('/admin/account-report/delete', 'Admin\AccountReportController@delete');

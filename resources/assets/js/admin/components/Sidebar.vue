@@ -50,7 +50,7 @@
                     },
                     {
                         title: '举报信息',
-                        path: '/account/report',
+                        path: '/account_report/list',
                     },
                     {
                         title: '充值记录',

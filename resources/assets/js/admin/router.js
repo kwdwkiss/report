@@ -23,7 +23,16 @@ const router = new VueRouter({
                 {name: 'user_create', path: 'user/create', component: require('./pages/User/Create')},
                 {name: 'user_update', path: 'user/update/:id', component: require('./pages/User/Update')},
 
-                {path: 'account/report', component: require('./pages/AccountReport')},
+                {
+                    name: 'account_report_list',
+                    path: 'account_report/list',
+                    component: require('./pages/AccountReport/Index')
+                },
+                {
+                    name: 'account_report_update',
+                    path: 'account_report/update/:id',
+                    component: require('./pages/AccountReport/Update')
+                },
 
                 {name: 'account_list', path: 'account/list', component: require('./pages/Account/Index')},
                 {name: 'account_create', path: 'account/create', component: require('./pages/Account/Create')},
