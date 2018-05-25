@@ -27,7 +27,7 @@
 
         <el-row>
             <el-table :data="dataList.data" stripe>
-                <el-table-column prop="id" label="ID" min-width="50"></el-table-column>
+                <el-table-column prop="id" label="ID" min-width="80"></el-table-column>
                 <el-table-column prop="_user.mobile" label="用户" min-width="110"></el-table-column>
                 <el-table-column prop="bill_no" label="系统订单号" min-width="150"></el-table-column>
                 <el-table-column prop="pay_type_label" label="支付类型" min-width="80"></el-table-column>

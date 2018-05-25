@@ -19,7 +19,7 @@
 
         <el-row>
             <el-table :data="dataList.data" stripe>
-                <el-table-column prop="id" label="ID" min-width="50"></el-table-column>
+                <el-table-column prop="id" label="ID" min-width="100"></el-table-column>
                 <el-table-column prop="article_type" label="文章类型" min-width="100"></el-table-column>
                 <el-table-column prop="title" label="标题" min-width="200"></el-table-column>
                 <el-table-column prop="remark" label="备注" min-width="160"></el-table-column>
