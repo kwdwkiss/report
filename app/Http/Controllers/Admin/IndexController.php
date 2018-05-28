@@ -91,6 +91,11 @@ class IndexController extends Controller
 
     public function statement()
     {
+        $user = \Auth::guard('admin')->user();
+        if ($user->id != 1) {
+            throw new JsonException('无权访问');
+        }
+
         return [
             'data' => [
                 'userRegister' => User::statement(),

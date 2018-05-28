@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="user.id===1">
         <div class="panel panel-default">
             <div class="panel-heading">新用户注册统计</div>
             <div class="panel-body">
@@ -100,6 +100,11 @@
                     accountSearch: {},
                     rechargeBill: {}
                 }
+            }
+        },
+        computed: {
+            user: function () {
+                return this.$store.state.user;
             }
         },
         created: function () {
