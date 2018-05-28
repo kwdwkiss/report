@@ -26,6 +26,8 @@ class AmountBill extends Model
         1 => '新用户注册赠送200积分',
         2 => '邀请新用户注册赠送100积分',
         3 => '邀请用户充值积分，提成10%',
+        4 => '新用户注册赠送100积分',
+        5 => '邀请新用户注册赠送50积分',
     ];
 
     public static function generateBillNo($userId)

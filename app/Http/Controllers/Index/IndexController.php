@@ -125,7 +125,7 @@ class IndexController extends Controller
         if (!captcha_check($captcha)) {
             throw new JsonException('验证码错误');
         }
-        if (is_null($name)) {
+        if (!$name) {
             throw new JsonException('账号不能为空');
         }
         if ($account_type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {

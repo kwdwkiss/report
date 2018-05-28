@@ -133,7 +133,7 @@ class UserController extends Controller
 
         $user = User::where('mobile', $mobile)->first();
         if ($user) {
-            throw new \Exception('用户已注册，请找回密码：登录->忘记密码');
+            throw new JsonException('用户已注册，请找回密码：登录->忘记密码');
         }
 
         //未使用，未过期的code
@@ -155,7 +155,7 @@ class UserController extends Controller
             ]);
 
             //新用户注册发放200积分
-            $amount = 200;
+            $amount = 100;
 
             $userProfile = UserProfile::create([
                 'user_id' => $user->id,
@@ -169,7 +169,7 @@ class UserController extends Controller
                 'amount' => $amount,
                 'user_amount' => $userProfile->amount,
                 'biz_type' => 0,
-                'biz_id' => 1,
+                'biz_id' => 4,
                 'description' => "新用户注册赠送${amount}积分"
             ]);
 
@@ -179,7 +179,7 @@ class UserController extends Controller
                 ->where('mobile', $inviterMobile)
                 ->first();
             if ($inviterUser) {
-                $inviterAmount = 100;
+                $inviterAmount = 50;
                 $inviterUser->_profile->increment('amount', $inviterAmount);
                 AmountBill::create([
                     'user_id' => $inviterUser->id,
@@ -188,7 +188,7 @@ class UserController extends Controller
                     'amount' => $inviterAmount,
                     'user_amount' => $inviterUser->_profile->amount,
                     'biz_type' => 0,
-                    'biz_id' => 2,
+                    'biz_id' => 5,
                     'description' => "邀请新用户注册赠送${inviterAmount}积分"
                 ]);
                 $userProfile->update(['inviter' => $inviterMobile]);
@@ -342,7 +342,7 @@ class UserController extends Controller
         if ($action && $action == 'register') {
             $user = User::where('mobile', $mobile)->first();
             if ($user) {
-                throw new \Exception('用户已注册，请找回密码：登录->忘记密码');
+                throw new JsonException('用户已注册，请找回密码：登录->忘记密码');
             }
         }
         if ($action && $action == 'forget') {
