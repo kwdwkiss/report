@@ -28,7 +28,7 @@
                                        v-model="forgetPasswordForm.code">
                             </div>
                             <span class="col-sm-3">
-                                <my-sms :mobile="forgetPasswordForm.mobile"></my-sms>
+                                <my-sms :mobile="forgetPasswordForm.mobile" :action="'forget'"></my-sms>
                             </span>
                         </div>
                         <div class="form-group">

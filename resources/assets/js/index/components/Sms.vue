@@ -13,7 +13,7 @@
                 smsHandle: null,
             }
         },
-        props: ['mobile'],
+        props: ['mobile', 'action'],
         methods: {
             smsInit: function () {
                 this.smsText = "发送短信";
@@ -23,7 +23,7 @@
             },
             sendSms: function () {
                 let self = this;
-                axios.post(api.userSms, {mobile: self.mobile})
+                axios.post(api.userSms, {mobile: self.mobile, action: self.action})
                     .then(function (res) {
                         self.$message.success("短信发送成功，请耐心等候，如有疑问请联系客服");
                         self.smsDisable = true;

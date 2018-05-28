@@ -65,6 +65,7 @@ module.exports = {
     taxonomyAllDisplay: '/taxonomy/all/display',
     captcha: '/captcha/default',
     uploadOss: '/index/upload-oss',
+    behaviorLog: '/index/behavior-log',
 
     indexSearch: '/index/search',
     indexReport: '/index/report',

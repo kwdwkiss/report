@@ -82,28 +82,23 @@ class UserController extends Controller
             throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
         }
 
-        $user = null;
-        \DB::transaction(function () use (&$user, $mobile, $password, $code) {
-            //未使用，未过期的code
-            $sms = Sms::where('mobile', $mobile)
-                ->where('status', 0)
-                ->where('code', $code)
-                ->where('expired_at', '>', Carbon::now())
-                ->first();
-            if (!$sms) {
-                throw new JsonException('验证码错误');
-            }
+        $user = User::where('mobile', $mobile)->first();
+        if (!$user) {
+            throw new JsonException('用户不存在，请先注册');
+        }
 
-            $sms->update(['status' => 1]);
+        //未使用，未过期的code
+        $sms = Sms::where('mobile', $mobile)
+            ->where('status', 0)
+            ->where('code', $code)
+            ->where('expired_at', '>', Carbon::now())
+            ->first();
+        if (!$sms) {
+            throw new JsonException('验证码错误');
+        }
+        $sms->update(['status' => 1]);
 
-            $user = User::where('mobile', $mobile)->first();
-
-            if (!$user) {
-                throw new JsonException('用户不存在');
-            }
-
-            $user->update(['password' => bcrypt($password)]);
-        });
+        $user->update(['password' => bcrypt($password)]);
 
         \Auth::guard('user')->login($user, $remember);
 
@@ -136,71 +131,67 @@ class UserController extends Controller
             throw new JsonException('邀请人手机号码格式错误');
         }
 
-        $user = null;
+        $user = User::where('mobile', $mobile)->first();
+        if ($user) {
+            throw new \Exception('用户已注册，请找回密码：登录->忘记密码');
+        }
+
+        //未使用，未过期的code
+        $sms = Sms::where('mobile', $mobile)
+            ->where('status', 0)
+            ->where('code', $code)
+            ->where('expired_at', '>', Carbon::now())
+            ->first();
+        if (!$sms) {
+            throw new JsonException('验证码错误');
+        }
+        $sms->update(['status' => 1]);
+
         \DB::transaction(function () use (&$user, $mobile, $password, $inviterMobile, $code) {
-            //未使用，未过期的code
-            $sms = Sms::where('mobile', $mobile)
-                ->where('status', 0)
-                ->where('code', $code)
-                ->where('expired_at', '>', Carbon::now())
+            $user = User::create([
+                'mobile' => $mobile,
+                'type' => 401,
+                'password' => bcrypt($password)
+            ]);
+
+            //新用户注册发放200积分
+            $amount = 200;
+
+            $userProfile = UserProfile::create([
+                'user_id' => $user->id,
+                'amount' => $amount,
+            ]);
+
+            AmountBill::create([
+                'user_id' => $user->id,
+                'bill_no' => AmountBill::generateBillNo($user->id),
+                'type' => 0,
+                'amount' => $amount,
+                'user_amount' => $userProfile->amount,
+                'biz_type' => 0,
+                'biz_id' => 1,
+                'description' => "新用户注册赠送${amount}积分"
+            ]);
+
+            //邀请人发放100积分
+            $inviterUser = User::with('_profile')
+                ->where('id', '!=', $user->id)//邀请人不能是自己
+                ->where('mobile', $inviterMobile)
                 ->first();
-            if (!$sms) {
-                throw new JsonException('验证码错误');
-            }
-
-            $sms->update(['status' => 1]);
-
-            $user = User::where('mobile', $mobile)->first();
-            if ($user) {
-                $user->update([
-                    'password' => bcrypt($password)
-                ]);
-            } else {
-                $user = User::create([
-                    'mobile' => $mobile,
-                    'type' => 401,
-                    'password' => bcrypt($password)
-                ]);
-
-                //新用户注册发放200积分
-                $amount = 200;
-
-                $userProfile = UserProfile::create([
-                    'user_id' => $user->id,
-                    'amount' => $amount,
-                ]);
-
+            if ($inviterUser) {
+                $inviterAmount = 100;
+                $inviterUser->_profile->increment('amount', $inviterAmount);
                 AmountBill::create([
-                    'user_id' => $user->id,
-                    'bill_no' => AmountBill::generateBillNo($user->id),
+                    'user_id' => $inviterUser->id,
+                    'bill_no' => AmountBill::generateBillNo($inviterUser->id),
                     'type' => 0,
-                    'amount' => $amount,
-                    'user_amount' => $userProfile->amount,
+                    'amount' => $inviterAmount,
+                    'user_amount' => $inviterUser->_profile->amount,
                     'biz_type' => 0,
-                    'biz_id' => 1,
-                    'description' => "新用户注册赠送${amount}积分"
+                    'biz_id' => 2,
+                    'description' => "邀请新用户注册赠送${inviterAmount}积分"
                 ]);
-
-                //邀请人发放100积分
-                $inviterUser = User::with('_profile')
-                    ->where('id', '!=', $user->id)//邀请人不能是自己
-                    ->where('mobile', $inviterMobile)
-                    ->first();
-                if ($inviterUser) {
-                    $inviterAmount = 100;
-                    $inviterUser->_profile->increment('amount', $inviterAmount);
-                    AmountBill::create([
-                        'user_id' => $inviterUser->id,
-                        'bill_no' => AmountBill::generateBillNo($inviterUser->id),
-                        'type' => 0,
-                        'amount' => $inviterAmount,
-                        'user_amount' => $inviterUser->_profile->amount,
-                        'biz_type' => 0,
-                        'biz_id' => 2,
-                        'description' => "邀请新用户注册赠送${inviterAmount}积分"
-                    ]);
-                    $userProfile->update(['inviter' => $inviterMobile]);
-                }
+                $userProfile->update(['inviter' => $inviterMobile]);
             }
         });
 
@@ -340,12 +331,25 @@ class UserController extends Controller
     public function sms()
     {
         $mobile = request('mobile');
+        $action = request('action');
 
         if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $mobile)) {
             return [
                 'code' => -1,
                 'message' => '手机号码格式错误'
             ];
+        }
+        if ($action && $action == 'register') {
+            $user = User::where('mobile', $mobile)->first();
+            if ($user) {
+                throw new \Exception('用户已注册，请找回密码：登录->忘记密码');
+            }
+        }
+        if ($action && $action == 'forget') {
+            $user = User::where('mobile', $mobile)->first();
+            if (!$user) {
+                throw new JsonException('用户不存在，请先注册');
+            }
         }
 
         $ipCount = Sms::where('ip', request()->getClientIp())

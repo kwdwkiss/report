@@ -35,7 +35,7 @@
                                 <input class="form-control" placeholder="请输入短信验证码" v-model="registerForm.code">
                             </div>
                             <span class="col-sm-3">
-                                <my-sms :mobile="registerForm.mobile"></my-sms>
+                                <my-sms :mobile="registerForm.mobile" :action="'register'"></my-sms>
                             </span>
                         </div>
                         <div class="form-group">

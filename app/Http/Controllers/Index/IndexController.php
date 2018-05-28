@@ -12,6 +12,7 @@ use App\Account;
 use App\AccountReport;
 use App\AccountSearch;
 use App\Attachment;
+use App\BehaviorLog;
 use App\Config;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
@@ -216,5 +217,25 @@ class IndexController extends Controller
         $user = \Auth::guard('admin')->user();
 
         return Attachment::createForOss($uploadFile, $user);
+    }
+
+    public function behaviorLog()
+    {
+        $type = request('type');
+        $content = request('content', '');
+
+        $user = \Auth::guard('user')->user();
+        $userId = $user ? $user->id : 0;
+
+        if (!isset(BehaviorLog::$types[$type])) {
+            throw new JsonException('类型错误');
+        }
+
+        BehaviorLog::create([
+            'user_id' => $userId,
+            'type' => $type,
+            'content' => $content
+        ]);
+
     }
 }

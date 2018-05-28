@@ -2,18 +2,18 @@
     <div v-if="user">
         <div class="row hidden-xs hidden-sm ad">
             <div class="col-md-6" v-for="(item, index) in page.ad_top" :key="index">
-                <a target="_blank" :href="item.url">
+                <a target="_blank" :href="item.url" @click="behaviorLog(item)">
                     <img :src="item.img_src">
                 </a>
             </div>
         </div>
 
         <!--<div class="row hidden-xs hidden-sm ad">-->
-            <!--<div class="col-md-3" v-for="(item, index) in page.ad_second" :key="index">-->
-                <!--<a target="_blank" :href="item.url">-->
-                    <!--<img :src="item.img_src">-->
-                <!--</a>-->
-            <!--</div>-->
+        <!--<div class="col-md-3" v-for="(item, index) in page.ad_second" :key="index">-->
+        <!--<a target="_blank" :href="item.url">-->
+        <!--<img :src="item.img_src">-->
+        <!--</a>-->
+        <!--</div>-->
         <!--</div>-->
     </div>
 </template>
@@ -27,6 +27,13 @@
             },
             page: function () {
                 return this.$store.state.page;
+            }
+        },
+        methods: {
+            behaviorLog: function (item) {
+                axios.post(api.behaviorLog, {type: 1, content: item.url}).then(function (res) {
+
+                });
             }
         }
     };

@@ -17,6 +17,7 @@ Route::middleware(['csrf'])->group(function () {
     Route::post('/index/search', 'Index\IndexController@search');
     Route::post('/index/report', 'Index\IndexController@report');
     Route::post('/index/upload-oss', 'Index\IndexController@uploadOss');
+    Route::post('/index/behavior-log', 'Index\IndexController@behaviorLog');
 
     Route::get('/index/article/list', 'Index\ArticleController@list');
     Route::get('/index/article/show', 'Index\ArticleController@show');
