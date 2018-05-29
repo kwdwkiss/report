@@ -52,8 +52,4 @@
     {{--};--}}
 {{--</script>--}}
 <!-- Scripts -->
-<script src="https://s22.cnzz.com/z_stat.php?id=1271314784&web_id=1271314784" language="JavaScript"></script>
-<style>body > a[title=站长统计] {
-        display: none
-    }</style>
 </html>
