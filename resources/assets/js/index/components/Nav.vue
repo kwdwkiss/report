@@ -18,6 +18,7 @@
                 <div class="collapse navbar-collapse" id="my-nav">
                     <ul class="nav navbar-nav">
                         <li><a class="collapse-hide" href="javascript:" @click="index">账号查询</a>
+                        <li><a class="collapse-hide" href="javascript:" @click="checkTb">淘宝验号</a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -141,6 +142,9 @@
             },
             inviterLink: function () {
                 this.$router.push({name: 'inviterLink'});
+            },
+            checkTb: function () {
+                this.$router.push({name: 'checkTb'});
             }
         }
     };

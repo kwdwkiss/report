@@ -57,14 +57,6 @@
         list-style: none;
     }
 
-    p {
-        margin-bottom: 0;
-    }
-
-    a {
-        color: #222;
-    }
-
     .row {
         margin: 10px 0;
     }

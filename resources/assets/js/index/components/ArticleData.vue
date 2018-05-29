@@ -24,6 +24,14 @@
 </script>
 
 <style scoped>
+    a {
+        color: #222;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
     .article-data > div {
         margin: 5px 0;
     }

@@ -12,6 +12,9 @@
 */
 
 Route::middleware(['csrf'])->group(function () {
+    Route::get('/check_tb', 'Index\CheckTbController@index');
+    Route::get('/check_tb_page', 'Index\CheckTbController@page');
+
     Route::get('/', 'Index\IndexController@index')->name('login');
     Route::get('/index/pop-window', 'Index\IndexController@popWindow');
     Route::post('/index/search', 'Index\IndexController@search');

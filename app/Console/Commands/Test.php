@@ -18,6 +18,8 @@ use App\Tag;
 use App\Taxonomy;
 use App\UserProfile;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Console\Command;
 
@@ -54,10 +56,18 @@ class Test extends Command
      */
     public function handle()
     {
-        \DB::enableQueryLog();
-        $today = \App\User::query()
-            ->whereDate('created_at', Carbon::today()->toDateString())
-            ->count();
-        dd(\DB::getQueryLog(), $today);
+        $client = new Client();
+        try {
+            $res = $client->get('https://rate.taobao.com/myRate.htm');
+        } catch (RequestException $e) {
+            $res = $e->getResponse();
+        }
+        $content = $res->getBody()->getContents();
+        dd($content);
+//        \DB::enableQueryLog();
+//        $today = \App\User::query()
+//            ->whereDate('created_at', Carbon::today()->toDateString())
+//            ->count();
+//        dd(\DB::getQueryLog(), $today);
     }
 }

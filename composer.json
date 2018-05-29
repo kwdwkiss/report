@@ -12,6 +12,7 @@
         "php": ">=7.0.0",
         "aliyuncs/oss-sdk-php": "^2.3",
         "fideloper/proxy": "~3.3",
+        "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "mews/captcha": "^2.1",

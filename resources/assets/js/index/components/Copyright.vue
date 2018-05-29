@@ -18,6 +18,10 @@
 </script>
 
 <style scoped>
+    a {
+        color: #222;
+    }
+
     .copyright {
         text-align: center;
     }
