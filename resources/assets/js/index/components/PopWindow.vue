@@ -30,7 +30,7 @@
                 }
             };
         },
-        created: function () {
+        mounted: function () {
             let self = this;
             let cookie = VueCookie.get('popWindow');
             if (!cookie && this.$route.name !== 'check_tb') {
