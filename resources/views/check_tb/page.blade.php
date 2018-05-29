@@ -39,18 +39,18 @@
 <div id="timer" class="timer"></div>
 <iframe id="my-frame" src="{{$page}}" frameborder="0" style="width: 100%;min-height: 800px"></iframe>
 </body>
-<script>
-    document.onload = function () {
-        var timer = document.getElementById('timer');
-        var frame = document.getElementById('my-frame');
-        var height = window.innerHeight;
-        frame.getAttributeNode('style').value = "width: 100%;height: " + height + "px";
-        timer.innerHTML = (new Date).toLocaleString();
-        setInterval(function () {
-            timer.innerHTML = (new Date).toLocaleString();
-        }, 1000);
-    };
-</script>
+{{--<script>--}}
+    {{--document.onload = function () {--}}
+        {{--var timer = document.getElementById('timer');--}}
+        {{--var frame = document.getElementById('my-frame');--}}
+        {{--var height = window.innerHeight;--}}
+        {{--frame.getAttributeNode('style').value = "width: 100%;height: " + height + "px";--}}
+        {{--timer.innerHTML = (new Date).toLocaleString();--}}
+        {{--setInterval(function () {--}}
+            {{--timer.innerHTML = (new Date).toLocaleString();--}}
+        {{--}, 1000);--}}
+    {{--};--}}
+{{--</script>--}}
 <!-- Scripts -->
 <script src="https://s22.cnzz.com/z_stat.php?id=1271314784&web_id=1271314784" language="JavaScript"></script>
 <style>body > a[title=站长统计] {
