@@ -33,7 +33,7 @@
         created: function () {
             let self = this;
             let cookie = VueCookie.get('popWindow');
-            if (!cookie) {
+            if (!cookie && this.$route.name !== 'check_tb') {
                 axios.get(api.indexPopWindow).then(function (res) {
                     self.notification = res.data.data;
                     if (self.notification.title !== '' && self.notification.content !== '') {
