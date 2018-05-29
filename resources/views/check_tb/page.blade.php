@@ -35,8 +35,8 @@
         font-size: 30px;
     }
 </style>
-<div class="layer"></div>
-<div id="timer" class="timer"></div>
+{{--<div class="layer"></div>--}}
+{{--<div id="timer" class="timer"></div>--}}
 <iframe id="my-frame" src="{{$page}}" frameborder="0" style="width: 100%;min-height: 800px"></iframe>
 </body>
 {{--<script>--}}
