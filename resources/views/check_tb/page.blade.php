@@ -22,7 +22,7 @@
         bottom: 0;
         left: 0;
         right: 0;
-        background-image: url({{url('images/check.png')}});
+        background-image: url('/images/check.png');
         background-color: #000;
         opacity: 0.15;
     }
@@ -40,14 +40,16 @@
 <iframe id="my-frame" src="{{$page}}" frameborder="0" style="width: 100%;min-height: 800px"></iframe>
 </body>
 <script>
-    var timer = document.getElementById('timer');
-    var frame = document.getElementById('my-frame');
-    var height = window.innerHeight;
-    frame.getAttributeNode('style').value = "width: 100%;height: " + height + "px";
-    timer.innerHTML = (new Date).toLocaleString();
-    setInterval(function () {
+    document.onload = function () {
+        var timer = document.getElementById('timer');
+        var frame = document.getElementById('my-frame');
+        var height = window.innerHeight;
+        frame.getAttributeNode('style').value = "width: 100%;height: " + height + "px";
         timer.innerHTML = (new Date).toLocaleString();
-    }, 1000);
+        setInterval(function () {
+            timer.innerHTML = (new Date).toLocaleString();
+        }, 1000);
+    };
 </script>
 <!-- Scripts -->
 <script src="https://s22.cnzz.com/z_stat.php?id=1271314784&web_id=1271314784" language="JavaScript"></script>
