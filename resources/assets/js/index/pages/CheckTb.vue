@@ -14,7 +14,7 @@
                 <a href="/check_tb_page?page=item_list">2、淘宝订单</a>
             </p>
             <p class="col-xs-offset-1 col-xs-10">
-                <a href="/check_tb_page?page=raise_naughty">3、淘气值</a>
+                <a href="https://market.m.taobao.com/apps/market/m-vip/raise-naughty.html">3、淘气值</a>
             </p>
             <p class="col-xs-offset-1 col-xs-10">
                 <a href="/check_tb_page?page=appeal_center">4、账号体检</a>
