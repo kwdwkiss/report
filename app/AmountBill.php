@@ -33,7 +33,7 @@ class AmountBill extends Model
     public static function generateBillNo($userId)
     {
         $userId = substr($userId, -4);
-        return date('ymdHis', time()) . str_pad($userId, 4, '0', STR_PAD_LEFT);
+        return date('ymdHis', time()) . random_int(10, 99) . str_pad($userId, 4, '0', STR_PAD_LEFT);
     }
 
     public function _user()
