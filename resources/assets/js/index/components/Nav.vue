@@ -25,6 +25,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="checkTb">淘宝验号</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="checkPdd">拼多多验号</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="searchOrder">查排名</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -159,6 +160,9 @@
             },
             customerService: function () {
                 this.$router.push({name: 'customerService'});
+            },
+            searchOrder: function () {
+                this.$router.push({name: 'searchOrder'});
             }
         }
     };
