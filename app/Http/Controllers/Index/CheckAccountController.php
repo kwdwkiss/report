@@ -24,7 +24,7 @@ class CheckAccountController
             'account_profile' => 'https://member1.taobao.com/member/fresh/account_profile.htm',
         ];
         $page = $pageList[$page];
-        $geo = $this->getGeo(request()->getClientIp());
+        $geo = $this->getGeo($this->getIp());
         return view('check_tb.tb', compact('page', 'geo'));
     }
 
@@ -36,7 +36,7 @@ class CheckAccountController
             'complaint_list' => 'http://mobile.yangkeduo.com/complaint_list/complaint_list.html',
         ];
         $page = $pageList[$page];
-        $geo = $this->getGeo(request()->getClientIp());
+        $geo = $this->getGeo($this->getIp());
         return view('check_tb.pdd', compact('page', 'geo'));
     }
 
@@ -57,10 +57,35 @@ class CheckAccountController
         return $geo;
     }
 
+    protected function getIp()
+    {
+        //判断服务器是否允许$_SERVER
+        if (isset($_SERVER)) {
+            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $realip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+                $realip = $_SERVER['HTTP_CLIENT_IP'];
+            } else {
+                $realip = $_SERVER['REMOTE_ADDR'];
+            }
+        } else {
+            //不允许就使用getenv获取
+            if (getenv("HTTP_X_FORWARDED_FOR")) {
+                $realip = getenv("HTTP_X_FORWARDED_FOR");
+            } elseif (getenv("HTTP_CLIENT_IP")) {
+                $realip = getenv("HTTP_CLIENT_IP");
+            } else {
+                $realip = getenv("REMOTE_ADDR");
+            }
+        }
+
+        return $realip;
+    }
+
     public function ip()
     {
         $data = [];
-        $ips = request()->getClientIps();
+        $ips = [$this->getIp()];
         foreach ($ips as $ip) {
             $geo = $this->getGeo($ip);
             $geo = explode(' ', $geo);
