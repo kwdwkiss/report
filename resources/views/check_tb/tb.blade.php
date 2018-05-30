@@ -27,16 +27,16 @@
 
         .timer {
             position: fixed;
-            top: 110px;
-            right: 40px;
+            top: 50px;
+            right: 20px;
             color: #000;
             font-size: 30px;
         }
 
         .geo {
             position: fixed;
-            top: 110px;
-            left: 40px;
+            top: 100px;
+            right: 20px;
             color: #000;
             font-size: 30px;
         }
@@ -53,9 +53,9 @@
     var frame = document.getElementById('my-frame');
     var height = window.innerHeight;
     frame.getAttributeNode('style').value = "width: 100%;height: " + height + "px";
-    timer.innerHTML = (new Date).toLocaleString();
+    timer.innerHTML = (new Date).toISOString();
     setInterval(function () {
-        timer.innerHTML = (new Date).toLocaleString();
+        timer.innerHTML = (new Date).toISOString();
     }, 1000);
 </script>
 <!-- Scripts -->
