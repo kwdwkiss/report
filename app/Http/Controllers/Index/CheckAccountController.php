@@ -9,9 +9,9 @@
 namespace App\Http\Controllers\Index;
 
 
-class CheckTbController
+class CheckAccountController
 {
-    public function index()
+    public function tb()
     {
         $page = request('page', 'my_rate');
         $pageList = [
@@ -21,6 +21,24 @@ class CheckTbController
             'appeal_center' => 'https://passport.taobao.com/ac/h5/appeal_center.htm?fromSite=0'
         ];
         $page = $pageList[$page];
+        $geo = $this->getGeo();
+        return view('check_tb.tb', compact('page', 'geo'));
+    }
+
+    public function pdd()
+    {
+        $page = request('page', 'personal');
+        $pageList = [
+            'personal' => 'http://mobile.yangkeduo.com/personal.html',
+            'complaint_list' => 'http://mobile.yangkeduo.com/complaint_list/complaint_list.html',
+        ];
+        $page = $pageList[$page];
+        $geo = $this->getGeo();
+        return view('check_tb.pdd', compact('page', 'geo'));
+    }
+
+    protected function getGeo()
+    {
         $ip = request()->getClientIp();
         $result = @file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip=' . $ip);
         $ip = preg_replace('/(\d+\.\d+)\.\d+\.\d+/', '$1.*.*', $ip);
@@ -34,6 +52,6 @@ class CheckTbController
         } else {
             $geo = $ip;
         }
-        return view('check_tb.index', compact('page', 'geo'));
+        return $geo;
     }
 }

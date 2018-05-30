@@ -18,7 +18,14 @@
                 <div class="collapse navbar-collapse" id="my-nav">
                     <ul class="nav navbar-nav">
                         <li><a class="collapse-hide" href="javascript:" @click="index">账号查询</a>
-                        <li><a class="collapse-hide" href="javascript:" @click="checkTb">淘宝验号</a>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">卖家工具<span
+                                    class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="collapse-hide" href="javascript:" @click="checkTb">淘宝验号</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="checkPdd">拼多多验号</a></li>
+                            </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -145,6 +152,9 @@
             },
             checkTb: function () {
                 this.$router.push({name: 'checkTb'});
+            },
+            checkPdd: function () {
+                this.$router.push({name: 'checkPdd'});
             }
         }
     };

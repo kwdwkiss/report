@@ -13,6 +13,7 @@ const router = window.router = new VueRouter({
                 {name: 'index', path: '', component: require('./pages/Index')},
                 {path: 'search', redirect: '/'},
                 {name: 'checkTb', path: 'check_tb', component: require('./pages/CheckTb')},
+                {name: 'checkPdd', path: 'check_pdd', component: require('./pages/CheckPdd')},
 
                 {name: 'register', path: 'register', component: require('./pages/Register')},
                 {name: 'login', path: 'login', component: require('./pages/Login')},
