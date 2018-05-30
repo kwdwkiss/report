@@ -27,7 +27,7 @@
 
         .timer {
             position: fixed;
-            top: 10px;
+            top: 80px;
             right: 10px;
             color: #000;
             font-size: 18px;
@@ -35,7 +35,7 @@
 
         .geo {
             position: fixed;
-            top: 30px;
+            top: 110px;
             right: 10px;
             color: #000;
             font-size: 18px;
