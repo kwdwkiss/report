@@ -12,6 +12,7 @@
 */
 
 Route::middleware(['csrf'])->group(function () {
+    Route::get('/check_ip', 'Index\CheckAccountController@ip');
     Route::get('/check_tb', 'Index\CheckAccountController@tb');
     Route::get('/check_pdd', 'Index\CheckAccountController@pdd');
 

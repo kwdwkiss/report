@@ -9,6 +9,8 @@
 namespace App\Http\Controllers\Index;
 
 
+use Illuminate\Http\Response;
+
 class CheckAccountController
 {
     public function tb()
@@ -22,7 +24,7 @@ class CheckAccountController
             'account_profile' => 'https://member1.taobao.com/member/fresh/account_profile.htm',
         ];
         $page = $pageList[$page];
-        $geo = $this->getGeo();
+        $geo = $this->getGeo(request()->getClientIp());
         return view('check_tb.tb', compact('page', 'geo'));
     }
 
@@ -34,13 +36,12 @@ class CheckAccountController
             'complaint_list' => 'http://mobile.yangkeduo.com/complaint_list/complaint_list.html',
         ];
         $page = $pageList[$page];
-        $geo = $this->getGeo();
+        $geo = $this->getGeo(request()->getClientIp());
         return view('check_tb.pdd', compact('page', 'geo'));
     }
 
-    protected function getGeo()
+    protected function getGeo($ip)
     {
-        $ip = request()->getClientIp();
         $result = @file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip=' . $ip);
         $ip = preg_replace('/(\d+\.\d+)\.\d+\.\d+/', '$1.*.*', $ip);
         if ($result) {
@@ -54,5 +55,18 @@ class CheckAccountController
             $geo = $ip;
         }
         return $geo;
+    }
+
+    public function ip()
+    {
+        $data = [];
+        $ips = request()->getClientIps();
+        foreach ($ips as $ip) {
+            $geo = $this->getGeo($ip);
+            $geo = explode(' ', $geo);
+            array_shift($geo);
+            $data[$ip] = implode(' ', $geo);
+        }
+        return view('check_tb.ip', compact('data'));
     }
 }
