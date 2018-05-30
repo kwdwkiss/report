@@ -56,14 +56,9 @@ class Test extends Command
      */
     public function handle()
     {
-        $client = new Client();
-        try {
-            $res = $client->get('https://rate.taobao.com/myRate.htm');
-        } catch (RequestException $e) {
-            $res = $e->getResponse();
-        }
-        $content = $res->getBody()->getContents();
-        dd($content);
+        $ip = '171.106.18.130';
+        $ip = preg_replace('/(\d+\.\d+)\.\d+\.\d+/', '$1.*.*', $ip);
+        dd($ip);
 //        \DB::enableQueryLog();
 //        $today = \App\User::query()
 //            ->whereDate('created_at', Carbon::today()->toDateString())

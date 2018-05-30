@@ -13,11 +13,6 @@ class CheckTbController
 {
     public function index()
     {
-        return view('check_tb.index');
-    }
-
-    public function page()
-    {
         $page = request('page', 'my_rate');
         $pageList = [
             'my_rate' => 'https://rate.taobao.com/user-myrate-UvCHyMmg0MFxT--buyerOrSeller%7C3--receivedOrPosted%7C1.htm',
@@ -26,6 +21,19 @@ class CheckTbController
             'appeal_center' => 'https://passport.taobao.com/ac/h5/appeal_center.htm?fromSite=0'
         ];
         $page = $pageList[$page];
-        return view('check_tb.page', compact('page'));
+        $ip = request()->getClientIp();
+        $result = @file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip=' . $ip);
+        $ip = preg_replace('/(\d+\.\d+)\.\d+\.\d+/', '$1.*.*', $ip);
+        if ($result) {
+            $result = json_decode($result, true);
+            $country = array_get($result, 'data.country');
+            $region = array_get($result, 'data.region');
+            $city = array_get($result, 'data.city');
+            $isp = array_get($result, 'data.isp');
+            $geo = "$ip $country $region $city $isp";
+        } else {
+            $geo = $ip;
+        }
+        return view('check_tb.index', compact('page', 'geo'));
     }
 }

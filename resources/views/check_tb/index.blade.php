@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=990">
 
     <meta name="keywords" content="宏海网络 淘宝验号"/>
     <meta name="description" content="宏海网络 淘宝验号"/>
@@ -13,45 +13,50 @@
 
     <title>宏海网络</title>
 
-    <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <style>
-        .row {
-            margin: 10px 0;
+        .layer {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-image: url('/images/check.png');
+            background-color: #000;
+            opacity: 0.15;
+        }
+
+        .timer {
+            position: fixed;
+            top: 110px;
+            right: 40px;
+            color: #000;
+            font-size: 30px;
+        }
+
+        .geo {
+            position: fixed;
+            top: 110px;
+            left: 40px;
+            color: #000;
+            font-size: 30px;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <h3 class="text-center text-success">宏海网络--淘宝验号工具</h3>
-    </div>
-    <div class="row">
-        <p class="col-xs-offset-1 col-xs-10 text-danger">说明：用手机淘宝扫描下方二维码，依次点击下方1-4个步骤，进入淘宝页面后截图保存即可。</p>
-    </div>
-    <div class="row">
-        <p class="col-xs-offset-1 col-xs-10">
-            <a href="{{url('/check_tb_page?page=my_rate')}}">1、淘宝评价</a>
-        </p>
-        <p class="col-xs-offset-1 col-xs-10">
-            <a href="{{url('/check_tb_page?page=item_list')}}">2、淘宝订单</a>
-        </p>
-        <p class="col-xs-offset-1 col-xs-10">
-            <a href="{{url('/check_tb_page?page=raise_naughty')}}">3、淘气值</a>
-        </p>
-        <p class="col-xs-offset-1 col-xs-10">
-            <a href="{{url('/check_tb_page?page=appeal_center')}}">4、账号体检</a>
-        </p>
-    </div>
-    <div class="row">
-        <img class="center-block" src="images/check_tb_qrcode.png" alt="" style="width: 200px">
-        <p class="text-center text-primary">淘宝验号工具二维码</p>
-    </div>
-</div>
-<!-- Scripts -->
-<script src="https://s22.cnzz.com/z_stat.php?id=1271314784&web_id=1271314784" language="JavaScript"></script>
-<style>body > a[title=站长统计] {
-        display: none
-    }</style>
+<div class="layer"></div>
+<div class="geo">{{$geo}}</div>
+<div id="timer" class="timer"></div>
+<iframe id="my-frame" src="{{$page}}" frameborder="0" style="width: 100%;min-height: 800px"></iframe>
 </body>
+<script>
+    var timer = document.getElementById('timer');
+    var frame = document.getElementById('my-frame');
+    var height = window.innerHeight;
+    frame.getAttributeNode('style').value = "width: 100%;height: " + height + "px";
+    timer.innerHTML = (new Date).toLocaleString();
+    setInterval(function () {
+        timer.innerHTML = (new Date).toLocaleString();
+    }, 1000);
+</script>
+<!-- Scripts -->
 </html>

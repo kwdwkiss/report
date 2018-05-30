@@ -30,17 +30,19 @@
                 }
             };
         },
-        mounted: function () {
-            let self = this;
-            let cookie = VueCookie.get('popWindow');
-            if (!cookie && this.$route.name !== 'check_tb') {
-                axios.get(api.indexPopWindow).then(function (res) {
-                    self.notification = res.data.data;
-                    if (self.notification.title !== '' && self.notification.content !== '') {
-                        $('.pop-window-dialog').modal('show');
-                        VueCookie.set('popWindow', true, 1);
-                    }
-                });
+        watch: {
+            '$route'(to, from) {
+                let self = this;
+                let cookie = VueCookie.get('popWindow');
+                if (!cookie && to.name !== 'checkTb') {
+                    axios.get(api.indexPopWindow).then(function (res) {
+                        self.notification = res.data.data;
+                        if (self.notification.title !== '' && self.notification.content !== '') {
+                            $('.pop-window-dialog').modal('show');
+                            VueCookie.set('popWindow', true, 1);
+                        }
+                    });
+                }
             }
         },
     }
