@@ -4,7 +4,7 @@
             <h3 class="text-center text-success">拼多多验号工具</h3>
         </div>
         <div class="row">
-            <p class="col-xs-offset-1 col-xs-10 text-danger">说明：用微信打开本页面，依次点击下方1-2个步骤，进入相应页面后截图保存即可。</p>
+            <p class="col-xs-offset-1 col-xs-10 text-danger">说明：用微信打开本页面，依次点击下方链接，进入相应页面后截图保存即可。</p>
         </div>
         <div class="row">
             <p class="col-xs-offset-1 col-xs-10">
