@@ -1,20 +1,18 @@
 <template>
-    <div>
-        <div class="article">
-            <div class="row title"><h3>{{taxonomy}}</h3></div>
+    <div class="article">
+        <div class="row text-center"><h3>{{taxonomy}}</h3></div>
 
-            <div class="row">
-                <ul>
-                    <li v-for="(item,index) in dataList.data" :key="index">
-                        <a :href="item.url">{{item.title}}</a>
-                        <span class="pull-right">{{item.updated_at.split(' ')[0]}}</span>
-                    </li>
-                </ul>
+        <div class="row" v-for="(item,index) in dataList.data" :key="index">
+            <div class="col-md-10">
+                <a :href="item.url">{{item.title}}</a>
             </div>
+            <div class="col-md-2">
+                <span class="pull-right">{{item.updated_at.split(' ')[0]}}</span>
+            </div>
+        </div>
 
-            <hr>
-
-            <div class="row">
+        <div class="row">
+            <div class="pull-right">
                 <el-pagination layout="prev, pager, next"
                                :total="dataList.meta.total"
                                :page-size="dataList.meta.per_page"
@@ -71,24 +69,7 @@
 </script>
 
 <style scoped>
-    hr {
-        margin: 10px auto;
-    }
-
     .article {
         padding: 10px 20px;
-        font-size: 16px;
-    }
-
-    .article ul li {
-        margin: 10px 0;
-    }
-
-    .title {
-        text-align: center;
-    }
-
-    .el-pagination {
-        float: right;
     }
 </style>
