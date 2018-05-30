@@ -37,6 +37,7 @@
                                 </li>
                             </ul>
                         </li>
+                        <li><a class="collapse-hide" href="javascript:" @click="customerService">联系客服</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <template v-if="!user">
@@ -155,6 +156,9 @@
             },
             checkPdd: function () {
                 this.$router.push({name: 'checkPdd'});
+            },
+            customerService: function () {
+                this.$router.push({name: 'customerService'});
             }
         }
     };
