@@ -24,7 +24,7 @@
             </p>
         </div>
         <div class="row">
-            <img class="center-block" src="images/check_tb_qrcode.gif" alt="" style="width: 280px">
+            <img class="center-block" src="images/check_tb_qrcode.png" alt="" style="width: 280px">
         </div>
     </div>
 </template>
