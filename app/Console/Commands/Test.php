@@ -19,6 +19,7 @@ use App\Taxonomy;
 use App\UserProfile;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\FileCookieJar;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Console\Command;
@@ -56,9 +57,8 @@ class Test extends Command
      */
     public function handle()
     {
-        $ip = '171.106.18.130';
-        $ip = preg_replace('/(\d+\.\d+)\.\d+\.\d+/', '$1.*.*', $ip);
-        dd($ip);
+        $data='';
+        dd($data);
 //        \DB::enableQueryLog();
 //        $today = \App\User::query()
 //            ->whereDate('created_at', Carbon::today()->toDateString())

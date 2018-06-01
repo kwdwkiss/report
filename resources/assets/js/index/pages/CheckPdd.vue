@@ -15,8 +15,7 @@
             </p>
         </div>
         <div class="row">
-            <img class="center-block" src="images/check_pdd_qrcode.png" alt="" style="width: 180px">
-            <p class="text-center text-primary">拼多多验号二维码</p>
+            <img class="center-block" src="images/check_pdd_qrcode.gif" alt="" style="width: 280px">
         </div>
     </div>
 </template>

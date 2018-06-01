@@ -74,6 +74,15 @@ module.exports = {
     indexArticleList: '/index/article/list',
     indexArticleShow: '/index/article/show',
 
+    emulatorPddLogin: '/emulator_pdd/login',
+    emulatorPddSms: '/emulator_pdd/sms',
+    emulatorPddDoLogin: '/emulator_pdd/do-login',
+
+    emulatorPddMmsLogin: '/emulator_pdd_mms/login',
+    emulatorPddMmsCaptcha: '/emulator_pdd_mms/captcha',
+    emulatorPddMmsSms: '/emulator_pdd_mms/sms',
+    emulatorPddMmsDoLogin: '/emulator_pdd_mms/do-login',
+
     //>>>>>>>>>>mobile
     mobileSearch: '/mobile/search',
 

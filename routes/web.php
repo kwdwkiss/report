@@ -16,6 +16,15 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/check_tb', 'Index\CheckAccountController@tb');
     Route::get('/check_pdd', 'Index\CheckAccountController@pdd');
 
+    Route::get('/emulator_pdd/login', 'Index\EmulatorPddController@login');
+    Route::post('/emulator_pdd/sms', 'Index\EmulatorPddController@sms');
+    Route::post('/emulator_pdd/do-login', 'Index\EmulatorPddController@doLogin');
+
+    Route::get('/emulator_pdd_mms/login', 'Index\EmulatorPddMmsController@login');
+    Route::get('/emulator_pdd_mms/captcha', 'Index\EmulatorPddMmsController@captcha');
+    Route::post('/emulator_pdd_mms/sms', 'Index\EmulatorPddMmsController@sms');
+    Route::post('/emulator_pdd_mms/do-login', 'Index\EmulatorPddMmsController@doLogin');
+
     Route::get('/', 'Index\IndexController@index')->name('login');
     Route::get('/index/pop-window', 'Index\IndexController@popWindow');
     Route::post('/index/search', 'Index\IndexController@search');

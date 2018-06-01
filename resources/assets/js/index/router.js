@@ -17,6 +17,9 @@ const router = window.router = new VueRouter({
                 {name: 'checkPdd', path: 'check_pdd', component: require('./pages/CheckPdd')},
                 {name: 'searchOrder', path: 'search_order', component: require('./pages/SearchOrder')},
 
+                {name: 'emulator_pdd', path: '/emulator_pdd', component: require('./pages/EmulatorPdd')},
+                {name: 'emulator_pdd_mms', path: '/emulator_pdd_mms', component: require('./pages/EmulatorPddMms')},
+
                 {name: 'register', path: 'register', component: require('./pages/Register')},
                 {name: 'login', path: 'login', component: require('./pages/Login')},
                 {name: 'forgetPassword', path: 'forget/password', component: require('./pages/ForgetPassword')},

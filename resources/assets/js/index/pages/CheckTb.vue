@@ -24,8 +24,7 @@
             </p>
         </div>
         <div class="row">
-            <img class="center-block" src="images/check_tb_qrcode.png" alt="" style="width: 180px">
-            <p class="text-center text-primary">淘宝验号二维码</p>
+            <img class="center-block" src="images/check_tb_qrcode.gif" alt="" style="width: 280px">
         </div>
     </div>
 </template>
