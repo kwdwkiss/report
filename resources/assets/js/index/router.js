@@ -50,12 +50,15 @@ router.beforeEach((to, from, next) => {
     } else {
         if ([
             'index',
+        ].indexOf(to.name) > -1) {
+            next({name: 'articleDetail', params: {id: laravel.index_blog_article}});
+        } else if ([
             'recharge',
             'rechargeList',
             'amountList',
             'inviterLink',
         ].indexOf(to.name) > -1) {
-            next({'name': 'articleDetail', params: {id: laravel.index_blog_article}});
+            next({name: 'login'});
         } else {
             next();
         }
