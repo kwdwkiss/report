@@ -1,0 +1,48 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: kwdwkiss
+ * Date: 2018/6/4
+ * Time: 下午9:58
+ */
+
+namespace App\Http\Controllers\Admin;
+
+use App\Exceptions\JsonException;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\StatementResource;
+use App\Statement;
+
+class StatementController extends Controller
+{
+    public function index()
+    {
+        $user = \Auth::guard('admin')->user();
+        if ($user->id != 1) {
+            throw new JsonException('无权访问');
+        }
+
+        $date = request('created_at');
+
+        $query = Statement::query();
+
+        $order_query = json_decode(request('order_query'), true);
+        $order_field = array_get($order_query, 'field');
+        $order_order = array_get($order_query, 'order');
+        if ($order_field) {
+            if ($order_order == 'ascending') {
+                $query->orderBy($order_field, 'asc');
+            } elseif ($order_order == 'descending') {
+                $query->orderBy($order_field, 'desc');
+            }
+        }
+        $query->orderBy('date', 'desc');
+
+        if (!is_null($date)) {
+            $query->where('date', '>=', $date[0]);
+            $query->where('date', '<=', $date[1]);
+        }
+
+        return StatementResource::collection($query->paginate());
+    }
+}

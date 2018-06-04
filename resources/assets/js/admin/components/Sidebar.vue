@@ -29,6 +29,10 @@
                         path: '/',
                     },
                     {
+                        title: '报表',
+                        path: '/statement/list',
+                    },
+                    {
                         title: '分类',
                         path: '/taxonomy',
                     },

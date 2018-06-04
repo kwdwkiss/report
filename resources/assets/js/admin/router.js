@@ -12,6 +12,7 @@ const router = new VueRouter({
             alias: '/',
             children: [
                 {path: '', component: require('./pages/Dashboard')},
+                {path: 'statement/list', component: require('./pages/Statement/Index')},
                 {path: 'taxonomy', component: require('./pages/Taxonomy')},
                 {path: 'tag', component: require('./pages/Tag')},
 
