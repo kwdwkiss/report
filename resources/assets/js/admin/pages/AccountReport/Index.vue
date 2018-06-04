@@ -78,7 +78,7 @@
                 routeNameCreate: 'account_report_create',
                 routeNameUpdate: 'account_report_update',
                 dataList: {meta: {}},
-                search: {},
+                search: {order_query: {}},
                 datePickerOptions: {
                     shortcuts: [{
                         text: '最近一周',
@@ -129,6 +129,10 @@
         methods: {
             doSearch: function () {
                 this.search.page = null;
+                this.loadData();
+            },
+            sortChange: function (item) {
+                this.search.order_query = {field: item.prop, order: item.order};
                 this.loadData();
             },
             reset: function () {

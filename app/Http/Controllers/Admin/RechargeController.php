@@ -24,7 +24,19 @@ class RechargeController extends Controller
         $payNo = request('pay_no');
         $created_at = request('created_at');
 
-        $query = RechargeBill::query()->with('_user')->orderBy('id', 'desc');
+        $query = RechargeBill::query()->with('_user');
+
+        $order_query = json_decode(request('order_query'), true);
+        $order_field = array_get($order_query, 'field');
+        $order_order = array_get($order_query, 'order');
+        if ($order_field) {
+            if ($order_order == 'ascending') {
+                $query->orderBy($order_field, 'asc');
+            } elseif ($order_order == 'descending') {
+                $query->orderBy($order_field, 'desc');
+            }
+        }
+        $query->orderBy('id', 'desc');
 
         if (!is_null($mobile)) {
             $query->whereHas('_user', function ($query) use ($mobile) {

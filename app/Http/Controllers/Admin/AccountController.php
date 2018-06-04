@@ -22,7 +22,19 @@ class AccountController extends Controller
         $type = request('type');
         $status = request('status');
 
-        $query = Account::query()->with('_type', '_status')->orderBy('id', 'desc');
+        $query = Account::query()->with('_type', '_status');
+
+        $order_query = json_decode(request('order_query'), true);
+        $order_field = array_get($order_query, 'field');
+        $order_order = array_get($order_query, 'order');
+        if ($order_field) {
+            if ($order_order == 'ascending') {
+                $query->orderBy($order_field, 'asc');
+            } elseif ($order_order == 'descending') {
+                $query->orderBy($order_field, 'desc');
+            }
+        }
+        $query->orderBy('id', 'desc');
 
         if (!is_null($name)) {
             $query->where('name', $name);

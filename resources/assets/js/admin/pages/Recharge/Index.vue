@@ -26,13 +26,13 @@
         </el-row>
 
         <el-row>
-            <el-table :data="dataList.data" stripe>
+            <el-table :data="dataList.data" stripe @sort-change="sortChange">
                 <el-table-column prop="id" label="ID" min-width="80"></el-table-column>
                 <el-table-column prop="_user.mobile" label="用户" min-width="110"></el-table-column>
                 <el-table-column prop="bill_no" label="系统订单号" min-width="150"></el-table-column>
                 <el-table-column prop="pay_type_label" label="支付类型" min-width="80"></el-table-column>
                 <el-table-column prop="pay_no" label="外部订单号" min-width="280"></el-table-column>
-                <el-table-column prop="money" label="金额" min-width="80"></el-table-column>
+                <el-table-column sortable="custom" prop="money" label="金额" min-width="80"></el-table-column>
                 <el-table-column prop="status_label" label="订单状态" min-width="80"></el-table-column>
                 <el-table-column prop="created_at" label="创建时间" min-width="160"></el-table-column>
                 <el-table-column label="操作" min-width="400">
@@ -51,7 +51,7 @@
             return {
                 apiList: api.rechargeList,
                 dataList: {meta: {}},
-                search: {},
+                search: {order_query: {}},
                 datePickerOptions: {
                     shortcuts: [{
                         text: '最近一周',
@@ -94,6 +94,10 @@
         methods: {
             doSearch: function () {
                 this.search.page = null;
+                this.loadData();
+            },
+            sortChange: function (item) {
+                this.search.order_query = {field: item.prop, order: item.order};
                 this.loadData();
             },
             reset: function () {

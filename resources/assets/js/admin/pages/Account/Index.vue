@@ -22,12 +22,12 @@
         </el-row>
 
         <el-row>
-            <el-table :data="dataList.data" stripe>
+            <el-table :data="dataList.data" stripe @sort-change="sortChange">
                 <el-table-column prop="type_label" label="账号类型" min-width="100"></el-table-column>
                 <el-table-column prop="name" label="账号" min-width="150"></el-table-column>
                 <el-table-column prop="status_label" label="账号状态" min-width="150"></el-table-column>
-                <el-table-column prop="report_count" label="举报次数" min-width="100"></el-table-column>
-                <el-table-column prop="auth_cash" label="合作金额" min-width="100"></el-table-column>
+                <el-table-column sortable="custom" prop="report_count" label="举报次数" min-width="100"></el-table-column>
+                <el-table-column sortable="custom" prop="auth_cash" label="合作金额" min-width="100"></el-table-column>
                 <el-table-column prop="address" label="常用地址" min-width="150"></el-table-column>
                 <el-table-column prop="remark" label="备注" min-width="200"></el-table-column>
                 <el-table-column prop="created_at" label="创建时间" min-width="180"></el-table-column>
@@ -54,7 +54,7 @@
                 routeNameCreate: 'account_create',
                 routeNameUpdate: 'account_update',
                 dataList: {meta: {}},
-                search: {},
+                search: {order_query: {}},
             }
         },
         computed: {
@@ -78,6 +78,10 @@
         methods: {
             doSearch: function () {
                 this.search.page = null;
+                this.loadData();
+            },
+            sortChange: function (item) {
+                this.search.order_query = {field: item.prop, order: item.order};
                 this.loadData();
             },
             reset: function () {
