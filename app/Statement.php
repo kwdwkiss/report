@@ -32,6 +32,10 @@ class Statement extends Model
             ->whereDate('created_at', $date)
             ->count();
 
+        $recharge_count = RechargeBill::query()
+            ->whereDate('created_at', $date)
+            ->count();
+
         $recharge_money = RechargeBill::query()
             ->whereDate('created_at', $date)
             ->sum('money');
@@ -65,6 +69,7 @@ class Statement extends Model
             'user_register_inviter' => $user_register_inviter,
             'account_report' => $account_report,
             'account_search' => $account_search,
+            'recharge_count' => $recharge_count,
             'recharge_money' => $recharge_money,
             'recharge_first_user' => $recharge_first_user,
             'recharge_referer_count' => $recharge_referer_count,

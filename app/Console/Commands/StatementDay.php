@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Statement;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class StatementDay extends Command
@@ -12,7 +13,7 @@ class StatementDay extends Command
      *
      * @var string
      */
-    protected $signature = 'statement_day {date?}';
+    protected $signature = 'statement_day {--start=} {date?}';
 
     /**
      * The console command description.
@@ -38,8 +39,19 @@ class StatementDay extends Command
      */
     public function handle()
     {
+        $start = $this->option('start');
         $date = $this->argument('date');
 
-        Statement::day($date);
+        if (!$start) {
+            Statement::day($date);
+        } else {
+            $startDate = Carbon::parse($start);
+            $endDate = Carbon::parse($date);
+            while ($startDate < $endDate) {
+                $this->info('statement ' . $startDate->toDateString());
+                Statement::day($startDate->toDateString());
+                $startDate = $startDate->addDay();
+            }
+        }
     }
 }

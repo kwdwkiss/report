@@ -27,6 +27,7 @@
                 <el-table-column prop="date" label="日期" min-width="100"></el-table-column>
                 <el-table-column prop="account_search" label="查询次数" min-width="100"></el-table-column>
                 <el-table-column prop="account_report" label="举报次数" min-width="100"></el-table-column>
+                <el-table-column prop="recharge_count" label="充值笔数" min-width="100"></el-table-column>
                 <el-table-column prop="recharge_money" label="充值金额" min-width="100"></el-table-column>
                 <el-table-column prop="recharge_first_user" label="首充用户" min-width="100"></el-table-column>
                 <el-table-column prop="user_register" label="注册用户" min-width="100"></el-table-column>
