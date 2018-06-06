@@ -60,9 +60,18 @@
         <div v-if="isSearch" class="row search-data">
             <div>
                 <div class="row" v-if="searchUser">
-                    <div class="col-md-12 text-warning">会员信息：</div>
+                    <div class="col-md-12 text-warning">
+                        会员信息：
+                        <span class="text-danger" v-if="!searchUser.is_check">（未审核）</span>
+                        <span class="text-success" v-if="searchUser.is_check">（已审核）</span>
+                    </div>
                 </div>
-                <div class="row text-success" v-if="searchUser">
+                <div class="row"
+                     v-bind:class="{
+                     'text-danger': !searchUser.is_check ,
+                     'text-success': searchUser.is_check
+                     }"
+                     v-if="searchUser">
                     <div>
                         <p class="col-xs-6 col-sm-4">会员编号：{{searchUser.id}}</p>
                         <p class="col-xs-6 col-sm-4">会员类型：{{searchUser.type_label}}</p>
@@ -385,7 +394,7 @@
             },
             searchUser: function () {
                 return this.$store.state.searchResult.user;
-            }
+            },
         },
         created: function () {
             this.initSearchParams();

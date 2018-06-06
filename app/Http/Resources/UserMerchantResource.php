@@ -17,6 +17,15 @@ class UserMerchantResource extends Resource
     {
         $data = parent::toArray($request);
         $data['type_label'] = UserMerchant::$types[$this->type];
+
+        if ($request->has('r_index')) {
+            $secretData = [];
+
+            $secretData['user_lock'] = $data['user_lock'];
+
+            return $secretData;
+        }
+
         return $data;
     }
 }
