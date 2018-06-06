@@ -56,6 +56,7 @@
                         count--;
                     }
                 }, 10000);
+                this.$router.push('/');
             },
         }
     }
