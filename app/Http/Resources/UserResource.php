@@ -34,6 +34,8 @@ class UserResource extends Resource
             $secretData['qq'] = $data['qq'] ? substr_replace($data['qq'], '**', -2) : '';
             $secretData['wx'] = $data['wx'] ? substr_replace($data['wx'], '**', -2) : '';
             $secretData['ww'] = $data['ww'] ? str_replace(mb_substr($data['ww'], -2), '**', $data['ww']) : '';
+            $secretData['jd'] = $data['jd'] ? str_replace(mb_substr($data['jd'], -2), '**', $data['jd']) : '';
+            $secretData['is'] = $data['is'] ? str_replace(mb_substr($data['is'], -2), '**', $data['is']) : '';
 
             return $secretData;
         }
