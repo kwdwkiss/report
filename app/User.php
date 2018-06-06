@@ -83,6 +83,25 @@ class User extends Authenticatable
         return (array)$value;
     }
 
+    public function isCheck()
+    {
+        $result = false;
+        switch ($this->type) {
+            case 401://普通会员
+                break;
+            case 402://试客
+                $result = $this->_profile->user_lock == true;
+                break;
+            case 403://商家
+                $result = $this->_profile->user_lock == true;
+                break;
+            case 404://主持
+                $result = $this->_profile->user_lock == true;
+                break;
+        }
+        return $result;
+    }
+
     public static function statement()
     {
         $data = \Cache::remember('statement.user.register', 10, function () {

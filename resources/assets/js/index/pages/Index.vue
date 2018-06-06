@@ -79,6 +79,8 @@
                         <p class="col-xs-6 col-sm-4">QQ：{{searchUser.qq}}</p>
                         <p class="col-xs-6 col-sm-4">微信：{{searchUser.wx}}</p>
                         <p class="col-xs-6 col-sm-4">旺旺：{{searchUser.ww}}</p>
+                        <p class="col-xs-6 col-sm-4">京东：{{searchUser.jd}}</p>
+                        <p class="col-xs-6 col-sm-4">IS：{{searchUser.is}}</p>
                         <p class="col-xs-6 col-sm-4">姓名：{{searchUser._profile.name}}</p>
                         <p class="col-xs-6 col-sm-4">年龄：{{searchUser._profile.age}}</p>
                         <p class="col-xs-6 col-sm-4">性别：{{searchUser._profile.gender_label}}</p>
@@ -162,26 +164,26 @@
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">账号类型</label>
-                                <div class="col-sm-9">
-                                    <span class="">{{reportData.account_type_label}}</span>
+                                <div class="col-sm-9 form-control-static">
+                                    {{reportData.account_type_label}}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">投诉账号</label>
-                                <div class="col-sm-9">
-                                    <span>{{reportData.account_name}}</span>
+                                <div class="col-sm-9 form-control-static">
+                                    {{reportData.account_name}}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">投诉类型</label>
-                                <div class="col-sm-9">
-                                    <span>{{reportData.type_label}}</span>
+                                <div class="col-sm-9 form-control-static">
+                                    {{reportData.type_label}}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">ip</label>
-                                <div class="col-sm-9">
-                                    <span>{{reportData.ip}}</span>
+                                <div class="col-sm-9 form-control-static">
+                                    {{reportData.ip}}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -196,8 +198,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">情况描述</label>
-                                <div class="col-sm-9">
-                                    <span>{{reportData.description}}</span>
+                                <div class="col-sm-9 form-control-static">
+                                    {{reportData.description}}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -225,26 +227,26 @@
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">账号类型</label>
-                                <div class="col-sm-9">
-                                    <span class="">{{reportData.account_type_label}}</span>
+                                <div class="col-sm-9 form-control-static">
+                                    {{reportData.account_type_label}}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">投诉账号</label>
-                                <div class="col-sm-9">
-                                    <span>{{reportData.account_name}}</span>
+                                <div class="col-sm-9 form-control-static">
+                                    {{reportData.account_name}}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">投诉类型</label>
-                                <div class="col-sm-9">
-                                    <span>{{reportData.type_label}}</span>
+                                <div class="col-sm-9 form-control-static">
+                                    {{reportData.type_label}}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">ip</label>
-                                <div class="col-sm-9">
-                                    <span>{{reportData.ip}}</span>
+                                <div class="col-sm-9 form-control-static">
+                                    {{reportData.ip}}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -259,8 +261,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">情况描述</label>
-                                <div class="col-sm-9">
-                                    <span>{{reportData.description}}</span>
+                                <div class="col-sm-9 form-control-static">
+                                    {{reportData.description}}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -518,10 +520,6 @@
         }
     }
 
-    .report-data-dialog .form-group > div {
-        padding-top: 7px;
-    }
-
     @media (min-width: 768px) {
         .search-data {
             font-size: 16px;
@@ -540,10 +538,6 @@
 
     .search-data p {
         margin: 5px 0;
-    }
-
-    .search-result-dialog .form-group > div {
-        padding-top: 7px;
     }
 
     th,

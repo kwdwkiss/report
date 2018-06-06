@@ -91,28 +91,32 @@ class IndexController extends Controller
             'result' => ''
         ]);
 
-        $user = User::query()->with('_profile')
+        $searchUser = User::query()->with('_profile')
             ->where('mobile', $name)
             ->orWhere('qq', $name)
             ->orWhere('ww', $name)
             ->orWhere('wx', $name)
             ->first();
 
-        request()->query->set('r_index', true);
-        $user = $user ? new UserResource($user) : null;
-
         $accounts = Account::where('name', $name)->get();
 
         //type 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
-        $accountReports = AccountReport::query()
+        $query = AccountReport::query()->with('_attachments');
+        if ($searchUser && $searchUser->isCheck()) {
+            $query->where('description', '!=', '');
+            $query->whereHas('_attachments');
+        }
+        $accountReports = $query
             ->where('account_name', $name)
             ->where('display', 1)
             ->orderBy('created_at', 'desc')->get();
 
+        request()->query->set('r_index', true);
+        $userResource = $searchUser ? new UserResource($searchUser) : null;
         return [
             'data' => [
                 'name' => $name,
-                'user' => $user,
+                'user' => $userResource,
                 'accounts' => AccountResource::collection($accounts),
                 'account_reports' => AccountReportResource::collection($accountReports)
             ]
