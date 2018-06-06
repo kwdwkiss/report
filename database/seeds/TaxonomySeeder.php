@@ -52,8 +52,9 @@ class TaxonomySeeder extends Seeder
                 ['id' => 313, 'pid' => 3, 'name' => '不收菜'],
 
                 ['id' => 401, 'pid' => 4, 'name' => '普通会员'],
-                ['id' => 402, 'pid' => 4, 'name' => '刷手'],
+                ['id' => 402, 'pid' => 4, 'name' => '试客'],
                 ['id' => 403, 'pid' => 4, 'name' => '商家'],
+                ['id' => 404, 'pid' => 4, 'name' => '主持'],
 
                 ['id' => 501, 'pid' => 5, 'name' => '宏海公告'],
                 ['id' => 502, 'pid' => 5, 'name' => '电商导航'],

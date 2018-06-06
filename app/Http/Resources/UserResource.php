@@ -19,6 +19,23 @@ class UserResource extends Resource
         $data['type_label'] = $this->_type ? $this->_type->name : '';
         $data['_profile'] = new UserProfileResource($this->_profile);
         $data['_merchant'] = new UserMerchantResource($this->_merchant);
+
+        if ($request->has('r_index')) {
+            $secretData = [];
+
+            $secretData['id'] = $data['id'];
+            $secretData['type_label'] = $data['type_label'];
+            $secretData['_profile'] = $data['_profile'];
+            $secretData['_merchant'] = $data['_merchant'];
+
+            $secretData['mobile'] = substr_replace($data['mobile'], '****', 3, 4);//186****3808
+            $secretData['qq'] = substr_replace($data['qq'], '**', -2);
+            $secretData['wx'] = substr_replace($data['wx'], '**', -2);
+            $secretData['ww'] = mb_ereg_replace(mb_substr($data['ww'], -2), '**', $data['ww']);
+
+            return $secretData;
+        }
+
         return $data;
     }
 }

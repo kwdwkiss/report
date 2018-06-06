@@ -59,6 +59,23 @@
 
         <div v-if="isSearch" class="row search-data">
             <div>
+                <div class="row" v-if="searchUser">
+                    <div class="col-md-12 text-warning">会员信息：</div>
+                </div>
+                <div class="row text-success" v-if="searchUser">
+                    <div>
+                        <p class="col-xs-6 col-sm-4">会员编号：{{searchUser.id}}</p>
+                        <p class="col-xs-6 col-sm-4">会员类型：{{searchUser.type_label}}</p>
+                        <p class="col-xs-6 col-sm-4">账号：{{searchUser.mobile}}</p>
+                        <p class="col-xs-6 col-sm-4">QQ：{{searchUser.qq}}</p>
+                        <p class="col-xs-6 col-sm-4">微信：{{searchUser.wx}}</p>
+                        <p class="col-xs-6 col-sm-4">旺旺：{{searchUser.ww}}</p>
+                        <p class="col-xs-6 col-sm-4">姓名：{{searchUser._profile.name}}</p>
+                        <p class="col-xs-6 col-sm-4">年龄：{{searchUser._profile.age}}</p>
+                        <p class="col-xs-6 col-sm-4">性别：{{searchUser._profile.gender_label}}</p>
+                        <p class="col-xs-6 col-sm-4">地址：{{searchUser._profile.address}}</p>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12 text-warning">查询结果：</div>
                 </div>
@@ -93,8 +110,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover" v-if="account_reports.length>0">
+                <div class="table-responsive" v-if="account_reports.length>0">
+                    <table class="table table-striped table-hover">
                         <thead>
                         <tr>
                             <th>账号类型</th>
@@ -365,6 +382,9 @@
             },
             account_reports: function () {
                 return this.$store.state.searchResult.account_reports;
+            },
+            searchUser: function () {
+                return this.$store.state.searchResult.user;
             }
         },
         created: function () {

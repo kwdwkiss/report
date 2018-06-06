@@ -21,8 +21,10 @@ use App\Http\Resources\AccountResource;
 use App\Http\Resources\NotificationResource;
 use App\Http\Resources\UserResource;
 use App\Taxonomy;
+use App\User;
 use Carbon\Carbon;
 use Detection\MobileDetect;
+use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
@@ -89,6 +91,16 @@ class IndexController extends Controller
             'result' => ''
         ]);
 
+        $user = User::query()->with('_profile')
+            ->where('mobile', $name)
+            ->orWhere('qq', $name)
+            ->orWhere('ww', $name)
+            ->orWhere('wx', $name)
+            ->first();
+
+        request()->query->set('r_index', true);
+        $user = $user ? new UserResource($user) : null;
+
         $accounts = Account::where('name', $name)->get();
 
         //type 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
@@ -100,6 +112,7 @@ class IndexController extends Controller
         return [
             'data' => [
                 'name' => $name,
+                'user' => $user,
                 'accounts' => AccountResource::collection($accounts),
                 'account_reports' => AccountReportResource::collection($accountReports)
             ]

@@ -40,7 +40,7 @@ class UserController extends Controller
             $query->where('wx', $wx);
         }
         if ($ww) {
-            $query->where('wx', $ww);
+            $query->where('ww', $ww);
         }
 
         return UserResource::collection($query->paginate());

@@ -23,6 +23,7 @@ use GuzzleHttp\Cookie\FileCookieJar;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class Test extends Command
 {
@@ -57,7 +58,8 @@ class Test extends Command
      */
     public function handle()
     {
-        $data='';
+        $data = mb_ereg_replace(mb_substr('桂林鸡血石', -2), '**', '桂林鸡血石');
+        $data = str_pad('', 3, '*');
         dd($data);
 //        \DB::enableQueryLog();
 //        $today = \App\User::query()
