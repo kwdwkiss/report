@@ -29,9 +29,9 @@ class UserResource extends Resource
             $secretData['_merchant'] = $data['_merchant'];
 
             $secretData['mobile'] = substr_replace($data['mobile'], '****', 3, 4);//186****3808
-            $secretData['qq'] = substr_replace($data['qq'], '**', -2);
-            $secretData['wx'] = substr_replace($data['wx'], '**', -2);
-            $secretData['ww'] = mb_ereg_replace(mb_substr($data['ww'], -2), '**', $data['ww']);
+            $secretData['qq'] = $secretData['qq'] ? substr_replace($data['qq'], '**', -2) : '';
+            $secretData['wx'] = $secretData['wx'] ? substr_replace($data['wx'], '**', -2) : '';
+            $secretData['ww'] = $secretData['ww'] ? mb_ereg_replace(mb_substr($data['ww'], -2), '**', $data['ww']) : '';
 
             return $secretData;
         }
