@@ -6,24 +6,16 @@
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">充值说明</label>
-                        <div class="col-sm-9">
-                            <div class="row">
-                                <span>1、1元=100积分，最低充值金额1元，请用支付宝扫描下方二维码，<span class="text-danger">备注填写注册手机号：{{user.mobile}}（否则不能自动到账）</span></span>
+                        <div class="col-sm-9 form-control-static">
+                            <p>1、支付宝扫描下方二维码，输入需要充值的金额，最低充值1元。（1元=100积分）</p>
+                            <p>2、支付宝转款一定要备注手机号：<span class="text-danger">{{user.mobile}}</span>，并且只写手机号，否者系统无法识别</p>
+                            <p>3、完成支付宝转账后，请点击
+                                <a class="btn btn-success" @click="doRecharge" style="padding: 4px 10px">充值完成</a>
+                                ，或刷新页面积分即可到账</p>
+                            <p>4、若5分钟后积分未能到账，请联系充值客服，微信号：ywh171337832</p>
+                            <div class="col-md-8">
+                                <img class="center-block" style="width: 180px" src="/images/tbpzw_alipay.png" alt="">
                             </div>
-                            <div class="row">
-                                <span>2、完成支付宝转账后，请点击充值完成按钮，耐心等待积分到账</span>
-                            </div>
-                            <div class="row">
-                                <span>3、若5分钟后未能到账，或忘记备注手机号，请联系充值客服，微信号：ywh171337832</span>
-                            </div>
-                            <div class="row">
-                                <img style="width: 200px" src="/images/tbpzw_alipay.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-9">
-                            <a class="btn btn-success" @click="doRecharge">充值完成</a>
                         </div>
                     </div>
                 </form>

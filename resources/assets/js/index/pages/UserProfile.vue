@@ -12,9 +12,8 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">会员类型</label>
-                            <div class="col-sm-9">
-                                <input :disabled="lock" type="text" class="form-control"
-                                       v-model="userModifyForm.type_label">
+                            <div class="col-sm-9 form-control-static">
+                                {{userModifyForm.type_label}}
                             </div>
                         </div>
                         <div class="form-group">
