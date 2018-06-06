@@ -61,6 +61,8 @@ class UserController extends Controller
             $qq = request('qq');
             $wx = request('wx');
             $ww = request('ww');
+            $jd = request('jd');
+            $is = request('is');
 
             Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($type);
             if ($mobile) {
@@ -103,12 +105,32 @@ class UserController extends Controller
             } else {
                 $ww = null;
             }
+
+            if ($jd) {
+                $exists = User::where('jd', $jd)->first();
+                if ($exists) {
+                    throw new JsonException('京东已存在');
+                }
+            } else {
+                $jd = null;
+            }
+
+            if ($is) {
+                $exists = User::where('is', $is)->first();
+                if ($exists) {
+                    throw new JsonException('IS已存在');
+                }
+            } else {
+                $is = null;
+            }
             $user = User::create([
                 'type' => $type,
                 'mobile' => $mobile,
                 'qq' => $qq,
                 'wx' => $wx,
                 'ww' => $ww,
+                'jd' => $jd,
+                'is' => $is
             ]);
 
             $profileData = request('_profile');
@@ -174,6 +196,8 @@ class UserController extends Controller
             $qq = request('qq');
             $wx = request('wx');
             $ww = request('ww');
+            $jd = request('jd');
+            $is = request('is');
 
             $user = User::with('_profile', '_merchant')->findOrFail(request('id'));
             Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($type);
@@ -213,12 +237,30 @@ class UserController extends Controller
             } else {
                 $ww = null;
             }
+            if ($jd) {
+                $exists = User::where('jd', $jd)->first();
+                if ($exists) {
+                    throw new JsonException('京东已存在');
+                }
+            } else {
+                $jd = null;
+            }
+            if ($is) {
+                $exists = User::where('is', $is)->first();
+                if ($exists) {
+                    throw new JsonException('IS已存在');
+                }
+            } else {
+                $is = null;
+            }
             $user->update([
                 'type' => $type,
                 'mobile' => $mobile,
                 'qq' => $qq,
                 'wx' => $wx,
                 'ww' => $ww,
+                'jd' => $jd,
+                'is' => $is
             ]);
 
             $profileData = request('_profile');
