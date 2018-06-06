@@ -206,6 +206,8 @@ class UserController extends Controller
             $qq = request('qq');
             $wx = request('wx');
             $ww = request('ww');
+            $jd = request('jd');
+            $is = request('is');
 
             $profileData = request('_profile');
             $name = array_get($profileData, 'name', '');
@@ -261,6 +263,24 @@ class UserController extends Controller
                 $ww = null;
             }
 
+            if ($jd) {
+                $exists = User::where('jd', $jd)->first();
+                if ($exists && $exists->id != $user->id) {
+                    throw new JsonException('京东已存在，请联系客服处理');
+                }
+            } else {
+                $jd = null;
+            }
+
+            if ($is) {
+                $exists = User::where('is', $is)->first();
+                if ($exists && $exists->id != $user->id) {
+                    throw new JsonException('IS已存在，请联系客服处理');
+                }
+            } else {
+                $is = null;
+            }
+
             if (!in_array($gender, [0, 1, 2,])) {
                 throw new JsonException('性别错误');
             }
@@ -269,6 +289,8 @@ class UserController extends Controller
                 'qq' => $qq,
                 'wx' => $wx,
                 'ww' => $ww,
+                'jd' => $jd,
+                'is' => $is
             ]);
 
             $profile->update([

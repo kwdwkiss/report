@@ -39,6 +39,20 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">京东</label>
+                            <div class="col-sm-9">
+                                <input :disabled="lock" type="text" class="form-control" placeholder="请输入京东号"
+                                       v-model="userModifyForm.jd">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">IS</label>
+                            <div class="col-sm-9">
+                                <input :disabled="lock" type="text" class="form-control" placeholder="请输入IS号"
+                                       v-model="userModifyForm.is">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">支付宝</label>
                             <div class="col-sm-9">
                                 <input :disabled="lock" type="text" class="form-control" placeholder="请输入支付宝"

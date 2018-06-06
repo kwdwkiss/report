@@ -9,6 +9,8 @@
             <el-input v-model="search.qq" placeholder="QQ" style="width: 150px"></el-input>
             <el-input v-model="search.wx" placeholder="微信" style="width: 150px"></el-input>
             <el-input v-model="search.ww" placeholder="旺旺" style="width: 150px"></el-input>
+            <el-input v-model="search.jd" placeholder="京东" style="width: 150px"></el-input>
+            <el-input v-model="search.is" placeholder="IS" style="width: 150px"></el-input>
             <el-button type="primary" @click="doSearch">搜索</el-button>
             <el-button type="warning" @click="reset">重置</el-button>
             <el-button type="success" @click="doCreate">添加</el-button>
@@ -98,6 +100,8 @@
                 <el-table-column prop="qq" label="QQ" min-width="120"></el-table-column>
                 <el-table-column prop="wx" label="微信" min-width="120"></el-table-column>
                 <el-table-column prop="ww" label="旺旺" min-width="120"></el-table-column>
+                <el-table-column prop="jd" label="京东" min-width="120"></el-table-column>
+                <el-table-column prop="is" label="IS" min-width="120"></el-table-column>
                 <el-table-column prop="_profile.amount" label="积分" min-width="100"></el-table-column>
                 <el-table-column prop="created_at" label="创建时间" min-width="180"></el-table-column>
                 <el-table-column label="操作" min-width="200">

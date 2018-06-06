@@ -24,6 +24,12 @@
                             <el-form-item prop="ww" label="旺旺" labelWidth="100px">
                                 <el-input v-model="form.ww"></el-input>
                             </el-form-item>
+                            <el-form-item prop="jd" label="京东" labelWidth="100px">
+                                <el-input v-model="form.jd"></el-input>
+                            </el-form-item>
+                            <el-form-item prop="is" label="IS" labelWidth="100px">
+                                <el-input v-model="form.is"></el-input>
+                            </el-form-item>
                             <el-form-item prop="remark" label="支付宝" labelWidth="100px">
                                 <el-input v-model="form._profile.alipay"></el-input>
                             </el-form-item>
