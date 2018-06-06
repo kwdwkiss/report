@@ -239,7 +239,7 @@ class UserController extends Controller
             }
             if ($jd) {
                 $exists = User::where('jd', $jd)->first();
-                if ($exists) {
+                if ($exists && $exists->id != $user->id) {
                     throw new JsonException('京东已存在');
                 }
             } else {
@@ -247,7 +247,7 @@ class UserController extends Controller
             }
             if ($is) {
                 $exists = User::where('is', $is)->first();
-                if ($exists) {
+                if ($exists && $exists->id != $user->id) {
                     throw new JsonException('IS已存在');
                 }
             } else {
