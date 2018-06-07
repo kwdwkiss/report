@@ -122,7 +122,7 @@
                 axios.get(api.userLogout).then(function (res) {
                     self.$store.commit('user', {
                         callback: function () {
-                            self.$router.push({name: 'index'});
+                            self.$router.go(0);
                         }
                     });
                 });
