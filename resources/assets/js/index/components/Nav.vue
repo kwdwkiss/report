@@ -5,8 +5,8 @@
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#my-nav" aria-expanded="false">
-                        <span style="color: #fff">菜单</span>
+                            data-target="#my-nav" aria-expanded="false" style="padding: 5px 10px">
+                        <span style="color: #fff;">菜单</span>
                         <!--<span class="icon-bar"></span>-->
                         <!--<span class="icon-bar"></span>-->
                         <!--<span class="icon-bar"></span>-->
@@ -64,9 +64,9 @@
                                         class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:">账号：{{user.mobile}}</a></li>
+                                    <li role="separator" class="divider"></li>
                                     <li><a class="collapse-hide" href="javascript:" @click="userModify">用户资料</a></li>
                                     <li><a class="collapse-hide" href="javascript:" @click="userMerchant">店铺资料</a></li>
-                                    <li role="separator" class="divider"></li>
                                     <li>
                                         <a class="collapse-hide" href="javascript:" @click="notificationList">
                                             系统通知
