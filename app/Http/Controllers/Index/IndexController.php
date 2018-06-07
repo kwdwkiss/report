@@ -224,6 +224,7 @@ class IndexController extends Controller
 
             //添加附件
             if ($attachment) {
+                $attachment->update(['use' => 1]);
                 $accountReport->_attachments()->attach($attachment);
             }
         });
