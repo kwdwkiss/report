@@ -8,9 +8,6 @@
 
 namespace App\Http\Controllers\Index;
 
-
-use Illuminate\Http\Response;
-
 class CheckAccountController
 {
     public function tb()
@@ -23,6 +20,7 @@ class CheckAccountController
             'appeal_center' => 'https://passport.taobao.com/ac/h5/appeal_center.htm?fromSite=0',
             'account_profile' => 'https://member1.taobao.com/member/fresh/account_profile.htm',
         ];
+        abort_if(!isset($pageList[$page]), 403);
         $page = $pageList[$page];
         $geo = $this->getGeo($this->getIp());
         return view('check_tb.tb', compact('page', 'geo'));
@@ -35,6 +33,7 @@ class CheckAccountController
             'personal' => 'http://mobile.yangkeduo.com/personal.html',
             'complaint_list' => 'http://mobile.yangkeduo.com/complaint_list/complaint_list.html',
         ];
+        abort_if(!isset($pageList[$page]), 403);
         $page = $pageList[$page];
         $geo = $this->getGeo($this->getIp());
         return view('check_tb.pdd', compact('page', 'geo'));
