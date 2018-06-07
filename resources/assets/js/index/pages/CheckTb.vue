@@ -17,7 +17,7 @@
                 <a href="https://market.m.taobao.com/apps/market/m-vip/raise-naughty.html">3、淘气值</a>
             </p>
             <p class="col-xs-offset-1 col-xs-10">
-                <a href="/check_tb?page=appeal_center">4、账号体检</a>
+                <a href="https://passport.taobao.com/ac/h5/appeal_center.htm?fromSite=0">4、账号体检</a>
             </p>
             <p class="col-xs-offset-1 col-xs-10">
                 <a href="/check_tb?page=account_profile">5、个人交易信息</a>

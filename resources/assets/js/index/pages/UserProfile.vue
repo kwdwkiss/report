@@ -69,7 +69,7 @@
                                 <input class="input-file" style="display: none" type="file"
                                        @change="uploadChange($event)">
                                 <img :src="userModifyForm._profile.alipay_img" alt=""
-                                     style="margin-top:10px;max-height: 200px">
+                                     style="margin-top:10px;max-height: 200px;max-width: 100%">
                             </div>
                         </div>
                         <div class="form-group">
@@ -90,7 +90,7 @@
                                 <input class="input-file" style="display: none" type="file"
                                        @change="uploadChange($event)">
                                 <img :src="userModifyForm._profile.identity_front_img" alt=""
-                                     style="margin-top:10px;max-height: 200px">
+                                     style="margin-top:10px;max-height: 200px;max-width: 100%">
                             </div>
                         </div>
                         <div class="form-group">
@@ -104,7 +104,7 @@
                                 <input class="input-file" style="display: none" type="file"
                                        @change="uploadChange($event)">
                                 <img :src="userModifyForm._profile.identity_back_img" alt=""
-                                     style="margin-top:10px;max-height: 200px">
+                                     style="margin-top:10px;max-height: 200px;max-width: 100%">
                             </div>
                         </div>
                         <div class="form-group">
