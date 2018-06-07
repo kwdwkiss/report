@@ -197,7 +197,7 @@ class IndexController extends Controller
                 break;
         }
         $reportUser = $query->first();
-        if ($reportUser->isCheck() && (empty($description) || empty($attachment))) {
+        if ($reportUser && $reportUser->isCheck() && (empty($description) || empty($attachment))) {
             throw new JsonException('举报的账号为宏海审核会员，必须同时提交图片和描述才能举报');
         }
 
