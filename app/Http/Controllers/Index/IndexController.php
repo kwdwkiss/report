@@ -258,7 +258,7 @@ class IndexController extends Controller
             ];
         }
 
-        $user = \Auth::guard('admin')->user();
+        $user = \Auth::guard('user')->user();
 
         return Attachment::createForOss($uploadFile, $user);
     }
