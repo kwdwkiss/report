@@ -30,8 +30,35 @@
                             <el-form-item label="IS" labelWidth="100px">
                                 <el-input v-model="form.is"></el-input>
                             </el-form-item>
-                            <el-form-item prop="remark" label="支付宝" labelWidth="100px">
+                            <el-form-item label="支付宝" labelWidth="100px">
                                 <el-input v-model="form._profile.alipay"></el-input>
+                            </el-form-item>
+                            <el-form-item label="支付宝截图" labelWidth="100px">
+                                <button @click="uploadImage(form,'_profile.alipay_img',$event)"
+                                        type="button" class="btn btn-primary">上传图片
+                                </button>
+                                <input class="input-file" style="display: none" type="file"
+                                       @change="uploadChange($event)">
+                                <img :src="form._profile.alipay_img" alt="" style="max-height: 150px">
+                            </el-form-item>
+                            <el-form-item label="身份证号" labelWidth="100px">
+                                <el-input v-model="form._profile.identity_code"></el-input>
+                            </el-form-item>
+                            <el-form-item label="身份证正面照" labelWidth="100px">
+                                <button @click="uploadImage(form,'_profile.identity_front_img',$event)"
+                                        type="button" class="btn btn-primary">上传图片
+                                </button>
+                                <input class="input-file" style="display: none" type="file"
+                                       @change="uploadChange($event)">
+                                <img :src="form._profile.identity_front_img" alt="" style="max-height: 150px">
+                            </el-form-item>
+                            <el-form-item label="身份证背面照" labelWidth="100px">
+                                <button @click="uploadImage(form,'_profile.identity_back_img',$event)"
+                                        type="button" class="btn btn-primary">上传图片
+                                </button>
+                                <input class="input-file" style="display: none" type="file"
+                                       @change="uploadChange($event)">
+                                <img :src="form._profile.identity_back_img" alt="" style="max-height: 150px">
                             </el-form-item>
                             <el-form-item label="姓名" labelWidth="100px">
                                 <el-input v-model="form._profile.name"></el-input>
@@ -161,6 +188,30 @@
                 this.cities = Object.keys(cityData[value]);
                 this.form._profile.city = this.cities[0];
             },
+            uploadImage: function (object, key, event) {
+                let inputFile = $(event.target).siblings('.input-file');
+                inputFile.data('object', object).data('key', key).click();
+            },
+            uploadChange: function (event) {
+                let self = this;
+                let formData = new FormData();
+                let inputFile = event.target;
+                formData.append("file", inputFile.files[0]);
+                axios
+                    .post(api.uploadOss, formData, {
+                        headers: {"Content-Type": "multipart/form-data"}
+                    })
+                    .then(function (res) {
+                        self.$message.success("成功");
+                        let object = $(inputFile).data('object');
+                        let key = $(inputFile).data('key');
+                        _.set(object, key, res.data.data.url);
+                        $(inputFile).val('');
+                    })
+                    .catch(function () {
+                        $(inputFile).val('');
+                    });
+            }
         }
     }
 </script>

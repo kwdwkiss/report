@@ -272,6 +272,10 @@ class UserController extends Controller
             $city = array_get($profileData, 'city', '');
             $remark = array_get($profileData, 'remark', '');
             $alipay = array_get($profileData, 'alipay', '');
+            $alipay_img = array_get($profileData, 'alipay_img', '');
+            $identity_code = array_get($profileData, 'identity_code', '');
+            $identity_front_img = array_get($profileData, 'identity_front_img', '');
+            $identity_back_img = array_get($profileData, 'identity_back_img', '');
             $user_lock = array_get($profileData, 'user_lock', 0);
 
             if (!in_array($gender, [0, 1, 2,])) {
@@ -285,6 +289,10 @@ class UserController extends Controller
                 'province' => $province,
                 'city' => $city,
                 'alipay' => $alipay,
+                'alipay_img' => $alipay_img,
+                'identity_code' => $identity_code,
+                'identity_front_img' => $identity_front_img,
+                'identity_back_img' => $identity_back_img,
                 'remark' => $remark,
                 'user_lock' => $user_lock
             ]);

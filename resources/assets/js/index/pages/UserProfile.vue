@@ -59,6 +59,55 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">支付宝截图</label>
+                            <div class="col-sm-9 form-control-static">
+                                <button v-if="!lock"
+                                        @click="uploadImage(userModifyForm,'_profile.alipay_img',$event)"
+                                        type="button"
+                                        class="btn btn-primary">上传图片
+                                </button>
+                                <input class="input-file" style="display: none" type="file"
+                                       @change="uploadChange($event)">
+                                <img :src="userModifyForm._profile.alipay_img" alt=""
+                                     style="margin-top:10px;max-height: 200px">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">身份证号</label>
+                            <div class="col-sm-9">
+                                <input :disabled="lock" type="text" class="form-control" placeholder="请输入身份证号"
+                                       v-model="userModifyForm._profile.identity_code">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">身份证正面照</label>
+                            <div class="col-sm-9 form-control-static">
+                                <button v-if="!lock"
+                                        @click="uploadImage(userModifyForm,'_profile.identity_front_img',$event)"
+                                        type="button"
+                                        class="btn btn-primary">上传图片
+                                </button>
+                                <input class="input-file" style="display: none" type="file"
+                                       @change="uploadChange($event)">
+                                <img :src="userModifyForm._profile.identity_front_img" alt=""
+                                     style="margin-top:10px;max-height: 200px">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">身份证背面照</label>
+                            <div class="col-sm-9 form-control-static">
+                                <button v-if="!lock"
+                                        @click="uploadImage(userModifyForm,'_profile.identity_back_img',$event)"
+                                        type="button"
+                                        class="btn btn-primary">上传图片
+                                </button>
+                                <input class="input-file" style="display: none" type="file"
+                                       @change="uploadChange($event)">
+                                <img :src="userModifyForm._profile.identity_back_img" alt=""
+                                     style="margin-top:10px;max-height: 200px">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">姓名</label>
                             <div class="col-sm-9">
                                 <input :disabled="lock" type="text" class="form-control" placeholder="请输入姓名"
@@ -127,7 +176,13 @@
         name: "UserProfile",
         data: function () {
             return {
-                userModifyForm: {_profile: {}},
+                userModifyForm: {
+                    _profile: {
+                        alipay_img: '',
+                        identity_front_img: '',
+                        identity_back_img: '',
+                    }
+                },
                 provinces: Object.keys(cityData),
                 cities: [],
             }
@@ -158,6 +213,30 @@
                     self.$store.commit("user");
                 });
             },
+            uploadImage: function (object, key, event) {
+                let inputFile = $(event.target).siblings('.input-file');
+                inputFile.data('object', object).data('key', key).click();
+            },
+            uploadChange: function (event) {
+                let self = this;
+                let formData = new FormData();
+                let inputFile = event.target;
+                formData.append("file", inputFile.files[0]);
+                axios
+                    .post(api.uploadOss, formData, {
+                        headers: {"Content-Type": "multipart/form-data"}
+                    })
+                    .then(function (res) {
+                        self.$message.success("成功");
+                        let object = $(inputFile).data('object');
+                        let key = $(inputFile).data('key');
+                        _.set(object, key, res.data.data.url);
+                        $(inputFile).val('');
+                    })
+                    .catch(function () {
+                        $(inputFile).val('');
+                    });
+            }
         }
     }
 </script>

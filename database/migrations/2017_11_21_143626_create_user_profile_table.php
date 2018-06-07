@@ -25,6 +25,10 @@ class CreateUserProfileTable extends Migration
             $table->string('province');
             $table->string('city');
             $table->string('alipay');//支付宝账号
+            $table->string('alipay_img');//支付宝截图
+            $table->string('identity_code');//身份证号
+            $table->string('identity_front_img');//身份证正面照
+            $table->string('identity_back_img');//身份证背面照
             $table->string('inviter');//邀请人
             $table->string('remark');
             $table->tinyInteger('user_lock');//用户锁 0-解锁 1-上锁

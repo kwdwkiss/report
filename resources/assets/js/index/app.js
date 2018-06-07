@@ -19,7 +19,10 @@ axios.interceptors.response.use(function (response) {
     }
 
     if (errorMessage) {
-        app.$message.error(errorMessage);
+        app.$message.error({
+            message: errorMessage,
+            duration: 5000,
+        });
         throw new Error(errorMessage);
     }
     return response;

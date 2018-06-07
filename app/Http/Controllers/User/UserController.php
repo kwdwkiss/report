@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\User;
 
 use App\AmountBill;
+use App\Attachment;
 use App\Config;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
@@ -217,6 +218,10 @@ class UserController extends Controller
             $province = array_get($profileData, 'province', '');
             $city = array_get($profileData, 'city', '');
             $alipay = array_get($profileData, 'alipay', '');
+            $alipay_img = array_get($profileData, 'alipay_img', '');
+            $identity_code = array_get($profileData, 'identity_code', '');
+            $identity_front_img = array_get($profileData, 'identity_front_img', '');
+            $identity_back_img = array_get($profileData, 'identity_back_img', '');
 
             $user = \Auth::guard('user')->user();
             $profile = $user->_profile;
@@ -301,6 +306,10 @@ class UserController extends Controller
                 'province' => $province,
                 'city' => $city,
                 'alipay' => $alipay,
+                'alipay_img' => $alipay_img,
+                'identity_code' => $identity_code,
+                'identity_front_img' => $identity_front_img,
+                'identity_back_img' => $identity_back_img,
             ]);
         });
 
