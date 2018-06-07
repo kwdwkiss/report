@@ -174,6 +174,33 @@ class IndexController extends Controller
             throw new JsonException('一个用户每天对同一账号只能举报一次');
         }
 
+        //关联用户是审核过了必须证据举报
+        $query = User::query();
+        switch ($account_type) {
+            case 201:
+                $query->where('qq', $name);
+                break;
+            case 202:
+                $query->where('ww', $name);
+                break;
+            case 203:
+                $query->where('wx', $name);
+                break;
+            case 204:
+                $query->where('mobile', $name);
+                break;
+            case 205:
+                $query->where('jd', $name);
+                break;
+            case 207:
+                $query->where('is', $name);
+                break;
+        }
+        $reportUser = $query->first();
+        if ($reportUser->isCheck() && (empty($description) || empty($attachment))) {
+            throw new JsonException('举报的账号为宏海审核会员，必须同时提交图片和描述才能举报');
+        }
+
         \DB::transaction(function () use ($user, $account_type, $name, $report_type, $ip, $description, $attachment
         ) {
             $account = Account::where('type', $account_type)->where('name', $name)->first();
