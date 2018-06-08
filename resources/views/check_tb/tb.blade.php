@@ -20,7 +20,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-image: url('/images/check.png');
+            background-image: url('https://tbpzw-static.oss-cn-shenzhen.aliyuncs.com/check_bg.png');
             background-color: #000;
             opacity: 0.15;
         }

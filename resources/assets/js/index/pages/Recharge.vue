@@ -14,7 +14,8 @@
                                 ，或刷新页面积分即可到账</p>
                             <p>4、若5分钟后积分未能到账，请联系充值客服，微信号：ywh171337832</p>
                             <div class="col-md-8">
-                                <img class="center-block" style="width: 180px" src="/images/tbpzw_alipay.png" alt="">
+                                <img class="center-block" style="width: 180px"
+                                     src="https://tbpzw-static.oss-cn-shenzhen.aliyuncs.com/tbpzw_alipay.png" alt="">
                             </div>
                         </div>
                     </div>

@@ -15,7 +15,8 @@
             </p>
         </div>
         <div class="row">
-            <img class="center-block" src="images/check_pdd_qrcode.png" alt="" style="width: 280px">
+            <img class="center-block" src="https://tbpzw-static.oss-cn-shenzhen.aliyuncs.com/check_pdd_qrcode.png"
+                 alt="" style="width: 280px">
         </div>
     </div>
 </template>
