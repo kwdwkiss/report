@@ -58,9 +58,10 @@ class Test extends Command
      */
     public function handle()
     {
-        $data = mb_ereg_replace(mb_substr('桂林鸡血石', -2), '**', '桂林鸡血石');
-        $data = str_pad('', 3, '*');
-        dd($data);
+        $data = \Image::make('/Users/kwdwkiss/Desktop/test.jpeg');
+        $data->heighten(800);
+        $data->save('/Users/kwdwkiss/Desktop/temp.jpeg');
+        dd('');
 //        \DB::enableQueryLog();
 //        $today = \App\User::query()
 //            ->whereDate('created_at', Carbon::today()->toDateString())

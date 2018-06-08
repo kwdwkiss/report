@@ -24,7 +24,9 @@ use App\Taxonomy;
 use App\User;
 use Carbon\Carbon;
 use Detection\MobileDetect;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class IndexController extends Controller
 {
@@ -245,23 +247,30 @@ class IndexController extends Controller
             throw new JsonException('上传文件失败，请稍后再次尝试');
         }
         if (!$uploadFile->isValid()) {
-            throw new JsonException('上传文件失败，请稍后再次尝试');
+            throw new JsonException('上传文件失败，文件大小必须小于3M，请稍后再次尝试');
         }
 
         $size = $uploadFile->getSize();//byte
 
-        $limit = 500;
+        $limit = 400;
 
         if ($size / 1024 > $limit) {
-            return [
-                'code' => -1,
-                'message' => "上传文件不能超过{$limit}KB"
-            ];
+            $image = \Image::make($uploadFile);
+            if ($image->height() > 600) {
+                $image->heighten(600);
+            } elseif ($image->width() > 600) {
+                $image->widen(600);
+            }
+            $filename = storage_path() . '/' . md5(microtime());
+            $image->save($filename);
+            $uploadFile = new File($filename);
         }
 
-        $user = \Auth::guard('user')->user();
+        $result = Attachment::createForOss($uploadFile, $user);
 
-        return Attachment::createForOss($uploadFile, $user);
+        unlink($uploadFile->getRealPath());
+
+        return $result;
     }
 
     public function behaviorLog()

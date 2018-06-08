@@ -5,6 +5,7 @@ namespace App;
 use App\Http\Resources\AttachmentResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 class Attachment extends Model
 {
@@ -40,7 +41,7 @@ class Attachment extends Model
         }
     }
 
-    public static function createForOss(UploadedFile $uploadFile, $user = null, $bucket = '')
+    public static function createForOss(File $uploadFile, $user = null, $bucket = '')
     {
         $filename = $uploadFile->getRealPath();
 
