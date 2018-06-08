@@ -54,6 +54,8 @@ router.beforeEach((to, from, next) => {
             'rechargeList',
             'amountList',
             'inviterLink',
+            'userProfile',
+            'userMerchant'
         ].indexOf(to.name) > -1) {
             next({name: 'login'});
         } else {

@@ -363,6 +363,12 @@
         <article-data></article-data>
 
         <bottom-ad></bottom-ad>
+
+        <div class="row hidden-md hidden-lg hidden-sm">
+            <a :href="page.mobile_ad.report_search.url">
+                <img :src="page.mobile_ad.report_search.img_src" style="width: 100%;max-height: 100px">
+            </a>
+        </div>
     </div>
 </template>
 

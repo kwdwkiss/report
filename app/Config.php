@@ -111,6 +111,12 @@ class Config extends Model
             ['img_src' => '/images/ad_empty.gif', 'url' => ''],
             ['img_src' => '/images/ad_empty.gif', 'url' => ''],
         ],
+        'mobile_ad' => [
+            'report_search' => ['img_src' => '/images/ad_empty.gif', 'url' => ''],
+            'check_tb' => ['img_src' => '/images/ad_empty.gif', 'url' => ''],
+            'check_pdd' => ['img_src' => '/images/ad_empty.gif', 'url' => ''],
+            'login' => ['img_src' => '/images/ad_empty.gif', 'url' => ''],
+        ],
         'service_qq' => [
             ['name' => '2412688374'],
             ['name' => '171337832'],

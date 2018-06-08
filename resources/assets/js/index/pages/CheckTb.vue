@@ -7,19 +7,19 @@
             <p class="col-xs-offset-1 col-xs-10 text-danger">说明：用手机淘宝扫描下方二维码，依次点击下方链接，进入淘宝页面后截图保存即可。</p>
         </div>
         <div class="row">
-            <p class="col-xs-offset-1 col-xs-10">
+            <p class="col-xs-offset-1 col-xs-5">
                 <a href="/check_tb?page=my_rate">1、淘宝评价</a>
             </p>
-            <p class="col-xs-offset-1 col-xs-10">
+            <p class="col-xs-offset-1 col-xs-5">
                 <a href="/check_tb?page=item_list">2、淘宝订单</a>
             </p>
-            <p class="col-xs-offset-1 col-xs-10">
+            <p class="col-xs-offset-1 col-xs-5">
                 <a href="https://market.m.taobao.com/apps/market/m-vip/raise-naughty.html">3、淘气值</a>
             </p>
-            <p class="col-xs-offset-1 col-xs-10">
+            <p class="col-xs-offset-1 col-xs-5">
                 <a href="https://passport.taobao.com/ac/h5/appeal_center.htm?fromSite=0">4、账号体检</a>
             </p>
-            <p class="col-xs-offset-1 col-xs-10">
+            <p class="col-xs-offset-1 col-xs-5">
                 <a href="/check_tb?page=account_profile">5、个人交易信息</a>
             </p>
         </div>
@@ -27,12 +27,23 @@
             <img class="center-block" src="https://tbpzw-static.oss-cn-shenzhen.aliyuncs.com/check_tb_qrcode.png" alt=""
                  style="width: 280px">
         </div>
+        <hr>
+        <div class="row hidden-md hidden-lg hidden-sm">
+            <a :href="page.mobile_ad.check_tb.url">
+                <img :src="page.mobile_ad.check_tb.img_src" style="width: 100%;max-height: 100px">
+            </a>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "CheckTb"
+        name: "CheckTb",
+        computed: {
+            page: function () {
+                return this.$store.state.page;
+            },
+        }
     }
 </script>
 
