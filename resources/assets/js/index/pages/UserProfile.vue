@@ -67,7 +67,7 @@
                                         class="btn btn-primary">上传图片
                                 </button>
                                 <a target="_blank"
-                                   href="https://tbpzw-static.oss-cn-shenzhen.aliyuncs.com/alipay_img_demo.jpeg">示例图片</a>
+                                   href="/images/alipay_img_demo.jpeg">示例图片</a>
                                 <input class="input-file" style="display: none" type="file"
                                        @change="uploadChange($event)">
                                 <img :src="userModifyForm._profile.alipay_img" alt=""
