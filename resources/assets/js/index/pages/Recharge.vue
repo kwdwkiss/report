@@ -13,8 +13,12 @@
                                 <a class="btn btn-success" @click="doRecharge" style="padding: 4px 10px">充值完成</a>
                                 ，或刷新页面积分即可到账</p>
                             <p>4、若5分钟后积分未能到账，请联系充值客服，微信号：ywh171337832</p>
-                            <div class="col-md-8">
-                                <img class="center-block" style="width: 180px"
+                            <div class="col-xs-6">
+                                <img class="center-block" style="width:100%;max-width: 200px"
+                                     src="/images/recharge_img_demo.png" alt="">
+                            </div>
+                            <div class="col-xs-6">
+                                <img class="center-block" style="width:100%;max-width: 200px"
                                      src="https://tbpzw-static.oss-cn-shenzhen.aliyuncs.com/tbpzw_alipay.png" alt="">
                             </div>
                         </div>

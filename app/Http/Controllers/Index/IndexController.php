@@ -259,7 +259,7 @@ class IndexController extends Controller
 
         $size = $uploadFile->getSize();//byte
 
-        $limit = 300;
+        $limit = 200;
 
         if ($size / 1024 > $limit || $watermark) {
             $image = \Image::make($uploadFile);
