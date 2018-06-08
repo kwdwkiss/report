@@ -222,7 +222,7 @@
                 let formData = new FormData();
                 let inputFile = $('.input-file');
                 formData.append('file', inputFile.get(0).files[0]);
-                axios.post('/admin/upload', formData, {
+                axios.post(api.adminUploadOss, formData, {
                     headers: {'Content-Type': 'multipart/form-data'}
                 }).then(function (res) {
                     self.$message.success('成功');

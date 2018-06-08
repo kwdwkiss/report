@@ -73,6 +73,7 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
 //>>>>>>>>>admin
 Route::middleware(['auth:admin'])->group(function () {
     Route::post('/admin/upload', 'Admin\IndexController@upload');
+    Route::post('/admin/upload-oss', 'Admin\IndexController@uploadOss');
 });
 
 Route::middleware(['auth:admin', 'csrf'])->group(function () {

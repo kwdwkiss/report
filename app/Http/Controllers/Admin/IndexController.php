@@ -89,6 +89,38 @@ class IndexController extends Controller
         return Attachment::createForLocal($uploadFile, $user);
     }
 
+    public function uploadOss()
+    {
+        $user = \Auth::guard('admin')->user();
+        if (!$user) {
+            throw new JsonException('用户未登录，请登录后再上传图片');
+        }
+
+        $uploadFile = request()->file('file');
+
+        if (!$uploadFile) {
+            throw new JsonException('上传文件失败，请稍后再次尝试');
+        }
+        if (!$uploadFile->isValid()) {
+            throw new JsonException('上传文件失败，请稍后再次尝试');
+        }
+
+        $size = $uploadFile->getSize();//byte
+
+        $limit = 1000;
+
+        if ($size / 1024 > $limit) {
+            return [
+                'code' => -1,
+                'message' => "上传文件不能超过{$limit}KB"
+            ];
+        }
+
+        $user = \Auth::guard('admin')->user();
+
+        return Attachment::createForOss($uploadFile, $user, env('ALIYUN_OSS_BUCKET_ADMIN'));
+    }
+
     public function statement()
     {
         $user = \Auth::guard('admin')->user();

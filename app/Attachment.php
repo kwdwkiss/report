@@ -40,20 +40,24 @@ class Attachment extends Model
         }
     }
 
-    public static function createForOss(UploadedFile $uploadFile, $user = null, $type = self::TYPE_IMAGE)
+    public static function createForOss(UploadedFile $uploadFile, $user = null, $bucket = '')
     {
         $filename = $uploadFile->getRealPath();
 
         $key = date('Ymd/', time()) . md5(microtime(true)) . '.' . $uploadFile->guessExtension();
 
-        $result = app('aliyun.oss')->uploadFile($key, $filename);
+        $oss = app('aliyun.oss');
+        if ($bucket) {
+            $oss->setBucket($bucket);
+        }
+        $result = $oss->uploadFile($key, $filename);
 
         if ($result['code'] == 0) {
             $attachment = static::create([
                 'user_id' => $user ? $user->id : 0,
                 'user_type' => static::parseUserType($user),
                 'name' => $key,
-                'type' => $type,
+                'type' => self::TYPE_IMAGE,
                 'use' => 0,
                 'url' => $result['url'],
                 'storage' => 1,
