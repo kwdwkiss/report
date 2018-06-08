@@ -60,6 +60,7 @@ class Test extends Command
     {
         $data = \Image::make('/Users/kwdwkiss/Desktop/test.jpeg');
         $data->heighten(800);
+        $data->insert('/Users/kwdwkiss/Desktop/indentity_watermark.png', 'center');
         $data->save('/Users/kwdwkiss/Desktop/temp.jpeg');
         dd('');
 //        \DB::enableQueryLog();

@@ -237,6 +237,7 @@ class IndexController extends Controller
     public function uploadOss()
     {
         $user = \Auth::guard('user')->user();
+
         if (!$user) {
             throw new JsonException('用户未登录，请登录后再上传图片');
         }
@@ -250,16 +251,25 @@ class IndexController extends Controller
             throw new JsonException('上传文件失败，文件大小必须小于3M，请稍后再次尝试');
         }
 
+        $watermark = request('watermark', '');
+        $watermarkList = [
+            'identity' => public_path('images/indentity_watermark.png'),
+        ];
+        $watermark = array_get($watermarkList, $watermark);
+
         $size = $uploadFile->getSize();//byte
 
-        $limit = 400;
+        $limit = 300;
 
-        if ($size / 1024 > $limit) {
+        if ($size / 1024 > $limit || $watermark) {
             $image = \Image::make($uploadFile);
             if ($image->height() > 600) {
                 $image->heighten(600);
             } elseif ($image->width() > 600) {
                 $image->widen(600);
+            }
+            if ($watermark && is_file($watermark)) {
+                $image->insert($watermark, 'center');
             }
             $filename = storage_path() . '/' . md5(microtime());
             $image->save($filename);

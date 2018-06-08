@@ -62,14 +62,15 @@
                             <label class="col-sm-3 control-label">支付宝截图</label>
                             <div class="col-sm-9 form-control-static">
                                 <button v-if="!lock"
-                                        @click="uploadImage(userModifyForm,'_profile.alipay_img',$event)"
+                                        @click="uploadImage($event)"
                                         type="button"
                                         class="btn btn-primary">上传图片
                                 </button>
+                                <input class="input-file" style="display: none" type="file"
+                                       data-key="_profile.alipay_img"
+                                       @change="uploadChange($event)">
                                 <a target="_blank"
                                    href="/images/alipay_img_demo.png">示例图片</a>
-                                <input class="input-file" style="display: none" type="file"
-                                       @change="uploadChange($event)">
                                 <img :src="userModifyForm._profile.alipay_img" alt=""
                                      style="margin-top:10px;max-height: 200px;max-width: 100%">
                             </div>
@@ -85,11 +86,13 @@
                             <label class="col-sm-3 control-label">身份证正面照</label>
                             <div class="col-sm-9 form-control-static">
                                 <button v-if="!lock"
-                                        @click="uploadImage(userModifyForm,'_profile.identity_front_img',$event)"
+                                        @click="uploadImage($event)"
                                         type="button"
                                         class="btn btn-primary">上传图片
                                 </button>
                                 <input class="input-file" style="display: none" type="file"
+                                       data-key="_profile.identity_front_img"
+                                       data-params="identity"
                                        @change="uploadChange($event)">
                                 <img :src="userModifyForm._profile.identity_front_img" alt=""
                                      style="margin-top:10px;max-height: 200px;max-width: 100%">
@@ -99,11 +102,13 @@
                             <label class="col-sm-3 control-label">身份证背面照</label>
                             <div class="col-sm-9 form-control-static">
                                 <button v-if="!lock"
-                                        @click="uploadImage(userModifyForm,'_profile.identity_back_img',$event)"
+                                        @click="uploadImage($event)"
                                         type="button"
                                         class="btn btn-primary">上传图片
                                 </button>
                                 <input class="input-file" style="display: none" type="file"
+                                       data-key="_profile.identity_back_img"
+                                       data-params="identity"
                                        @change="uploadChange($event)">
                                 <img :src="userModifyForm._profile.identity_back_img" alt=""
                                      style="margin-top:10px;max-height: 200px;max-width: 100%">
@@ -215,29 +220,28 @@
                     self.$store.commit("user");
                 });
             },
-            uploadImage: function (object, key, event) {
-                let inputFile = $(event.target).siblings('.input-file');
-                inputFile.data('object', object).data('key', key).click();
+            uploadImage: function (event) {
+                $(event.target).siblings('.input-file').click();
             },
             uploadChange: function (event) {
                 let self = this;
                 let formData = new FormData();
                 let inputFile = event.target;
                 formData.append("file", inputFile.files[0]);
-                axios
-                    .post(api.uploadOss, formData, {
-                        headers: {"Content-Type": "multipart/form-data"}
-                    })
-                    .then(function (res) {
-                        self.$message.success("成功");
-                        let object = $(inputFile).data('object');
-                        let key = $(inputFile).data('key');
-                        _.set(object, key, res.data.data.url);
-                        $(inputFile).val('');
-                    })
-                    .catch(function () {
-                        $(inputFile).val('');
-                    });
+                let params = $(inputFile).data('params');
+                if (params === 'identity') {
+                    formData.set('watermark', 'identity');
+                }
+                axios.post(api.uploadOss, formData, {
+                    headers: {"Content-Type": "multipart/form-data"}
+                }).then(function (res) {
+                    self.$message.success("成功");
+                    let key = $(inputFile).data('key');
+                    _.set(self.userModifyForm, key, res.data.data.url);
+                    $(inputFile).val('');
+                }).catch(function () {
+                    $(inputFile).val('');
+                });
             },
         }
     }
