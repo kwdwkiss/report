@@ -39,7 +39,9 @@
                                 </button>
                                 <input class="input-file" style="display: none" type="file"
                                        @change="uploadChange($event)">
-                                <img :src="form._profile.alipay_img" alt="" style="max-height: 150px">
+                                <a target="_blank" :href="form._profile.alipay_img">
+                                    <img :src="form._profile.alipay_img" alt="" style="max-height: 150px">
+                                </a>
                             </el-form-item>
                             <el-form-item label="身份证号" labelWidth="100px">
                                 <el-input v-model="form._profile.identity_code"></el-input>
@@ -50,7 +52,9 @@
                                 </button>
                                 <input class="input-file" style="display: none" type="file"
                                        @change="uploadChange($event)">
-                                <img :src="form._profile.identity_front_img" alt="" style="max-height: 150px">
+                                <a target="_blank" :href="form._profile.identity_front_img">
+                                    <img :src="form._profile.identity_front_img" alt="" style="max-height: 150px">
+                                </a>
                             </el-form-item>
                             <el-form-item label="身份证背面照" labelWidth="100px">
                                 <button @click="uploadImage(form,'_profile.identity_back_img',$event)"
@@ -58,7 +62,9 @@
                                 </button>
                                 <input class="input-file" style="display: none" type="file"
                                        @change="uploadChange($event)">
-                                <img :src="form._profile.identity_back_img" alt="" style="max-height: 150px">
+                                <a target="_blank" :href="form._profile.identity_back_img">
+                                    <img :src="form._profile.identity_back_img" alt="" style="max-height: 150px">
+                                </a>
                             </el-form-item>
                             <el-form-item label="姓名" labelWidth="100px">
                                 <el-input v-model="form._profile.name"></el-input>
