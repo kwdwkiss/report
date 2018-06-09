@@ -19,6 +19,7 @@ use App\User;
 use App\UserMerchant;
 use App\UserProfile;
 use Carbon\Carbon;
+use Cly\RegExp\RegExp;
 
 class UserController extends Controller
 {
@@ -75,7 +76,7 @@ class UserController extends Controller
         $code = request('code');
         $remember = request('remember');
 
-        if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $mobile)) {
+        if (!preg_match(RegExp::MOBILE, $mobile)) {
             throw new JsonException('手机号码格式错误');
         }
 
@@ -120,7 +121,7 @@ class UserController extends Controller
         $remember = request('remember');
         $inviterMobile = request('inviter', '');
 
-        if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $mobile)) {
+        if (!preg_match(RegExp::MOBILE, $mobile)) {
             throw new JsonException('手机号码格式错误');
         }
 
@@ -128,7 +129,7 @@ class UserController extends Controller
             throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
         }
 
-        if ($inviterMobile && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $inviterMobile)) {
+        if ($inviterMobile && !preg_match(RegExp::MOBILE, $inviterMobile)) {
             throw new JsonException('邀请人手机号码格式错误');
         }
 
@@ -364,7 +365,7 @@ class UserController extends Controller
         $mobile = request('mobile');
         $action = request('action');
 
-        if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $mobile)) {
+        if (!preg_match(RegExp::MOBILE, $mobile)) {
             return [
                 'code' => -1,
                 'message' => '手机号码格式错误'

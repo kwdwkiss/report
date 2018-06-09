@@ -4,7 +4,7 @@
             <div class="panel-heading">更新</div>
             <div class="panel-body">
                 <el-tabs v-model="updateActiveName">
-                    <el-tab-pane label="个人资料" name="1">
+                    <el-tab-pane label="账号资料" name="1">
                         <el-form>
                             <el-form-item prop="type" label="会员类型" labelWidth="100px">
                                 <el-select v-model="form.type">
@@ -30,6 +30,22 @@
                             <el-form-item label="IS" labelWidth="100px">
                                 <el-input v-model="form.is"></el-input>
                             </el-form-item>
+                            <el-form-item label="api_key" labelWidth="100px">
+                                <el-input :disabled="true" v-model="form.api_key"></el-input>
+                                <el-button type="primary">更新</el-button>
+                            </el-form-item>
+                            <el-form-item label="api_secret" labelWidth="100px">
+                                <el-input :disabled="true" v-model="form.api_secret"></el-input>
+                                <el-button type="primary">更新</el-button>
+                            </el-form-item>
+                            <el-form-item labelWidth="100px">
+                                <el-button type="primary" @click="doReturn">返回</el-button>
+                                <el-button type="success" @click="doSubmit">提交</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </el-tab-pane>
+                    <el-tab-pane label="个人资料" name="2">
+                        <el-form>
                             <el-form-item label="支付宝" labelWidth="100px">
                                 <el-input v-model="form._profile.alipay"></el-input>
                             </el-form-item>
@@ -109,7 +125,7 @@
                             </el-form-item>
                         </el-form>
                     </el-tab-pane>
-                    <el-tab-pane label="店铺资料" name="2">
+                    <el-tab-pane label="店铺资料" name="3">
                         <el-form>
                             <el-form-item label="店铺类型" labelWidth="100px">
                                 <el-select v-model="form._merchant.type">

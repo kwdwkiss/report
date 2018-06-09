@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\JsonSuccessResponse;
+use App\Http\Middleware\UserApi;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -60,5 +61,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
         'json.success' => JsonSuccessResponse::class,
+        'user.api' => UserApi::class,
     ];
 }

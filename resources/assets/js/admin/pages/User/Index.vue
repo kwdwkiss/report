@@ -53,6 +53,11 @@
                             <el-form-item label="支付宝">
                                 <span>{{ props.row._profile.alipay }}</span>
                             </el-form-item>
+                            <el-form-item label="支付宝截图">
+                                <span><a target="_blank" :href="props.row._profile.alipay_img">
+                                    <img :src="props.row._profile.alipay_img" style="max-height: 150px">
+                                </a></span>
+                            </el-form-item>
                             <el-form-item label="身份证号">
                                 <span>{{ props.row._profile.identity_code }}</span>
                             </el-form-item>
@@ -64,11 +69,6 @@
                             <el-form-item label="身份证背面">
                                 <span><a target="_blank" :href="props.row._profile.identity_back_img">
                                     <img :src="props.row._profile.identity_back_img" style="max-height: 150px">
-                                </a></span>
-                            </el-form-item>
-                            <el-form-item label="支付宝截图">
-                                <span><a target="_blank" :href="props.row._profile.alipay_img">
-                                    <img :src="props.row._profile.alipay_img" style="max-height: 150px">
                                 </a></span>
                             </el-form-item>
                             <el-form-item label="备注">

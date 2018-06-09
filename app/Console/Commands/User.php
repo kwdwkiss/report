@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\UserProfile;
 use Carbon\Carbon;
+use Cly\RegExp\RegExp;
 use Illuminate\Console\Command;
 
 class User extends Command
@@ -76,7 +77,7 @@ class User extends Command
                         continue;
                     }
 
-                    if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $mobile)) {
+                    if (!preg_match(RegExp::MOBILE, $mobile)) {
                         continue;
                     }
                     $user = \App\User::where('mobile', $mobile)->first();

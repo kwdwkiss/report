@@ -58,11 +58,8 @@ class Test extends Command
      */
     public function handle()
     {
-        $data = \Image::make('/Users/kwdwkiss/Desktop/test.jpeg');
-        $data->heighten(800);
-        $data->insert('/Users/kwdwkiss/Desktop/indentity_watermark.png', 'center');
-        $data->save('/Users/kwdwkiss/Desktop/temp.jpeg');
-        dd('');
+        $data = preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9]|9[0-9])\d{8}$/', '19956945671');
+        dd($data);
 //        \DB::enableQueryLog();
 //        $today = \App\User::query()
 //            ->whereDate('created_at', Carbon::today()->toDateString())

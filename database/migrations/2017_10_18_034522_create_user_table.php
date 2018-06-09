@@ -25,6 +25,8 @@ class CreateUserTable extends Migration
             $table->string('jd')->unique()->nullable();//京东
             $table->string('is')->unique()->nullable();//IS
             $table->string('password');
+            $table->string('api_key')->unique()->nullable();//api key
+            $table->string('api_secret')->unique()->nullable();//api secret
             $table->rememberToken();
             $table->timestamps();
 

@@ -13,6 +13,7 @@ use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AccountResource;
 use App\Taxonomy;
+use Cly\RegExp\RegExp;
 
 class AccountController extends Controller
 {
@@ -76,7 +77,7 @@ class AccountController extends Controller
             if ($type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {
                 throw new JsonException('QQ号码格式错误');
             }
-            if ($type == 204 && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $name)) {
+            if ($type == 204 && !preg_match(RegExp::MOBILE, $name)) {
                 throw new JsonException('手机号码格式错误');
             }
 

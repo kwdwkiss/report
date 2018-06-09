@@ -15,6 +15,7 @@ use App\Taxonomy;
 use App\User;
 use App\UserMerchant;
 use App\UserProfile;
+use Cly\RegExp\RegExp;
 
 class UserController extends Controller
 {
@@ -66,7 +67,7 @@ class UserController extends Controller
 
             Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($type);
             if ($mobile) {
-                if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $mobile)) {
+                if (!preg_match(RegExp::MOBILE, $mobile)) {
                     throw new JsonException('手机号错误');
                 }
                 $exists = User::where('mobile', $mobile)->first();
@@ -202,7 +203,7 @@ class UserController extends Controller
             $user = User::with('_profile', '_merchant')->findOrFail(request('id'));
             Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($type);
             if ($mobile) {
-                if (!preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $mobile)) {
+                if (!preg_match(RegExp::MOBILE, $mobile)) {
                     throw new JsonException('手机号错误');
                 }
                 $exists = User::where('mobile', $mobile)->first();

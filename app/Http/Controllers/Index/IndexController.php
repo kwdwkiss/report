@@ -23,6 +23,7 @@ use App\Http\Resources\UserResource;
 use App\Taxonomy;
 use App\User;
 use Carbon\Carbon;
+use Cly\RegExp\RegExp;
 use Detection\MobileDetect;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
@@ -153,7 +154,7 @@ class IndexController extends Controller
         if ($account_type == 203 && !preg_match('/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}+$/', $name)) {
             throw new JsonException('微信号码格式错误');
         }
-        if ($account_type == 204 && !preg_match('/^1(3[0-9]|4[579]|5[0-35-9]|7[0-9]|8[0-9])\d{8}$/', $name)) {
+        if ($account_type == 204 && !preg_match(RegExp::MOBILE, $name)) {
             throw new JsonException('手机号码格式错误');
         }
         $accountType = Taxonomy::where('pid', Taxonomy::ACCOUNT_TYPE)->findOrFail($account_type);
