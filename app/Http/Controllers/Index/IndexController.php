@@ -73,9 +73,7 @@ class IndexController extends Controller
             throw new JsonException('用户数据异常，请联系客服');
         }
 
-        request()->query->set('ip_hide', 1);
         $name = request('name');
-
         if (!$name) {
             throw new JsonException('查询账号为空');
         }
@@ -89,7 +87,7 @@ class IndexController extends Controller
             'user_id' => $user ? $user->id : 0,
             'type' => 0,
             'name' => $name,
-            'ip' => request()->getClientIp(),
+            'ip' => get_client_ip(),
             'success' => 1,
             'result' => ''
         ]);
@@ -114,6 +112,7 @@ class IndexController extends Controller
             ->where('display', 1)
             ->orderBy('created_at', 'desc')->get();
 
+        request()->query->set('ip_hide', 1);
         request()->query->set('r_index', true);
         $userResource = $searchUser ? new UserResource($searchUser) : null;
         return [

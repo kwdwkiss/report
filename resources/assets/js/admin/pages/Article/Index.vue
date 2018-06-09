@@ -69,6 +69,7 @@
             this.doSearch();
         },
         mounted: function () {
+            let self = this;
             let clipboard = new Clipboard('.btn-copy');
             clipboard.on('success', function (e) {
                 e.clearSelection();

@@ -22,7 +22,7 @@ class CheckAccountController
         ];
         abort_if(!isset($pageList[$page]), 403);
         $page = $pageList[$page];
-        $geo = $this->getGeo($this->getIp());
+        $geo = $this->getGeo(get_client_ip());
         return view('check_tb.tb', compact('page', 'geo'));
     }
 
@@ -35,7 +35,7 @@ class CheckAccountController
         ];
         abort_if(!isset($pageList[$page]), 403);
         $page = $pageList[$page];
-        $geo = $this->getGeo($this->getIp());
+        $geo = $this->getGeo(get_client_ip());
         return view('check_tb.pdd', compact('page', 'geo'));
     }
 
@@ -54,43 +54,5 @@ class CheckAccountController
             $geo = $ip;
         }
         return $geo;
-    }
-
-    protected function getIp()
-    {
-        //判断服务器是否允许$_SERVER
-        if (isset($_SERVER)) {
-            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                $realip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-            } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
-                $realip = $_SERVER['HTTP_CLIENT_IP'];
-            } else {
-                $realip = $_SERVER['REMOTE_ADDR'];
-            }
-        } else {
-            //不允许就使用getenv获取
-            if (getenv("HTTP_X_FORWARDED_FOR")) {
-                $realip = getenv("HTTP_X_FORWARDED_FOR");
-            } elseif (getenv("HTTP_CLIENT_IP")) {
-                $realip = getenv("HTTP_CLIENT_IP");
-            } else {
-                $realip = getenv("REMOTE_ADDR");
-            }
-        }
-
-        return $realip;
-    }
-
-    public function ip()
-    {
-        $data = [];
-        $ips = [$this->getIp()];
-        foreach ($ips as $ip) {
-            $geo = $this->getGeo($ip);
-            $geo = explode(' ', $geo);
-            array_shift($geo);
-            $data[$ip] = implode(' ', $geo);
-        }
-        return view('check_tb.ip', compact('data'));
     }
 }

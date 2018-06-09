@@ -36,7 +36,10 @@
             "App\\": "app/",
             "Aliyun\\":"app/aliyun",
             "Cly\\":"app/cly"
-        }
+        },
+        "files": [
+            "app/cly/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

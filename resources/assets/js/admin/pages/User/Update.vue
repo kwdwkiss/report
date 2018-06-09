@@ -32,10 +32,12 @@
                             </el-form-item>
                             <el-form-item label="api_key" labelWidth="100px">
                                 <el-input :disabled="true" v-model="form.api_key"></el-input>
+                                <el-button type="primary btn-copy" :data-clipboard-text="form.api_key">复制</el-button>
                                 <el-button type="primary" @click="apiKeyUpdate">更新</el-button>
                             </el-form-item>
                             <el-form-item label="api_secret" labelWidth="100px">
                                 <el-input :disabled="true" v-model="form.api_secret"></el-input>
+                                <el-button type="primary btn-copy" :data-clipboard-text="form.api_secret">复制</el-button>
                                 <el-button type="primary" @click="apiSecretUpdate">更新</el-button>
                             </el-form-item>
                             <el-form-item labelWidth="100px">
@@ -168,6 +170,7 @@
 
 <script>
     import cityData from '../../../city.json';
+    import Clipboard from 'clipboard';
 
     export default {
         name: "Update",
@@ -187,14 +190,25 @@
             }
         },
         created: function () {
+            this.loadData();
+        },
+        mounted: function () {
             let self = this;
-            let id = self.$route.params.id;
-            axios.get(self.apiShow, {params: {id: id}}).then(function (res) {
-                self.form = res.data.data;
-                self.form._merchant = self.form._merchant ? self.form._merchant : {};
+            let clipboard = new Clipboard('.btn-copy');
+            clipboard.on('success', function (e) {
+                e.clearSelection();
+                self.$message.success('复制成功');
             });
         },
         methods: {
+            loadData: function () {
+                let self = this;
+                let id = self.$route.params.id;
+                axios.get(self.apiShow, {params: {id: id}}).then(function (res) {
+                    self.form = res.data.data;
+                    self.form._merchant = self.form._merchant ? self.form._merchant : {};
+                });
+            },
             doReturn: function () {
                 this.$router.push({name: 'user_list'});
             },
@@ -219,26 +233,29 @@
                 let formData = new FormData();
                 let inputFile = event.target;
                 formData.append("file", inputFile.files[0]);
-                axios
-                    .post(api.uploadOss, formData, {
-                        headers: {"Content-Type": "multipart/form-data"}
-                    })
-                    .then(function (res) {
-                        self.$message.success("成功");
-                        let object = $(inputFile).data('object');
-                        let key = $(inputFile).data('key');
-                        _.set(object, key, res.data.data.url);
-                        $(inputFile).val('');
-                    })
-                    .catch(function () {
-                        $(inputFile).val('');
-                    });
+                axios.post(api.uploadOss, formData, {
+                    headers: {"Content-Type": "multipart/form-data"}
+                }).then(function (res) {
+                    self.$message.success("成功");
+                    let object = $(inputFile).data('object');
+                    let key = $(inputFile).data('key');
+                    _.set(object, key, res.data.data.url);
+                    $(inputFile).val('');
+                }).catch(function () {
+                    $(inputFile).val('');
+                });
             },
             apiKeyUpdate: function () {
-
+                let self = this;
+                axios.post(api.adminUserUpdateApiKey, {id: self.form.id}).then(function (res) {
+                    self.loadData();
+                });
             },
             apiSecretUpdate: function () {
-
+                let self = this;
+                axios.post(api.adminUserUpdateApiSecret, {id: self.form.id}).then(function (res) {
+                    self.loadData();
+                });
             }
         }
     }

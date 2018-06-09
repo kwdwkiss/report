@@ -12,7 +12,6 @@
 */
 
 Route::middleware(['csrf'])->group(function () {
-    Route::get('/check_ip', 'Index\CheckAccountController@ip');
     Route::get('/check_tb', 'Index\CheckAccountController@tb');
     Route::get('/check_pdd', 'Index\CheckAccountController@pdd');
 
@@ -140,4 +139,9 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
 
     Route::get('/admin/amount-bill/list', 'Admin\AmountController@index');
     Route::get('/admin/search-bill/list', 'Admin\SearchBillController@index');
+});
+
+//>>>>>user_api
+Route::middleware(['user_api'])->group(function () {
+    Route::get('/user_api/account-report/search', 'UserApi\IndexController@search');
 });

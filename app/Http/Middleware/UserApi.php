@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Exceptions\JsonException;
+use App\User;
 use Carbon\Carbon;
 use Closure;
 
@@ -36,8 +37,22 @@ class UserApi
         if ($time < Carbon::now()->subMinute() || $time > Carbon::now()->addMinute()) {
             throw new JsonException('timestamp is invalid', 4);
         }
+        $user = User::where('api_key', $api_key)->first();
+        if (!$user) {
+            throw new JsonException('api_key error', 5);
+        }
+        $api_secret = $user->api_secret;
+        if (!$api_secret) {
+            throw new JsonException('api_secret null', 6);
+        }
 
-
+        unset($input['sign']);
+        ksort($input);
+        $str = http_build_query($input);
+        if ($sign != md5($str . $api_secret)) {
+            throw new JsonException('sign invalid', 7);
+        }
+        \Auth::guard('user')->setUser($user);
 
         return $next($request);
     }
