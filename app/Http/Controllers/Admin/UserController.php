@@ -345,12 +345,14 @@ class UserController extends Controller
     public function updateApiKey()
     {
         $user = User::findOrFail(request('id'));
+        $user->updateApiKey();
         return [];
     }
 
     public function updateApiSecret()
     {
         $user = User::findOrFail(request('id'));
+        $user->updateApiSecret();
         return [];
     }
 

@@ -22,7 +22,7 @@ class UserProfileResource extends Resource
 
             $name = $data['name'];
             $secretData['name'] = mb_substr($name, 0, 1) . str_pad('', mb_strlen($name) - 1, '*');
-            $secretData['age'] = $data['age'] ? $data['age'] : '';
+            //$secretData['age'] = $data['age'] ? $data['age'] : '';
             $secretData['gender_label'] = $data['gender_label'];
             $secretData['province'] = $data['province'];
             $secretData['city'] = $data['city'];

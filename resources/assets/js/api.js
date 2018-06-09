@@ -33,6 +33,8 @@ module.exports = {
     userCreate: '/admin/user/create',
     userUpdate: '/admin/user/update',
     userDelete: '/admin/user/delete',
+    adminUserUpdateApiKey: '/admin/user/update-api-key',
+    adminUserUpdateApiSecret: '/admin/user/update-api-secret',
 
     accountList: '/admin/account/list',
     accountShow: '/admin/account/show',

@@ -82,7 +82,6 @@
                         <p class="col-xs-6 col-sm-4">京东：{{searchUser.jd}}</p>
                         <p class="col-xs-6 col-sm-4">IS：{{searchUser.is}}</p>
                         <p class="col-xs-6 col-sm-4">姓名：{{searchUser._profile.name}}</p>
-                        <p class="col-xs-6 col-sm-4">年龄：{{searchUser._profile.age}}</p>
                         <p class="col-xs-6 col-sm-4">性别：{{searchUser._profile.gender_label}}</p>
                         <p class="col-xs-6 col-sm-4">地址：{{searchUser._profile.address}}</p>
                     </div>

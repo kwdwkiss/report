@@ -249,7 +249,7 @@ class IndexController extends Controller
             throw new JsonException('上传文件失败，请稍后再次尝试');
         }
         if (!$uploadFile->isValid()) {
-            throw new JsonException('上传文件失败，文件大小必须小于3M，请稍后再次尝试');
+            throw new JsonException('上传文件失败，文件大小必须小于5M，请稍后再次尝试');
         }
 
         $watermark = request('watermark', '');
