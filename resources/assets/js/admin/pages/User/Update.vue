@@ -32,11 +32,11 @@
                             </el-form-item>
                             <el-form-item label="api_key" labelWidth="100px">
                                 <el-input :disabled="true" v-model="form.api_key"></el-input>
-                                <el-button type="primary">更新</el-button>
+                                <el-button type="primary" @click="apiKeyUpdate">更新</el-button>
                             </el-form-item>
                             <el-form-item label="api_secret" labelWidth="100px">
                                 <el-input :disabled="true" v-model="form.api_secret"></el-input>
-                                <el-button type="primary">更新</el-button>
+                                <el-button type="primary" @click="apiSecretUpdate">更新</el-button>
                             </el-form-item>
                             <el-form-item labelWidth="100px">
                                 <el-button type="primary" @click="doReturn">返回</el-button>
@@ -233,6 +233,12 @@
                     .catch(function () {
                         $(inputFile).val('');
                     });
+            },
+            apiKeyUpdate: function () {
+
+            },
+            apiSecretUpdate: function () {
+
             }
         }
     }

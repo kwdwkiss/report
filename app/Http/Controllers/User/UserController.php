@@ -366,10 +366,7 @@ class UserController extends Controller
         $action = request('action');
 
         if (!preg_match(RegExp::MOBILE, $mobile)) {
-            return [
-                'code' => -1,
-                'message' => '手机号码格式错误'
-            ];
+            throw new JsonException('手机号码格式错误');
         }
         if ($action && $action == 'register') {
             $user = User::where('mobile', $mobile)->first();

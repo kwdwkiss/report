@@ -342,6 +342,18 @@ class UserController extends Controller
         return [];
     }
 
+    public function updateApiKey()
+    {
+        $user = User::findOrFail(request('id'));
+        return [];
+    }
+
+    public function updateApiSecret()
+    {
+        $user = User::findOrFail(request('id'));
+        return [];
+    }
+
     public function delete()
     {
         \DB::transaction(function () {

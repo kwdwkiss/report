@@ -102,6 +102,16 @@ class User extends Authenticatable
         return $result;
     }
 
+    public function updateApiKey()
+    {
+        $this->update(['api_key' => md5($this->id . microtime())]);
+    }
+
+    public function updateApiSecret()
+    {
+        $this->update(['api_secret' => md5($this->id . microtime())]);
+    }
+
     public static function statement()
     {
         $data = \Cache::remember('statement.user.register', 10, function () {
