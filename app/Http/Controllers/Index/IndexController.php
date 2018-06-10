@@ -341,5 +341,6 @@ class IndexController extends Controller
             'content' => $content
         ]);
 
+        return [];
     }
 }
