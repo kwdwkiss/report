@@ -31,7 +31,10 @@ axios.interceptors.response.use(function (response) {
         if (error.response.status === 401) {//Unauthorized
             //app.$router.push('/login');
         } else if (error.response.status === 419) {//csrf token invalid
-            location.reload();
+            app.$message.error('token失效,手动刷新或3秒后自动刷新页面');
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
         } else {
             let errorMessage = error.response.data.message ? error.response.data.message : error.response.statusText;
             app.$message.error(errorMessage);
