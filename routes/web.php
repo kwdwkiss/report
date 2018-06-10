@@ -142,6 +142,6 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
 });
 
 //>>>>>user_api
-Route::middleware(['user_api'])->group(function () {
-    Route::get('/user_api/account-report/search', 'UserApi\IndexController@search');
+Route::middleware(['user.api'])->group(function () {
+    Route::get('/user_api/account-report/search', 'UserApi\AccountReportController@search');
 });

@@ -9,8 +9,9 @@
 namespace App\Http\Controllers\UserApi;
 
 
+use App\Account;
+use App\AccountReport;
 use App\AccountSearch;
-use App\Console\Commands\Account;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AccountReportResource;
@@ -19,7 +20,7 @@ use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Support\Collection;
 
-class AccountReport extends Controller
+class AccountReportController extends Controller
 {
     public function search()
     {
@@ -48,7 +49,7 @@ class AccountReport extends Controller
 
             AccountSearch::create([
                 'user_id' => $user ? $user->id : 0,
-                'type' => 0,
+                'type' => 1,//api 调用
                 'name' => $name,
                 'ip' => get_client_ip(),
                 'success' => 1,

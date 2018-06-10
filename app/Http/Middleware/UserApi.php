@@ -33,7 +33,7 @@ class UserApi
         if (!$timestamp) {
             throw new JsonException('timestamp null', 3);
         }
-        $time = Carbon::parse($timestamp);
+        $time = Carbon::createFromTimestamp($timestamp);
         if ($time < Carbon::now()->subMinute() || $time > Carbon::now()->addMinute()) {
             throw new JsonException('timestamp is invalid', 4);
         }
