@@ -59,31 +59,34 @@
 
         <div v-if="isSearch" class="row search-data">
             <div>
-                <div class="row" v-if="searchUser">
+                <div class="row" v-if="searchUser.length>0">
                     <div class="col-md-12 text-warning">
                         会员信息：
-                        <span class="text-danger" v-if="!searchUser.is_check">（未审核）</span>
-                        <span class="text-success" v-if="searchUser.is_check">（已审核）</span>
                     </div>
                 </div>
-                <div class="row"
-                     v-bind:class="{
-                     'text-danger': !searchUser.is_check ,
-                     'text-success': searchUser.is_check
-                     }"
-                     v-if="searchUser">
+                <div class="row" v-for="(item,index) in searchUser" :key="'search_user'+index"
+                     v-bind:class="{'text-danger':!item.is_check,'text-success':item.is_check}">
                     <div>
-                        <p class="col-xs-6 col-sm-4">会员编号：{{searchUser.id}}</p>
-                        <p class="col-xs-6 col-sm-4">会员类型：{{searchUser.type_label}}</p>
-                        <p class="col-xs-6 col-sm-4">账号：{{searchUser.mobile}}</p>
-                        <p class="col-xs-6 col-sm-4">QQ：{{searchUser.qq}}</p>
-                        <p class="col-xs-6 col-sm-4">微信：{{searchUser.wx}}</p>
-                        <p class="col-xs-6 col-sm-4">旺旺：{{searchUser.ww}}</p>
-                        <p class="col-xs-6 col-sm-4">京东：{{searchUser.jd}}</p>
-                        <p class="col-xs-6 col-sm-4">IS：{{searchUser.is}}</p>
-                        <p class="col-xs-6 col-sm-4">姓名：{{searchUser._profile.name}}</p>
-                        <p class="col-xs-6 col-sm-4">性别：{{searchUser._profile.gender_label}}</p>
-                        <p class="col-xs-6 col-sm-4">地址：{{searchUser._profile.address}}</p>
+                        <p class="col-xs-6 col-sm-4">
+                            会员审核:
+                            <strong class="bold" v-if="!item.is_check">
+                                （未审核）
+                            </strong>
+                            <strong class="bold" v-if="item.is_check">
+                                （已审核）
+                            </strong>
+                        </p>
+                        <p class="col-xs-6 col-sm-4">会员编号：{{item.id}}</p>
+                        <p class="col-xs-6 col-sm-4">会员类型：{{item.type_label}}</p>
+                        <p class="col-xs-6 col-sm-4">账号：{{item.mobile}}</p>
+                        <p class="col-xs-6 col-sm-4">QQ：{{item.qq}}</p>
+                        <p class="col-xs-6 col-sm-4">微信：{{item.wx}}</p>
+                        <p class="col-xs-6 col-sm-4">旺旺：{{item.ww}}</p>
+                        <p class="col-xs-6 col-sm-4">京东：{{item.jd}}</p>
+                        <p class="col-xs-6 col-sm-4">IS：{{item.is}}</p>
+                        <p class="col-xs-6 col-sm-4">姓名：{{item._profile.name}}</p>
+                        <p class="col-xs-6 col-sm-4">性别：{{item._profile.gender_label}}</p>
+                        <p class="col-xs-6 col-sm-4">地址：{{item._profile.address}}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -94,7 +97,7 @@
                         无<span class="text-warning">{{name}}</span>账号信息，如果确认是恶意号码，请投诉举报！
                     </p>
                 </div>
-                <div v-if="accounts.length>0" class="row" v-for="(item,index) in accounts" :key="index">
+                <div v-if="accounts.length>0" class="row" v-for="(item,index) in accounts" :key="'accounts'+index">
                     <div v-if="[103,105,106].indexOf(item.status)>-1" class="text-success">
                         <p class="col-sm-6">{{item.type_label}}账号:<span class="text-warning">{{item.name}}</span></p>
                         <p class="col-sm-6 text-primary">认证:{{item.status_label}}</p>
@@ -133,7 +136,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(item,index) in account_reports" :key="index" style="color: red">
+                        <tr v-for="(item,index) in account_reports" :key="'account_reports'+index" style="color: red">
                             <td>{{item.account_type_label}}</td>
                             <td>{{item.account_name}}</td>
                             <td>{{item.type_label}}</td>

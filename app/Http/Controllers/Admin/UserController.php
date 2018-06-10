@@ -26,6 +26,8 @@ class UserController extends Controller
         $qq = request('qq');
         $wx = request('wx');
         $ww = request('ww');
+        $jd = request('jd');
+        $is = request('is');
 
         $query = User::with('_profile', '_type', '_merchant')->orderBy('id', 'desc');
         if ($type) {
@@ -42,6 +44,12 @@ class UserController extends Controller
         }
         if ($ww) {
             $query->where('ww', $ww);
+        }
+        if ($jd) {
+            $query->where('jd', $jd);
+        }
+        if ($is) {
+            $query->where('is', $is);
         }
 
         return UserResource::collection($query->paginate());

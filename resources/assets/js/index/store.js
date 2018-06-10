@@ -9,7 +9,7 @@ const store = window.store = new Vuex.Store({
         taxonomy: laravel.taxonomy,
         breadcrumb: {},
         searchResult: {
-            user: null,
+            user: [],
             account_reports: [],
             accounts: [],
             type: 0,//type 0-不显示 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
