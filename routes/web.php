@@ -26,8 +26,6 @@ Route::middleware(['csrf'])->group(function () {
 
     Route::get('/', 'Index\IndexController@index')->name('login');
     Route::get('/index/pop-window', 'Index\IndexController@popWindow');
-    Route::post('/index/search', 'Index\IndexController@search');
-    Route::post('/index/report', 'Index\IndexController@report');
     Route::post('/index/upload-oss', 'Index\IndexController@uploadOss');
     Route::post('/index/behavior-log', 'Index\IndexController@behaviorLog');
 
@@ -48,13 +46,12 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/admin', 'Admin\IndexController@index');
     Route::get('/admin/logout', 'Admin\IndexController@logout');
     Route::post('/admin/login', 'Admin\IndexController@login');
-
-    Route::get('/mobile', 'Index\MobileController@index');
 });
 
 Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::get('/user/info', 'User\UserController@info');
-
+    Route::post('/index/search', 'Index\IndexController@search');
+    Route::post('/index/report', 'Index\IndexController@report');
     Route::get('/user/recharge/index', 'User\RechargeController@index');
     Route::get('/user/amount/index', 'User\AmountController@index');
 

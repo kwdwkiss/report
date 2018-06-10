@@ -29,7 +29,10 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
     if (error.response) {
         if (error.response.status === 401) {//Unauthorized
-            //app.$router.push('/login');
+            app.$message.error('用户未登录,请重新登录或3秒后自动跳转登录页面');
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
         } else if (error.response.status === 419) {//csrf token invalid
             app.$message.error('token失效,手动刷新或3秒后自动刷新页面');
             setTimeout(function () {
