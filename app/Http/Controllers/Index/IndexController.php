@@ -158,6 +158,7 @@ class IndexController extends Controller
         request()->query->set('r_index', true);
         return [
             'data' => [
+                'name' => $name,
                 'user' => UserResource::collection($searchUsers),
                 'accounts' => AccountResource::collection($accounts),
                 'account_reports' => AccountReportResource::collection($accountReports)

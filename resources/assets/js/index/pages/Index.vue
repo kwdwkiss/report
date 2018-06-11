@@ -94,7 +94,7 @@
                 </div>
                 <div class="row" v-if="accounts.length==0">
                     <p class="col-md-12 text-primary">
-                        无<span class="text-warning">{{searchParams.name}}</span>账号信息，如果确认是恶意号码，请投诉举报！
+                        无<span class="text-warning">{{name}}</span>账号信息，如果确认是恶意号码，请投诉举报！
                     </p>
                 </div>
                 <div v-if="accounts.length>0" class="row" v-for="(item,index) in accounts" :key="'accounts'+index">
