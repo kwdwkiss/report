@@ -73,7 +73,7 @@
                                 （未审核）
                             </strong>
                             <strong class="bold" v-if="item.is_check">
-                                （已审核）
+                                （实名认证）
                             </strong>
                         </p>
                         <p class="col-xs-6 col-sm-4">会员编号：{{item.id}}</p>
