@@ -5,6 +5,7 @@
         </div>
         <div class="row">
             <p class="col-xs-offset-1 col-xs-10 text-danger">说明：用微信打开本页面，依次点击下方链接，进入相应页面后截图保存即可。</p>
+            <p class="col-xs-offset-1 col-xs-10 text-danger">注意：拼多多账号绑定微信则用微信扫码，绑定QQ则用QQ扫码。</p>
         </div>
         <div class="row">
             <p class="col-xs-offset-1 col-xs-5">
