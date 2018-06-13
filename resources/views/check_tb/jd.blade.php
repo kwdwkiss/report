@@ -60,7 +60,7 @@
     var timer = document.getElementById('timer');
     var frame = document.getElementById('my-frame');
     var height = window.innerHeight;
-    frame.getAttributeNode('style').value = "width: 100%;height: " + height + "px";
+    frame.getAttributeNode('style').value = "height: " + height + "px";
     timer.innerHTML = (new Date).toISOString();
     setInterval(function () {
         timer.innerHTML = (new Date).toISOString();
