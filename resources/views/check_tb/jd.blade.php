@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,user-scalable=0">
+    <meta name="viewport" content="width=device-width">
 
     <meta name="keywords" content="宏海网络 淘宝验号"/>
     <meta name="description" content="宏海网络 淘宝验号"/>
@@ -40,13 +40,21 @@
             color: #000;
             font-size: 18px;
         }
+
+        iframe{
+            overflow: scroll;
+            -webkit-overflow-scrolling: touch;
+            min-width: 100%;
+            *width:100%;
+            width:1px;
+        }
     </style>
 </head>
 <body>
 <div class="layer"></div>
 <div class="geo">{{$geo}}</div>
 <div id="timer" class="timer"></div>
-<iframe id="my-frame" src="{{$page}}" frameborder="0" style="min-height: 800px"></iframe>
+<iframe id="my-frame" src="{{$page}}" frameborder="0" scrolling="no"></iframe>
 </body>
 <script>
     var timer = document.getElementById('timer');
