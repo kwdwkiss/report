@@ -39,6 +39,19 @@ class CheckAccountController
         return view('check_tb.pdd', compact('page', 'geo'));
     }
 
+    public function jd()
+    {
+        $page = request('page', 'personal');
+        $pageList = [
+            'personal' => 'http://mobile.yangkeduo.com/personal.html',
+            'complaint_list' => 'http://mobile.yangkeduo.com/complaint_list/complaint_list.html',
+        ];
+        abort_if(!isset($pageList[$page]), 403);
+        $page = $pageList[$page];
+        $geo = $this->getGeo(get_client_ip());
+        return view('check_tb.jd', compact('page', 'geo'));
+    }
+
     protected function getGeo($ip)
     {
         $result = @file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip=' . $ip);

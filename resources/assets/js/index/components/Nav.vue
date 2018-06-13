@@ -25,6 +25,7 @@
                                 <li><a class="collapse-hide" href="javascript:" @click="index">恶意账号查询</a>
                                 <li><a class="collapse-hide" href="javascript:" @click="checkTb">淘宝验号</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="checkPdd">拼多多验号</a></li>
+                                <!--<li><a class="collapse-hide" href="javascript:" @click="checkJd">京东验号</a></li>-->
                                 <li><a class="collapse-hide" href="javascript:" @click="searchOrder">淘宝信用查询</a></li>
                             </ul>
                         </li>
@@ -162,6 +163,9 @@
             },
             checkPdd: function () {
                 this.$router.push({name: 'checkPdd'});
+            },
+            checkJd: function () {
+                this.$router.push({name: 'checkJd'});
             },
             customerService: function () {
                 this.$router.push({name: 'customerService'});
