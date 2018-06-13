@@ -46,7 +46,7 @@
 <div class="layer"></div>
 <div class="geo">{{$geo}}</div>
 <div id="timer" class="timer"></div>
-<iframe id="my-frame" src="{{$page}}" frameborder="0" style="width: 100%;max-width:450px;min-height: 800px"></iframe>
+<iframe id="my-frame" src="{{$page}}" frameborder="0" style="width: 400px;min-height: 800px"></iframe>
 </body>
 <script>
     var timer = document.getElementById('timer');
