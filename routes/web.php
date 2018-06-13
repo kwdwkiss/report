@@ -14,6 +14,7 @@
 Route::middleware(['csrf'])->group(function () {
     Route::get('/check_tb', 'Index\CheckAccountController@tb');
     Route::get('/check_pdd', 'Index\CheckAccountController@pdd');
+    Route::get('/check_jd', 'Index\CheckAccountController@jd');
 
     Route::get('/emulator_pdd/login', 'Index\EmulatorPddController@login');
     Route::post('/emulator_pdd/sms', 'Index\EmulatorPddController@sms');

@@ -9,16 +9,16 @@
         </div>
         <div class="row">
             <p class="col-xs-offset-1 col-xs-5">
-                <a href="https://vip.m.jd.com/?sceneval=2&sid=">1、京东会员</a>
+                <a href="/check_jd?page=jd_member">1、京东会员</a>
             </p>
             <p class="col-xs-offset-1 col-xs-5">
-                <a href="https://m.jr.jd.com/jdbt/credit/index.html">2、小白信用</a>
+                <a href="/check_jd?page=credit">2、小白信用</a>
             </p>
             <p class="col-xs-offset-1 col-xs-5">
-                <a href="https://home.m.jd.com/myJd/newhome.action">3、我的京东</a>
+                <a href="/check_jd?page=my_jd">3、我的京东</a>
             </p>
             <p class="col-xs-offset-1 col-xs-5">
-                <a href="https://wqs.jd.com/my/accountv2.shtml?sceneval=2">4、账户设置</a>
+                <a href="/check_jd?page=account">4、账户设置</a>
             </p>
         </div>
         <div class="row">

@@ -41,10 +41,12 @@ class CheckAccountController
 
     public function jd()
     {
-        $page = request('page', 'personal');
+        $page = request('page');
         $pageList = [
-            'personal' => 'http://mobile.yangkeduo.com/personal.html',
-            'complaint_list' => 'http://mobile.yangkeduo.com/complaint_list/complaint_list.html',
+            'jd_member' => 'https://vip.m.jd.com/?sceneval=2&sid=',
+            'credit' => 'https://m.jr.jd.com/jdbt/credit/index.html',
+            'my_jd' => 'https://home.m.jd.com/myJd/newhome.action',
+            'account' => 'https://wqs.jd.com/my/accountv2.shtml?sceneval=2',
         ];
         abort_if(!isset($pageList[$page]), 403);
         $page = $pageList[$page];
