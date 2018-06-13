@@ -42,7 +42,7 @@
         }
     </style>
 </head>
-<body>
+<body style="max-width: 400px">
 <div class="layer"></div>
 <div class="geo">{{$geo}}</div>
 <div id="timer" class="timer"></div>
