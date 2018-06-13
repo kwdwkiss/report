@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=400">
 
     <meta name="keywords" content="宏海网络 淘宝验号"/>
     <meta name="description" content="宏海网络 淘宝验号"/>
@@ -42,7 +42,7 @@
         }
     </style>
 </head>
-<body style="max-width: 400px">
+<body>
 <div class="layer"></div>
 <div class="geo">{{$geo}}</div>
 <div id="timer" class="timer"></div>
