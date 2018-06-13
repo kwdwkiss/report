@@ -42,7 +42,7 @@
         }
     </style>
 </head>
-<body>
+<body style="max-width: 400px">
 <div class="layer"></div>
 <div class="geo">{{$geo}}</div>
 <div id="timer" class="timer"></div>
@@ -52,7 +52,7 @@
     var timer = document.getElementById('timer');
     var frame = document.getElementById('my-frame');
     var height = window.innerHeight;
-    //frame.getAttributeNode('style').value = "width: 100%;max-width:400px;height: " + height + "px";
+    frame.getAttributeNode('style').value = "width: 100%;height: " + height + "px";
     timer.innerHTML = (new Date).toISOString();
     setInterval(function () {
         timer.innerHTML = (new Date).toISOString();
