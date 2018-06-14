@@ -17,8 +17,13 @@ class UserResource extends Resource
     {
         $data = parent::toArray($request);
         $data['type_label'] = $this->_type ? $this->_type->name : '';
+        $data['auth_type_label'] = $this->_auth_type ? $this->_auth_type->name : '';
+        $data['auth_duration_label'] = $data['auth_duration'] . '个月';
+        $data['is_auth'] = $this->resource->isAuth();
+
         $data['_profile'] = new UserProfileResource($this->_profile);
         $data['_merchant'] = new UserMerchantResource($this->_merchant);
+
 
         if ($request->has('r_index')) {
             $secretData = [];

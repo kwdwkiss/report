@@ -21,9 +21,19 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $dates = [
+        'auth_start_at',
+        'auth_end_at'
+    ];
+
     public function _type()
     {
         return $this->hasOne(Taxonomy::class, 'id', 'type');
+    }
+
+    public function _auth_type()
+    {
+        return $this->hasOne(Taxonomy::class, 'id', 'auth_type');
     }
 
     public function _profile()
@@ -81,6 +91,11 @@ class User extends Authenticatable
         }
 
         return (array)$value;
+    }
+
+    public function isAuth()
+    {
+        return $this->auth_end_at > Carbon::now();
     }
 
     public function isCheck()

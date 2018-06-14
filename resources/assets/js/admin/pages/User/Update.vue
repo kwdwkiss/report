@@ -1,8 +1,70 @@
 <template>
     <div>
+        <div class="modal fade user-auth-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">会员认证</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">认证类型</label>
+                                <div class="col-sm-9">
+                                    <select v-model="auth_type" class="form-control">
+                                        <option value="0">无</option>
+                                        <option v-for="item in userTypeList" :value="item.id">{{item.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">认证时长</label>
+                                <div class="col-sm-9">
+                                    <select v-model="auth_duration" class="form-control">
+                                        <option value="0">无</option>
+                                        <option value="1">1个月</option>
+                                        <option value="2">2个月</option>
+                                        <option value="3">3个月</option>
+                                        <option value="4">4个月</option>
+                                        <option value="5">5个月</option>
+                                        <option value="6">6个月</option>
+                                        <option value="7">7个月</option>
+                                        <option value="8">8个月</option>
+                                        <option value="9">9个月</option>
+                                        <option value="10">10个月</option>
+                                        <option value="11">11个月</option>
+                                        <option value="12">一年</option>
+                                        <option value="24">两年</option>
+                                        <option value="36">三年</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="button" class="btn btn-primary" @click="doUserAuth">提交</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="panel">
             <div class="panel-heading">更新</div>
             <div class="panel-body">
+                <div class="row text-success" v-if="form.is_auth">
+                    <span class="col-md-3">认证类型：{{form.auth_type_label}}</span>
+                    <span class="col-md-3">认证时长：{{form.auth_duration_label}}</span>
+                    <span class="col-md-3">认证开始时间：{{form.auth_start_at}}</span>
+                    <span class="col-md-3">认证结束时间：{{form.auth_end_at}}</span>
+                </div>
+
                 <el-tabs v-model="updateActiveName">
                     <el-tab-pane label="账号资料" name="1">
                         <el-form>
@@ -11,6 +73,7 @@
                                     <el-option v-for="item in userTypeList" :key="item.id" :value="item.id"
                                                :label="item.name"></el-option>
                                 </el-select>
+                                <el-button type="primary" @click="userAuth">会员认证</el-button>
                             </el-form-item>
                             <el-form-item label="手机号" labelWidth="100px">
                                 <el-input v-model="form.mobile"></el-input>
@@ -182,6 +245,8 @@
                 updateActiveName: '1',
                 provinces: Object.keys(cityData),
                 cities: [],
+                auth_type: 0,
+                auth_duration: 0,
             }
         },
         computed: {
@@ -255,6 +320,23 @@
                 let self = this;
                 axios.post(api.adminUserUpdateApiSecret, {id: self.form.id}).then(function (res) {
                     self.loadData();
+                });
+            },
+            userAuth: function () {
+                $('.user-auth-dialog').modal('show');
+            },
+            doUserAuth: function () {
+                let self = this;
+                axios.post(api.adminUserUpdateAuth, {
+                    id: self.form.id,
+                    auth_type: self.auth_type,
+                    auth_duration: self.auth_duration
+                }).then(function (res) {
+                    $('.user-auth-dialog').modal('hide');
+                    self.$message.success('成功');
+                    self.loadData();
+                }).catch(function () {
+                    $('.user-auth-dialog').modal('hide');
                 });
             }
         }

@@ -15,6 +15,7 @@ use App\Taxonomy;
 use App\User;
 use App\UserMerchant;
 use App\UserProfile;
+use Carbon\Carbon;
 use Cly\RegExp\RegExp;
 
 class UserController extends Controller
@@ -29,7 +30,7 @@ class UserController extends Controller
         $jd = request('jd');
         $is = request('is');
 
-        $query = User::with('_profile', '_type', '_merchant')->orderBy('id', 'desc');
+        $query = User::with('_profile', '_type', '_auth_type', '_merchant')->orderBy('id', 'desc');
         if ($type) {
             $query->where('type', $type);
         }
@@ -346,6 +347,28 @@ class UserController extends Controller
                 ]);
             }
         });
+
+        return [];
+    }
+
+    public function updateAuth()
+    {
+        $auth_duration = (int)request('auth_duration');
+        if ($auth_duration < 0) {
+            throw new JsonException('auth_duration error');
+        }
+        $auth_type = request('auth_type');
+        Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($auth_type);
+        $user = User::findOrFail(request('id'));
+
+        $auth_start_at = Carbon::now();
+        $auth_end_at = $auth_start_at->addMonths($auth_duration);
+        $user->update([
+            'auth_type' => $auth_type,
+            'auth_duration' => $auth_duration,
+            'auth_start_at' => $auth_start_at,
+            'auth_end_at' => $auth_end_at
+        ]);
 
         return [];
     }
