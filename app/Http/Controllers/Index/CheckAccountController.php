@@ -51,7 +51,7 @@ class CheckAccountController
         abort_if(!isset($pageList[$pageKey]), 403);
         $page = $pageList[$pageKey];
         $geo = $this->getGeo(get_client_ip());
-        if ($pageKey == 'jd_member') {
+        if (in_array($pageKey, ['jd_member', 'credit'])) {
             return view('check_tb.jd_fix', compact('page', 'geo'));
         }
         return view('check_tb.jd', compact('page', 'geo'));
