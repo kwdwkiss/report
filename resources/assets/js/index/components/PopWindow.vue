@@ -34,7 +34,7 @@
             '$route'(to, from) {
                 let self = this;
                 let cookie = VueCookie.get('popWindow');
-                if (!cookie && ['checkTb', 'checkPdd'].indexOf(to.name) === -1) {
+                if (!cookie && ['checkTb', 'checkPdd', 'checkJd'].indexOf(to.name) === -1) {
                     axios.get(api.indexPopWindow).then(function (res) {
                         self.notification = res.data.data;
                         if (self.notification.title !== '' && self.notification.content !== '') {
