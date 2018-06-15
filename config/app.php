@@ -178,7 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Mews\Captcha\CaptchaServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+        //Overtrue\LaravelWeChat\ServiceProvider::class,
     ],
 
     /*
@@ -230,6 +231,7 @@ return [
 
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        //'EasyWeChat' => Overtrue\LaravelWeChat\Facade::class,
     ],
 
 ];
