@@ -19,7 +19,7 @@
                             </div>
                             <div class="col-xs-6">
                                 <img class="center-block" style="width:100%;max-width: 200px"
-                                     src="https://tbpzw-static.oss-cn-shenzhen.aliyuncs.com/tbpzw_alipay.png" alt="">
+                                     src="/images/tbpzw_alipay.png" alt="">
                             </div>
                         </div>
                     </div>

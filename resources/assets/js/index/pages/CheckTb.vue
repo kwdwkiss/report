@@ -24,7 +24,7 @@
             </p>
         </div>
         <div class="row">
-            <img class="center-block" src="https://tbpzw-static.oss-cn-shenzhen.aliyuncs.com/check_tb_qrcode.png" alt=""
+            <img class="center-block" src="/images/check_tb_qrcode.png" alt=""
                  style="width: 280px">
         </div>
         <hr>
