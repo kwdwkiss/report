@@ -2,7 +2,7 @@
     <div class="hidden-xs hidden-sm row logo">
         <div class="col-md-6">
             <a href="/#/">
-                <img src="/images/logo.jpg">
+                <img src="/images/logo.png">
             </a>
         </div>
         <div class="hidden-xs hidden-sm service-qq col-xs-12 col-md-3">
