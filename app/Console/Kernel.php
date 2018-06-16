@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('statics')->everyTenMinutes();
         $schedule->command('settle_day')->dailyAt('00:30');
-        $schedule->command('statement_day')->dailyAt('01:00');
+        $schedule->command('statement_day')->dailyAt('00:15');
     }
 
     /**
