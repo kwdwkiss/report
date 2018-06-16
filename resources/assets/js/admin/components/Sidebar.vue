@@ -93,6 +93,20 @@
                                 path: '/system/admin'
                             },
                         ]
+                    },
+                    {
+                        title: '微信设置',
+                        path: '/wechat',
+                        children: [
+                            {
+                                title: '服务器配置',
+                                path: '/wechat/server'
+                            },
+                            {
+                                title: '菜单管理',
+                                path: '/wechat/menu'
+                            },
+                        ]
                     }
                 ]
             }

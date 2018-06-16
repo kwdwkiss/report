@@ -68,6 +68,7 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a class="collapse-hide" href="javascript:" @click="userModify">用户资料</a></li>
                                     <li><a class="collapse-hide" href="javascript:" @click="userMerchant">店铺资料</a></li>
+                                    <li><a class="collapse-hide" href="javascript:" @click="userReport">我的举报</a></li>
                                     <li>
                                         <a class="collapse-hide" href="javascript:" @click="notificationList">
                                             系统通知
@@ -172,6 +173,9 @@
             },
             searchOrder: function () {
                 this.$router.push({name: 'searchOrder'});
+            },
+            userReport: function () {
+                this.$router.push({name: 'userReport'});
             }
         }
     };

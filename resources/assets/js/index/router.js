@@ -26,6 +26,7 @@ const router = window.router = new VueRouter({
                 {name: 'forgetPassword', path: 'forget/password', component: require('./pages/ForgetPassword')},
                 {name: 'userProfile', path: 'user/profile', component: require('./pages/UserProfile')},
                 {name: 'userMerchant', path: 'user/merchant', component: require('./pages/UserMerchant')},
+                {name: 'userReport', path: 'user/report', component: require('./pages/UserReport')},
 
                 {name: 'articleList', path: 'article/list/:id', component: require('./pages/ArticleList')},
                 {name: 'articleDetail', path: 'article/:id', component: require('./pages/ArticleDetail'), props: true},

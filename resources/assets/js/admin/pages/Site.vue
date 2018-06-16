@@ -5,9 +5,7 @@
             <div class="panel-body">
                 <el-form ref="form" :model="dataList" label-width="150px">
                     <el-form-item label="域名">
-                        <template>
-                            <el-input v-model="dataList.domain"></el-input>
-                        </template>
+                        <el-input v-model="dataList.domain"></el-input>
                     </el-form-item>
                     <el-form-item label="名称">
                         <el-input v-model="dataList.name"></el-input>

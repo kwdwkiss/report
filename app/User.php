@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $this->hasMany(RechargeBill::class, 'user_id', 'id');
     }
 
+    public function _account_report()
+    {
+        return $this->hasMany(AccountReport::class, 'user_id', 'id');
+    }
+
     public function _tagEntities()
     {
         return $this->belongsTo(TagEntity::class, 'id', 'entity_id');

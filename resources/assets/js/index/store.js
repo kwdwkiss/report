@@ -18,6 +18,7 @@ const store = window.store = new Vuex.Store({
         notification: {data: [], meta: {}, links: {}},
         unreadNotification: laravel.unreadNotification,
         recharge: {data: [], meta: {}, links: {}},
+        report: {data: [], meta: {}, links: {}},
         amount: {data: [], meta: {}, links: {}},
     },
     mutations: {
@@ -66,6 +67,11 @@ const store = window.store = new Vuex.Store({
         recharge(state, payload) {
             axios.get(api.userRechargeList, {params: payload}).then(function (res) {
                 state.recharge = res.data;
+            });
+        },
+        report(state, payload) {
+            axios.get(api.userReportList, {params: payload}).then(function (res) {
+                state.report = res.data;
             });
         },
         amount(state, payload) {

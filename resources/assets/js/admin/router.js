@@ -47,9 +47,14 @@ const router = new VueRouter({
 
                 {path: 'site/index-page', component: require('./pages/IndexPage')},
                 {path: 'site/pop-window', component: require('./pages/PopWindow')},
+
                 {path: 'system/site', component: require('./pages/Site')},
                 {path: 'system/admin', component: require('./pages/Admin')},
+
                 {path: 'message', component: require('./pages/Message')},
+
+                {path: 'wechat/server', component: require('./pages/Wechat/Server')},
+                {path: 'wechat/menu', component: require('./pages/Wechat/Menu')},
             ]
         }
     ]

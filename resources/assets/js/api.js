@@ -65,6 +65,11 @@ module.exports = {
     amountBillList: '/admin/amount-bill/list',
     searchBillList: '/admin/search-bill/list',
 
+    adminWechatGetServer: '/admin/wechat/get-server',
+    adminWechatSetServer: '/admin/wechat/set-server',
+    adminWechatGetMenu: '/admin/wechat/get-menu',
+    adminWechatSetMenu: '/admin/wechat/set-menu',
+
     //>>>>>>>>>>index
     taxonomyAllData: '/taxonomy/all/data',
     taxonomyAllDisplay: '/taxonomy/all/display',
@@ -101,6 +106,8 @@ module.exports = {
     userSms: '/user/sms',
     userModify: '/user/modify',
     userMerchantModify: '/user/merchant/modify',
+    userReportList: '/user/report/index',
+    userReportHide: '/user/report/hide',
 
     userNotificationList: '/user/notification',
     userUnreadNotificationList: '/user/unread-notification',

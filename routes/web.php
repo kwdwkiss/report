@@ -64,6 +64,9 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::post('/user/modify', 'User\UserController@modify');
     Route::post('/user/merchant/modify', 'User\UserController@merchantModify');
 
+    Route::get('/user/report/index', 'User\AccountReportController@index');
+    Route::post('/user/report/hide', 'User\AccountReportController@hide');
+
     Route::post('/mobile/search', 'Index\MobileController@search');
 });
 
@@ -138,7 +141,15 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
 
     Route::get('/admin/amount-bill/list', 'Admin\AmountController@index');
     Route::get('/admin/search-bill/list', 'Admin\SearchBillController@index');
+
+    Route::get('/admin/wechat/get-server', 'Admin\WechatController@getServer');
+    Route::post('/admin/wechat/set-server', 'Admin\WechatController@setServer');
+    Route::get('/admin/wechat/get-menu', 'Admin\WechatController@getMenu');
+    Route::post('/admin/wechat/set-menu', 'Admin\WechatController@setMenu');
 });
+
+//>>>>>wechat serv
+Route::any('/wechat', 'WechatController@serve');
 
 //>>>>>user_api
 Route::middleware(['user.api'])->group(function () {

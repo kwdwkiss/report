@@ -27,6 +27,7 @@ class CreateAccountReportTable extends Migration
 
             $table->index(['account_name', 'account_type']);
             $table->index('created_at');
+            $table->index('user_id');
         });
     }
 
