@@ -303,7 +303,11 @@ class IndexController extends Controller
         $limit = 200;
 
         if ($size / 1024 > $limit || $watermark) {
-            $image = \Image::make($uploadFile);
+            try {
+                $image = \Image::make($uploadFile);
+            } catch (\Exception $e) {
+                throw new JsonException('图片只支持JPG，PNG，GIF格式。');
+            }
             if ($image->height() > 600) {
                 $image->heighten(600);
             } elseif ($image->width() > 600) {

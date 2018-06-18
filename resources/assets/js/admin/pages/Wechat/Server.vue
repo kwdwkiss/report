@@ -12,6 +12,18 @@
                 <el-form-item label="AppSecret">
                     <el-input v-model="dataList.app_secret"></el-input>
                 </el-form-item>
+                <el-form-item label="Token">
+                    <el-input v-model="dataList.token"></el-input>
+                    <a class="btn btn-primary btn-copy" :data-clipboard-text="dataList.token">复制</a>
+                    <a class="btn btn-primary" @click="refreshToken">刷新</a>
+                </el-form-item>
+                <el-form-item label="AESKey">
+                    <el-input v-model="dataList.aes_key"></el-input>
+                </el-form-item>
+                <el-form-item label="服务器URL">
+                    <el-input :disabled="true" v-model="dataList.url"></el-input>
+                    <a class="btn btn-primary btn-copy" :data-clipboard-text="dataList.url">复制</a>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submit">提交</el-button>
                 </el-form-item>
@@ -21,6 +33,8 @@
 </template>
 
 <script>
+    import Clipboard from 'clipboard';
+
     export default {
         name: "Server",
         data: function () {
@@ -30,6 +44,14 @@
         },
         created: function () {
             this.loadData();
+        },
+        mounted: function () {
+            let self = this;
+            let clipboard = new Clipboard('.btn-copy');
+            clipboard.on('success', function (e) {
+                e.clearSelection();
+                self.$message.success('复制成功');
+            });
         },
         methods: {
             loadData: function () {
@@ -41,6 +63,13 @@
             submit: function () {
                 let self = this;
                 axios.post(api.adminWechatSetServer, self.dataList).then(function () {
+                    self.$message.success('成功');
+                    self.loadData();
+                });
+            },
+            refreshToken: function () {
+                let self = this;
+                axios.post(api.adminWechatRefreshToken, self.dataList).then(function () {
                     self.$message.success('成功');
                     self.loadData();
                 });

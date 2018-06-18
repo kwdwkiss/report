@@ -21,6 +21,7 @@ class WechatController extends Controller
             'app_id' => 'wx1120af7462a3189a',
             'app_secret' => '684b481e3f783330b6ae960cb5688a36'
         ]);
+        $wechat->url = url('/wechat');
 
         return [
             'data' => new WechatReource($wechat)
@@ -40,6 +41,19 @@ class WechatController extends Controller
             'wechat_id' => $wechat_id,
             'app_id' => $app_id,
             'app_secret' => $app_secret
+        ]);
+
+        return [];
+    }
+
+    public function refreshToken()
+    {
+        $id = request('id');
+
+        $wechat = Wechat::findOrFail($id);
+
+        $wechat->update([
+            'token' => str_random(32)
         ]);
 
         return [];

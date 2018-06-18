@@ -144,6 +144,7 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
 
     Route::get('/admin/wechat/get-server', 'Admin\WechatController@getServer');
     Route::post('/admin/wechat/set-server', 'Admin\WechatController@setServer');
+    Route::post('/admin/wechat/refresh-token', 'Admin\WechatController@refreshToken');
     Route::get('/admin/wechat/get-menu', 'Admin\WechatController@getMenu');
     Route::post('/admin/wechat/set-menu', 'Admin\WechatController@setMenu');
 });

@@ -67,6 +67,7 @@ module.exports = {
 
     adminWechatGetServer: '/admin/wechat/get-server',
     adminWechatSetServer: '/admin/wechat/set-server',
+    adminWechatRefreshToken: '/admin/wechat/refresh-token',
     adminWechatGetMenu: '/admin/wechat/get-menu',
     adminWechatSetMenu: '/admin/wechat/set-menu',
 

@@ -19,6 +19,8 @@ class CreateWechatsTable extends Migration
             $table->string('wechat_id');//原始ID
             $table->string('app_id');//appid
             $table->string('app_secret');//app_secret
+            $table->string('token');
+            $table->string('aes_key');
             $table->text('menu');//menu
             $table->timestamps();
         });

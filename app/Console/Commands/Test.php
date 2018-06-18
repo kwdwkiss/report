@@ -59,7 +59,7 @@ class Test extends Command
      */
     public function handle()
     {
-        $data = null>Carbon::now();
+        $data = url('wechat');
         dd($data);
 //        \DB::enableQueryLog();
 //        $today = \App\User::query()
