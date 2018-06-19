@@ -21,6 +21,7 @@ class CreateStatementsTable extends Migration
             $table->integer('user_register_inviter');//被邀请注册数
             $table->integer('account_report');//账号举报
             $table->integer('account_search');//账号查询
+            $table->integer('account_search_user');//查询用户
             $table->integer('recharge_count');//充值笔数
             $table->integer('recharge_money');//充值金额
             $table->integer('recharge_first_user');//首充用户

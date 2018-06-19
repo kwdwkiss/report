@@ -32,6 +32,11 @@ class Statement extends Model
             ->whereDate('created_at', $date)
             ->count();
 
+        $subQuery = AccountSearch::query()
+            ->whereDate('created_at', $date)
+            ->groupBy('user_id');
+        $account_search_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))->mergeBindings($subQuery->getQuery())->count();
+
         $recharge_count = RechargeBill::query()
             ->whereDate('created_at', $date)
             ->count();
@@ -69,6 +74,7 @@ class Statement extends Model
             'user_register_inviter' => $user_register_inviter,
             'account_report' => $account_report,
             'account_search' => $account_search,
+            'account_search_user' => $account_search_user,
             'recharge_count' => $recharge_count,
             'recharge_money' => $recharge_money,
             'recharge_first_user' => $recharge_first_user,
