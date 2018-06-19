@@ -26,15 +26,13 @@ class SearchBill extends Model
             ->groupBy('user_id')
             ->get()->pluck('user_id');
 
-        \DB::transaction(function () use ($userIds, $date) {
-            $data = [];
-            foreach ($userIds as $userId) {
+        foreach ($userIds as $userId) {
+            \DB::transaction(function () use ($userId, $date) {
                 $count = AccountSearch::query()
                     ->whereDate('created_at', $date)
                     ->where('user_id', $userId)
                     ->count();
 
-                $data[$userId] = $count;
                 $amount = $count * 2;//一次查询消耗2积分
 
                 $searchBill = static::updateOrCreate([
@@ -68,7 +66,7 @@ class SearchBill extends Model
                         'description' => "${date}查询${count}次"
                     ]);
                 }
-            }
-        });
+            });
+        }
     }
 }
