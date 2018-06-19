@@ -30,11 +30,19 @@
                 }
             };
         },
+        mounted: function () {
+            this.popWindow(this.$route);
+        },
         watch: {
             '$route'(to, from) {
+                this.popWindow(to);
+            }
+        },
+        methods: {
+            popWindow: function (route) {
                 let self = this;
                 let cookie = VueCookie.get('popWindow');
-                if (!cookie && ['checkTb', 'checkPdd', 'checkJd'].indexOf(to.name) === -1) {
+                if (!cookie && ['checkTb', 'checkPdd', 'checkJd'].indexOf(route.name) === -1) {
                     axios.get(api.indexPopWindow).then(function (res) {
                         self.notification = res.data.data;
                         if (self.notification.title !== '' && self.notification.content !== '') {
@@ -44,7 +52,7 @@
                     });
                 }
             }
-        },
+        }
     }
 </script>
 

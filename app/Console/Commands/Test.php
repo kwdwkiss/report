@@ -59,8 +59,8 @@ class Test extends Command
      */
     public function handle()
     {
-        $data = url('wechat');
-        dd($data);
+        $data = json_decode('', true);
+        dd((array)$data);
 //        \DB::enableQueryLog();
 //        $today = \App\User::query()
 //            ->whereDate('created_at', Carbon::today()->toDateString())
