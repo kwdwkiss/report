@@ -47,7 +47,8 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">IS</label>
                             <div class="col-sm-9">
-                                <input :disabled="lock" type="text" class="form-control" placeholder="请输入IS号"
+                                <input :disabled="lock" type="text" class="form-control"
+                                       placeholder="请输入IS号（IS：iSpeak语音，没有可不填）"
                                        v-model="userModifyForm.is">
                             </div>
                         </div>

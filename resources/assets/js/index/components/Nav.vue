@@ -26,6 +26,7 @@
                                 <li><a class="collapse-hide" href="javascript:" @click="checkTb">淘宝验号</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="checkPdd">拼多多验号</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="checkJd">京东验号</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="oneKeyExcel">一键生成EXCEL</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="searchOrder">淘宝信用查询</a></li>
                             </ul>
                         </li>
@@ -176,6 +177,9 @@
             },
             userReport: function () {
                 this.$router.push({name: 'userReport'});
+            },
+            oneKeyExcel: function () {
+                this.$router.push({name: 'oneKeyExcel'});
             }
         }
     };

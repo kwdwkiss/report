@@ -16,6 +16,7 @@ const router = window.router = new VueRouter({
                 {name: 'checkTb', path: 'check_tb', component: require('./pages/CheckTb')},
                 {name: 'checkPdd', path: 'check_pdd', component: require('./pages/CheckPdd')},
                 {name: 'checkJd', path: 'check_jd', component: require('./pages/CheckJd')},
+                {name: 'oneKeyExcel', path: 'one_key_excel', component: require('./pages/OneKeyExcel')},
                 {name: 'searchOrder', path: 'search_order', component: require('./pages/SearchOrder')},
 
                 {name: 'emulator_pdd', path: '/emulator_pdd', component: require('./pages/EmulatorPdd')},
