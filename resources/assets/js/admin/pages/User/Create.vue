@@ -97,7 +97,7 @@
         },
         methods: {
             doReturn: function () {
-                this.$router.push({name: 'user_list'});
+                this.$router.push({name: 'userList'});
             },
             doSubmit: function () {
                 let self = this;

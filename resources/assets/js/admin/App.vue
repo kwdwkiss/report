@@ -1,48 +1,18 @@
 <template>
     <div>
-        <div class="header-wrapper">
-            <app-header></app-header>
-        </div>
-        <div class="body-wrapper">
-            <aside class="main-sidebar">
-                <app-sidebar></app-sidebar>
-            </aside>
-            <div class="content-wrapper">
-                <router-view></router-view>
-            </div>
+        <my-nav></my-nav>
+
+        <div class="container-fluid" style="padding-top:51px">
+
+            <router-view></router-view>
+
         </div>
     </div>
 </template>
 <script>
-    Vue.component('app-header', require('./components/Header.vue'));
-    Vue.component('app-sidebar', require('./components/Sidebar.vue'));
+    Vue.component('my-nav', require('./components/Nav.vue'));
 </script>
 <style>
-    .header-wrapper {
-        width: 100%;
-    }
-
-    .body-wrapper {
-        position: absolute;
-        width: 100%;
-        top: 60px;
-        bottom: 0;
-    }
-
-    .main-sidebar {
-        height: 100%;
-        width: 160px;
-    }
-
-    .content-wrapper {
-        position: absolute;
-        top: 0;
-        left: 160px;
-        bottom: 0;
-        right: 0;
-        padding: 10px;
-    }
-
     .el-pagination {
         float: right;
     }

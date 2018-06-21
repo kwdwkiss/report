@@ -51,8 +51,8 @@
                 apiList: api.accountList,
                 apiUpdate: api.accountUpdate,
                 apiDelete: api.accountDelete,
-                routeNameCreate: 'account_create',
-                routeNameUpdate: 'account_update',
+                routeNameCreate: 'accountCreate',
+                routeNameUpdate: 'accountUpdate',
                 dataList: {meta: {}},
                 search: {order_query: {}},
             }

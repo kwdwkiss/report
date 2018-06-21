@@ -38,7 +38,7 @@
         },
         methods: {
             doReturn: function () {
-                this.$router.push({name: 'recharge_list'});
+                this.$router.push({name: 'rechargeList'});
             },
             doSubmit: function () {
                 let self = this;

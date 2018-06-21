@@ -6,7 +6,7 @@ Vue.use(Vuex);
 const store = window.store = new Vuex.Store({
     state: {
         taxonomy: laravel.taxonomy,
-        user: {},
+        user: laravel.user,
     },
     mutations: {
         taxonomy(state) {
@@ -17,7 +17,7 @@ const store = window.store = new Vuex.Store({
         user(state) {
             axios.get(api.adminInfo).then(function (res) {
                 state.user = res.data.data;
-            })
+            });
         }
     }
 });

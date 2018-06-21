@@ -45,7 +45,7 @@
             return {
                 apiShow: api.accountShow,
                 apiUpdate: api.accountUpdate,
-                routeNameList: 'account_list',
+                routeNameList: 'accountList',
                 form: {},
             }
         },

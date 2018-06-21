@@ -52,7 +52,7 @@
             return {
                 apiShow: api.accountReportShow,
                 apiUpdate: api.accountReportUpdate,
-                routeNameList: 'account_report_list',
+                routeNameList: 'reportList',
                 form: {},
             }
         },

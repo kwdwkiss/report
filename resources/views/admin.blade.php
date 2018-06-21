@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>管理后台</title>
+    <title>宏海网络-管理后台</title>
 
     <script>
         window.laravel = JSON.parse('{!! json_encode($config) !!}');

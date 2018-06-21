@@ -25,7 +25,7 @@ class IndexController extends Controller
     {
         $config = [
             'taxonomy' => Taxonomy::allData(),
-            'siteName' => Config::get('site.name') . ' 管理后台',
+            'user' => \Auth::guard('admin')->user(),
         ];
         return view('admin', compact('config'));
     }

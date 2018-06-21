@@ -75,8 +75,8 @@
                 apiList: api.accountReportList,
                 apiUpdate: api.accountReportUpdate,
                 apiDelete: api.accountReportDelete,
-                routeNameCreate: 'account_report_create',
-                routeNameUpdate: 'account_report_update',
+                routeNameCreate: 'reportCreate',
+                routeNameUpdate: 'reportUpdate',
                 dataList: {meta: {}},
                 search: {order_query: {}},
                 datePickerOptions: {

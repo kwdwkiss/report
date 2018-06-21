@@ -180,10 +180,10 @@
                 });
             },
             doCreate: function () {
-                this.$router.push({name: 'user_create'});
+                this.$router.push({name: 'userCreate'});
             },
             doUpdate: function (row) {
-                this.$router.push({name: 'user_update', params: {id: row.id}});
+                this.$router.push({name: 'userUpdate', params: {id: row.id}});
             },
             doDelete: function (row) {
                 let self = this;

@@ -115,7 +115,7 @@
                 });
             },
             recharge: function () {
-                this.$router.push({name: 'recharge_create'});
+                this.$router.push({name: 'rechargeCreate'});
             }
         }
     }

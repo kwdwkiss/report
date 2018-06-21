@@ -102,10 +102,10 @@
                 });
             },
             doCreate: function () {
-                this.$router.push({name: 'article_create'});
+                this.$router.push({name: 'articleCreate'});
             },
             doUpdate: function (row) {
-                this.$router.push({name: 'article_update', params: {id: row.id}});
+                this.$router.push({name: 'articleUpdate', params: {id: row.id}});
             },
             doDelete: function (row) {
                 let self = this;

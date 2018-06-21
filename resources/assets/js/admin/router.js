@@ -11,50 +11,36 @@ const router = new VueRouter({
             component: require('./App.vue'),
             alias: '/',
             children: [
-                {path: '', component: require('./pages/Dashboard')},
-                {path: 'statement/list', component: require('./pages/Statement/Index')},
-                {path: 'taxonomy', component: require('./pages/Taxonomy')},
-                {path: 'tag', component: require('./pages/Tag')},
+                {name: 'index', path: '', component: require('./pages/Dashboard')},
+                {name: 'statementList', path: 'statement/list', component: require('./pages/Statement/Index')},
 
-                {name: 'article_list', path: 'article/list', component: require('./pages/Article/Index')},
-                {name: 'article_create', path: 'article/create', component: require('./pages/Article/Create')},
-                {name: 'article_update', path: 'article/update/:id', component: require('./pages/Article/Update')},
+                {name: 'userList', path: 'user/list', component: require('./pages/User/Index')},
+                {name: 'userCreate', path: 'user/create', component: require('./pages/User/Create')},
+                {name: 'userUpdate', path: 'user/update/:id', component: require('./pages/User/Update')},
+                {name: 'reportList', path: 'report/list', component: require('./pages/AccountReport/Index')},
+                {name: 'reportUpdate', path: 'report/update/:id', component: require('./pages/AccountReport/Update')},
+                {name: 'accountList', path: 'account/list', component: require('./pages/Account/Index')},
+                {name: 'accountCreate', path: 'account/create', component: require('./pages/Account/Create')},
+                {name: 'accountUpdate', path: 'account/update/:id', component: require('./pages/Account/Update')},
 
-                {name: 'user_list', path: 'user/list', component: require('./pages/User/Index')},
-                {name: 'user_create', path: 'user/create', component: require('./pages/User/Create')},
-                {name: 'user_update', path: 'user/update/:id', component: require('./pages/User/Update')},
+                {name: 'rechargeList', path: 'recharge/list', component: require('./pages/Recharge/Index')},
+                {name: 'rechargeCreate', path: 'recharge/create', component: require('./pages/Recharge/Create')},
+                {name: 'amountBillList', path: 'amount-bill/list', component: require('./pages/AmountBill/Index')},
+                {name: 'searchBillList', path: 'search-bill/list', component: require('./pages/SearchBill/Index')},
 
-                {
-                    name: 'account_report_list',
-                    path: 'account_report/list',
-                    component: require('./pages/AccountReport/Index')
-                },
-                {
-                    name: 'account_report_update',
-                    path: 'account_report/update/:id',
-                    component: require('./pages/AccountReport/Update')
-                },
+                {name: 'siteIndexPage', path: 'site/index-page', component: require('./pages/IndexPage')},
+                {name: 'sitePopWindow', path: 'site/pop-window', component: require('./pages/PopWindow')},
+                {name: 'messageList', path: 'message/list', component: require('./pages/Message')},
 
-                {name: 'account_list', path: 'account/list', component: require('./pages/Account/Index')},
-                {name: 'account_create', path: 'account/create', component: require('./pages/Account/Create')},
-                {name: 'account_update', path: 'account/update/:id', component: require('./pages/Account/Update')},
+                {name: 'systemSite', path: 'system/site', component: require('./pages/Site')},
+                {name: 'systemAdmin', path: 'system/admin', component: require('./pages/Admin')},
+                {name: 'taxonomyList', path: 'taxonomy/list', component: require('./pages/Taxonomy')},
+                {name: 'articleList', path: 'article/list', component: require('./pages/Article/Index')},
+                {name: 'articleCreate', path: 'article/create', component: require('./pages/Article/Create')},
+                {name: 'articleUpdate', path: 'article/update/:id', component: require('./pages/Article/Update')},
 
-                {name: 'recharge_list', path: 'recharge/list', component: require('./pages/Recharge/Index')},
-                {name: 'recharge_create', path: 'recharge/create', component: require('./pages/Recharge/Create')},
-
-                {path: 'amount-bill/list', component: require('./pages/AmountBill/Index')},
-                {path: 'search-bill/list', component: require('./pages/SearchBill/Index')},
-
-                {path: 'site/index-page', component: require('./pages/IndexPage')},
-                {path: 'site/pop-window', component: require('./pages/PopWindow')},
-
-                {path: 'system/site', component: require('./pages/Site')},
-                {path: 'system/admin', component: require('./pages/Admin')},
-
-                {path: 'message', component: require('./pages/Message')},
-
-                {path: 'wechat/server', component: require('./pages/Wechat/Server')},
-                {path: 'wechat/menu', component: require('./pages/Wechat/Menu')},
+                {name: 'wechatServer', path: 'wechat/server', component: require('./pages/Wechat/Server')},
+                {name: 'wechatMenu', path: 'wechat/menu', component: require('./pages/Wechat/Menu')},
             ]
         }
     ]

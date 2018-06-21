@@ -44,7 +44,7 @@
         data: function () {
             return {
                 apiCreate: api.accountCreate,
-                routeNameList: 'account_list',
+                routeNameList: 'accountList',
                 form: {},
             }
         },

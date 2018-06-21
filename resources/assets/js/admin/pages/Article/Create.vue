@@ -50,7 +50,7 @@
         },
         methods: {
             doReturn: function () {
-                this.$router.push({name: 'article_list'});
+                this.$router.push({name: 'articleList'});
             },
             doSubmit: function () {
                 let self = this;
