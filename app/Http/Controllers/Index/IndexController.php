@@ -357,19 +357,18 @@ class IndexController extends Controller
         $path = \Storage::disk('public')->path($filename);
 
         $fp = fopen($path, 'w');
+        fputs($fp, chr(239) . chr(187) . chr(191));
         foreach ($data as $row) {
             if (!is_array($row)) {
                 continue;
             }
-            $row = array_map(function ($item) {
-                return iconv('utf8', 'gbk', $item);
-            }, $row);
+//            $row = array_map(function ($item) {
+//                return iconv('utf8', 'gbk', $item);
+//            }, $row);
             fputcsv($fp, $row);
         }
         fclose($fp);
 
         return ['data' => asset('storage/' . $filename)];
-
-        //return response()->download($filename, 'temp.csv');
     }
 }
