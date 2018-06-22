@@ -351,14 +351,12 @@ class IndexController extends Controller
 
     public function oneKeyExcel()
     {
-        $data = request('data');
+        $data = request('data', []);
 
-        $data = json_decode($data, true);
-        $data = $data ?: [];
+        $filename = 'temp/' . date('YmdHis', time()) . str_random(4) . '.csv';
+        $path = \Storage::disk('public')->path($filename);
 
-        $filename = storage_path('temp/') . md5(microtime(true)) . '.csv';
-        $fp = fopen($filename, 'w');
-
+        $fp = fopen($path, 'w');
         foreach ($data as $row) {
             if (!is_array($row)) {
                 continue;
@@ -368,7 +366,10 @@ class IndexController extends Controller
             }, $row);
             fputcsv($fp, $row);
         }
+        fclose($fp);
 
-        return response()->download($filename, 'temp.csv');
+        return ['data' => asset('storage/' . $filename)];
+
+        //return response()->download($filename, 'temp.csv');
     }
 }

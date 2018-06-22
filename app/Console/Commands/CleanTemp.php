@@ -39,7 +39,7 @@ class CleanTemp extends Command
      */
     public function handle()
     {
-        $finder = Finder::create()->files()->in(storage_path('temp'));
+        $finder = Finder::create()->files()->in(storage_path('app/public/temp'));
         foreach ($finder as $file) {
             $carbon = Carbon::createFromTimestamp($file->getMTime());
             if (Carbon::now()->diffInMinutes($carbon) > 10) {

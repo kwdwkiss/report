@@ -86,10 +86,9 @@
                 // };
                 // $('#download-btn')[0].href = uri + base64(format(template, ctx));
                 // $('#download-btn')[0].download = 'temp.xls';
-                let token = $('meta[name="csrf-token"]')[0].content;
-                $('input[name=_token]').val(token);
-                $('input[name=data]').val(JSON.stringify(this.table));
-                $('.one-key-excel-form').submit();
+                axios.post(api.oneKeyExcel, {data: this.table}).then(function (res) {
+                    location.href = res.data.data;
+                });
             }
         }
     }
