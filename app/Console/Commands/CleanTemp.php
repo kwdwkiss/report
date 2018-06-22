@@ -42,7 +42,7 @@ class CleanTemp extends Command
         $finder = Finder::create()->files()->in(storage_path('app/public/temp'));
         foreach ($finder as $file) {
             $carbon = Carbon::createFromTimestamp($file->getMTime());
-            if (Carbon::now()->diffInMinutes($carbon) > 10) {
+            if (Carbon::now()->diffInMinutes($carbon) > 60) {
                 unlink($file);
             }
         }
