@@ -353,6 +353,10 @@ class IndexController extends Controller
     {
         $data = request('data', []);
 
+        if (!is_array($data)) {
+            throw new JsonException('数据格式错误');
+        }
+
         $filename = 'temp/' . date('YmdHis', time()) . str_random(4) . '.csv';
         $path = \Storage::disk('public')->path($filename);
 
