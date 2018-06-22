@@ -30,8 +30,8 @@
         </div>
         <hr>
         <div class="row hidden-md hidden-lg hidden-sm">
-            <a :href="page.mobile_ad.check_pdd.url">
-                <img :src="page.mobile_ad.check_pdd.img_src" style="width: 100%;max-height: 100px">
+            <a :href="page.mobile_ad.check_jd.url">
+                <img :src="page.mobile_ad.check_jd.img_src" style="width: 100%;max-height: 100px">
             </a>
         </div>
     </div>

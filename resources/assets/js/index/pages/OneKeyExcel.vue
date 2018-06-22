@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div class="row">
-            <p class="col-md-6">
+        <div class="row demo">
+            <p class="col-xs-6">
                 示例1：<br>
                 日期 姓名 单号 电话 价格<br>
                 9.15 小明 01 1340 100<br>
                 9.15 小里 02 1341 100<br>
                 9.15 小亮 03 135 100
             </p>
-            <p class="col-md-6">
+            <p class="col-xs-6">
                 示例2:<br>
                 日期+姓名+单号+电话+价格/<br>
                 9.15+小明+01+1340+100/<br>
@@ -31,16 +31,18 @@
             </table>
         </div>
         <div class="row">
-            <textarea class="form-control" cols="30" rows="10" v-model="content"></textarea>
+            <textarea class="form-control" cols="20" rows="8" v-model="content"></textarea>
         </div>
         <div class="row">
             <button class="btn btn-primary" @click="preview">预览</button>
             <a id="download-btn" class="btn btn-primary" @click="download">下载</a>
         </div>
-        <form class="one-key-excel-form hidden" :action="apiOneKeyExcel" method="post">
-            <input type="text" name="_token">
-            <input type="text" name="data">
-        </form>
+        <hr>
+        <div class="row hidden-md hidden-lg hidden-sm">
+            <a :href="page.mobile_ad.one_key_excel.url">
+                <img :src="page.mobile_ad.one_key_excel.img_src" style="width: 100%;max-height: 100px">
+            </a>
+        </div>
     </div>
 </template>
 
@@ -50,9 +52,13 @@
         data: function () {
             return {
                 content: '',
-                table: [],
-                apiOneKeyExcel: api.oneKeyExcel,
+                table: []
             }
+        },
+        computed: {
+            page: function () {
+                return this.$store.state.page;
+            },
         },
         methods: {
             parse: function (str) {
@@ -95,5 +101,14 @@
 </script>
 
 <style scoped>
+    @media (max-width: 768px) {
+        .demo > p {
+            padding: 0;
+            font-size: 12px;
+        }
 
+        textarea {
+            font-size: 14px;
+        }
+    }
 </style>

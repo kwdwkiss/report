@@ -196,6 +196,40 @@
                 </div>
             </div>
             <div class="panel">
+                <div class="panel-heading">京东验号页面广告</div>
+                <div class="panel-body">
+                    <el-form label-width="100px">
+                        <el-form-item label="图片路径">
+                            <el-input v-model="data.mobile_ad.check_jd.img_src"></el-input>
+                            <el-button type="primary" @click="uploadImage(data.mobile_ad.check_jd)">上传</el-button>
+                        </el-form-item>
+                        <el-form-item label="链接">
+                            <el-input v-model="data.mobile_ad.check_jd.url"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="success" @click="doSave">保存</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-heading">一键生成EXCEL页面广告</div>
+                <div class="panel-body">
+                    <el-form label-width="100px">
+                        <el-form-item label="图片路径">
+                            <el-input v-model="data.mobile_ad.one_key_excel.img_src"></el-input>
+                            <el-button type="primary" @click="uploadImage(data.mobile_ad.one_key_excel)">上传</el-button>
+                        </el-form-item>
+                        <el-form-item label="链接">
+                            <el-input v-model="data.mobile_ad.one_key_excel.url"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="success" @click="doSave">保存</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </div>
+            <div class="panel">
                 <div class="panel-heading">登录页面广告</div>
                 <div class="panel-body">
                     <el-form label-width="100px">

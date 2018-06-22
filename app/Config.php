@@ -112,10 +112,12 @@ class Config extends Model
             ['img_src' => '/images/ad_empty.gif', 'url' => ''],
         ],
         'mobile_ad' => [
-            'report_search' => ['img_src' => '/images/ad_empty.gif', 'url' => ''],
-            'check_tb' => ['img_src' => '/images/ad_empty.gif', 'url' => ''],
-            'check_pdd' => ['img_src' => '/images/ad_empty.gif', 'url' => ''],
-            'login' => ['img_src' => '/images/ad_empty.gif', 'url' => ''],
+            'report_search' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
+            'check_tb' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
+            'check_pdd' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
+            'check_jd' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
+            'login' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
+            'one_key_excel' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
         ],
         'service_qq' => [
             ['name' => '2412688374'],
