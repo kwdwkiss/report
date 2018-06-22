@@ -77,6 +77,7 @@ module.exports = {
     captcha: '/captcha/default',
     uploadOss: '/index/upload-oss',
     behaviorLog: '/index/behavior-log',
+    oneKeyExcel: '/index/one-key-excel',
 
     indexSearch: '/index/search',
     indexReport: '/index/report',

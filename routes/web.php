@@ -29,6 +29,7 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/index/pop-window', 'Index\IndexController@popWindow');
     Route::post('/index/upload-oss', 'Index\IndexController@uploadOss');
     Route::post('/index/behavior-log', 'Index\IndexController@behaviorLog');
+    Route::post('/index/one-key-excel', 'Index\IndexController@oneKeyExcel');
 
     Route::get('/index/article/list', 'Index\ArticleController@list');
     Route::get('/index/article/show', 'Index\ArticleController@show');

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\DeleteFile;
 use App\Http\Middleware\JsonSuccessResponse;
 use App\Http\Middleware\UserApi;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;

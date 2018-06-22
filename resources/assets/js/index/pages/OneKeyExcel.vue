@@ -37,6 +37,10 @@
             <button class="btn btn-primary" @click="preview">预览</button>
             <a id="download-btn" class="btn btn-primary" @click="download">下载</a>
         </div>
+        <form class="one-key-excel-form hidden" :action="apiOneKeyExcel" method="post">
+            <input type="text" name="_token">
+            <input type="text" name="data">
+        </form>
     </div>
 </template>
 
@@ -46,7 +50,8 @@
         data: function () {
             return {
                 content: '',
-                table: []
+                table: [],
+                apiOneKeyExcel: api.oneKeyExcel,
             }
         },
         methods: {
@@ -65,22 +70,26 @@
             },
             download: function () {
                 this.parse(this.content);
-                let uri = 'data:application/vnd.ms-excel;base64,';
-                let template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><?xml version="1.0" encoding="UTF-8" standalone="yes"?><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table style="vnd.ms-excel.numberformat:@">{table}</table></body></html>';
-                let base64 = function (s) {
-                    return window.btoa(unescape(encodeURIComponent(s)));
-                };
-                let format = function (s, c) {
-                    return s.replace(/{(\w+)}/g, function (m, p) {
-                        return c[p];
-                    });
-                };
-                let ctx = {
-                    worksheet: '',
-                    table: $('#my-table').html()
-                };
-                $('#download-btn')[0].href = uri + base64(format(template, ctx));
-                $('#download-btn')[0].download = 'temp.xls';
+                // let uri = 'data:application/vnd.ms-excel;base64,';
+                // let template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><?xml version="1.0" encoding="UTF-8" standalone="yes"?><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table style="vnd.ms-excel.numberformat:@">{table}</table></body></html>';
+                // let base64 = function (s) {
+                //     return window.btoa(unescape(encodeURIComponent(s)));
+                // };
+                // let format = function (s, c) {
+                //     return s.replace(/{(\w+)}/g, function (m, p) {
+                //         return c[p];
+                //     });
+                // };
+                // let ctx = {
+                //     worksheet: '',
+                //     table: $('#my-table').html()
+                // };
+                // $('#download-btn')[0].href = uri + base64(format(template, ctx));
+                // $('#download-btn')[0].download = 'temp.xls';
+                let token = $('meta[name="csrf-token"]')[0].content;
+                $('input[name=_token]').val(token);
+                $('input[name=data]').val(JSON.stringify(this.table));
+                $('.one-key-excel-form').submit();
             }
         }
     }

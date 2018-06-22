@@ -348,4 +348,27 @@ class IndexController extends Controller
 
         return [];
     }
+
+    public function oneKeyExcel()
+    {
+        $data = request('data');
+
+        $data = json_decode($data, true);
+        $data = $data ?: [];
+
+        $filename = storage_path('temp/') . md5(microtime(true)) . '.csv';
+        $fp = fopen($filename, 'w');
+
+        foreach ($data as $row) {
+            if (!is_array($row)) {
+                continue;
+            }
+            $row = array_map(function ($item) {
+                return iconv('utf8', 'gbk', $item);
+            }, $row);
+            fputcsv($fp, $row);
+        }
+
+        return response()->download($filename, 'temp.csv');
+    }
 }
