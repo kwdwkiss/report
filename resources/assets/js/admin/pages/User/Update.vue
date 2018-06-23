@@ -111,6 +111,19 @@
                     </el-tab-pane>
                     <el-tab-pane label="个人资料" name="2">
                         <el-form>
+                            <el-form-item label="积分" labelWidth="100px">
+                                <label>{{form._profile.amount}}</label>
+                            </el-form-item>
+                            <el-form-item label="保证金" labelWidth="100px">
+                                <label class="col-md-12">{{form._profile.deposit}}</label>
+                            </el-form-item>
+                            <el-form-item label="修改保证金" labelWidth="100px">
+                                <el-input v-model="deposit" style="width: 200px" placeholder="输入保证金金额，最低1元">
+                                </el-input>
+                                <span>元</span>
+                                <el-button type="primary" @click="addDeposit">缴纳</el-button>
+                                <el-button type="danger" @click="subDeposit">退回</el-button>
+                            </el-form-item>
                             <el-form-item label="支付宝" labelWidth="100px">
                                 <el-input v-model="form._profile.alipay"></el-input>
                             </el-form-item>
@@ -247,6 +260,7 @@
                 cities: [],
                 auth_type: 0,
                 auth_duration: 0,
+                deposit: 0,
             }
         },
         computed: {
@@ -338,6 +352,27 @@
                 }).catch(function () {
                     $('.user-auth-dialog').modal('hide');
                 });
+            },
+            addDeposit: function () {
+                let self = this;
+                axios.post(api.adminUserAddDeposit, {
+                    id: self.form.id,
+                    deposit: self.deposit,
+                }).then(function (res) {
+                    self.$message.success('成功');
+                    self.loadData();
+                })
+            },
+            subDeposit: function () {
+                let self = this;
+                axios.post(api.adminUserSubDeposit, {
+                    id: self.form.id,
+                    deposit: self.deposit,
+                }).then(function (res) {
+                    self.deposit = 0;
+                    self.$message.success('成功');
+                    self.loadData();
+                })
             }
         }
     }

@@ -114,6 +114,8 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/user/update-auth', 'Admin\UserController@updateAuth');
     Route::post('/admin/user/update-api-key', 'Admin\UserController@updateApiKey');
     Route::post('/admin/user/update-api-secret', 'Admin\UserController@updateApiSecret');
+    Route::post('/admin/user/add-deposit', 'Admin\UserController@addDeposit');
+    Route::post('/admin/user/sub-deposit', 'Admin\UserController@subDeposit');
 
     Route::get('/admin/account/list', 'Admin\AccountController@list');
     Route::get('/admin/account/show', 'Admin\AccountController@show');

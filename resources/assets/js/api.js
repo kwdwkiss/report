@@ -36,6 +36,8 @@ module.exports = {
     adminUserUpdateAuth: '/admin/user/update-auth',
     adminUserUpdateApiKey: '/admin/user/update-api-key',
     adminUserUpdateApiSecret: '/admin/user/update-api-secret',
+    adminUserAddDeposit: '/admin/user/add-deposit',
+    adminUserSubDeposit: '/admin/user/sub-deposit',
 
     accountList: '/admin/account/list',
     accountShow: '/admin/account/show',

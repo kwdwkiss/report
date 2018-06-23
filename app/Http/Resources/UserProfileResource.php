@@ -20,8 +20,8 @@ class UserProfileResource extends Resource
         if ($request->has('r_index')) {
             $secretData = [];
 
-            $name = $data['name'];
-            $secretData['name'] = mb_substr($name, 0, 1) . str_pad('', mb_strlen($name) - 1, '*');
+            $secretData['deposit'] = $data['deposit'];
+            $secretData['name'] = mb_substr($data['name'], 0, 1) . str_pad('', mb_strlen($data['name']) - 1, '*');
             //$secretData['age'] = $data['age'] ? $data['age'] : '';
             $secretData['gender_label'] = $data['gender_label'];
             $secretData['province'] = $data['province'];

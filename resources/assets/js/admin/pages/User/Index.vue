@@ -29,6 +29,9 @@
                             <el-form-item label="积分">
                                 <span>{{ props.row._profile.amount }}</span>
                             </el-form-item>
+                            <el-form-item label="保证金">
+                                <span>{{ props.row._profile.deposit }}</span>
+                            </el-form-item>
                             <el-form-item label="邀请人">
                                 <span>{{ props.row._profile.inviter }}</span>
                             </el-form-item>

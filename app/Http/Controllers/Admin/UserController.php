@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DepositBill;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
@@ -394,6 +395,56 @@ class UserController extends Controller
             $user->syncTag([]);
             $user->_profile->delete();
             $user->delete();
+        });
+
+        return [];
+    }
+
+    public function addDeposit()
+    {
+        $deposit = request('deposit');
+
+        $user = User::findOrFail(request('id'));
+
+        if ($deposit < 0) {
+            throw new JsonException('保证金数值不能为负');
+        }
+
+        \DB::transaction(function () use ($deposit, $user) {
+            $user->_profile->increment('deposit', $deposit);
+
+            DepositBill::create([
+                'user_id' => $user->id,
+                'type' => 0,
+                'deposit' => $deposit
+            ]);
+        });
+
+        return [];
+    }
+
+    public function subDeposit()
+    {
+        $deposit = request('deposit');
+
+        $user = User::findOrFail(request('id'));
+
+        if ($deposit < 0) {
+            throw new JsonException('保证金数值不能为负');
+        }
+
+        if ($user->_profile->deposit < $deposit) {
+            throw new JsonException('保证金不足');
+        }
+
+        \DB::transaction(function () use ($deposit, $user) {
+            $user->_profile->decrement('deposit', $deposit);
+
+            DepositBill::create([
+                'user_id' => $user->id,
+                'type' => 1,
+                'deposit' => $deposit
+            ]);
         });
 
         return [];

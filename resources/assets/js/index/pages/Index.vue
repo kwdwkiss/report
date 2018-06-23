@@ -78,6 +78,7 @@
                         </p>
                         <p class="col-xs-6 col-sm-4">会员编号：{{item.id}}</p>
                         <p class="col-xs-6 col-sm-4">会员类型：{{item.type_label}}</p>
+                        <p class="col-xs-6 col-sm-4">保证金：{{item._profile.deposit}}元</p>
                         <p class="col-xs-6 col-sm-4">账号：{{item.mobile}}</p>
                         <p class="col-xs-6 col-sm-4">QQ：{{item.qq}}</p>
                         <p class="col-xs-6 col-sm-4">微信：{{item.wx}}</p>
