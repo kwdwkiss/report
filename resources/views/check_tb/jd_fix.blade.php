@@ -81,7 +81,7 @@
     }
     timer.innerHTML = dateFtt("yyyy-MM-dd hh:mm:ss",new Date);
     setInterval(function () {
-        timer.innerHTML = (new Date).toISOString();
+        timer.innerHTML = dateFtt("yyyy-MM-dd hh:mm:ss",new Date);
     }, 1000);
 </script>
 <!-- Scripts -->
