@@ -105,6 +105,9 @@
         computed: {
             report: function () {
                 return this.$store.state.report;
+            },
+            user: function () {
+                return this.$store.state.user;
             }
         },
         created: function () {

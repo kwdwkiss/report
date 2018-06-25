@@ -414,10 +414,18 @@
         },
         methods: {
             detailReport: function (item) {
+                if (!this.user.is_auth) {
+                    this.$message.error('认证主持或商家才能查看详情');
+                    return;
+                }
                 this.reportData = item;
                 $('.report-data-dialog').modal('show');
             },
             detailSearch: function (item) {
+                if (!this.user.is_auth) {
+                    this.$message.error('认证用户才能查看详情');
+                    return;
+                }
                 this.reportData = item;
                 $('.search-detail-dialog').modal('show');
             },

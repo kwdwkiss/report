@@ -10,6 +10,7 @@ namespace App\Http\Controllers\User;
 
 
 use App\AccountReport;
+use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AccountReportResource;
 
@@ -33,6 +34,10 @@ class AccountReportController extends Controller
         $id = request('id');
 
         $user = \Auth::guard('user')->user();
+
+        if (!$user->isAuth()) {
+            throw new JsonException('认证用户才能删除记录');
+        }
 
         $accountReport = AccountReport::where('user_id', $user->id)->findOrFail($id);
 
