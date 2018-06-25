@@ -373,6 +373,13 @@ class IndexController extends Controller
         }
         fclose($fp);
 
+        $user = \Auth::guard('user')->user();
+        BehaviorLog::create([
+            'user_id' => $user ? $user->id : 0,
+            'type' => 2,
+            'content' => json_encode($data)
+        ]);
+
         return ['data' => asset('storage/' . $filename)];
     }
 }
