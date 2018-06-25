@@ -37,12 +37,6 @@
         }
     }
 
-    @media (max-width: 768px) {
-        .el-message {
-            min-width: 300px;
-        }
-    }
-
     body {
         background-color: #fff;
         color: #222;
@@ -63,5 +57,27 @@
 
     .row > div {
         padding: 0 5px;
+    }
+
+    @media (max-width: 768px) {
+        .el-message {
+            min-width: 300px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .el-message {
+            width: 50%;
+            text-align: center;
+        }
+    }
+
+    .el-message {
+        top: 10%;
+        font-size: 18px;
+    }
+
+    .el-message > p {
+        font-size: 18px;
     }
 </style>
