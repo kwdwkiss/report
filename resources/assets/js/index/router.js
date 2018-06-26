@@ -7,6 +7,7 @@ Vue.use(VueRouter);
 const router = window.router = new VueRouter({
     routes: [
         {
+            name: 'app',
             path: '/',
             component: require('./pages/App'),
             children: [
@@ -44,6 +45,10 @@ const router = window.router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    //站长之家异步统计api
+    if (typeof _czc !== 'undefined' && from.matched.length !== 0) {
+        _czc.push(['_trackPageview', to.path]);
+    }
     if (store.state.user) {
         if (['login', 'forgetPassword'].indexOf(to.name) > -1) {
             next({name: 'index'});
