@@ -12,4 +12,9 @@ class BehaviorLog extends Model
         1 => '广告点击',
         2 => '一键EXCEL'
     ];
+
+    public function _user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

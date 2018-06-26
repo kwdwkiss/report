@@ -22,6 +22,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="index">概况</a>
                                 <li><a class="collapse-hide" href="javascript:" @click="statementList">报表</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="behaviorLogList">用户行为日志</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -174,6 +175,9 @@
             wechatMenu: function () {
                 this.$router.push({name: 'wechatMenu'});
             },
+            behaviorLogList: function () {
+                this.$router.push({name: 'behaviorLogList'});
+            }
         }
     };
 </script>

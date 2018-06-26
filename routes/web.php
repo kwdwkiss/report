@@ -80,6 +80,7 @@ Route::middleware(['auth:admin'])->group(function () {
 Route::middleware(['auth:admin', 'csrf'])->group(function () {
     Route::get('/admin/dashboard', 'Admin\IndexController@statement');
     Route::get('/admin/statement/list', 'Admin\StatementController@index');
+    Route::get('/admin/behavior-log/list', 'Admin\BehaviorLogController@index');
 
     Route::get('/admin/info', 'Admin\IndexController@info');
     Route::post('/admin/modify-password', 'Admin\IndexController@modifyPassword');

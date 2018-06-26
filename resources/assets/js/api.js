@@ -1,6 +1,7 @@
 module.exports = {
     adminDashboard: '/admin/dashboard',
     adminStatementList: '/admin/statement/list',
+    adminBehaviorLogList: '/admin/behavior-log/list',
 
     login: '/admin/login',
     logout: '/admin/logout',

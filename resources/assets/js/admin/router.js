@@ -13,6 +13,7 @@ const router = new VueRouter({
             children: [
                 {name: 'index', path: '', component: require('./pages/Dashboard')},
                 {name: 'statementList', path: 'statement/list', component: require('./pages/Statement/Index')},
+                {name: 'behaviorLogList', path: 'behavior-log/list', component: require('./pages/BehaviorLog/Index')},
 
                 {name: 'userList', path: 'user/list', component: require('./pages/User/Index')},
                 {name: 'userCreate', path: 'user/create', component: require('./pages/User/Create')},

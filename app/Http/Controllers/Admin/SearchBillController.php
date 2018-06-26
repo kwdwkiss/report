@@ -8,9 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\AmountBill;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\AmountBillResource;
 use App\Http\Resources\SearchBillResource;
 use App\SearchBill;
 

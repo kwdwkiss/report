@@ -377,7 +377,7 @@ class IndexController extends Controller
         BehaviorLog::create([
             'user_id' => $user ? $user->id : 0,
             'type' => 2,
-            'content' => json_encode($data)
+            'content' => json_encode($data, JSON_UNESCAPED_UNICODE)
         ]);
 
         return ['data' => asset('storage/' . $filename)];
