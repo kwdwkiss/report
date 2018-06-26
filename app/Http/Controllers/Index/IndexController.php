@@ -114,7 +114,7 @@ class IndexController extends Controller
 
             $userCheckList = [];
             foreach ($searchUsers as $item) {
-                if ($item->isCheck()) {
+                if ($item->isAuth()) {
                     if ($item->mobile == $name) {
                         $userCheckList[204] = 1;
                         continue;
@@ -240,8 +240,8 @@ class IndexController extends Controller
                 break;
         }
         $reportUser = $query->first();
-        if ($reportUser && $reportUser->isCheck() && (empty($description) || empty($attachment))) {
-            throw new JsonException('举报的账号为宏海审核会员，必须同时提交图片和描述才能举报');
+        if ($reportUser && $reportUser->isAuth() && (empty($description) || empty($attachment))) {
+            throw new JsonException('举报的账号为宏海认证会员，必须同时提交图片和描述才能举报');
         }
 
         \DB::transaction(function () use ($user, $account_type, $name, $report_type, $ip, $description, $attachment

@@ -67,8 +67,7 @@
 
     @media (min-width: 768px) {
         .el-message {
-            width: 50%;
-            text-align: center;
+            /*width: 50%;*/
         }
     }
 
