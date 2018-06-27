@@ -6,17 +6,17 @@ use Aliyun\Core\Exception\ServerException;
 use Aliyun\Core\Regions\EndpointProvider;
 use Aliyun\Core\Http\HttpHelper;
 
-class DefaultAcsClient implements IAcsClient 
-{    
+class DefaultAcsClient implements IAcsClient
+{
     public $iClientProfile;
     public $__urlTestFlag__;
-    
+
     function  __construct($iClientProfile)
     {
         $this->iClientProfile = $iClientProfile;
         $this->__urlTestFlag__ = false;
     }
-    
+
     public function getAcsResponse($request, $iSigner = null, $credential = null, $autoRetry = true, $maxRetryNumber = 3)
     {
         $httpResponse = $this->doActionImpl($request, $iSigner, $credential, $autoRetry, $maxRetryNumber);
@@ -29,8 +29,8 @@ class DefaultAcsClient implements IAcsClient
     }
 
     private function doActionImpl($request, $iSigner = null, $credential = null, $autoRetry = true, $maxRetryNumber = 3)
-    {    
-        if(null == $this->iClientProfile && (null == $iSigner || null == $credential 
+    {
+        if(null == $this->iClientProfile && (null == $iSigner || null == $credential
             || null == $request->getRegionId() || null == $request->getAcceptFormat()))
         {
             throw new ClientException("No active profile found.", "SDK.InvalidProfile");
@@ -61,13 +61,13 @@ class DefaultAcsClient implements IAcsClient
         } else {
             $httpResponse = HttpHelper::curl($requestUrl, $request->getMethod(),$request->getContent(), $request->getHeaders());
         }
-        
+
         $retryTimes = 1;
         while (500 <= $httpResponse->getStatus() && $autoRetry && $retryTimes < $maxRetryNumber) {
             $requestUrl = $request->composeUrl($iSigner, $credential,$domain);
-            
+
             if(count($request->getDomainParameter())>0){
-                $httpResponse = HttpHelper::curl($requestUrl, $request->getDomainParameter(), $request->getHeaders());
+                $httpResponse = HttpHelper::curl($requestUrl, $request->getMethod(), $request->getDomainParameter(), $request->getHeaders());
             } else {
                 $httpResponse = HttpHelper::curl($requestUrl, $request->getMethod(), $request->getContent(), $request->getHeaders());
             }
@@ -75,13 +75,13 @@ class DefaultAcsClient implements IAcsClient
         }
         return $httpResponse;
     }
-    
+
     public function doAction($request, $iSigner = null, $credential = null, $autoRetry = true, $maxRetryNumber = 3)
-    {    
+    {
         trigger_error("doAction() is deprecated. Please use getAcsResponse() instead.", E_USER_NOTICE);
         return $this->doActionImpl($request, $iSigner, $credential, $autoRetry, $maxRetryNumber);
     }
-    
+
     private function prepareRequest($request)
     {
         if(null == $request->getRegionId())
@@ -98,17 +98,17 @@ class DefaultAcsClient implements IAcsClient
         }
         return $request;
     }
-    
-    
+
+
     private function buildApiException($respObject, $httpStatus)
     {
         throw new ServerException($respObject->Message, $respObject->Code, $httpStatus, $respObject->RequestId);
     }
-    
+
     private function parseAcsResponse($body, $format)
     {
         if ("JSON" == $format)
-        {    
+        {
             $respObject = json_decode($body);
         }
         else if("XML" == $format)
