@@ -72,4 +72,10 @@ router.beforeEach((to, from, next) => {
     }
 });
 
+router.afterEach((to, from) => {
+    if (store.state.unreadNotification > 0) {
+        app.$message.error('你有未读通知，请到：个人中心->系统通知，查看并且阅读！')
+    }
+});
+
 export default router

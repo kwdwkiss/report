@@ -111,7 +111,7 @@
         },
         created: function () {
             if (this.unreadNotification > 0) {
-                self.notificationList();
+                this.notificationList();
             }
         },
         mounted: function () {
