@@ -145,6 +145,7 @@
                                         type="button" class="btn btn-primary">上传图片
                                 </button>
                                 <input class="input-file" style="display: none" type="file"
+                                       data-params="identity"
                                        @change="uploadChange($event)">
                                 <a target="_blank" :href="form._profile.identity_front_img">
                                     <img :src="form._profile.identity_front_img" alt="" style="max-height: 150px">
@@ -155,6 +156,7 @@
                                         type="button" class="btn btn-primary">上传图片
                                 </button>
                                 <input class="input-file" style="display: none" type="file"
+                                       data-params="identity"
                                        @change="uploadChange($event)">
                                 <a target="_blank" :href="form._profile.identity_back_img">
                                     <img :src="form._profile.identity_back_img" alt="" style="max-height: 150px">
@@ -312,7 +314,11 @@
                 let formData = new FormData();
                 let inputFile = event.target;
                 formData.append("file", inputFile.files[0]);
-                axios.post(api.uploadOss, formData, {
+                let params = $(inputFile).data('params');
+                if (params === 'identity') {
+                    formData.set('watermark', 'identity');
+                }
+                axios.post(api.adminUploadOssImage, formData, {
                     headers: {"Content-Type": "multipart/form-data"}
                 }).then(function (res) {
                     self.$message.success("成功");

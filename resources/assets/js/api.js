@@ -9,6 +9,7 @@ module.exports = {
     register: '/admin/register',
     modifyPassword: '/admin/modify-password',
     adminUploadOss: '/admin/upload-oss',
+    adminUploadOssImage: '/admin/upload-oss-image',
 
     adminList: '/admin/list',
     adminCreate: '/admin/create',
