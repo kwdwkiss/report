@@ -469,7 +469,7 @@
                     .post(api.indexReport, self.reportParams)
                     .then(function () {
                         self.initReportParams();
-                        self.$message.success("成功");
+                        self.$message.success('投诉举报成功');
                         $("#report-dialog").modal("hide");
                     })
                     .catch(function () {
