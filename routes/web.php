@@ -43,7 +43,8 @@ Route::middleware(['csrf'])->group(function () {
     Route::post('/user/register', 'User\UserController@register');
     Route::post('/user/sms', 'User\UserController@sms');
 
-    Route::get('/user/recharge/callback', 'User\RechargeController@recharge');
+    Route::get('/user/recharge/callback', 'User\RechargeController@apiCallback');
+    Route::get('/user/recharge/page-callback', 'User\RechargeController@pageCallback');
 
     Route::get('/admin', 'Admin\IndexController@index');
     Route::get('/admin/logout', 'Admin\IndexController@logout');

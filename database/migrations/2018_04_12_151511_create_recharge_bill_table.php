@@ -17,7 +17,7 @@ class CreateRechargeBillTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('bill_no')->unique();
-            $table->integer('pay_type');//0-人工 1-支付宝 2-微信
+            $table->integer('pay_type');//1-手工充值 2-支付宝 3-财付通 4-手Q 5-微信
             $table->string('pay_no');
             $table->decimal('money');
             $table->tinyInteger('status');//-1-已关闭 0-待充值 1-已到账

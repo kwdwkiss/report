@@ -36,8 +36,8 @@
         data: function () {
             return {
                 appid: '2018062932',
-                domain: 'pay2.58eq.cn:9999',
-                back_url: encodeURIComponent('http://' + location.host + '/user/recharge/callback'),
+                domain: 'pay.tbpzw.com',
+                back_url: encodeURIComponent('http://' + location.host + '/user/recharge/page-callback'),
             }
         },
         computed: {

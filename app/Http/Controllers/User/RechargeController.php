@@ -29,13 +29,14 @@ class RechargeController
         return RechargeBillResource::collection($recharges);
     }
 
-    public function recharge()
+    public function apiCallback()
     {
         $name = request('name');
         $tno = request('tno');
         $money = request('money');
         $sign = request('sign');
         $key = request('key');
+        $typ = request('typ', 1);//默认支付宝，1-手工充值 2-支付宝 3-财付通 4-手Q 5-微信
 
         if ($key != env('MCB_RECHARGE_KEY')) {
             return 'key invalid';
@@ -46,6 +47,10 @@ class RechargeController
             return 'sign invalid';
         }
 
+        if (!$tno) {
+            return 'tno null';
+        }
+
         $user = User::where('mobile', $name)->first();
         if (!$user) {
             return 'user null';
@@ -53,14 +58,14 @@ class RechargeController
 
         $exist = RechargeBill::query()
             ->where('pay_no', $tno)
-            ->where('pay_type', 1)
+            ->where('pay_type', $typ)
             ->first();
         if ($exist) {
             return 1;
         }
 
         try {
-            RechargeBill::recharge($user, $money, $tno, 1);
+            RechargeBill::recharge($user, $money, $tno, $typ);
             return 1;
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -69,6 +74,6 @@ class RechargeController
 
     public function pageCallback()
     {
-
+        return redirect('/');
     }
 }
