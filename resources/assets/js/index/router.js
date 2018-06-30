@@ -33,6 +33,7 @@ const router = window.router = new VueRouter({
                 {name: 'articleDetail', path: 'article/:id', component: require('./pages/ArticleDetail'), props: true},
 
                 {name: 'recharge', path: 'recharge', component: require('./pages/Recharge')},
+                {name: 'rechargeTest', path: 'recharge/test', component: require('./pages/RechargeTest')},
                 {name: 'rechargeList', path: 'recharge/list', component: require('./pages/RechargeList')},
                 {name: 'amountList', path: 'amount/list', component: require('./pages/AmountList')},
                 {name: 'inviterLink', path: 'inviter/link', component: require('./pages/InviterLink')},

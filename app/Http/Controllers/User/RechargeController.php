@@ -51,11 +51,24 @@ class RechargeController
             return 'user null';
         }
 
+        $exist = RechargeBill::query()
+            ->where('pay_no', $tno)
+            ->where('pay_type', 1)
+            ->first();
+        if ($exist) {
+            return 1;
+        }
+
         try {
             RechargeBill::recharge($user, $money, $tno, 1);
             return 1;
         } catch (\Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    public function pageCallback()
+    {
+
     }
 }

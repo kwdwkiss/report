@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">积分充值</div>
             <div class="panel-body">
-                <!--<iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350" frameborder="0"></iframe>-->
+                <iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350" frameborder="0"></iframe>
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">充值说明</label>
