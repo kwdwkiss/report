@@ -7,7 +7,6 @@ Vue.use(VueRouter);
 const router = window.router = new VueRouter({
     routes: [
         {
-            name: 'app',
             path: '/',
             component: require('./pages/App'),
             children: [

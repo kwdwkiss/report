@@ -31,7 +31,7 @@ class RechargeController
 
     public function recharge()
     {
-        $mobile = request('name');
+        $name = request('name');
         $tno = request('tno');
         $money = request('money');
         $sign = request('sign');
@@ -41,12 +41,12 @@ class RechargeController
             return 'key invalid';
         }
 
-        $md5 = md5($tno . $mobile . $money . env('MCB_RECHARGE_MD5'));
+        $md5 = md5($tno . $name . $money . env('MCB_RECHARGE_MD5'));
         if ($md5 != $sign) {
             return 'sign invalid';
         }
 
-        $user = User::where('mobile', $mobile)->first();
+        $user = User::where('mobile', $name)->first();
         if (!$user) {
             return 'user null';
         }

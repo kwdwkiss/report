@@ -3,6 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">积分充值</div>
             <div class="panel-body">
+                <iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350" frameborder="0"></iframe>
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">充值说明</label>
@@ -33,12 +34,19 @@
     export default {
         name: "Recharge",
         data: function () {
-            return {}
+            return {
+                appid: '2018062932',
+                domain: 'pay2.58eq.cn:9999',
+                back_url: encodeURIComponent('http://' + location.host + '/user/recharge/callback'),
+            }
         },
         computed: {
             user: function () {
                 return this.$store.state.user;
             },
+            pay_src: function () {
+                return `http://${this.domain}/pay/?appid=${this.appid}&payno=${this.user.mobile}&pt=pc&back_url=${this.back_url}`
+            }
         },
         methods: {
             doRecharge: function () {
