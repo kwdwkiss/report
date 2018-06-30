@@ -64,6 +64,7 @@
             parse: function (str) {
                 this.table = [];
                 str = str.replace(/\//g, "\n");
+                str = str.replace(/＋/g, '+');
                 str = str.replace(/\+/g, ' ');
                 let rows = str.split(/\n+/);
                 for (let i in rows) {
