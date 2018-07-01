@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-3 col-md-6">
-                    <button class="btn btn-primary">登录</button>
+                    <button class="btn btn-primary" @click="login">登录</button>
                 </div>
             </div>
         </div>
@@ -39,7 +39,10 @@
         },
         methods: {
             login: function () {
-                axios.get(api.emulatorPddLogin).then(function (res) {
+                axios.get(api.emulatorPddLogin, {
+                    mobile: this.mobile,
+                    code: this.code
+                }).then(function (res) {
                 });
             },
             sms: function () {

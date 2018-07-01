@@ -14,10 +14,14 @@ class RechargeBillResource extends Resource
      */
     public function toArray($request)
     {
+        //1-手工充值 2-支付宝 3-财付通 4-手Q 5-微信
         $payTypes = [
-            0 => '人工',
-            1 => '支付宝',
-            2 => '微信'
+            0 => '无',
+            1 => '手工充值',
+            2 => '支付宝',
+            3 => '财付通',
+            4 => '手Q',
+            5 => '微信',
         ];
         $status = [
             0 => '待支付',
