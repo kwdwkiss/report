@@ -11,7 +11,7 @@
                         <!--<span class="icon-bar"></span>-->
                         <!--<span class="icon-bar"></span>-->
                     </button>
-                    <a class="navbar-brand collapse-hide" @click="go('index')">宏海网络</a>
+                    <a class="navbar-brand collapse-hide" href="javascript:" @click="go('index')">宏海网络</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,8 +19,7 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">电商工具<span
-                                    class="caret"></span></a>
+                               aria-haspopup="true" aria-expanded="false">电商工具<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="go('index')">恶意账号查询</a>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('checkTb')">淘宝验号</a></li>

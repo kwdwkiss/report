@@ -10,7 +10,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand collapse-hide" href="javascript:" @click="index">管理后台</a>
+                    <a class="navbar-brand collapse-hide" href="javascript:" @click="go('index')">管理后台</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -22,7 +22,8 @@
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="go('index')">概况</a>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('statementList')">报表</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('behaviorLogList')">用户行为日志</a></li>
+                                <li><a class="collapse-hide" href="javascript:"
+                                       @click="go('behaviorLogList')">用户行为日志</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -39,8 +40,10 @@
                                aria-haspopup="true" aria-expanded="false">财务信息<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="go('rechargeList')">充值记录</a>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('amountBillList')">积分记录</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('searchBillList')">查询汇总</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('amountBillList')">积分记录</a>
+                                </li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('searchBillList')">查询汇总</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -48,7 +51,8 @@
                                aria-haspopup="true" aria-expanded="false">页面设置<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="go('siteIndexPage')">首页设置</a>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('sitePopWindow')">弹窗设置</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('sitePopWindow')">弹窗设置</a>
+                                </li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('messageList')">系统通知</a></li>
                             </ul>
                         </li>
@@ -57,8 +61,10 @@
                                aria-haspopup="true" aria-expanded="false">系统设置<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="go('systemSite')">站点设置</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('systemAdmin')">管理员设置</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('taxonomyList')">分类管理</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('systemAdmin')">管理员设置</a>
+                                </li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('taxonomyList')">分类管理</a>
+                                </li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('articleList')">文章管理</a></li>
                             </ul>
                         </li>
@@ -66,7 +72,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">微信设置<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="collapse-hide" href="javascript:" @click="go('wechatServer')">服务器配置</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('wechatServer')">服务器配置</a>
+                                </li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('wechatMenu')">菜单管理</a></li>
                             </ul>
                         </li>
