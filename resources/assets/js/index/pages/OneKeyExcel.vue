@@ -68,6 +68,9 @@
                 str = str.replace(/\+/g, ' ');
                 let rows = str.split(/\n+/);
                 for (let i in rows) {
+                    if (rows[i] === '') {
+                        continue;
+                    }
                     let rowData = rows[i].split(/\s+/);
                     this.table.push(rowData);
                 }
@@ -77,6 +80,10 @@
             },
             download: function () {
                 this.parse(this.content);
+                if (this.content.length <= 1) {
+                    this.$message.error('数据为空');
+                    return;
+                }
                 // let uri = 'data:application/vnd.ms-excel;base64,';
                 // let template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><?xml version="1.0" encoding="UTF-8" standalone="yes"?><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table style="vnd.ms-excel.numberformat:@">{table}</table></body></html>';
                 // let base64 = function (s) {

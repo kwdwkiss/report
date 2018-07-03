@@ -356,6 +356,9 @@ class IndexController extends Controller
         if (!is_array($data)) {
             throw new JsonException('数据格式错误');
         }
+        if (empty($data)) {
+            throw new JsonException('数据为空');
+        }
 
         $filename = 'temp/' . date('YmdHis', time()) . str_random(4) . '.csv';
         $path = \Storage::disk('public')->path($filename);
