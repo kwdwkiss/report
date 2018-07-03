@@ -11,7 +11,7 @@
                         <!--<span class="icon-bar"></span>-->
                         <!--<span class="icon-bar"></span>-->
                     </button>
-                    <a class="navbar-brand collapse-hide" href="javascript:" @click="index">宏海网络</a>
+                    <a class="navbar-brand collapse-hide" @click="go('index')">宏海网络</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -22,18 +22,17 @@
                                aria-haspopup="true" aria-expanded="false">电商工具<span
                                     class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="collapse-hide" href="javascript:" @click="index">恶意账号查询</a>
-                                <li><a class="collapse-hide" href="javascript:" @click="checkTb">淘宝验号</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="checkPdd">拼多多验号</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="checkJd">京东验号</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="oneKeyExcel">一键生成EXCEL</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="searchOrder">淘宝信用查询</a></li>
+                                <li><a class="collapse-hide" @click="go('index')">恶意账号查询</a>
+                                <li><a class="collapse-hide" @click="go('checkTb')">淘宝验号</a></li>
+                                <li><a class="collapse-hide" @click="go('checkPdd')">拼多多验号</a></li>
+                                <li><a class="collapse-hide" @click="go('checkJd')">京东验号</a></li>
+                                <li><a class="collapse-hide" @click="go('oneKeyExcel')">一键生成EXCEL</a></li>
+                                <li><a class="collapse-hide" @click="go('searchOrder')">淘宝信用查询</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">文章资讯<span
-                                    class="caret"></span></a>
+                               aria-haspopup="true" aria-expanded="false">文章资讯<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li v-if="item.name" v-for="(item,index) in page.menu" :key="index">
                                     <a class="collapse-hide" :href="item.url">{{item.name}}</a>
@@ -43,8 +42,8 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <template v-if="!user">
-                            <li><a class="collapse-hide" href="javascript:" @click="login">登录</a></li>
-                            <li><a class="collapse-hide" href="javascript:" @click="register">注册</a></li>
+                            <li><a class="collapse-hide" @click="('login')">登录</a></li>
+                            <li><a class="collapse-hide" @click="('register')">注册</a></li>
                         </template>
                         <template v-if="user">
                             <li class="dropdown">
@@ -52,12 +51,12 @@
                                    aria-haspopup="true" aria-expanded="false">积分充值<span
                                         class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:">积分:{{user._profile.amount}}</a></li>
+                                    <li><a>积分:{{user._profile.amount}}</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="recharge">积分充值</a></li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="rechargeList">充值记录</a></li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="amountList">积分记录</a></li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="inviterLink">推广赚积分</a></li>
+                                    <li><a class="collapse-hide" @click="go('recharge')">积分充值</a></li>
+                                    <li><a class="collapse-hide" @click="go('rechargeList')">充值记录</a></li>
+                                    <li><a class="collapse-hide" @click="go('amountList')">积分记录</a></li>
+                                    <li><a class="collapse-hide" @click="go('inviterLink')">推广赚积分</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -65,24 +64,25 @@
                                    aria-haspopup="true" aria-expanded="false">个人中心<span
                                         class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:">账号：{{user.mobile}}</a></li>
+                                    <li><a>账号：{{user.mobile}}</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="userModify">用户资料</a></li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="userMerchant">店铺资料</a></li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="userReport">我的举报</a></li>
+                                    <li><a class="collapse-hide" @click="go('userProfile')">用户资料</a></li>
+                                    <li><a class="collapse-hide" @click="go('userMerchant')">店铺资料</a></li>
+                                    <li><a class="collapse-hide" @click="go('userReport')">我的举报</a></li>
+                                    <li><a class="collapse-hide" @click="go('excelList')">我的表格</a></li>
                                     <li>
-                                        <a class="collapse-hide" href="javascript:" @click="notificationList">
+                                        <a class="collapse-hide" @click="go('notificationList')">
                                             系统通知
                                             <template v-if="unreadNotification>0">
                                                 （{{unreadNotification}}）
                                             </template>
                                         </a>
                                     </li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="doLogout">退出</a></li>
+                                    <li><a class="collapse-hide" @click="doLogout">退出</a></li>
                                 </ul>
                             </li>
                         </template>
-                        <li><a class="collapse-hide" href="javascript:" @click="customerService">联系客服</a></li>
+                        <li><a class="collapse-hide" @click="go('customerService')">联系客服</a></li>
                     </ul>
                 </div>
             </div>
@@ -130,56 +130,8 @@
                     });
                 });
             },
-            index: function () {
-                this.$router.push({name: 'index'});
-            },
-            login: function () {
-                this.$router.push({name: 'login'});
-            },
-            register: function () {
-                this.$router.push({name: 'register'});
-            },
-            notificationList: function () {
-                this.$router.push({name: 'notificationList'});
-            },
-            rechargeList: function () {
-                this.$router.push({name: 'rechargeList'});
-            },
-            amountList: function () {
-                this.$router.push({name: 'amountList'});
-            },
-            recharge: function () {
-                this.$router.push({name: 'recharge'});
-            },
-            userModify: function () {
-                this.$router.push({name: 'userProfile'});
-            },
-            userMerchant: function () {
-                this.$router.push({name: 'userMerchant'});
-            },
-            inviterLink: function () {
-                this.$router.push({name: 'inviterLink'});
-            },
-            checkTb: function () {
-                this.$router.push({name: 'checkTb'});
-            },
-            checkPdd: function () {
-                this.$router.push({name: 'checkPdd'});
-            },
-            checkJd: function () {
-                this.$router.push({name: 'checkJd'});
-            },
-            customerService: function () {
-                this.$router.push({name: 'customerService'});
-            },
-            searchOrder: function () {
-                this.$router.push({name: 'searchOrder'});
-            },
-            userReport: function () {
-                this.$router.push({name: 'userReport'});
-            },
-            oneKeyExcel: function () {
-                this.$router.push({name: 'oneKeyExcel'});
+            go: function (name) {
+                this.$router.push({name: name});
             }
         }
     };

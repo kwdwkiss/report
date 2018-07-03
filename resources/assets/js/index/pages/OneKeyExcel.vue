@@ -34,14 +34,45 @@
             <textarea class="form-control" cols="20" rows="8" v-model="content"></textarea>
         </div>
         <div class="row">
-            <button class="btn btn-primary" @click="preview">预览</button>
+            <button class="btn btn-warning" @click="preview">预览</button>
             <a id="download-btn" class="btn btn-primary" @click="download">下载</a>
+            <button class="btn btn-success" @click="save">保存</button>
         </div>
         <hr>
         <div class="row hidden-md hidden-lg hidden-sm">
             <a :href="page.mobile_ad.one_key_excel.url">
                 <img :src="page.mobile_ad.one_key_excel.img_src" style="width: 100%;max-height: 100px">
             </a>
+        </div>
+
+        <div class="modal fade" id="excel-create-dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">保存表格</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <p class="text-success bold" style="font-size: 16px">保存后可到 个人中心->我的表格 查看</p>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">保存名称</label>
+                                <div class="col-sm-9">
+                                    <input v-model="title" name="name" type="text" class="form-control"
+                                           placeholder="保存EXCEL的名称">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="button" class="btn btn-primary" @click="doSave">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -52,13 +83,17 @@
         data: function () {
             return {
                 content: '',
-                table: []
+                table: [],
+                title: '',
             }
         },
         computed: {
             page: function () {
                 return this.$store.state.page;
             },
+            user: function () {
+                return this.$store.state.user;
+            }
         },
         methods: {
             parse: function (str) {
@@ -102,6 +137,32 @@
                 // $('#download-btn')[0].download = 'temp.xls';
                 axios.post(api.oneKeyExcel, {data: this.table}).then(function (res) {
                     location.href = res.data.data;
+                });
+            },
+            save: function () {
+                if (!this.user) {
+                    this.$message.error('请登录后再保存');
+                    return;
+                }
+                this.parse(this.content);
+                if (this.content.length <= 1) {
+                    this.$message.error('数据为空');
+                    return;
+                }
+                $('#excel-create-dialog').modal('show');
+            },
+            doSave: function () {
+                if (this.title === '') {
+                    this.$message.error('表格名称不能为空');
+                    return;
+                }
+                let self = this;
+                axios.post(api.userExcelCreate, {
+                    title: this.title,
+                    data: this.table
+                }).then(function (res) {
+                    $('#excel-create-dialog').modal('hide');
+                    self.$message.success('保存成功');
                 });
             }
         }

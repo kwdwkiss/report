@@ -122,5 +122,9 @@ module.exports = {
 
     userRechargeList: '/user/recharge/index',
 
+    userExcelList: '/user/excel/index',
+    userExcelCreate: '/user/excel/create',
+    userExcelDelete: '/user/excel/delete',
+
     userAmountList: '/user/amount/index',
 };

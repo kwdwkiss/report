@@ -30,6 +30,8 @@ const router = window.router = new VueRouter({
                 {name: 'userMerchant', path: 'user/merchant', component: require('./pages/UserMerchant')},
                 {name: 'userReport', path: 'user/report', component: require('./pages/UserReport')},
 
+                {name: 'excelList', path: 'excel/list', component: require('./pages/ExcelList')},
+
                 {name: 'articleList', path: 'article/list/:id', component: require('./pages/ArticleList')},
                 {name: 'articleDetail', path: 'article/:id', component: require('./pages/ArticleDetail'), props: true},
 
