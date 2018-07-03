@@ -15,7 +15,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\FileCookieJar;
 use GuzzleHttp\Exception\RequestException;
 
-class EmulatorPddController extends Controller
+class EmulatorTbController extends Controller
 {
     /**
      * @var Client

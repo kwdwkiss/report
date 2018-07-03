@@ -19,6 +19,7 @@ const router = window.router = new VueRouter({
                 {name: 'oneKeyExcel', path: 'one_key_excel', component: require('./pages/OneKeyExcel')},
                 {name: 'searchOrder', path: 'search_order', component: require('./pages/SearchOrder')},
 
+                {name: 'emulator_tb', path: '/emulator_tb', component: require('./pages/EmulatorTb')},
                 {name: 'emulator_pdd', path: '/emulator_pdd', component: require('./pages/EmulatorPdd')},
                 {name: 'emulator_pdd_mms', path: '/emulator_pdd_mms', component: require('./pages/EmulatorPddMms')},
 
