@@ -59,6 +59,31 @@ class ExcelController extends Controller
         return [];
     }
 
+    public function update()
+    {
+        $id = request('id');
+        $data = request('data');
+        $title = request('title');
+
+        if (!is_array($data)) {
+            throw new JsonException('数据格式错误');
+        }
+        if (empty($data)) {
+            throw new JsonException('数据为空');
+        }
+        if (!$title) {
+            throw new JsonException('标题为空');
+        }
+
+        $user = \Auth::guard('user')->user();
+
+        Excel::query()->where('user_id', $user->id)->where('id', $id)->update([
+            'body' => json_encode($data),
+        ]);
+
+        return [];
+    }
+
     public function delete()
     {
         $id = request('id');

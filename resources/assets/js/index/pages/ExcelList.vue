@@ -18,6 +18,7 @@
                             <td>{{item.created_at}}</td>
                             <td>
                                 <a class="btn btn-primary" @click="detail(item)">查看</a>
+                                <a class="btn btn-warning" @click="edit(item)">编辑</a>
                                 <a class="btn btn-danger" @click="deleteDialog(item)">删除</a>
                             </td>
                         </tr>
@@ -56,6 +57,46 @@
                             </table>
                         </div>
                         <button class="btn btn-primary" @click="download">下载</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade excel-edit-dialog">
+            <div class="modal-dialog" style="width: 100%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">表格详情</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>表格名称：<input type="text" v-model="item.title"></div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr v-for="(row,index) in table" v-if="index===0">
+                                    <th></th>
+                                    <th v-for="col in row">{{col}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(row,index) in table" v-if="index!==0">
+                                    <td><span class="btn btn-danger glyphicon glyphicon-remove"
+                                              @click="removeRow(index)"></span></td>
+                                    <td v-for="(col,index2) in row">
+                                        <input type="text" v-model="table[index][index2]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="btn btn-primary glyphicon glyphicon-plus" @click="addRow"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button class="btn btn-warning" @click="doEdit">保存</button>
                     </div>
                 </div>
             </div>
@@ -112,6 +153,36 @@
                 this.item = item;
                 this.table = JSON.parse(item.body);
                 $('.excel-detail-dialog').modal('show');
+            },
+            edit: function (item) {
+                this.item = item;
+                this.table = JSON.parse(item.body);
+                $('.excel-edit-dialog').modal('show');
+            },
+            removeRow: function (index) {
+                this.table.splice(index, 1);
+            },
+            addRow: function () {
+                if (this.table[0].length <= 0) {
+                    return;
+                }
+                let row = [];
+                for (let i = 0; i < this.table[0].length; i++) {
+                    row.push('');
+                }
+                this.table.push(row);
+            },
+            doEdit: function () {
+                let self = this;
+                axios.post(api.userExcelUpdate, {
+                    id: this.item.id,
+                    title: this.item.title,
+                    data: this.table
+                }).then(function (res) {
+                    $('.excel-edit-dialog').modal('hide');
+                    self.$message.success('保存成功');
+                    self.$store.commit("excel");
+                });
             },
             deleteDialog: function (item) {
                 this.item = item;

@@ -124,6 +124,7 @@ module.exports = {
 
     userExcelList: '/user/excel/index',
     userExcelCreate: '/user/excel/create',
+    userExcelUpdate: '/user/excel/update',
     userExcelDelete: '/user/excel/delete',
 
     userAmountList: '/user/amount/index',

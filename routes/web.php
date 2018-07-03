@@ -71,6 +71,7 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
 
     Route::get('/user/excel/index', 'User\ExcelController@index');
     Route::post('/user/excel/create', 'User\ExcelController@create');
+    Route::post('/user/excel/update', 'User\ExcelController@update');
     Route::post('/user/excel/delete', 'User\ExcelController@delete');
 
     Route::post('/mobile/search', 'Index\MobileController@search');
