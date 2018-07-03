@@ -20,54 +20,54 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">数据统计<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="collapse-hide" href="javascript:" @click="index">概况</a>
-                                <li><a class="collapse-hide" href="javascript:" @click="statementList">报表</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="behaviorLogList">用户行为日志</a></li>
+                                <li><a class="collapse-hide" @click="index">概况</a>
+                                <li><a class="collapse-hide" @click="statementList">报表</a></li>
+                                <li><a class="collapse-hide" @click="behaviorLogList">用户行为日志</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">恶意查询<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="collapse-hide" href="javascript:" @click="userList">用户资料</a>
-                                <li><a class="collapse-hide" href="javascript:" @click="accountList">账号信息</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="reportList">举报信息</a></li>
+                                <li><a class="collapse-hide" @click="userList">用户资料</a>
+                                <li><a class="collapse-hide" @click="accountList">账号信息</a></li>
+                                <li><a class="collapse-hide" @click="reportList">举报信息</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">财务信息<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="collapse-hide" href="javascript:" @click="rechargeList">充值记录</a>
-                                <li><a class="collapse-hide" href="javascript:" @click="amountBillList">积分记录</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="searchBillList">查询汇总</a></li>
+                                <li><a class="collapse-hide" @click="rechargeList">充值记录</a>
+                                <li><a class="collapse-hide" @click="amountBillList">积分记录</a></li>
+                                <li><a class="collapse-hide" @click="searchBillList">查询汇总</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">页面设置<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="collapse-hide" href="javascript:" @click="siteIndexPage">首页设置</a>
-                                <li><a class="collapse-hide" href="javascript:" @click="sitePopWindow">弹窗设置</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="messageList">系统通知</a></li>
+                                <li><a class="collapse-hide" @click="siteIndexPage">首页设置</a>
+                                <li><a class="collapse-hide" @click="sitePopWindow">弹窗设置</a></li>
+                                <li><a class="collapse-hide" @click="messageList">系统通知</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">系统设置<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="collapse-hide" href="javascript:" @click="systemSite">站点设置</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="systemAdmin">管理员设置</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="taxonomyList">分类管理</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="articleList">文章管理</a></li>
+                                <li><a class="collapse-hide" @click="systemSite">站点设置</a></li>
+                                <li><a class="collapse-hide" @click="systemAdmin">管理员设置</a></li>
+                                <li><a class="collapse-hide" @click="taxonomyList">分类管理</a></li>
+                                <li><a class="collapse-hide" @click="articleList">文章管理</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">微信设置<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="collapse-hide" href="javascript:" @click="wechatServer">服务器配置</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="wechatMenu">菜单管理</a></li>
+                                <li><a class="collapse-hide" @click="wechatServer">服务器配置</a></li>
+                                <li><a class="collapse-hide" @click="wechatMenu">菜单管理</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -123,6 +123,9 @@
                 axios.get(api.logout).then(function () {
                     self.$router.push('/login');
                 });
+            },
+            go: function (name) {
+                this.$router.push({name: name});
             },
             index: function () {
                 this.$router.push({name: 'index'});

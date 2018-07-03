@@ -57,6 +57,7 @@
                     <div class="modal-body">
                         <form class="form-horizontal" role="form">
                             <p class="text-success bold" style="font-size: 16px">保存后可到 个人中心->我的表格 查看</p>
+                            <p class="text-danger bold" style="font-size: 16px">每个用户最多保存30个表格</p>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">保存名称</label>
                                 <div class="col-sm-9">

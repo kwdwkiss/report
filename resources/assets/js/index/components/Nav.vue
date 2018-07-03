@@ -42,8 +42,8 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <template v-if="!user">
-                            <li><a class="collapse-hide" @click="('login')">登录</a></li>
-                            <li><a class="collapse-hide" @click="('register')">注册</a></li>
+                            <li><a class="collapse-hide" @click="go('login')">登录</a></li>
+                            <li><a class="collapse-hide" @click="go('register')">注册</a></li>
                         </template>
                         <template v-if="user">
                             <li class="dropdown">
