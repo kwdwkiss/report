@@ -21,6 +21,8 @@ class CreateExcelsTable extends Migration
             $table->integer('columns');
             $table->integer('rows');
             $table->timestamps();
+
+            $table->index('user_id');
         });
     }
 

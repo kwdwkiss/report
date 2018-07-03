@@ -30,6 +30,7 @@ class CreateUserTable extends Migration
             $table->integer('auth_duration');//认证时长，单位：月
             $table->timestamp('auth_start_at')->nullable();//认证开始时间
             $table->timestamp('auth_end_at')->nullable();//认证结束时间
+            $table->string('last_ip');//最近登录ip
             $table->rememberToken();
             $table->timestamps();
 

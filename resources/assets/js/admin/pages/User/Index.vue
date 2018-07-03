@@ -124,6 +124,7 @@
                 <el-table-column prop="jd" label="京东" min-width="120"></el-table-column>
                 <el-table-column prop="is" label="IS" min-width="120"></el-table-column>
                 <el-table-column prop="_profile.amount" label="积分" min-width="100"></el-table-column>
+                <el-table-column prop="last_ip" label="最后登录IP" min-width="120"></el-table-column>
                 <el-table-column prop="created_at" label="创建时间" min-width="180"></el-table-column>
                 <el-table-column label="操作" min-width="200">
                     <template slot-scope="scope">

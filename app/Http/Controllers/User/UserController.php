@@ -37,6 +37,9 @@ class UserController extends Controller
             'mobile' => request('mobile'),
             'password' => request('password')
         ], $remember)) {
+            $user = \Auth::guard('user')->user();
+            $user->update(['last_ip' => get_client_ip()]);
+
             return [];
         }
         return [
@@ -153,7 +156,8 @@ class UserController extends Controller
             $user = User::create([
                 'mobile' => $mobile,
                 'type' => 401,
-                'password' => bcrypt($password)
+                'password' => bcrypt($password),
+                'last_ip' => get_client_ip()
             ]);
 
             //新用户注册发放200积分
