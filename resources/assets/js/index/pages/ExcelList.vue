@@ -1,8 +1,17 @@
 <template>
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">表格列表</div>
+            <div class="panel-heading">我的表格</div>
             <div class="panel-body">
+                <div>
+                    <label>名称</label>
+                    <input type="text" v-model="search.title">
+                    <label>内容</label>
+                    <input type="text" v-model="search.body">
+                    <button class="btn btn-primary" @click="doSearch">查询</button>
+                    <button class="btn btn-warning" @click="reset">重置</button>
+                    <button class="btn btn-success" @click="create">创建</button>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-responsive table-striped">
                         <thead>
@@ -130,6 +139,7 @@
         name: "RechargeList",
         data: function () {
             return {
+                search: {title: '', body: ''},
                 item: {},
                 table: [],
             }
@@ -146,6 +156,15 @@
             list: function () {
                 this.$store.commit("excel");
             },
+            doSearch: function () {
+                this.$store.commit("excel", this.search);
+            },
+            reset: function () {
+                this.search = {
+                    title: '',
+                    body: ''
+                }
+            },
             paginate: function (page) {
                 this.$store.commit("excel", {page: page});
             },
@@ -153,6 +172,9 @@
                 this.item = item;
                 this.table = JSON.parse(item.body);
                 $('.excel-detail-dialog').modal('show');
+            },
+            create: function () {
+                this.$router.push({name: 'oneKeyExcel'});
             },
             edit: function (item) {
                 this.item = item;

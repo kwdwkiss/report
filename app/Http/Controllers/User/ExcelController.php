@@ -18,11 +18,22 @@ class ExcelController extends Controller
 {
     public function index()
     {
+        $title = request('title');
+        $body = request('body');
+
         $user = \Auth::guard('user')->user();
 
-        $excel = Excel::query()->where('user_id', $user->id)->paginate();
+        $query = Excel::query()
+            ->where('user_id', $user->id);
 
-        return ExcelResource::collection($excel);
+        if ($title) {
+            $query->where('title', 'like', "%${title}%");
+        }
+        if ($body) {
+            $query->where('body', 'like', "%${body}%");
+        }
+
+        return ExcelResource::collection($query->paginate());
     }
 
     public function create()
@@ -51,7 +62,7 @@ class ExcelController extends Controller
         Excel::create([
             'user_id' => $user->id,
             'title' => $title,
-            'body' => json_encode($data),
+            'body' => json_encode($data, JSON_UNESCAPED_UNICODE),
             'columns' => count($data[0]),
             'rows' => count($data)
         ]);
@@ -78,7 +89,7 @@ class ExcelController extends Controller
         $user = \Auth::guard('user')->user();
 
         Excel::query()->where('user_id', $user->id)->where('id', $id)->update([
-            'body' => json_encode($data),
+            'body' => json_encode($data, JSON_UNESCAPED_UNICODE),
         ]);
 
         return [];
