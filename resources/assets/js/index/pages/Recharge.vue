@@ -59,7 +59,7 @@
                 return this.$store.state.user;
             },
             pay_src: function () {
-                return `http://${this.domain}/pay/?appid=${this.appid}&payno=${this.user.mobile}&pt=pc&back_url=${this.back_url}`
+                return `http://${this.domain}/pay/?appid=${this.appid}&payno=${this.user.mobile}&back_url=${this.back_url}`
             }
         },
         methods: {
