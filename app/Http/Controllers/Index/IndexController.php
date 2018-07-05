@@ -23,8 +23,12 @@ use App\Taxonomy;
 use App\User;
 use Carbon\Carbon;
 use Cly\RegExp\RegExp;
+use Cly\Spreadsheet\NoScienceValueBinder;
 use Illuminate\Http\File;
 use Illuminate\Support\Collection;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class IndexController extends Controller
 {
@@ -360,21 +364,25 @@ class IndexController extends Controller
             throw new JsonException('数据为空');
         }
 
-        $filename = 'temp/' . date('YmdHis', time()) . str_random(4) . '.csv';
+        $filename = 'temp/' . date('YmdHis', time()) . str_random(4) . '.xlsx';
         $path = \Storage::disk('public')->path($filename);
 
-        $fp = fopen($path, 'w');
-        fputs($fp, chr(239) . chr(187) . chr(191));
-        foreach ($data as $row) {
-            if (!is_array($row)) {
-                continue;
-            }
-//            $row = array_map(function ($item) {
-//                return iconv('utf8', 'gbk', $item);
-//            }, $row);
-            fputcsv($fp, $row);
-        }
-        fclose($fp);
+        Cell::setValueBinder(new NoScienceValueBinder());
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray($data);
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($path);
+
+//        $fp = fopen($path, 'w');
+//        fputs($fp, chr(239) . chr(187) . chr(191));
+//        foreach ($data as $row) {
+//            if (!is_array($row)) {
+//                continue;
+//            }
+//            fputcsv($fp, $row);
+//        }
+//        fclose($fp);
 
         $user = \Auth::guard('user')->user();
         BehaviorLog::create([
