@@ -35,7 +35,8 @@ class Statement extends Model
         $subQuery = AccountSearch::query()
             ->whereDate('created_at', $date)
             ->groupBy('user_id');
-        $account_search_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))->mergeBindings($subQuery->getQuery())->count();
+        $account_search_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
+            ->mergeBindings($subQuery->getQuery())->count();
 
         $recharge_count = RechargeBill::query()
             ->whereDate('created_at', $date)
@@ -71,20 +72,21 @@ class Statement extends Model
             ->where('type', 2)
             ->count();
 
-        $excel_download_user = BehaviorLog::query()
+        $subQuery = BehaviorLog::query()
             ->whereDate('created_at', $date)
-            ->where('type', 2)
-            ->groupBy('user_id')
-            ->count();
+            ->groupBy('user_id');
+        $excel_download_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
+            ->mergeBindings($subQuery->getQuery())->count();
 
         $excel_save_count = Excel::query()
             ->whereDate('created_at', $date)
             ->count();
 
-        $excel_save_user = Excel::query()
+        $subQuery = Excel::query()
             ->whereDate('created_at', $date)
-            ->groupBy('user_id')
-            ->count();
+            ->groupBy('user_id');
+        $excel_save_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
+            ->mergeBindings($subQuery->getQuery())->count();
 
         Statement::updateOrCreate([
             'date' => $date,
