@@ -66,6 +66,26 @@ class Statement extends Model
             ->where('biz_type', 2)
             ->sum('amount');
 
+        $excel_download_count = BehaviorLog::query()
+            ->whereDate('created_at', $date)
+            ->where('type', 2)
+            ->count();
+
+        $excel_download_user = BehaviorLog::query()
+            ->whereDate('created_at', $date)
+            ->where('type', 2)
+            ->groupBy('user_id')
+            ->count();
+
+        $excel_save_count = Excel::query()
+            ->whereDate('created_at', $date)
+            ->count();
+
+        $excel_save_user = Excel::query()
+            ->whereDate('created_at', $date)
+            ->groupBy('user_id')
+            ->count();
+
         Statement::updateOrCreate([
             'date' => $date,
             'type' => 1,
@@ -79,7 +99,11 @@ class Statement extends Model
             'recharge_money' => $recharge_money,
             'recharge_first_user' => $recharge_first_user,
             'recharge_referer_count' => $recharge_referer_count,
-            'recharge_referer_amount' => $recharge_referer_amount
+            'recharge_referer_amount' => $recharge_referer_amount,
+            'excel_download_count' => $excel_download_count,
+            'excel_download_user' => $excel_download_user,
+            'excel_save_count' => $excel_save_count,
+            'excel_save_user' => $excel_save_user,
         ]);
     }
 }

@@ -35,6 +35,10 @@
                 <el-table-column prop="user_register_inviter" label="邀请注册" min-width="80"></el-table-column>
                 <el-table-column prop="recharge_referer_count" label="提成笔数" min-width="100"></el-table-column>
                 <el-table-column prop="recharge_referer_amount" label="提成积分" min-width="100"></el-table-column>
+                <el-table-column prop="excel_download_count" label="excel下载数" min-width="100"></el-table-column>
+                <el-table-column prop="excel_download_user" label="excel下载用户数" min-width="100"></el-table-column>
+                <el-table-column prop="excel_save_count" label="excel保存数" min-width="100"></el-table-column>
+                <el-table-column prop="excel_save_user" label="excel保存用户数" min-width="100"></el-table-column>
                 <el-table-column label="操作" min-width="400">
                     <template slot-scope="scope">
                     </template>

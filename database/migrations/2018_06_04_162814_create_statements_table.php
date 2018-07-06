@@ -27,6 +27,10 @@ class CreateStatementsTable extends Migration
             $table->integer('recharge_first_user');//首充用户
             $table->integer('recharge_referer_count');//充值提成笔数
             $table->integer('recharge_referer_amount');//充值提成金额
+            $table->integer('excel_download_count');//excel下载次数
+            $table->integer('excel_download_user');//excel下载用户数
+            $table->integer('excel_save_count');//excel保存个数
+            $table->integer('excel_save_user');//excel保存用户数
             $table->timestamps();
         });
     }
