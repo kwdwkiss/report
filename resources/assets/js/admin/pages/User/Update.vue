@@ -316,7 +316,7 @@
                 formData.append("file", inputFile.files[0]);
                 let params = $(inputFile).data('params');
                 if (params === 'identity') {
-                    formData.set('watermark', 'identity');
+                    formData.append('watermark', 'identity');
                 }
                 axios.post(api.adminUploadOssImage, formData, {
                     headers: {"Content-Type": "multipart/form-data"}

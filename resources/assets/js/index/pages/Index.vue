@@ -88,7 +88,7 @@
                         <p class="col-xs-6 col-sm-4">姓名：{{item._profile.name}}</p>
                         <p class="col-xs-6 col-sm-4">性别：{{item._profile.gender_label}}</p>
                         <p class="col-xs-6 col-sm-4">地址：{{item._profile.address}}</p>
-                        <p class="col-xs-6 col-sm-4">备注：{{item._profile.remark}}</p>
+                        <p class="col-xs-6 col-sm-4 text-primary">备注：{{item._profile.remark}}</p>
                     </div>
                 </div>
                 <div class="row">
