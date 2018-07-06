@@ -27,6 +27,7 @@ class UserProfileResource extends Resource
             $secretData['province'] = $data['province'];
             $secretData['city'] = $data['city'];
             $secretData['address'] = $data['province'] . $data['city'];
+            $secretData['remark'] = $data['remark'];
 
             $secretData['user_lock'] = $data['user_lock'];
             //$secretData['alipay'] = substr_replace($data['alipay'], '***', 2, 3);
