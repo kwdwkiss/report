@@ -149,7 +149,7 @@ class IndexController extends Controller
             $accountReportsData = [];
             foreach ($accountReports as $item) {
                 if (isset($userCheckList[$item->account_type])) {
-                    if (empty($item->description) || empty($item->_attachments)) {
+                    if (empty($item->description) || $item->_attachments->isEmpty()) {
                         continue;
                     }
                 }
