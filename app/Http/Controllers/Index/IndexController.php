@@ -97,6 +97,7 @@ class IndexController extends Controller
                 'result' => ''
             ]);
 
+            //存在账号的用户
             $searchUsers = User::query()->with('_profile')
                 ->where('mobile', $name)
                 ->orWhere('qq', $name)
@@ -106,6 +107,7 @@ class IndexController extends Controller
                 ->orWhere('is', $name)
                 ->get();
 
+            //所有的账号
             $accounts = Account::where('name', $name)->get();
 
             //type 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
