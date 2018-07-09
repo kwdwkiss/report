@@ -33,6 +33,7 @@ class UserResource extends Resource
             $secretData['type_label'] = $data['type_label'];
             $secretData['_profile'] = $data['_profile'];
             $secretData['_merchant'] = $data['_merchant'];
+            $secretData['is_auth'] = $data['is_auth'];
             $secretData['is_check'] = $this->resource->isCheck();
 
             $secretData['mobile'] = substr_replace($data['mobile'], '****', 3, 4);//186****3808

@@ -294,7 +294,7 @@ class IndexController extends Controller
         }
         if (!$uploadFile->isValid()) {
             $errorMessage = $uploadFile->getErrorMessage();
-            throw new JsonException("上传文件失败，${errorMessage}，请稍后再次尝试");
+            throw new JsonException("上传文件失败：${errorMessage}");
         }
 
         $watermark = request('watermark', '');

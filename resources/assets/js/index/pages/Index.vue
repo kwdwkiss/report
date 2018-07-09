@@ -65,14 +65,14 @@
                     </div>
                 </div>
                 <div class="row" v-for="(item,index) in searchUser" :key="'search_user'+index"
-                     v-bind:class="{'text-danger':!item.is_check,'text-success':item.is_check}">
+                     v-bind:class="{'text-danger':!item.is_auth,'text-success':item.is_auth}">
                     <div>
                         <p class="col-xs-6 col-sm-4">
                             会员审核:
-                            <strong class="bold" v-if="!item.is_check">
+                            <strong class="bold" v-if="!item.is_auth">
                                 （未审核）
                             </strong>
-                            <strong class="bold" v-if="item.is_check">
+                            <strong class="bold" v-if="item.is_auth">
                                 （实名认证）
                             </strong>
                         </p>
