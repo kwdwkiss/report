@@ -18,6 +18,7 @@ use App\Tag;
 use App\Taxonomy;
 use App\UserProfile;
 use Carbon\Carbon;
+use Cly\Emulator\Pdd;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\FileCookieJar;
 use GuzzleHttp\Exception\RequestException;
@@ -59,8 +60,17 @@ class Test extends Command
      */
     public function handle()
     {
-        $data = json_decode('', true);
-        dd((array)$data);
+        $pdd = new Pdd();
+
+        if ($pdd->isLogin()) {
+            $this->line('is login');
+        } else {
+            $pdd->login();
+            $mobile = $this->ask('input mobile');
+            $this->line($pdd->sms($mobile));
+            $code = $this->ask('input mobile code');
+            $this->line($pdd->doLogin($mobile, $code));
+        }
 //        \DB::enableQueryLog();
 //        $today = \App\User::query()
 //            ->whereDate('created_at', Carbon::today()->toDateString())

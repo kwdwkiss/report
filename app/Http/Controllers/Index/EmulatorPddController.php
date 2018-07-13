@@ -85,6 +85,19 @@ class EmulatorPddController extends Controller
         }
     }
 
+    public function personal()
+    {
+        $url = 'http://mobile.yangkeduo.com/personal.html';
+
+        try {
+            $response = $this->client->get($url);
+            return [];
+
+        } catch (RequestException $e) {
+            throw new JsonException($e->getMessage());
+        }
+    }
+
     public function afterSales()
     {
         $url = 'http://apiv3.yangkeduo.com/after_sales/list?range=all&offset=0&size=10&pdduid=3498107458';
