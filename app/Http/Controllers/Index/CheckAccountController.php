@@ -73,4 +73,11 @@ class CheckAccountController
         }
         return $geo;
     }
+
+    public function geo()
+    {
+        $geo = $this->getGeo(request('ip'));
+
+        return ['data' => $geo];
+    }
 }

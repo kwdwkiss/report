@@ -365,10 +365,15 @@ class UserController extends Controller
         $auth_start_at = Carbon::now();
         $auth_end_at = $auth_start_at->addMonths($auth_duration);
         $user->update([
+            'type' => $auth_type,
             'auth_type' => $auth_type,
             'auth_duration' => $auth_duration,
             'auth_start_at' => $auth_start_at,
             'auth_end_at' => $auth_end_at
+        ]);
+
+        $user->_profile->update([
+            'user_lock' => 1,
         ]);
 
         return [];

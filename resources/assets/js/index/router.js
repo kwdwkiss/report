@@ -43,7 +43,8 @@ const router = window.router = new VueRouter({
 
                 {name: 'notificationList', path: 'notification/list', component: require('./pages/NotificatioinList')},
             ]
-        }
+        },
+        {path: 'check_account/tb_my_rate', component: require('./pages/check_account/TbMyRate')},
     ]
 });
 
