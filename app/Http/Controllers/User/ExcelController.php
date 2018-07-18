@@ -54,7 +54,7 @@ class ExcelController extends Controller
         $user = \Auth::guard('user')->user();
 
         $count = Excel::query()->where('user_id', $user->id)->count();
-        $countLimit = 30;
+        $countLimit = 100;
         if ($count >= $countLimit) {
             throw new JsonException("每个用户只能保存${countLimit}份表格，请删除旧表格再保存");
         }
