@@ -227,58 +227,61 @@ class IndexController extends Controller
 
         $reportToday = \Cache::remember('statement.user.report.total', 10, function () {
             return AccountReport::query()
-                ->where('created_at', '>', Carbon::today())
+                ->whereDate('created_at', Carbon::today()->toDateString())
                 ->count();
         });
 
         $reportMonth = \Cache::remember('statement.user.report.month', 10, function () {
             return AccountReport::query()
-                ->where('created_at', '>', Carbon::now()->startOfMonth())
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->month)
                 ->count();
         });
 
         $reportLastMonth = \Cache::remember('statement.user.report.last_month', 3600 * 24, function () {
             return AccountReport::query()
-                ->where('created_at', '>', Carbon::now()->subMonths(1)->startOfMonth())
-                ->where('created_at', '<', Carbon::now()->startOfMonth())
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
                 ->count();
         });
 
         $searchToday = \Cache::remember('statement.user.search.total', 10, function () {
             return AccountSearch::query()
-                ->where('created_at', '>', Carbon::today())
+                ->whereDate('created_at', Carbon::today()->toDateString())
                 ->count();
         });
 
         $searchMonth = \Cache::remember('statement.user.search.month', 10, function () {
             return AccountSearch::query()
-                ->where('created_at', '>', Carbon::now()->startOfMonth())
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->month)
                 ->count();
         });
 
         $searchLastMonth = \Cache::remember('statement.user.search.last_month', 3600 * 24, function () {
             return AccountSearch::query()
-                ->where('created_at', '>', Carbon::now()->subMonths(1)->startOfMonth())
-                ->where('created_at', '<', Carbon::now()->startOfMonth())
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
                 ->count();
         });
 
         $rechargeToday = \Cache::remember('statement.user.recharge.total', 10, function () {
             return RechargeBill::query()
-                ->where('created_at', '>', Carbon::today())
+                ->whereDate('created_at', Carbon::today()->toDateString())
                 ->count();
         });
 
         $rechargeMonth = \Cache::remember('statement.user.recharge.month', 10, function () {
             return RechargeBill::query()
-                ->where('created_at', '>', Carbon::now()->startOfMonth())
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->month)
                 ->count();
         });
 
         $rechargeLastMonth = \Cache::remember('statement.user.recharge.last_month', 3600 * 24, function () {
             return RechargeBill::query()
-                ->where('created_at', '>', Carbon::now()->subMonths(1)->startOfMonth())
-                ->where('created_at', '<', Carbon::now()->startOfMonth())
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
                 ->count();
         });
 
