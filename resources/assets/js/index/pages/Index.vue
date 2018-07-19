@@ -375,7 +375,8 @@
                 reportData: {},
                 searchParams: {},
                 reportParams: {},
-                captcha_src: api.captcha + "?" + Date.parse(new Date())
+                captcha_src: api.captcha + "?" + Date.parse(new Date()),
+                reporting: false,
             };
         },
         computed: {
@@ -455,16 +456,22 @@
             },
             doReport: function () {
                 let self = this;
-                axios
-                    .post(api.indexReport, self.reportParams)
-                    .then(function () {
-                        self.initReportParams();
-                        self.$message.success('投诉举报成功');
-                        $("#report-dialog").modal("hide");
-                    })
-                    .catch(function () {
-                        self.doCaptcha();
-                    });
+
+                if (self.reporting) {
+                    self.$message('举报中，请不要重复提交');
+                }
+                self.reporting = true;
+
+                axios.post(api.indexReport, self.reportParams).then(function () {
+                    self.initReportParams();
+                    self.$message.success('投诉举报成功');
+                    $("#report-dialog").modal("hide");
+
+                    self.reporting = false;
+                }).catch(function () {
+                    self.doCaptcha();
+                    self.reporting = false;
+                });
             },
             uploadImage: function (item) {
                 let inputFile = $(".input-file");
