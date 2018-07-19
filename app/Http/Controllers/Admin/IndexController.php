@@ -14,8 +14,10 @@ use App\Attachment;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\RechargeBill;
+use App\Statement;
 use App\Taxonomy;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\File;
 
 class IndexController extends Controller
@@ -180,12 +182,149 @@ class IndexController extends Controller
             throw new JsonException('无权访问');
         }
 
+        $registerTotal = \Cache::remember('statement.user.register.total', 10, function () {
+            return User::query()->count();
+        });
+
+        $registerToday = \Cache::remember('statement.user.register.today', 10, function () {
+            return User::query()
+                ->whereDate('created_at', Carbon::today()->toDateString())
+                ->count();
+        });
+
+        $registerTodayInviter = \Cache::remember('statement.user.register.today_inviter', 10, function () {
+            return User::query()
+                ->whereHas('_profile', function ($query) {
+                    $query->where('inviter', '!=', '');
+                })
+                ->whereDate('created_at', Carbon::today()->toDateString())
+                ->count();
+        });
+
+        $registerMonth = \Cache::remember('statement.user.register.month', 10, function () {
+            return User::query()
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->month)
+                ->count();
+        });
+
+        $registerLastMonth = \Cache::remember('statement.user.register.last_month', 3600 * 24, function () {
+            return User::query()
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
+                ->count();
+        });
+
+        $row = Statement::query()
+            ->where('date', Carbon::yesterday()->toDateString())
+            ->first();
+        $registerYesterday = $row ? $row->user_register : 0;
+        $registerYesterdayInviter = $row ? $row->user_register_inviter : 0;
+        $reportYesterday = $row ? $row->account_report : 0;
+        $searchYesterday = $row ? $row->account_search : 0;
+        $rechargeYesterday = $row ? $row->recharge_money : 0;
+        $rechargeYesterdayOnce = $row ? $row->recharge_first_user : 0;
+
+        $reportToday = \Cache::remember('statement.user.report.total', 10, function () {
+            return AccountReport::query()
+                ->where('created_at', '>', Carbon::today())
+                ->count();
+        });
+
+        $reportMonth = \Cache::remember('statement.user.report.month', 10, function () {
+            return AccountReport::query()
+                ->where('created_at', '>', Carbon::now()->startOfMonth())
+                ->count();
+        });
+
+        $reportLastMonth = \Cache::remember('statement.user.report.last_month', 3600 * 24, function () {
+            return AccountReport::query()
+                ->where('created_at', '>', Carbon::now()->subMonths(1)->startOfMonth())
+                ->where('created_at', '<', Carbon::now()->startOfMonth())
+                ->count();
+        });
+
+        $searchToday = \Cache::remember('statement.user.search.total', 10, function () {
+            return AccountSearch::query()
+                ->where('created_at', '>', Carbon::today())
+                ->count();
+        });
+
+        $searchMonth = \Cache::remember('statement.user.search.month', 10, function () {
+            return AccountSearch::query()
+                ->where('created_at', '>', Carbon::now()->startOfMonth())
+                ->count();
+        });
+
+        $searchLastMonth = \Cache::remember('statement.user.search.last_month', 3600 * 24, function () {
+            return AccountSearch::query()
+                ->where('created_at', '>', Carbon::now()->subMonths(1)->startOfMonth())
+                ->where('created_at', '<', Carbon::now()->startOfMonth())
+                ->count();
+        });
+
+        $rechargeToday = \Cache::remember('statement.user.recharge.total', 10, function () {
+            return RechargeBill::query()
+                ->where('created_at', '>', Carbon::today())
+                ->count();
+        });
+
+        $rechargeMonth = \Cache::remember('statement.user.recharge.month', 10, function () {
+            return RechargeBill::query()
+                ->where('created_at', '>', Carbon::now()->startOfMonth())
+                ->count();
+        });
+
+        $rechargeLastMonth = \Cache::remember('statement.user.recharge.last_month', 3600 * 24, function () {
+            return RechargeBill::query()
+                ->where('created_at', '>', Carbon::now()->subMonths(1)->startOfMonth())
+                ->where('created_at', '<', Carbon::now()->startOfMonth())
+                ->count();
+        });
+
+        $rechargeTodayOnce = \Cache::remember('statement.user.recharge.today_once', 10, function () {
+            $todayUserIds = RechargeBill::query()
+                ->select('user_id')
+                ->whereDate('created_at', Carbon::today()->toDateString())
+                ->get()->pluck('user_id')->toArray();
+            $subQuery = RechargeBill::query()
+                ->whereIn('user_id', $todayUserIds)
+                ->groupBy('user_id')
+                ->havingRaw('count(*)=1');
+            return \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))->mergeBindings($subQuery->getQuery())->count();
+        });
+
         return [
             'data' => [
-                'userRegister' => User::statement(),
-                'accountReport' => AccountReport::statement(),
-                'accountSearch' => AccountSearch::statement(),
-                'rechargeBill' => RechargeBill::statement()
+                'userRegister' => [
+                    'total' => $registerTotal,
+                    'today' => $registerToday,
+                    'yesterday' => $registerYesterday,
+                    'month' => $registerMonth,
+                    'lastMonth' => $registerLastMonth,
+                    'todayInviter' => $registerTodayInviter,
+                    'yesterdayInviter' => $registerYesterdayInviter
+                ],
+                'accountReport' => [
+                    'today' => $reportToday,
+                    'yesterday' => $reportYesterday,
+                    'month' => $reportMonth,
+                    'lastMonth' => $reportLastMonth
+                ],
+                'accountSearch' => [
+                    'today' => $searchToday,
+                    'yesterday' => $searchYesterday,
+                    'month' => $searchMonth,
+                    'lastMonth' => $searchLastMonth
+                ],
+                'rechargeBill' => [
+                    'today' => $rechargeToday,
+                    'yesterday' => $rechargeYesterday,
+                    'month' => $rechargeMonth,
+                    'lastMonth' => $rechargeLastMonth,
+                    'todayOnce' => $rechargeTodayOnce,
+                    'yesterdayOnce' => $rechargeYesterdayOnce
+                ]
             ]
         ];
     }

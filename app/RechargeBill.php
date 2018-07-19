@@ -23,56 +23,6 @@ class RechargeBill extends Model
         return date('ymdHis', time()) . random_int(10, 99) . str_pad($userId, 4, '0', STR_PAD_LEFT);
     }
 
-    public static function statement()
-    {
-        $data = \Cache::remember('statement.recharge.bill', 10, function () {
-            $today = static::query()
-                ->whereDate('created_at', Carbon::today()->toDateString())
-                ->sum('money');
-
-            $todayUserIds = static::query()
-                ->select('user_id')
-                ->whereDate('created_at', Carbon::today()->toDateString())
-                ->get()->pluck('user_id')->toArray();
-            $subQuery = static::query()
-                ->whereIn('user_id', $todayUserIds)
-                ->groupBy('user_id')
-                ->havingRaw('count(*)=1');
-            $todayOnce = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))->mergeBindings($subQuery->getQuery())->count();
-
-            $yesterday = static::query()
-                ->whereDate('created_at', Carbon::yesterday()->toDateString())
-                ->sum('money');
-
-            $yesterdayUserIds = static::query()
-                ->select('user_id')
-                ->whereDate('created_at', Carbon::yesterday()->toDateString())
-                ->get()->pluck('user_id')->toArray();
-            $subQuery = static::query()
-                ->whereIn('user_id', $yesterdayUserIds)
-                ->groupBy('user_id')
-                ->havingRaw('count(*)=1');
-            $yesterdayOnce = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))->mergeBindings($subQuery->getQuery())->count();
-
-            $month = static::query()
-                ->whereYear('created_at', Carbon::now()->year)
-                ->whereMonth('created_at', Carbon::now()->month)
-                ->sum('money');
-
-            $lastMonth = static::query()
-                ->whereYear('created_at', Carbon::now()->year)
-                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
-                ->sum('money');
-
-            return compact(
-                'today', 'yesterday', 'month', 'lastMonth',
-                'todayOnce', 'yesterdayOnce'
-            );
-        });
-
-        return $data;
-    }
-
     public static function recharge($user, $money, $tno, $pay_type)
     {
         \DB::transaction(function () use ($user, $money, $tno, $pay_type) {

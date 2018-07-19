@@ -131,48 +131,4 @@ class User extends Authenticatable
     {
         $this->update(['api_secret' => md5($this->id . microtime())]);
     }
-
-    public static function statement()
-    {
-        $data = \Cache::remember('statement.user.register', 10, function () {
-            $total = User::query()->count();
-
-            $today = User::query()
-                ->whereDate('created_at', Carbon::today()->toDateString())
-                ->count();
-
-            $todayInviter = User::query()
-                ->whereHas('_profile', function ($query) {
-                    $query->where('inviter', '!=', '');
-                })
-                ->whereDate('created_at', Carbon::today()->toDateString())
-                ->count();
-
-            $yesterday = static::query()
-                ->whereDate('created_at', Carbon::yesterday()->toDateString())
-                ->count();
-
-            $yesterdayInviter = User::query()
-                ->whereHas('_profile', function ($query) {
-                    $query->where('inviter', '!=', '');
-                })
-                ->whereDate('created_at', Carbon::yesterday()->toDateString())
-                ->count();
-
-            $month = User::query()
-                ->whereYear('created_at', Carbon::now()->year)
-                ->whereMonth('created_at', Carbon::now()->month)
-                ->count();
-
-            $lastMonth = User::query()
-                ->whereYear('created_at', Carbon::now()->year)
-                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
-                ->count();
-
-            return compact('total', 'today', 'yesterday', 'month', 'lastMonth',
-                'todayInviter', 'yesterdayInviter');
-        });
-
-        return $data;
-    }
 }
