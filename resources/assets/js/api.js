@@ -82,6 +82,7 @@ module.exports = {
     uploadOss: '/index/upload-oss',
     behaviorLog: '/index/behavior-log',
     oneKeyExcel: '/index/one-key-excel',
+    checkGeo: 'check_geo',
 
     indexSearch: '/index/search',
     indexReport: '/index/report',

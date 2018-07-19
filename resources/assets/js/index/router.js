@@ -44,7 +44,12 @@ const router = window.router = new VueRouter({
                 {name: 'notificationList', path: 'notification/list', component: require('./pages/NotificatioinList')},
             ]
         },
-        {path: 'check_account/tb_my_rate', component: require('./pages/check_account/TbMyRate')},
+        {name: 'tb_my_rate', path: 'check_account/tb_my_rate', component: require('./pages/check_account/TbMyRate')},
+        {
+            name: 'tb_raise_naughty',
+            path: 'check_account/tb_raise_naughty',
+            component: require('./pages/check_account/TbRaiseNaughty')
+        },
     ]
 });
 

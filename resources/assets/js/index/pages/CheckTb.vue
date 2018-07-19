@@ -43,7 +43,12 @@
             page: function () {
                 return this.$store.state.page;
             },
-        }
+        },
+        methods: {
+            go: function (name) {
+                this.$router.push({name: name});
+            }
+        },
     }
 </script>
 

@@ -76,7 +76,7 @@ class CheckAccountController
 
     public function geo()
     {
-        $geo = $this->getGeo(request('ip'));
+        $geo = $this->getGeo(get_client_ip());
 
         return ['data' => $geo];
     }
