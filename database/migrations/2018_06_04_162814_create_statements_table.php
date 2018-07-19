@@ -23,7 +23,7 @@ class CreateStatementsTable extends Migration
             $table->integer('account_search');//账号查询
             $table->integer('account_search_user');//查询用户
             $table->integer('recharge_count');//充值笔数
-            $table->integer('recharge_money');//充值金额
+            $table->decimal('recharge_money');//充值金额
             $table->integer('recharge_first_user');//首充用户
             $table->integer('recharge_referer_count');//充值提成笔数
             $table->integer('recharge_referer_amount');//充值提成金额
