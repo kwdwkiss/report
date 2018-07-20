@@ -250,16 +250,18 @@ class IndexController extends Controller
             throw new JsonException('举报的账号为宏海认证会员，必须同时提交图片和描述才能举报');
         }
 
-        \DB::transaction(function () use ($user, $account_type, $name, $report_type, $ip, $description, $attachment
+        $account = Account::where('type', $account_type)->where('name', $name)->first();
+        if (!$account) {
+            $account = Account::create([
+                'type' => $account_type,
+                'name' => $name,
+                'status' => 102
+            ]);
+        }
+
+        \DB::transaction(function () use ($account, $user, $account_type, $name,
+            $report_type, $ip, $description, $attachment
         ) {
-            $account = Account::where('type', $account_type)->where('name', $name)->first();
-            if (!$account) {
-                $account = Account::create([
-                    'type' => $account_type,
-                    'name' => $name,
-                    'status' => 102
-                ]);
-            }
             $account->increment('report_count');
 
             $accountReport = AccountReport::create([
