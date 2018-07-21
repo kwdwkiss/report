@@ -41,6 +41,9 @@ module.exports = {
     adminUserAddDeposit: '/admin/user/add-deposit',
     adminUserSubDeposit: '/admin/user/sub-deposit',
 
+    adminUserRemarkIndex: '/admin/user-remark/index',
+    adminUserRemarkCreate: '/admin/user-remark/create',
+
     accountList: '/admin/account/list',
     accountShow: '/admin/account/show',
     accountCreate: '/admin/account/create',

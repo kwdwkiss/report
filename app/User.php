@@ -46,6 +46,11 @@ class User extends Authenticatable
         return $this->hasOne(UserMerchant::class, 'user_id', 'id');
     }
 
+    public function _remark()
+    {
+        return $this->hasMany(UserRemark::class, 'user_id', 'id');
+    }
+
     public function _amountBill()
     {
         return $this->hasMany(AmountBill::class, 'user_id', 'id');

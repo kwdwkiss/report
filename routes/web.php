@@ -126,6 +126,9 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/user/add-deposit', 'Admin\UserController@addDeposit');
     Route::post('/admin/user/sub-deposit', 'Admin\UserController@subDeposit');
 
+    Route::get('/admin/user-remark/index', 'Admin\UserRemarkController@index');
+    Route::post('/admin/user-remark/create', 'Admin\UserRemarkController@create');
+
     Route::get('/admin/account/list', 'Admin\AccountController@list');
     Route::get('/admin/account/show', 'Admin\AccountController@show');
     Route::post('/admin/account/create', 'Admin\AccountController@create');

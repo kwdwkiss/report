@@ -240,6 +240,18 @@
                             </el-form-item>
                         </el-form>
                     </el-tab-pane>
+                    <el-tab-pane label="管理员备注" name="4">
+                        <el-input v-model="create_remark" placeholder="备注内容"></el-input>
+                        <el-button type="primary" @click="createUserRemark">添加备注</el-button>
+                        <el-table :data="user_remark" stripe>
+                            <el-table-column prop="content" label="备注内容" min-width="600"></el-table-column>
+                            <el-table-column prop="created_at" label="创建时间" min-width="250"></el-table-column>
+                            <el-table-column label="操作" min-width="300">
+                                <template slot-scope="scope">
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </el-tab-pane>
                 </el-tabs>
             </div>
         </div>
@@ -263,6 +275,8 @@
                 auth_type: 0,
                 auth_duration: 0,
                 deposit: 0,
+                user_remark: [],
+                create_remark: '',
             }
         },
         computed: {
@@ -272,6 +286,7 @@
         },
         created: function () {
             this.loadData();
+            this.loadUserRemark();
         },
         mounted: function () {
             let self = this;
@@ -378,6 +393,24 @@
                     self.deposit = 0;
                     self.$message.success('成功');
                     self.loadData();
+                })
+            },
+            loadUserRemark: function () {
+                let self = this;
+                let id = self.$route.params.id;
+                axios.get(api.adminUserRemarkIndex, {params: {id: id}}).then(function (res) {
+                    self.user_remark = res.data.data;
+                });
+            },
+            createUserRemark: function () {
+                let self = this;
+                axios.post(api.adminUserRemarkCreate, {
+                    id: self.form.id,
+                    content: self.create_remark
+                }).then(function (res) {
+                    self.create_remark = '';
+                    self.$message.success('成功');
+                    self.loadUserRemark();
                 })
             }
         }
