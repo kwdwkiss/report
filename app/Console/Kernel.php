@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('statics')->everyTenMinutes();
         $schedule->command('statement_day')->dailyAt('00:00');
+        $schedule->command('statement_month')->monthlyOn(1, '00:01');
         //耗时任务2点执行
         $schedule->command('settle_day')->dailyAt('02:00');
         //清楚temp文件
