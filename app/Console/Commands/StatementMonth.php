@@ -43,14 +43,14 @@ class StatementMonth extends Command
         $date = $this->argument('date');
 
         if (!$start) {
-            Statement::day($date);
+            Statement::month($date);
         } else {
             $startDate = Carbon::parse($start);
             $endDate = Carbon::parse($date);
             while ($startDate < $endDate) {
-                $this->info('statement ' . $startDate->toDateString());
-                Statement::day($startDate->toDateString());
-                $startDate = $startDate->addDay();
+                $this->info('statement ' . date('Y-m', $startDate->getTimestamp()));
+                Statement::month(date('Y-m', $startDate->getTimestamp()));
+                $startDate = $startDate->addMonth();
             }
         }
     }

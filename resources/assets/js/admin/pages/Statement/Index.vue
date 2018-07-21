@@ -13,6 +13,11 @@
                     :picker-options="datePickerOptions">
             </el-date-picker>
 
+            <el-select v-model="search.type" placeholder="请选择统计类型">
+                <el-option label="按天" :value="1"></el-option>
+                <el-option label="按月" :value="2"></el-option>
+            </el-select>
+
             <el-button type="primary" @click="doSearch">搜索</el-button>
             <el-button type="warning" @click="reset">重置</el-button>
 
@@ -55,7 +60,7 @@
             return {
                 apiList: api.adminStatementList,
                 dataList: {meta: {}},
-                search: {order_query: {}},
+                search: {order_query: {}, type: 1},
                 datePickerOptions: {
                     shortcuts: [{
                         text: '最近一周',

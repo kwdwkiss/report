@@ -17,6 +17,8 @@ class StatementController extends Controller
 {
     public function index()
     {
+        $type = request('type', 1);
+
         $user = \Auth::guard('admin')->user();
         if ($user->id != 1) {
             throw new JsonException('无权访问');
@@ -41,6 +43,9 @@ class StatementController extends Controller
         if (!is_null($date)) {
             $query->where('date', '>=', $date[0]);
             $query->where('date', '<=', $date[1]);
+        }
+        if ($type) {
+            $query->where('type', $type);
         }
 
         return StatementResource::collection($query->paginate());
