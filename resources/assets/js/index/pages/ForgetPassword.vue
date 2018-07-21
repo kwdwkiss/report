@@ -14,14 +14,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">新密码</label>
-                            <div class="col-sm-9">
-                                <input type="password" class="form-control"
-                                       placeholder="密码必须包含字母、数字、符号两种组合且长度为8-16" name="password"
-                                       v-model="forgetPasswordForm.password">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-3 control-label">短信验证码</label>
                             <div class="col-sm-6">
                                 <input class="form-control" placeholder="请输入短信验证码"
@@ -30,6 +22,14 @@
                             <span class="col-sm-3">
                                 <my-sms :mobile="forgetPasswordForm.mobile" :action="'forget'"></my-sms>
                             </span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">新密码</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control"
+                                       placeholder="密码必须包含字母、数字、符号两种组合且长度为8-16" name="password"
+                                       v-model="forgetPasswordForm.password">
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">

@@ -44,7 +44,7 @@ class UserController extends Controller
         }
         return [
             'code' => 100,
-            'message' => '登录失败'
+            'message' => '账号或密码错误'
         ];
     }
 
