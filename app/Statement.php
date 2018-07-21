@@ -242,6 +242,24 @@ class Statement extends Model
             \Cache::forget('statement.user.recharge.today_once');
         }
 
+        $row = Statement::query()
+            ->where('date', Carbon::yesterday()->toDateString())
+            ->first();
+        $registerYesterday = $row ? $row->user_register : 0;
+        $registerYesterdayInviter = $row ? $row->user_register_inviter : 0;
+        $reportYesterday = $row ? $row->account_report : 0;
+        $searchYesterday = $row ? $row->account_search : 0;
+        $rechargeYesterday = $row ? $row->recharge_money : 0;
+        $rechargeYesterdayOnce = $row ? $row->recharge_first_user : 0;
+
+        $row = Statement::query()
+            ->where('date', date('Y-m', Carbon::now()->subMonth()->getTimestamp()))
+            ->first();
+        $registerLastMonth = $row ? $row->user_register : 0;
+        $reportLastMonth = $row ? $row->account_report : 0;
+        $searchLastMonth = $row ? $row->account_search : 0;
+        $rechargeLastMonth = $row ? $row->recharge_money : 0;
+
         $registerTotal = \Cache::remember('statement.user.register.total', 10, function () {
             return User::query()->count();
         });
@@ -268,23 +286,6 @@ class Statement extends Model
                 ->count();
         });
 
-        $registerLastMonth = \Cache::remember('statement.user.register.last_month', 3600 * 24, function () {
-            return User::query()
-                ->whereYear('created_at', Carbon::now()->year)
-                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
-                ->count();
-        });
-
-        $row = Statement::query()
-            ->where('date', Carbon::yesterday()->toDateString())
-            ->first();
-        $registerYesterday = $row ? $row->user_register : 0;
-        $registerYesterdayInviter = $row ? $row->user_register_inviter : 0;
-        $reportYesterday = $row ? $row->account_report : 0;
-        $searchYesterday = $row ? $row->account_search : 0;
-        $rechargeYesterday = $row ? $row->recharge_money : 0;
-        $rechargeYesterdayOnce = $row ? $row->recharge_first_user : 0;
-
         $reportToday = \Cache::remember('statement.user.report.today', 10, function () {
             return AccountReport::query()
                 ->whereDate('created_at', Carbon::today()->toDateString())
@@ -295,13 +296,6 @@ class Statement extends Model
             return AccountReport::query()
                 ->whereYear('created_at', Carbon::now()->year)
                 ->whereMonth('created_at', Carbon::now()->month)
-                ->count();
-        });
-
-        $reportLastMonth = \Cache::remember('statement.user.report.last_month', 3600 * 24, function () {
-            return AccountReport::query()
-                ->whereYear('created_at', Carbon::now()->year)
-                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
                 ->count();
         });
 
@@ -318,13 +312,6 @@ class Statement extends Model
                 ->count();
         });
 
-        $searchLastMonth = \Cache::remember('statement.user.search.last_month', 3600 * 24, function () {
-            return AccountSearch::query()
-                ->whereYear('created_at', Carbon::now()->year)
-                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
-                ->count();
-        });
-
         $rechargeToday = \Cache::remember('statement.user.recharge.today', 10, function () {
             return RechargeBill::query()
                 ->whereDate('created_at', Carbon::today()->toDateString())
@@ -335,13 +322,6 @@ class Statement extends Model
             return RechargeBill::query()
                 ->whereYear('created_at', Carbon::now()->year)
                 ->whereMonth('created_at', Carbon::now()->month)
-                ->sum('money');
-        });
-
-        $rechargeLastMonth = \Cache::remember('statement.user.recharge.last_month', 3600 * 24, function () {
-            return RechargeBill::query()
-                ->whereYear('created_at', Carbon::now()->year)
-                ->whereMonth('created_at', Carbon::now()->subMonths(1)->month)
                 ->sum('money');
         });
 
