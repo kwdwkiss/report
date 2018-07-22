@@ -6,6 +6,7 @@ use Aliyun\Oss;
 use Aliyun\Sms;
 use Cly\Session\SessionGuard;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Horizon\Horizon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
     {
         \Schema::defaultStringLength(191);
 
+        //原生的session，刷新会有bug
         \Auth::extend('cly_session', function ($app, $name, $config) {
             $provider = \Auth::createUserProvider($config['provider'] ?? null);
 
@@ -39,6 +41,11 @@ class AppServiceProvider extends ServiceProvider
             }
 
             return $guard;
+        });
+
+        //配置后台管理员登录，可以访问horizon
+        Horizon::auth(function ($request) {
+            return \Auth::guard('admin')->check();
         });
     }
 
