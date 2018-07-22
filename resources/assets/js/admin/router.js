@@ -32,6 +32,7 @@ const router = new VueRouter({
                 {name: 'siteIndexPage', path: 'site/index-page', component: require('./pages/IndexPage')},
                 {name: 'sitePopWindow', path: 'site/pop-window', component: require('./pages/PopWindow')},
                 {name: 'messageList', path: 'message/list', component: require('./pages/Message')},
+                {name: 'messageStatus', path: 'message/status', component: require('./pages/MessageStatus')},
 
                 {name: 'systemSite', path: 'system/site', component: require('./pages/Site')},
                 {name: 'systemAdmin', path: 'system/admin', component: require('./pages/Admin')},

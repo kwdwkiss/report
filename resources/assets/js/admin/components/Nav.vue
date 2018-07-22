@@ -53,7 +53,6 @@
                                 <li><a class="collapse-hide" href="javascript:" @click="go('siteIndexPage')">首页设置</a>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('sitePopWindow')">弹窗设置</a>
                                 </li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('messageList')">系统通知</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -66,6 +65,8 @@
                                 <li><a class="collapse-hide" href="javascript:" @click="go('taxonomyList')">分类管理</a>
                                 </li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('articleList')">文章管理</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('messageList')">系统通知</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('messageStatus')">通知状态</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
