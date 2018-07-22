@@ -118,11 +118,6 @@
                 return this.$store.state.unreadNotification;
             },
         },
-        created: function () {
-            if (this.unreadNotification > 0) {
-                this.notificationList();
-            }
-        },
         mounted: function () {
             $('.navbar-collapse').on('click', '.collapse-hide', function () {
                 $('.navbar-collapse').collapse('hide');

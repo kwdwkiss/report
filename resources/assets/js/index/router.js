@@ -4,7 +4,7 @@ import store from './store'
 
 Vue.use(VueRouter);
 
-const router = window.router = new VueRouter({
+const router = new VueRouter({
     routes: [
         {
             path: '/',
@@ -84,7 +84,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {
     if (store.state.unreadNotification > 0) {
-        app.$message.error('你有未读通知，请到：个人中心->系统通知，查看并且阅读！')
+        Vue.prototype.$message.error('你有未读通知，请到：个人中心->系统通知，查看并且阅读！')
     }
 });
 
