@@ -62,7 +62,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Queue Worker Configuration
-    |--------------------------------------------------------------------------
+    |-------------------------------------------php -------------------------------
     |
     | Here you may define the queue worker settings used by your application
     | in all environments. These supervisors and settings handle all your
@@ -84,7 +84,7 @@ return [
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => ['send_notification'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 3,
