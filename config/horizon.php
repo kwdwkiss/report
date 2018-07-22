@@ -74,7 +74,7 @@ return [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => ['send_notification'],
                 'balance' => 'simple',
                 'processes' => 10,
                 'tries' => 3,
