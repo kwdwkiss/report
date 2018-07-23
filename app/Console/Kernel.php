@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('statics')->everyTenMinutes();
+        $schedule->command('statement_profile')->everyTenMinutes();
         $schedule->command('statement_day')->dailyAt('00:00');
         $schedule->command('statement_month')->monthlyOn(1, '00:01');
         //耗时任务2点执行

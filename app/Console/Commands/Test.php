@@ -60,17 +60,7 @@ class Test extends Command
      */
     public function handle()
     {
-        $pdd = new Pdd();
-
-        if ($pdd->isLogin()) {
-            $this->line('is login');
-        } else {
-            $pdd->login();
-            $mobile = $this->ask('input mobile');
-            $this->line($pdd->sms($mobile));
-            $code = $this->ask('input mobile code');
-            $this->line($pdd->doLogin($mobile, $code));
-        }
+        dd(\Cache::get('statement.profile'));
 //        \DB::enableQueryLog();
 //        $today = \App\User::query()
 //            ->whereDate('created_at', Carbon::today()->toDateString())

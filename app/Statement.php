@@ -225,23 +225,8 @@ class Statement extends Model
         ]);
     }
 
-    public static function profile($refresh = false)
+    public static function profile()
     {
-        if ($refresh) {
-            \Cache::forget('statement.user.register.total');
-            \Cache::forget('statement.user.register.today');
-            \Cache::forget('statement.user.register.today_inviter');
-            \Cache::forget('statement.user.register.month');
-            \Cache::forget('statement.user.register.last_month');
-            \Cache::forget('statement.user.report.today');
-            \Cache::forget('statement.user.report.month');
-            \Cache::forget('statement.user.report.last_month');
-            \Cache::forget('statement.user.recharge.today');
-            \Cache::forget('statement.user.recharge.month');
-            \Cache::forget('statement.user.recharge.last_month');
-            \Cache::forget('statement.user.recharge.today_once');
-        }
-
         $row = Statement::query()
             ->where('date', Carbon::yesterday()->toDateString())
             ->first();
@@ -260,17 +245,17 @@ class Statement extends Model
         $searchLastMonth = $row ? $row->account_search : 0;
         $rechargeLastMonth = $row ? $row->recharge_money : 0;
 
-        $registerTotal = \Cache::remember('statement.user.register.total', 10, function () {
+        $registerTotal = \Cache::remember('statement.user.register.total', rand(10, 20), function () {
             return User::query()->count();
         });
 
-        $registerToday = \Cache::remember('statement.user.register.today', 10, function () {
+        $registerToday = \Cache::remember('statement.user.register.today', rand(10, 20), function () {
             return User::query()
                 ->whereDate('created_at', Carbon::today()->toDateString())
                 ->count();
         });
 
-        $registerTodayInviter = \Cache::remember('statement.user.register.today_inviter', 10, function () {
+        $registerTodayInviter = \Cache::remember('statement.user.register.today_inviter', rand(10, 20), function () {
             return User::query()
                 ->whereHas('_profile', function ($query) {
                     $query->where('inviter', '!=', '');
@@ -279,53 +264,53 @@ class Statement extends Model
                 ->count();
         });
 
-        $registerMonth = \Cache::remember('statement.user.register.month', 10, function () {
+        $registerMonth = \Cache::remember('statement.user.register.month', rand(10, 20), function () {
             return User::query()
                 ->whereYear('created_at', Carbon::now()->year)
                 ->whereMonth('created_at', Carbon::now()->month)
                 ->count();
         });
 
-        $reportToday = \Cache::remember('statement.user.report.today', 10, function () {
+        $reportToday = \Cache::remember('statement.user.report.today', rand(10, 20), function () {
             return AccountReport::query()
                 ->whereDate('created_at', Carbon::today()->toDateString())
                 ->count();
         });
 
-        $reportMonth = \Cache::remember('statement.user.report.month', 10, function () {
+        $reportMonth = \Cache::remember('statement.user.report.month', rand(10, 20), function () {
             return AccountReport::query()
                 ->whereYear('created_at', Carbon::now()->year)
                 ->whereMonth('created_at', Carbon::now()->month)
                 ->count();
         });
 
-        $searchToday = \Cache::remember('statement.user.search.today', 10, function () {
+        $searchToday = \Cache::remember('statement.user.search.today', rand(10, 20), function () {
             return AccountSearch::query()
                 ->whereDate('created_at', Carbon::today()->toDateString())
                 ->count();
         });
 
-        $searchMonth = \Cache::remember('statement.user.search.month', 10, function () {
+        $searchMonth = \Cache::remember('statement.user.search.month', rand(10, 20), function () {
             return AccountSearch::query()
                 ->whereYear('created_at', Carbon::now()->year)
                 ->whereMonth('created_at', Carbon::now()->month)
                 ->count();
         });
 
-        $rechargeToday = \Cache::remember('statement.user.recharge.today', 10, function () {
+        $rechargeToday = \Cache::remember('statement.user.recharge.today', rand(10, 20), function () {
             return RechargeBill::query()
                 ->whereDate('created_at', Carbon::today()->toDateString())
                 ->sum('money');
         });
 
-        $rechargeMonth = \Cache::remember('statement.user.recharge.month', 10, function () {
+        $rechargeMonth = \Cache::remember('statement.user.recharge.month', rand(10, 20), function () {
             return RechargeBill::query()
                 ->whereYear('created_at', Carbon::now()->year)
                 ->whereMonth('created_at', Carbon::now()->month)
                 ->sum('money');
         });
 
-        $rechargeTodayOnce = \Cache::remember('statement.user.recharge.today_once', 10, function () {
+        $rechargeTodayOnce = \Cache::remember('statement.user.recharge.today_once', rand(10, 20), function () {
             $todayUserIds = RechargeBill::query()
                 ->select('user_id')
                 ->whereDate('created_at', Carbon::today()->toDateString())

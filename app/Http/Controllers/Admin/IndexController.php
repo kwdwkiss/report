@@ -182,6 +182,8 @@ class IndexController extends Controller
             throw new JsonException('无权访问');
         }
 
-        return ['data' => Statement::profile(request('refresh'))];
+        $data = \Cache::get('statement.profile', Statement::profile());
+
+        return ['data' => $data];
     }
 }
