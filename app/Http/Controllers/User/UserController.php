@@ -38,6 +38,12 @@ class UserController extends Controller
             'password' => request('password')
         ], $remember)) {
             $user = \Auth::guard('user')->user();
+
+            if ($user->deny_login) {
+                \Auth::guard('user')->logout();
+                throw new JsonException('您已被禁止登陆，如有疑问，请联系客服！');
+            }
+
             $user->update(['last_ip' => get_client_ip()]);
 
             return [];

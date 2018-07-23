@@ -221,6 +221,7 @@ class UserController extends Controller
             $ww = request('ww');
             $jd = request('jd');
             $is = request('is');
+            $deny_login = request('deny_login', 0);
 
             $user = User::with('_profile', '_merchant')->findOrFail(request('id'));
             if (empty($type)) {
@@ -286,7 +287,8 @@ class UserController extends Controller
                 'wx' => $wx,
                 'ww' => $ww,
                 'jd' => $jd,
-                'is' => $is
+                'is' => $is,
+                'deny_login' => $deny_login
             ];
             if ($password) {
                 if (!preg_match(RegExp::PASSWORD, $password)) {

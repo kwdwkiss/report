@@ -31,6 +31,7 @@ class CreateUserTable extends Migration
             $table->timestamp('auth_start_at')->nullable();//认证开始时间
             $table->timestamp('auth_end_at')->nullable();//认证结束时间
             $table->string('last_ip');//最近登录ip
+            $table->tinyInteger('deny_login');//禁止登陆
             $table->rememberToken();
             $table->timestamps();
 

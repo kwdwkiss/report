@@ -96,6 +96,11 @@
                             <el-form-item label="IS" labelWidth="100px">
                                 <el-input v-model="form.is"></el-input>
                             </el-form-item>
+                            <el-form-item label="禁止登录" labelWidth="100px">
+                                <el-switch v-model="form.deny_login" :active-value="1"
+                                           :inactive-value="0">
+                                </el-switch>
+                            </el-form-item>
                             <el-form-item label="api_key" labelWidth="100px">
                                 <el-input :disabled="true" v-model="form.api_key"></el-input>
                                 <el-button type="primary btn-copy" :data-clipboard-text="form.api_key">复制</el-button>
