@@ -66,7 +66,7 @@
                                 </li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('articleList')">文章管理</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('messageList')">系统通知</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('messageStatus')">通知状态</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('queueStatus')">队列状态</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
