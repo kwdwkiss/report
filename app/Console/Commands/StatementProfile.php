@@ -38,6 +38,6 @@ class StatementProfile extends Command
      */
     public function handle()
     {
-        \Cache::set('statement.profile', Statement::profile());
+        \Cache::set('statement.profile', Statement::profile(), 10);
     }
 }
