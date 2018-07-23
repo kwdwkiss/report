@@ -102,9 +102,9 @@ class Server
     {
         $content = $this->vbot->http->get('https://login.weixin.qq.com/jslogin', ['query' => [
             'appid' => 'wx782c26e4c19acffb',
-            'fun'   => 'new',
-            'lang'  => 'zh_CN',
-            '_'     => time(),
+            'fun' => 'new',
+            'lang' => 'zh_CN',
+            '_' => time(),
         ]]);
 
         preg_match('/window.QRLogin.code = (\d+); window.QRLogin.uuid = \"(\S+?)\"/', $content, $matches);
@@ -113,7 +113,12 @@ class Server
             throw new FetchUuidException('fetch uuid failed.');
         }
 
-        $this->vbot->config['server.uuid'] = $matches[2];
+        return $this->vbot->config['server.uuid'] = $matches[2];
+    }
+
+    public function getQrCode($uuid)
+    {
+        return 'https://login.weixin.qq.com/l/' . $uuid;
     }
 
     /**
@@ -121,7 +126,7 @@ class Server
      */
     public function showQrCode()
     {
-        $url = 'https://login.weixin.qq.com/l/'.$this->vbot->config['server.uuid'];
+        $url = 'https://login.weixin.qq.com/l/' . $this->vbot->config['server.uuid'];
 
         $this->vbot->qrCodeObserver->trigger($url);
 
@@ -155,10 +160,10 @@ class Server
                 case '200':
                     preg_match('/window.redirect_uri="(https:\/\/(\S+?)\/\S+?)";/', $content, $matches);
 
-                    $this->vbot->config['server.uri.redirect'] = $matches[1].'&fun=new';
+                    $this->vbot->config['server.uri.redirect'] = $matches[1] . '&fun=new';
                     $url = 'https://%s/cgi-bin/mmwebwx-bin';
-                    $this->vbot->config['server.uri.file'] = sprintf($url, 'file.'.$matches[2]);
-                    $this->vbot->config['server.uri.push'] = sprintf($url, 'webpush.'.$matches[2]);
+                    $this->vbot->config['server.uri.file'] = sprintf($url, 'file.' . $matches[2]);
+                    $this->vbot->config['server.uri.push'] = sprintf($url, 'webpush.' . $matches[2]);
                     $this->vbot->config['server.uri.base'] = sprintf($url, $matches[2]);
 
                     return;
@@ -189,7 +194,7 @@ class Server
     {
         $content = $this->vbot->http->get($this->vbot->config['server.uri.redirect']);
 
-        $data = (array) simplexml_load_string($content, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $data = (array)simplexml_load_string($content, 'SimpleXMLElement', LIBXML_NOCDATA);
 
         $this->vbot->config['server.skey'] = $data['skey'];
         $this->vbot->config['server.sid'] = $data['wxsid'];
@@ -200,12 +205,12 @@ class Server
             throw new LoginFailedException('Login failed.');
         }
 
-        $this->vbot->config['server.deviceId'] = 'e'.substr(mt_rand().mt_rand(), 1, 15);
+        $this->vbot->config['server.deviceId'] = 'e' . substr(mt_rand() . mt_rand(), 1, 15);
 
         $this->vbot->config['server.baseRequest'] = [
-            'Uin'      => $data['wxuin'],
-            'Sid'      => $data['wxsid'],
-            'Skey'     => $data['skey'],
+            'Uin' => $data['wxuin'],
+            'Sid' => $data['wxsid'],
+            'Skey' => $data['skey'],
             'DeviceID' => $this->vbot->config['server.deviceId'],
         ];
 
@@ -217,7 +222,7 @@ class Server
      */
     private function saveServer()
     {
-        $this->vbot->cache->forever('session.'.$this->vbot->config['session'], json_encode($this->vbot->config['server']));
+        $this->vbot->cache->forever('session.' . $this->vbot->config['session'], json_encode($this->vbot->config['server']));
     }
 
     /**
@@ -230,7 +235,7 @@ class Server
     public function init($first = true)
     {
         $this->beforeInitSuccess();
-        $url = $this->vbot->config['server.uri.base'].'/webwxinit?r='.time();
+        $url = $this->vbot->config['server.uri.base'] . '/webwxinit?r=' . time();
 
         $result = $this->vbot->http->json($url, [
             'BaseRequest' => $this->vbot->config['server.baseRequest'],
@@ -241,8 +246,8 @@ class Server
         $this->vbot->myself->init($result['User']);
 
         ApiExceptionHandler::handle($result, function ($result) {
-            $this->vbot->cache->forget('session.'.$this->vbot->config['session']);
-            $this->vbot->log->error('Init failed.'.json_encode($result));
+            $this->vbot->cache->forget('session.' . $this->vbot->config['session']);
+            $this->vbot->log->error('Init failed.' . json_encode($result));
 
             throw new InitFailException('Init failed.');
         });
@@ -258,7 +263,7 @@ class Server
      */
     private function beforeInitSuccess()
     {
-        $this->vbot->console->log('current session: '.$this->vbot->config['session']);
+        $this->vbot->console->log('current session: ' . $this->vbot->config['session']);
         $this->vbot->console->log('init begin.');
     }
 
@@ -269,7 +274,7 @@ class Server
      */
     private function afterInitSuccess($content)
     {
-        $this->vbot->log->info('response:'.json_encode($content));
+        $this->vbot->log->info('response:' . json_encode($content));
         $this->vbot->console->log('init success.');
         $this->vbot->loginSuccessObserver->trigger();
         $this->vbot->console->log('init contacts begin.');
@@ -292,14 +297,14 @@ class Server
      */
     protected function statusNotify()
     {
-        $url = sprintf($this->vbot->config['server.uri.base'].'/webwxstatusnotify?lang=zh_CN&pass_ticket=%s', $this->vbot->config['server.passTicket']);
+        $url = sprintf($this->vbot->config['server.uri.base'] . '/webwxstatusnotify?lang=zh_CN&pass_ticket=%s', $this->vbot->config['server.passTicket']);
 
         $this->vbot->http->json($url, [
-            'BaseRequest'  => $this->vbot->config['server.baseRequest'],
-            'Code'         => 3,
+            'BaseRequest' => $this->vbot->config['server.baseRequest'],
+            'Code' => 3,
             'FromUserName' => $this->vbot->myself->username,
-            'ToUserName'   => $this->vbot->myself->username,
-            'ClientMsgId'  => time(),
+            'ToUserName' => $this->vbot->myself->username,
+            'ClientMsgId' => time(),
         ]);
     }
 
@@ -311,7 +316,7 @@ class Server
 
         if (is_array($this->vbot->config['server.syncKey.List'])) {
             foreach ($this->vbot->config['server.syncKey.List'] as $item) {
-                $syncKey[] = $item['Key'].'_'.$item['Val'];
+                $syncKey[] = $item['Key'] . '_' . $item['Val'];
             }
         } elseif ($first) {
             $this->init(false);

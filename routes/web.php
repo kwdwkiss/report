@@ -47,6 +47,8 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/user/recharge/callback', 'User\RechargeController@apiCallback');
     Route::get('/user/recharge/page-callback', 'User\RechargeController@pageCallback');
 
+    Route::get('/user/vbot/qrcode', 'User\VbotController@getQrcode');
+
     Route::get('/admin', 'Admin\IndexController@index');
     Route::get('/admin/logout', 'Admin\IndexController@logout');
     Route::post('/admin/login', 'Admin\IndexController@login');

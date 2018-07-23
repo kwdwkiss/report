@@ -68,6 +68,7 @@ class UserController extends Controller
     {
         \DB::transaction(function () {
             $type = request('type');
+            $password = request('password');
             $mobile = request('mobile');
             $qq = request('qq');
             $wx = request('wx');
@@ -75,6 +76,9 @@ class UserController extends Controller
             $jd = request('jd');
             $is = request('is');
 
+            if (empty($type)) {
+                throw new JsonException('请选择类型');
+            }
             Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($type);
             if ($mobile) {
                 if (!preg_match(RegExp::MOBILE, $mobile)) {
@@ -134,7 +138,7 @@ class UserController extends Controller
             } else {
                 $is = null;
             }
-            $user = User::create([
+            $createData = [
                 'type' => $type,
                 'mobile' => $mobile,
                 'qq' => $qq,
@@ -142,7 +146,14 @@ class UserController extends Controller
                 'ww' => $ww,
                 'jd' => $jd,
                 'is' => $is
-            ]);
+            ];
+            if ($password) {
+                if (!preg_match(RegExp::PASSWORD, $password)) {
+                    throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
+                }
+                $createData['password'] = bcrypt($password);
+            }
+            $user = User::create($createData);
 
             $profileData = request('_profile');
             $name = array_get($profileData, 'name', '');
@@ -170,7 +181,7 @@ class UserController extends Controller
             ]);
 
             $merchantData = request('_merchant');
-            $merchant_type = array_get($merchantData, 'type');
+            $merchant_type = array_get($merchantData, 'type', 0);
             $merchant_name = array_get($merchantData, 'name', '');
             $merchant_goods_type = array_get($merchantData, 'goods_type', '');
             $merchant_url = array_get($merchantData, 'url', '');
@@ -178,7 +189,7 @@ class UserController extends Controller
             $merchant_manager = array_get($merchantData, 'manager', '');
             $merchant_user_lock = array_get($merchantData, 'user_lock', 0);
 
-            if (!in_array($merchant_type, [1, 2, 3])) {
+            if (!in_array($merchant_type, [0, 1, 2, 3])) {
                 throw new JsonException('店铺类型错误');
             }
             if (!in_array($merchant_user_lock, [0, 1])) {
@@ -203,6 +214,7 @@ class UserController extends Controller
     {
         \DB::transaction(function () {
             $type = request('type');
+            $password = request('password');
             $mobile = request('mobile');
             $qq = request('qq');
             $wx = request('wx');
@@ -211,6 +223,9 @@ class UserController extends Controller
             $is = request('is');
 
             $user = User::with('_profile', '_merchant')->findOrFail(request('id'));
+            if (empty($type)) {
+                throw new JsonException('请选择类型');
+            }
             Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($type);
             if ($mobile) {
                 if (!preg_match(RegExp::MOBILE, $mobile)) {
@@ -264,7 +279,7 @@ class UserController extends Controller
             } else {
                 $is = null;
             }
-            $user->update([
+            $updateData = [
                 'type' => $type,
                 'mobile' => $mobile,
                 'qq' => $qq,
@@ -272,7 +287,14 @@ class UserController extends Controller
                 'ww' => $ww,
                 'jd' => $jd,
                 'is' => $is
-            ]);
+            ];
+            if ($password) {
+                if (!preg_match(RegExp::PASSWORD, $password)) {
+                    throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
+                }
+                $updateData['password'] = bcrypt($password);
+            }
+            $user->update($updateData);
 
             $profileData = request('_profile');
             $name = array_get($profileData, 'name', '');

@@ -29,7 +29,7 @@ class Kernel
     private function checkEnvironment()
     {
         if (PHP_SAPI !== 'cli') {
-            die('Please execute script in terminal!');
+            //die('Please execute script in terminal!');
         }
 
         if (version_compare(PHP_VERSION, '7.0.0', '<')) {

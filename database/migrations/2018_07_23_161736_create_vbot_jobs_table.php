@@ -17,6 +17,7 @@ class CreateVbotJobsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('status');//-1 关闭 0-完成 1-等待扫码
+            $table->string('uuid');
             $table->string('session_key');
             $table->timestamps();
         });

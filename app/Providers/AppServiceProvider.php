@@ -5,6 +5,7 @@ namespace App\Providers;
 use Aliyun\Oss;
 use Aliyun\Sms;
 use Cly\Session\SessionGuard;
+use Cly\Vbot\VbotService;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 

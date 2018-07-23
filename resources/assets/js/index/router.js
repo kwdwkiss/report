@@ -23,15 +23,6 @@ const router = new VueRouter({
                 {name: 'emulator_pdd', path: '/emulator_pdd', component: require('./pages/EmulatorPdd')},
                 {name: 'emulator_pdd_mms', path: '/emulator_pdd_mms', component: require('./pages/EmulatorPddMms')},
 
-                {name: 'register', path: 'register', component: require('./pages/Register')},
-                {name: 'login', path: 'login', component: require('./pages/Login')},
-                {name: 'forgetPassword', path: 'forget/password', component: require('./pages/ForgetPassword')},
-                {name: 'userProfile', path: 'user/profile', component: require('./pages/UserProfile')},
-                {name: 'userMerchant', path: 'user/merchant', component: require('./pages/UserMerchant')},
-                {name: 'userReport', path: 'user/report', component: require('./pages/UserReport')},
-
-                {name: 'excelList', path: 'excel/list', component: require('./pages/ExcelList')},
-
                 {name: 'articleList', path: 'article/list/:id', component: require('./pages/ArticleList')},
                 {name: 'articleDetail', path: 'article/:id', component: require('./pages/ArticleDetail'), props: true},
 
@@ -41,7 +32,15 @@ const router = new VueRouter({
                 {name: 'amountList', path: 'amount/list', component: require('./pages/AmountList')},
                 {name: 'inviterLink', path: 'inviter/link', component: require('./pages/InviterLink')},
 
+                {name: 'register', path: 'register', component: require('./pages/Register')},
+                {name: 'login', path: 'login', component: require('./pages/Login')},
+                {name: 'forgetPassword', path: 'forget/password', component: require('./pages/ForgetPassword')},
+                {name: 'userProfile', path: 'user/profile', component: require('./pages/UserProfile')},
+                {name: 'userMerchant', path: 'user/merchant', component: require('./pages/UserMerchant')},
+                {name: 'userReport', path: 'user/report', component: require('./pages/UserReport')},
                 {name: 'notificationList', path: 'notification/list', component: require('./pages/NotificatioinList')},
+                {name: 'excelList', path: 'excel/list', component: require('./pages/ExcelList')},
+                {name: 'vbotIndex', path: 'vbot/index', component: require('./pages/VbotIndex')},
             ]
         },
         {name: 'tb_my_rate', path: 'check_account/tb_my_rate', component: require('./pages/check_account/TbMyRate')},

@@ -132,4 +132,6 @@ module.exports = {
     userExcelDelete: '/user/excel/delete',
 
     userAmountList: '/user/amount/index',
+
+    userVbotQrcode: '/user/vbot/qrcode',
 };

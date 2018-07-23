@@ -78,6 +78,9 @@
                             <el-form-item label="手机号" labelWidth="100px">
                                 <el-input v-model="form.mobile"></el-input>
                             </el-form-item>
+                            <el-form-item label="密码" labelWidth="100px">
+                                <el-input type="password" v-model="form.password"></el-input>
+                            </el-form-item>
                             <el-form-item label="QQ" labelWidth="100px">
                                 <el-input v-model="form.qq"></el-input>
                             </el-form-item>

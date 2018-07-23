@@ -11,6 +11,8 @@ namespace App\Http\Controllers\User;
 
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
+use App\VbotJob;
+use Cly\Vbot\VbotService;
 
 class VbotController extends Controller
 {
@@ -21,5 +23,18 @@ class VbotController extends Controller
         if (!$user) {
             throw new JsonException('请登录后再使用此功能');
         }
+    }
+
+    public function getQrcode()
+    {
+        $user = \Auth::guard('user')->user();
+
+        if (!$user) {
+            throw new JsonException('请登录后再使用此功能');
+        }
+
+        $vbotservice = new VbotService($user);
+
+        return ['data' => $vbotservice->getQrCode($user)];
     }
 }

@@ -128,7 +128,7 @@ class UserController extends Controller
             throw new JsonException('手机号码格式错误');
         }
 
-        if (!preg_match('/^(?![0-9]+$)(?![a-zA-Z]+$)(?![^a-zA-Z^\d]+$).{8,16}$/', $password)) {
+        if (!preg_match(RegExp::PASSWORD, $password)) {
             throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
         }
 
