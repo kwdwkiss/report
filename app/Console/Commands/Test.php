@@ -60,7 +60,21 @@ class Test extends Command
      */
     public function handle()
     {
-        dd(\Cache::get('statement.profile'));
+        $path = storage_path('pid_files');
+        $pid = pcntl_fork();
+        if ($pid == -1) {
+            die('could not fork');
+        } elseif ($pid) {
+            $pid = posix_getpid();
+            $ppid = posix_getppid();
+            $this->line("parent:$pid $ppid");
+            //pcntl_wait($status);
+        } else {
+            $pid = posix_getpid();
+            $ppid = posix_getppid();
+            $this->line("child:$pid $ppid");
+        }
+
 //        \DB::enableQueryLog();
 //        $today = \App\User::query()
 //            ->whereDate('created_at', Carbon::today()->toDateString())

@@ -12,6 +12,9 @@ namespace Cly\Vbot;
 use App\User;
 use App\VbotJob;
 use Cly\Vbot\Foundation\Vbot;
+use Cly\Vbot\Message\FriendVerify;
+use Cly\Vbot\Message\Text;
+use Illuminate\Support\Collection;
 
 class VbotService
 {
@@ -24,6 +27,8 @@ class VbotService
      * @var User
      */
     protected $user;
+
+    protected $vbotJob;
 
     public function __construct($user)
     {
@@ -98,7 +103,7 @@ class VbotService
     {
         $user = $this->user;
 
-        $vbotJob = VbotJob::query()
+        $this->vbotJob = $vbotJob = VbotJob::query()
             ->where('user_id', $user->id)
             ->where('status', 2)
             ->first();
@@ -108,7 +113,7 @@ class VbotService
         } else {
             $uuid = $this->vbot->server->getUuid();
 
-            $vbotJob = VbotJob::create([
+            $this->vbotJob = VbotJob::create([
                 'user_id' => $user->id,
                 'status' => 2,
                 'uuid' => $uuid,
@@ -121,6 +126,27 @@ class VbotService
 
     public function userClear()
     {
+        $this->vbot->server->login();
+        $this->vbot->server->init();
 
+        $this->vbot->messageHandler->setHandler(function (Collection $message) {
+            if ($message['type'] == FriendVerify::TYPE) {
+                $from = $message['from'];
+                vbot('friends')->setRemarkName($from['UserName'], 'aa' . $from['NickName']);
+            }
+        });
+
+        $nicknameList = [
+            '宏海网络-微信收款'
+        ];
+
+        foreach ($friends = vbot('friends') as $item) {
+            if (in_array($item['NickName'], $nicknameList)) {
+                Text::send($item['UserName'], '测试是否还是好友');
+                $this->line(json_encode($item));
+            }
+        }
+
+        $this->vbot->messageHandler->listen();
     }
 }

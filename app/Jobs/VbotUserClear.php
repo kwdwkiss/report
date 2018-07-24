@@ -38,6 +38,6 @@ class VbotUserClear implements ShouldQueue
 
         $vbotService = new VbotService($user);
 
-        $vbotService;
+        $vbotService->userClear();
     }
 }
