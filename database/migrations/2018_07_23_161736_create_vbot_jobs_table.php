@@ -16,9 +16,11 @@ class CreateVbotJobsTable extends Migration
         Schema::create('vbot_jobs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('status');//-1 关闭 0-完成 1-等待扫码
-            $table->string('uuid');
-            $table->string('session_key');
+            //0-新任务 1-已获取UUID 2-已登录
+            //-1任务完成 -2登录超时
+            $table->integer('status');
+            $table->text('context');
+            $table->string('qrcode_url');
             $table->timestamps();
         });
     }

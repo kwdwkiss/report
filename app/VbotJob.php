@@ -7,4 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class VbotJob extends Model
 {
     protected $guarded = [];
+
+    protected $casts = [
+        'context' => 'array'
+    ];
+
+    public static $statusType = [
+        -2 => '异常退出',
+        -1 => '已完成',
+        0 => '已创建',
+        1 => '等待扫码',
+        2 => '正在执行',
+        3 => '执行完毕，等待处理',
+    ];
 }

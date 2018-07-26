@@ -2,19 +2,20 @@
 
 namespace App\Jobs;
 
-use App\User;
 use Cly\Vbot\VbotService;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class VbotUserClear implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $vbotJob;
+
+    public $timeout = 60 * 5;
 
     /**
      * Create a new job instance.
@@ -34,10 +35,12 @@ class VbotUserClear implements ShouldQueue
      */
     public function handle()
     {
-        $user = User::findOrFail($this->vbotJob->user_id);
+        $vbotService = new VbotService($this->vbotJob);
 
-        $vbotService = new VbotService($user);
-
-        $vbotService->userClear();
+        try {
+            $vbotService->userClear();
+        } catch (\Exception $e) {
+            $vbotService->error();
+        }
     }
 }

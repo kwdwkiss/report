@@ -47,8 +47,6 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/user/recharge/callback', 'User\RechargeController@apiCallback');
     Route::get('/user/recharge/page-callback', 'User\RechargeController@pageCallback');
 
-    Route::get('/user/vbot/qrcode', 'User\VbotController@getQrcode');
-
     Route::get('/admin', 'Admin\IndexController@index');
     Route::get('/admin/logout', 'Admin\IndexController@logout');
     Route::post('/admin/login', 'Admin\IndexController@login');
@@ -76,6 +74,9 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::post('/user/excel/create', 'User\ExcelController@create');
     Route::post('/user/excel/update', 'User\ExcelController@update');
     Route::post('/user/excel/delete', 'User\ExcelController@delete');
+
+    Route::post('/user/vbot/create', 'User\VbotController@create');
+    Route::get('/user/vbot/status', 'User\VbotController@status');
 
     Route::post('/mobile/search', 'Index\MobileController@search');
 });

@@ -60,7 +60,7 @@ class MessageHandler
      *
      * @return int
      */
-    private function heartbeat($time)
+    public function heartbeat($time)
     {
         if (time() - $time > 1800) {
             Text::send('filehelper', 'heart beat '.Carbon::now()->toDateTimeString());
@@ -71,7 +71,7 @@ class MessageHandler
         return $time;
     }
 
-    private function checkSync()
+    public function checkSync()
     {
         return $this->vbot->sync->checkSync();
     }

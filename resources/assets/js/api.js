@@ -133,5 +133,6 @@ module.exports = {
 
     userAmountList: '/user/amount/index',
 
-    userVbotQrcode: '/user/vbot/qrcode',
+    userVbotCreate: '/user/vbot/create',
+    userVbotStatus: '/user/vbot/status',
 };

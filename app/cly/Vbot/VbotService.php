@@ -9,11 +9,11 @@
 namespace Cly\Vbot;
 
 
-use App\User;
 use App\VbotJob;
 use Cly\Vbot\Foundation\Vbot;
 use Cly\Vbot\Message\FriendVerify;
 use Cly\Vbot\Message\Text;
+use Illuminate\Config\Repository;
 use Illuminate\Support\Collection;
 
 class VbotService
@@ -24,15 +24,13 @@ class VbotService
     protected $vbot;
 
     /**
-     * @var User
+     * @var VbotJob
      */
-    protected $user;
-
     protected $vbotJob;
 
-    public function __construct($user)
+    public function __construct($vbotJob)
     {
-        $this->user = $user;
+        $this->vbotJob = $vbotJob;
 
         $path = storage_path('vbot/');
         $this->vbot = new Vbot([
@@ -67,7 +65,7 @@ class VbotService
              * 日志配置项
              */
             'log' => [
-                'enable' => false,
+                'enable' => true,
                 'level' => 'debug',
                 'permission' => 0777,
                 'system' => $path . 'log', // 系统报错日志
@@ -89,64 +87,138 @@ class VbotService
                     ],
                 ],
             ],
-            'session' => $user->id
+            'session' => $vbotJob->user_id
         ]);
-    }
-
-    public function session($sessionKey)
-    {
-        $this->vbot->config->set('session', $sessionKey);
-        return $this;
-    }
-
-    public function getQrcode()
-    {
-        $user = $this->user;
-
-        $this->vbotJob = $vbotJob = VbotJob::query()
-            ->where('user_id', $user->id)
-            ->where('status', 2)
-            ->first();
-
-        if ($vbotJob) {
-            $uuid = $vbotJob->uuid;
-        } else {
-            $uuid = $this->vbot->server->getUuid();
-
-            $this->vbotJob = VbotJob::create([
-                'user_id' => $user->id,
-                'status' => 2,
-                'uuid' => $uuid,
-                'session_key' => $user->id
-            ]);
-        }
-
-        return $this->vbot->server->getQrCode($uuid);
     }
 
     public function userClear()
     {
-        $this->vbot->server->login();
-        $this->vbot->server->init();
-
-        $this->vbot->messageHandler->setHandler(function (Collection $message) {
-            if ($message['type'] == FriendVerify::TYPE) {
-                $from = $message['from'];
-                vbot('friends')->setRemarkName($from['UserName'], 'aa' . $from['NickName']);
-            }
-        });
-
-        $nicknameList = [
-            '宏海网络-微信收款'
-        ];
-
-        foreach ($friends = vbot('friends') as $item) {
-            if (in_array($item['NickName'], $nicknameList)) {
-                Text::send($item['UserName'], '测试是否还是好友');
-                $this->line(json_encode($item));
-            }
+        $vbotJob = $this->vbotJob;
+        //还原上下文
+        if ($vbotJob->context) {
+            $this->vbot->config = new Repository($vbotJob->context);
         }
 
-        $this->vbot->messageHandler->listen();
+        $uuid = array_get($vbotJob->context, 'server.uuid');
+        //新任务，获取uuid
+        if ($vbotJob->status == 0 || empty($uuid)) {
+            $this->vbot->server->cleanCookies();
+            $uuid = $this->vbot->server->getUuid();
+            echo "new job get uuid:$uuid\n";
+            $vbotJob->update([
+                'status' => 1,
+                'context' => $this->vbot->config->all(),
+                'qrcode_url' => $this->vbot->server->getQrcode($uuid),
+            ]);
+        }
+
+        //等待扫码登录
+        if ($vbotJob->status == 1) {
+            try {
+                $this->vbot->server->waitForLogin();
+            } catch (\Exception $e) {
+                $vbotJob->update([
+                    'status' => -2,
+                    'context' => $this->vbot->config->all()
+                ]);
+                exit();
+            }
+            echo "is login\n";
+            $vbotJob->update([
+                'status' => 2,
+                'context' => $this->vbot->config->all()
+            ]);
+        }
+
+        //已登录，开始任务
+        if ($vbotJob->status == 2) {
+            $times = 3;
+            while (true) {
+                if ($times == 0) {
+                    exit();
+                }
+                try {
+                    $this->vbot->server->getLogin();
+                    $this->vbot->server->init();
+                    break;
+                } catch (Exceptions\InitFailException $e) {
+                    echo $e->getMessage() . "\n";
+                    $times--;
+                }
+            }
+
+            $this->vbot->messageHandler->setHandler(function (Collection $message) {
+                if ($message['type'] == FriendVerify::TYPE) {
+                    $from = $message['from'];
+                    vbot('friends')->setRemarkName($from['UserName'], 'aa' . $from['NickName']);
+                }
+            });
+
+            $pid = pcntl_fork();
+            if ($pid == -1) {
+                throw new \Exception('could not fork');
+            } elseif ($pid) {
+                //parent
+                echo "parent child:$pid\n";
+
+                $closeTime = 0;
+                $ret = 0;
+                while (true) {
+                    if (!$closeTime) {
+                        $ret = pcntl_waitpid($pid, $status, WNOHANG);
+                        echo "ret:$ret\n";
+                    }
+                    if ($ret == -1) {
+                        break;
+                    } elseif ($ret > 0) {
+                        $ret = 0;
+                        $closeTime = time();
+                        $closeTimeStr = date('H:i:s', $closeTime);
+                        echo "child close at $closeTimeStr\n";
+                    }
+                    if ($closeTime && time() - $closeTime > 60) {
+                        $now = date('H:i:s', time());
+                        echo "parent close at $now\n";
+
+                        $vbotJob->update([
+                            'status' => -1,
+                            'context' => $this->vbot->config->all()
+                        ]);
+                        break;
+                    }
+                    echo "fetch message\n";
+                    if (!($checkSync = $this->vbot->messageHandler->checkSync())) {
+                        continue;
+                    }
+                    if (!$this->vbot->messageHandler->handleCheckSync($checkSync[0], $checkSync[1])) {
+                        break;
+                    }
+                }
+            } else {
+                //child
+                $pid = posix_getpid();
+                echo "child $pid\n";
+
+                $nicknameList = [
+                    '宏海网络-微信收款'
+                ];
+                foreach ($friends = vbot('friends') as $item) {
+                    if (in_array($item['NickName'], $nicknameList)) {
+                        Text::send($item['UserName'], '测试是否还是好友');
+                        echo "send:{$item['UserName']}\n";
+                    }
+                }
+                $vbotJob->update([
+                    'status' => 3,
+                    'context' => $this->vbot->config->all()
+                ]);
+                exit();
+            }
+        }
+    }
+
+    public function error()
+    {
+        $this->vbotJob->update(['status' => -2]);
     }
 }
