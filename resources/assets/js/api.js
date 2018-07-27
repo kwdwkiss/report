@@ -44,6 +44,11 @@ module.exports = {
     adminUserRemarkIndex: '/admin/user-remark/index',
     adminUserRemarkCreate: '/admin/user-remark/create',
 
+    adminUserAuthBillIndex: '/admin/user-auth-bill/index',
+    adminUserAuthBillCreate: '/admin/user-auth-bill/create',
+    adminUserAuthBillUpdate: '/admin/user-auth-bill/update',
+    adminUserAuthBillDelete: '/admin/user-auth-bill/delete',
+
     accountList: '/admin/account/list',
     accountShow: '/admin/account/show',
     accountCreate: '/admin/account/create',
@@ -130,6 +135,9 @@ module.exports = {
     userExcelCreate: '/user/excel/create',
     userExcelUpdate: '/user/excel/update',
     userExcelDelete: '/user/excel/delete',
+
+    userAuthBillIndex: 'user/user-auth-bill/index',
+    userAuthBillPay: 'user/user-auth-bill/pay',
 
     userAmountList: '/user/amount/index',
 

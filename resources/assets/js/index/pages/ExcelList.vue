@@ -3,14 +3,20 @@
         <div class="panel panel-default">
             <div class="panel-heading">我的表格</div>
             <div class="panel-body">
-                <div>
-                    <label>名称</label>
-                    <input type="text" v-model="search.title">
-                    <label>内容</label>
-                    <input type="text" v-model="search.body">
-                    <button class="btn btn-primary" @click="doSearch">查询</button>
-                    <button class="btn btn-warning" @click="reset">重置</button>
-                    <button class="btn btn-success" @click="create">创建</button>
+                <div class="row">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="input-name">名称</label>
+                            <input type="text" class="form-control" id="input-name" v-model="search.title">
+                        </div>
+                        <div class="form-group">
+                            <label for="input-body">内容</label>
+                            <input type="email" class="form-control" id="input-body" v-model="search.body">
+                        </div>
+                        <button class="btn btn-primary" @click="doSearch">查询</button>
+                        <button class="btn btn-warning" @click="reset">重置</button>
+                        <button class="btn btn-success" @click="create">创建</button>
+                    </form>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-responsive table-striped">

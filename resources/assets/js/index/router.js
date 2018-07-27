@@ -41,6 +41,11 @@ const router = new VueRouter({
                 {name: 'notificationList', path: 'notification/list', component: require('./pages/NotificatioinList')},
                 {name: 'excelList', path: 'excel/list', component: require('./pages/ExcelList')},
                 {name: 'vbotIndex', path: 'vbot/index', component: require('./pages/VbotIndex')},
+                {
+                    name: 'userAuthBillIndex',
+                    path: 'user-auth-bill/index',
+                    component: require('./pages/UserAuthBillList')
+                },
             ]
         },
         {name: 'tb_my_rate', path: 'check_account/tb_my_rate', component: require('./pages/check_account/TbMyRate')},

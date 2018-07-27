@@ -75,6 +75,9 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::post('/user/excel/update', 'User\ExcelController@update');
     Route::post('/user/excel/delete', 'User\ExcelController@delete');
 
+    Route::get('/user/user-auth-bill/index', 'User\UserAuthBillController@index');
+    Route::post('/user/user-auth-bill/pay', 'User\UserAuthBillController@pay');
+
     Route::post('/user/vbot/create', 'User\VbotController@create');
     Route::get('/user/vbot/status', 'User\VbotController@status');
 
@@ -128,6 +131,11 @@ Route::middleware(['auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/user/update-api-secret', 'Admin\UserController@updateApiSecret');
     Route::post('/admin/user/add-deposit', 'Admin\UserController@addDeposit');
     Route::post('/admin/user/sub-deposit', 'Admin\UserController@subDeposit');
+
+    Route::get('/admin/user-auth-bill/index', 'Admin\UserAuthBillController@index');
+    Route::post('/admin/user-auth-bill/create', 'Admin\UserAuthBillController@create');
+    Route::post('/admin/user-auth-bill/update', 'Admin\UserAuthBillController@update');
+    Route::post('/admin/user-auth-bill/delete', 'Admin\UserAuthBillController@delete');
 
     Route::get('/admin/user-remark/index', 'Admin\UserRemarkController@index');
     Route::post('/admin/user-remark/create', 'Admin\UserRemarkController@create');

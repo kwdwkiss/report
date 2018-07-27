@@ -44,6 +44,8 @@
                                 </li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('searchBillList')">查询汇总</a>
                                 </li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('userAuthBillList')">认证记录</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="dropdown">

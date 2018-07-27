@@ -29,6 +29,17 @@ const router = new VueRouter({
                 {name: 'amountBillList', path: 'amount-bill/list', component: require('./pages/AmountBill/Index')},
                 {name: 'searchBillList', path: 'search-bill/list', component: require('./pages/SearchBill/Index')},
 
+                {
+                    name: 'userAuthBillList',
+                    path: 'user-auth-bill/list',
+                    component: require('./pages/UserAuthBill/Index')
+                },
+                {
+                    name: 'userAuthBillCreate',
+                    path: 'user-auth-bill/create',
+                    component: require('./pages/UserAuthBill/Create')
+                },
+
                 {name: 'siteIndexPage', path: 'site/index-page', component: require('./pages/IndexPage')},
                 {name: 'sitePopWindow', path: 'site/pop-window', component: require('./pages/PopWindow')},
                 {name: 'messageList', path: 'message/list', component: require('./pages/Message')},

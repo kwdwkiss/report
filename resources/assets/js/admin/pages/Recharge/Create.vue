@@ -2,7 +2,7 @@
     <div class="panel">
         <div class="panel-heading">人工充值</div>
         <div class="panel-body">
-            <el-form ref="form" :model="form" :rules="rules">
+            <el-form ref="form" :model="form">
                 <el-form-item prop="mobile" label="用户手机号" labelWidth="100px">
                     <el-input v-model="form.mobile"></el-input>
                 </el-form-item>
