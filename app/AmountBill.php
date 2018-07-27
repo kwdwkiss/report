@@ -20,6 +20,7 @@ class AmountBill extends Model
         1 => '充值',
         2 => '充值提成',
         101 => '查询结算',
+        102 => '认证会员',
     ];
 
     public $sysGiveAmount = [

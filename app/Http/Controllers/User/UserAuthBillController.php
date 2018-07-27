@@ -9,9 +9,11 @@
 namespace App\Http\Controllers\User;
 
 
+use App\AmountBill;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserAuthBillResource;
+use App\Taxonomy;
 use App\UserAuthBill;
 use Carbon\Carbon;
 
@@ -45,7 +47,20 @@ class UserAuthBillController extends Controller
                 throw new JsonException('用户积分不足，请充值积分');
             }
 
+            $typeLabel = Taxonomy::findOrFail($userAuthBill->type)->name;
+            $durationLabel = $userAuthBill->duration . '个月';
+
             $user->_profile->decrement('amount', $amount);
+            AmountBill::create([
+                'user_id' => $user->id,
+                'bill_no' => AmountBill::generateBillNo($user->id),
+                'type' => 1,
+                'amount' => $amount,
+                'user_amount' => $user->_profile->amount,
+                'biz_type' => 102,
+                'biz_id' => $userAuthBill->id,
+                'description' => "认证：{$typeLabel} 时长：$durationLabel"
+            ]);
 
             $user->update([
                 'type' => $userAuthBill->type,
