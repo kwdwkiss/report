@@ -111,7 +111,7 @@ class Statement extends Model
 
     public static function month($date)
     {
-        $date = $date ? Carbon::parse($date) : Carbon::now();
+        $date = $date ? Carbon::parse($date) : Carbon::now()->subMonth();
         $year = $date->year;
         $month = $date->month;
 

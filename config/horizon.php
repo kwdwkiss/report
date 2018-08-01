@@ -79,26 +79,12 @@ return [
                 'processes' => 10,
                 'tries' => 3,
             ],
-            'supervisor-2' => [
-                'connection' => 'redis',
-                'queue' => ['vbot_user_clear'],
-                'balance' => 'simple',
-                'processes' => 50,
-                'tries' => 3,
-            ],
         ],
 
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
                 'queue' => ['send_notification'],
-                'balance' => 'simple',
-                'processes' => 3,
-                'tries' => 3,
-            ],
-            'supervisor-2' => [
-                'connection' => 'redis',
-                'queue' => ['vbot_user_clear'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 3,

@@ -2,30 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Aliyun\Sms;
-use App\Account;
-use App\AccountReport;
-use App\Admin;
-use App\AmountBill;
-use App\Attachment;
-use App\Config;
 use App\Jobs\SendNotification;
-use App\Message;
-use App\Notifications\SiteMessage;
-use App\RechargeBill;
-use App\SearchBill;
-use App\Tag;
-use App\Taxonomy;
-use App\UserProfile;
-use Carbon\Carbon;
-use Cly\Emulator\Pdd;
-use GuzzleHttp\Client;
-use GuzzleHttp\Cookie\FileCookieJar;
-use GuzzleHttp\Exception\RequestException;
-use Illuminate\Bus\Dispatcher;
 use Illuminate\Console\Command;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Str;
 
 class Test extends Command
 {
@@ -86,7 +64,7 @@ class Test extends Command
             foreach ($childs as $key => $pid) {
                 $res = pcntl_waitpid($pid, $status, WNOHANG);
 
-                echo "wait $pid $status $res\n";
+                echo "wait $pid $status $res";
                 // If the process has already exited
                 if ($res == -1 || $res > 0)
                     unset($childs[$key]);

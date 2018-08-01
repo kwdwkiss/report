@@ -121,7 +121,7 @@ class VbotService
                     'status' => -2,
                     'context' => $this->vbot->config->all()
                 ]);
-                exit();
+                return;
             }
             echo "is login\n";
             $vbotJob->update([
@@ -135,7 +135,7 @@ class VbotService
             $times = 3;
             while (true) {
                 if ($times == 0) {
-                    exit();
+                    return;
                 }
                 try {
                     $this->vbot->server->getLogin();
@@ -150,7 +150,7 @@ class VbotService
             $this->vbot->messageHandler->setHandler(function (Collection $message) {
                 if ($message['type'] == FriendVerify::TYPE) {
                     $from = $message['from'];
-                    vbot('friends')->setRemarkName($from['UserName'], 'aa' . $from['NickName']);
+                    vbot('friends')->setRemarkName($from['UserName'], 'A 宏海0000' . $from['NickName']);
                 }
             });
 
@@ -202,17 +202,31 @@ class VbotService
                 $nicknameList = [
                     '宏海网络-微信收款'
                 ];
+                $text = '由于微信好友太多，我正在使用宏海清粉软件，如有打扰请包涵。';
+                $text = '正在测试微信清粉软件，如有打扰请包涵。';
                 foreach ($friends = vbot('friends') as $item) {
-                    if (in_array($item['NickName'], $nicknameList)) {
-                        Text::send($item['UserName'], '测试是否还是好友');
-                        echo "send:{$item['UserName']}\n";
+                    $vbotJob = $vbotJob->fresh();
+                    if (in_array($vbotJob->status, [-2, -1])) {
+                        return;
                     }
+                    //if (in_array($item['NickName'], $nicknameList)) {
+                    try {
+                        Text::send($item['UserName'], $text);
+                    } catch (\Exception $e) {
+                        $vbotJob->update([
+                            'status' => -2,
+                            'context' => $this->vbot->config->all()
+                        ]);
+                    }
+                    sleep(1);
+                    echo "send:{$item['UserName']}\n";
+                    //}
                 }
                 $vbotJob->update([
                     'status' => 3,
                     'context' => $this->vbot->config->all()
                 ]);
-                exit();
+                return;
             }
         }
     }

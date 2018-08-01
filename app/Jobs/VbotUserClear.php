@@ -15,8 +15,6 @@ class VbotUserClear implements ShouldQueue
 
     protected $vbotJob;
 
-    public $timeout = 60 * 5;
-
     /**
      * Create a new job instance.
      *
@@ -35,12 +33,16 @@ class VbotUserClear implements ShouldQueue
      */
     public function handle()
     {
-        $vbotService = new VbotService($this->vbotJob);
-
-        try {
-            $vbotService->userClear();
-        } catch (\Exception $e) {
-            $vbotService->error();
+        $pid = pcntl_fork();
+        if ($pid == -1) {
+            throw new \Exception('could not fork');
+        } elseif ($pid == 0) {
+            $vbotService = new VbotService($this->vbotJob);
+            try {
+                $vbotService->userClear();
+            } catch (\Exception $e) {
+                $vbotService->error();
+            }
         }
     }
 }

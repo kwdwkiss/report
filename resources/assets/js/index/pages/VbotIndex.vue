@@ -6,10 +6,10 @@
                 <div class="row">
                     <button class="btn btn-primary" @click="doCreate">创建任务</button>
                 </div>
-                <div class="row" v-show="status_label">
+                <div class="row" v-show="vbotJob">
                     <p>任务状态：{{status_label}}</p>
                 </div>
-                <div class="row">
+                <div class="row" v-show="vbotJob">
                     <div class="hidden qrcode"></div>
                     <img :src="qrcode_url" alt="">
                 </div>
@@ -35,8 +35,16 @@
                 return this.$store.state.user;
             },
         },
-        create: function () {
+        watch: {
+            '$route': function (to, from) {
+                if (this.$route.name !== 'vbotIndex') {
+                    clearInterval(self.handle);
+                }
+            }
+        },
+        created: function () {
             this.init();
+            this.loop();
         },
         methods: {
             init: function () {
@@ -51,13 +59,18 @@
                     self.$message.error('请登录后再使用此功能');
                     return;
                 }
+                self.init();
                 axios.post(api.userVbotCreate).then(function (res) {
                     self.$message.success('任务已创建，请等待执行完毕后再创建新任务');
-                    self.doStatus();
-                    self.handle = setInterval(function () {
-                        self.doStatus();
-                    }, self.interval);
+                    self.loop();
                 })
+            },
+            loop: function () {
+                let self = this;
+                self.doStatus();
+                self.handle = setInterval(function () {
+                    self.doStatus();
+                }, self.interval);
             },
             doStatus: function () {
                 let self = this;
@@ -80,6 +93,7 @@
                                 break;
                             case 1:
                                 let url = self.vbotJob.qrcode_url;
+                                $('.qrcode').empty();
                                 let canvas = $('.qrcode').qrcode({width: 128, height: 128, text: url}).find('canvas');
                                 self.qrcode_url = canvas.get(0).toDataURL('image/jpg');
                                 break;
