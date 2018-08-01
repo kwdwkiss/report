@@ -135,9 +135,6 @@ class VbotService
         if ($vbotJob->status == 2) {
             $times = 3;
             while (true) {
-                if ($times == 0) {
-                    return;
-                }
                 try {
                     $this->vbot->server->getLogin();
                     $this->vbot->server->init();
@@ -145,6 +142,14 @@ class VbotService
                 } catch (Exceptions\InitFailException $e) {
                     echo $e->getMessage() . "\n";
                     $times--;
+                }
+                if ($times == 0) {
+                    $vbotJob->update([
+                        'status' => -2,
+                        'context' => $this->vbot->config->all(),
+                        'exception' => $e->getTraceAsString()
+                    ]);
+                    return;
                 }
             }
 
@@ -170,6 +175,11 @@ class VbotService
                         echo "ret:$ret\n";
                     }
                     if ($ret == -1) {
+                        $vbotJob->update([
+                            'status' => -2,
+                            'context' => $this->vbot->config->all(),
+                            'exception' => 'sub_process ret=-1'
+                        ]);
                         break;
                     } elseif ($ret > 0) {
                         $ret = 0;
