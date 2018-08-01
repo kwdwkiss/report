@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\FileCookieJar;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Response;
 
 class EmulatorTbController extends Controller
 {
@@ -28,6 +29,33 @@ class EmulatorTbController extends Controller
         $this->client = new Client([
             'cookies' => $jar,
         ]);
+    }
+
+    public function index()
+    {
+        return view('emulator_tb/index');
+    }
+
+    public function member_request_nick_check()
+    {
+        $url = 'https://login.taobao.com/member/request_nick_check.do?_input_charset=utf-8';
+
+        $params = request()->all();
+
+        $response = $this->client->post($url, ['form_params' => $params]);
+
+        return new Response($response->getBody()->getContents());
+    }
+
+    public function member_login()
+    {
+        $url = 'https://login.taobao.com/member/login.jhtml?redirectURL=https%3A%2F%2Fwww.taobao.com%2F';
+
+        $params = request()->all();
+
+        $response = $this->client->post($url, ['form_params' => $params]);
+
+        return new Response($response->getBody()->getContents());
     }
 
     public function login()

@@ -103,6 +103,9 @@
                             case 3:
                                 break;
                         }
+                    } else {
+                        clearInterval(self.handle);
+                        self.init();
                     }
                 })
             }

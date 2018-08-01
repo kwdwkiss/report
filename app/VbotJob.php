@@ -9,7 +9,15 @@ class VbotJob extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'context' => 'array'
+        'context' => 'array',
+        'data' => 'array'
+    ];
+
+    protected $dataTemplate = [
+        'contacts' => [],//联系人
+        'send_text' => '',//发送的文本消息
+        'send_mode' => 0,//发送模式，0-所有人，1-根据联系人列表
+        'send_contacts' => [],//发送联系人列表
     ];
 
     public static $statusType = [
@@ -21,4 +29,10 @@ class VbotJob extends Model
         3 => '执行完毕，等待处理',
         10 => '已派发任务',
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->data = $this->dataTemplate;
+    }
 }

@@ -196,35 +196,38 @@ class VbotService
                 }
             } else {
                 //child
+                \DB::connection()->reconnect();
+                $data = $vbotJob->data;
+
                 $pid = posix_getpid();
                 echo "child $pid\n";
 
-                $nicknameList = [
-                    '宏海网络-微信收款'
-                ];
                 $text = '由于微信好友太多，我正在使用宏海清粉软件，如有打扰请包涵。';
-                $text = '正在测试微信清粉软件，如有打扰请包涵。';
+                //$text = '我近期在开发和测试微信清粉群发软件，如有打扰请包涵，不必回复';
+                $text = array_get($data, 'send_text', $text);
                 foreach ($friends = vbot('friends') as $item) {
                     $vbotJob = $vbotJob->fresh();
                     if (in_array($vbotJob->status, [-2, -1])) {
                         return;
                     }
-                    //if (in_array($item['NickName'], $nicknameList)) {
                     try {
                         Text::send($item['UserName'], $text);
+                        $data['send_contacts'][] = $item['NickName'];
                     } catch (\Exception $e) {
                         $vbotJob->update([
                             'status' => -2,
-                            'context' => $this->vbot->config->all()
+                            'context' => $this->vbot->config->all(),
+                            'data' => $data,
+                            'exception' => $e->getTraceAsString()
                         ]);
                     }
                     sleep(1);
                     echo "send:{$item['UserName']}\n";
-                    //}
                 }
                 $vbotJob->update([
                     'status' => 3,
-                    'context' => $this->vbot->config->all()
+                    'context' => $this->vbot->config->all(),
+                    'data' => $data
                 ]);
                 return;
             }

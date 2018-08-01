@@ -20,6 +20,8 @@ class CreateVbotJobsTable extends Migration
             //-1任务完成 -2登录超时
             $table->integer('status');
             $table->text('context');
+            $table->text('data');
+            $table->text('exception');
             $table->string('qrcode_url');
             $table->timestamps();
         });

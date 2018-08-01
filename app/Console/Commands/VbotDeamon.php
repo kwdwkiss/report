@@ -51,11 +51,9 @@ class VbotDeamon extends Command
                 $pid = pcntl_fork();
                 if ($pid == -1) {
                     throw new \Exception('could not fork');
-                } elseif ($pid) {
-                    //parent
-                    pcntl_signal_dispatch();
-                    sleep(1);
-                } else {
+                } elseif ($pid == 0) {
+                    //child
+                    \DB::connection()->reconnect();
                     $vbotJob->update(['status' => 10]);
                     $vbotService = new VbotService($vbotJob);
                     try {
@@ -66,6 +64,9 @@ class VbotDeamon extends Command
                     break;
                 }
             }
+            //parent
+            pcntl_signal_dispatch();
+            sleep(1);
         }
     }
 }

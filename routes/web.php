@@ -10,6 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware([])->group(function () {
+    Route::get('/emulator_tb/index', 'Index\EmulatorTbController@index');
+    Route::post('/emulator_tb/member/request_nick_check.do',
+        'Index\EmulatorTbController@member_request_nick_check');
+    Route::post('/emulator_tb/member/login.jhtml',
+        'Index\EmulatorTbController@member_login');
+});
 
 Route::middleware(['csrf'])->group(function () {
     Route::get('/check_tb', 'Index\CheckAccountController@tb');
