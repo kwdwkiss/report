@@ -45,7 +45,7 @@ class VbotDeamon extends Command
 
         while (true) {
             $vbotJob = VbotJob::query()
-                ->where('status', 0)
+                ->whereNotIn('status', [-2, -1, 10])
                 ->first();
             if ($vbotJob) {
                 $pid = pcntl_fork();
