@@ -45,7 +45,7 @@ class VbotDeamon extends Command
 
         while (true) {
             $vbotJob = VbotJob::query()
-                ->whereNotIn('status', [-2, -1, 10])
+                ->where('status', 0)
                 ->first();
             if ($vbotJob) {
                 $pid = pcntl_fork();
@@ -54,7 +54,6 @@ class VbotDeamon extends Command
                 } elseif ($pid == 0) {
                     //child
                     \DB::connection()->reconnect();
-                    $vbotJob->update(['status' => 10]);
                     $vbotService = new VbotService($vbotJob);
                     try {
                         $vbotService->userClear();

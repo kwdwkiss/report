@@ -27,7 +27,6 @@ class VbotJob extends Model
         1 => '等待扫码',
         2 => '正在发送消息',
         3 => '执行完毕，等待处理',
-        10 => '已派发任务',
     ];
 
     public function __construct(array $attributes = [])
