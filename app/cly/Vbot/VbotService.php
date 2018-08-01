@@ -119,7 +119,8 @@ class VbotService
             } catch (\Exception $e) {
                 $vbotJob->update([
                     'status' => -2,
-                    'context' => $this->vbot->config->all()
+                    'context' => $this->vbot->config->all(),
+                    'exception' => $e->getTraceAsString()
                 ]);
                 return;
             }
