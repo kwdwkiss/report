@@ -120,7 +120,7 @@ class VbotService
                 $vbotJob->update([
                     'status' => -2,
                     'context' => $this->vbot->config->all(),
-                    'exception' => $e->getTraceAsString()
+                    'exception' => $e->getMessage() . $e->getTraceAsString()
                 ]);
                 return;
             }
@@ -147,7 +147,7 @@ class VbotService
                     $vbotJob->update([
                         'status' => -2,
                         'context' => $this->vbot->config->all(),
-                        'exception' => $e->getTraceAsString()
+                        'exception' => $e->getMessage() . $e->getTraceAsString()
                     ]);
                     return;
                 }
@@ -229,7 +229,7 @@ class VbotService
                             'status' => -2,
                             'context' => $this->vbot->config->all(),
                             'data' => $data,
-                            'exception' => $e->getTraceAsString()
+                            'exception' => $e->getMessage() . $e->getTraceAsString()
                         ]);
                     }
                     sleep(1);
