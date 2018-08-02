@@ -1,10 +1,11 @@
 <template>
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">微信清粉</div>
+            <div class="panel-heading">微信工具</div>
             <div class="panel-body">
+
                 <div class="row">
-                    <button class="btn btn-primary" @click="doCreate">创建任务</button>
+                    <button class="btn btn-primary" @click="doCreate">扫码登录</button>
                 </div>
                 <div class="row" v-show="vbotJob">
                     <p>任务状态：{{status_label}}</p>
@@ -13,6 +14,25 @@
                     <div class="hidden qrcode"></div>
                     <img :src="qrcode_url" alt="">
                 </div>
+
+                <ul class="nav nav-tabs" id="myTabs">
+                    <li class="active"><a href="#friends-admin" data-toggle="tab">好友管理</a></li>
+                    <li><a href="#multiple-send" data-toggle="tab">群发</a></li>
+                    <li><a href="#user-clear" data-toggle="tab">清粉</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="friends-admin">
+
+                    </div>
+                    <div class="tab-pane" id="multiple-send">
+
+                    </div>
+                    <div class="tab-pane" id="user-clear">
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -45,6 +65,11 @@
         created: function () {
             this.init();
             this.loop();
+
+            $('#myTabs a').click(function (e) {
+                e.preventDefault()
+                $(this).tab('show')
+            })
         },
         methods: {
             init: function () {

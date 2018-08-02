@@ -261,7 +261,7 @@ class Server
     /**
      * before init success.
      */
-    private function beforeInitSuccess()
+    public function beforeInitSuccess()
     {
         $this->vbot->console->log('current session: ' . $this->vbot->config['session']);
         $this->vbot->console->log('init begin.');
@@ -272,7 +272,7 @@ class Server
      *
      * @param $content
      */
-    private function afterInitSuccess($content)
+    public function afterInitSuccess($content)
     {
         $this->vbot->log->info('response:' . json_encode($content));
         $this->vbot->console->log('init success.');
@@ -280,14 +280,14 @@ class Server
         $this->vbot->console->log('init contacts begin.');
     }
 
-    protected function initContactList($contactList)
+    public function initContactList($contactList)
     {
         if ($contactList) {
             $this->vbot->contactFactory->store($contactList);
         }
     }
 
-    protected function initContact()
+    public function initContact()
     {
         $this->vbot->contactFactory->fetchAll();
     }
@@ -308,7 +308,7 @@ class Server
         ]);
     }
 
-    protected function generateSyncKey($result, $first)
+    public function generateSyncKey($result, $first)
     {
         $this->vbot->config['server.syncKey'] = $result['SyncKey'];
 

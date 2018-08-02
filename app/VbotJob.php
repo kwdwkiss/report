@@ -10,7 +10,13 @@ class VbotJob extends Model
 
     protected $casts = [
         'context' => 'array',
-        'data' => 'array'
+        'data' => 'array',
+        'friends' => 'array',
+        'groups' => 'array',
+        'members' => 'array',
+        'officials' => 'array',
+        'specials' => 'array',
+        'myself' => 'array',
     ];
 
     protected $dataTemplate = [
@@ -20,13 +26,18 @@ class VbotJob extends Model
         'send_contacts' => [],//发送联系人列表
     ];
 
-    public static $statusType = [
+    public static $statusTypes = [
         -2 => '异常退出',
-        -1 => '已完成',
-        0 => '已创建',
+        -1 => '完成',
+        0 => '待运行',
+        1 => '运行中',
+    ];
+
+    public static $runStatusTypes = [
+        0 => '获取UUID',
         1 => '等待扫码',
-        2 => '正在发送消息',
-        3 => '执行完毕，等待处理',
+        2 => '等待登录',
+        3 => '登录完成',
     ];
 
     public function __construct(array $attributes = [])

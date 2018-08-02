@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\VbotJob;
 use Cly\Vbot\VbotService;
 use Illuminate\Console\Command;
 
@@ -39,33 +38,6 @@ class VbotDeamon extends Command
      */
     public function handle()
     {
-        pcntl_signal(SIGCHLD, function ($pid) {
-            pcntl_waitpid($pid, $status, WNOHANG);
-        });
-
-        while (true) {
-            $vbotJob = VbotJob::query()
-                ->where('status', 0)
-                ->first();
-            if ($vbotJob) {
-                $pid = pcntl_fork();
-                if ($pid == -1) {
-                    throw new \Exception('could not fork');
-                } elseif ($pid == 0) {
-                    //child
-                    \DB::connection()->reconnect();
-                    $vbotService = new VbotService($vbotJob);
-                    try {
-                        $vbotService->userClear();
-                    } catch (\Exception $e) {
-                        $vbotService->error();
-                    }
-                    break;
-                }
-            }
-            //parent
-            pcntl_signal_dispatch();
-            sleep(1);
-        }
+        VbotService::deamon();
     }
 }

@@ -37,11 +37,30 @@ class Test extends Command
      */
     public function handle()
     {
+        pcntl_signal(SIGCHLD, function ($pid) {
+            echo "pid:$pid pcntl_waitpid";
+            pcntl_waitpid($pid, $status, WNOHANG);
+        });
 
-//        \DB::enableQueryLog();
-//        $today = \App\User::query()
-//            ->whereDate('created_at', Carbon::today()->toDateString())
-//            ->count();
-//        dd(\DB::getQueryLog(), $today);
+        $pid = pcntl_fork();
+        if ($pid == -1) {
+            throw new \Exception('fork error');
+        } elseif ($pid == 0) {
+            sleep(1);
+
+            $pid = pcntl_fork();
+            if ($pid == -1) {
+                throw new \Exception('fork error');
+            } elseif ($pid == 0) {
+                return;
+            }
+            echo "l2_pid:$pid\n";
+            sleep(5);
+            return;
+        }
+        echo "l1_pid:$pid\n";
+        while (true) {
+            pcntl_signal_dispatch();
+        }
     }
 }

@@ -44,6 +44,11 @@ class VbotCmd extends Command
      */
     public function handle()
     {
-
+        $vbotJob = VbotJob::create([
+            'user_id' => 1,
+            'status' => 0
+        ]);
+        $vbotService = new VbotService($vbotJob);
+        $vbotService->manager();
     }
 }

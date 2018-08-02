@@ -10,11 +10,16 @@ namespace Cly\Vbot;
 
 
 use App\VbotJob;
+use Cly\Vbot\Console\Console;
+use Cly\Vbot\Core\ApiExceptionHandler;
+use Cly\Vbot\Exceptions\InitFailException;
+use Cly\Vbot\Exceptions\LoginTimeoutException;
 use Cly\Vbot\Foundation\Vbot;
 use Cly\Vbot\Message\FriendVerify;
 use Cly\Vbot\Message\Text;
-use Illuminate\Config\Repository;
+use Illuminate\Redis\Connections\Connection;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Redis;
 
 class VbotService
 {
@@ -28,8 +33,15 @@ class VbotService
      */
     protected $vbotJob;
 
+    /**
+     * @var Connection
+     */
+    protected $redis;
+
     public function __construct($vbotJob)
     {
+        $this->redis = Redis::connection('vbot');
+
         $this->vbotJob = $vbotJob;
 
         $path = storage_path('vbot/');
@@ -91,162 +103,245 @@ class VbotService
         ]);
     }
 
-    public function userClear()
+    public static function deamon()
     {
-        $vbotJob = $this->vbotJob;
-        //还原上下文
-        if ($vbotJob->context) {
-            $this->vbot->config = new Repository($vbotJob->context);
-        }
+        pcntl_signal(SIGCHLD, function ($signo) {
+            pcntl_waitpid(-1, $status, WNOHANG);
+        });
 
-        $uuid = array_get($vbotJob->context, 'server.uuid');
-        //新任务，获取uuid
-        if ($vbotJob->status == 0 || empty($uuid)) {
-            $this->vbot->server->cleanCookies();
-            $uuid = $this->vbot->server->getUuid();
-            echo "new job get uuid:$uuid\n";
-            $vbotJob->update([
-                'status' => 1,
-                'context' => $this->vbot->config->all(),
-                'qrcode_url' => $this->vbot->server->getQrcode($uuid),
-            ]);
-        }
+        while (true) {
+            $vbotJob = VbotJob::query()->where('status', 0)->first();
 
-        //等待扫码登录
-        if ($vbotJob->status == 1) {
-            try {
-                $this->vbot->server->waitForLogin();
-            } catch (\Exception $e) {
-                $vbotJob->update([
-                    'status' => -2,
-                    'context' => $this->vbot->config->all(),
-                    'exception' => $e->getMessage() . $e->getTraceAsString()
-                ]);
-                return;
-            }
-            echo "is login\n";
-            $vbotJob->update([
-                'status' => 2,
-                'context' => $this->vbot->config->all()
-            ]);
-        }
-
-        //已登录，开始任务
-        if ($vbotJob->status == 2) {
-            $times = 3;
-            while (true) {
-                try {
-                    $this->vbot->server->getLogin();
-                    $this->vbot->server->init();
-                    break;
-                } catch (Exceptions\InitFailException $e) {
-                    echo $e->getMessage() . "\n";
-                    $times--;
-                }
-                if ($times == 0) {
-                    $vbotJob->update([
-                        'status' => -2,
-                        'context' => $this->vbot->config->all(),
-                        'exception' => $e->getMessage() . $e->getTraceAsString()
-                    ]);
+            if ($vbotJob) {
+                $pid = pcntl_fork();
+                if ($pid == -1) {
+                    throw new \Exception('could not pcntl_fork');
+                } elseif ($pid == 0) {
+                    //child
+                    \DB::connection()->reconnect();
+                    $vbotService = new VbotService($vbotJob);
+                    try {
+                        $vbotService->manager();
+                    } catch (\Exception $e) {
+                        $vbotService->error($e);
+                    }
                     return;
                 }
             }
+            pcntl_signal_dispatch();
+            sleep(1);
+        }
+    }
 
-            $this->vbot->messageHandler->setHandler(function (Collection $message) {
-                if ($message['type'] == FriendVerify::TYPE) {
-                    $from = $message['from'];
-                    vbot('friends')->setRemarkName($from['UserName'], 'A 宏海0000' . $from['NickName']);
-                }
-            });
+    public function manager()
+    {
+        $this->vbotJob->update(['status' => 1]);
+        //login
+        $this->getUuid();
+        $this->waitForLogin();
+        //init myself,init contacts
+        $this->init();
+        //do job
 
-            $pid = pcntl_fork();
-            if ($pid == -1) {
-                throw new \Exception('could not fork');
-            } elseif ($pid) {
-                //parent
-                echo "parent child:$pid\n";
+        $pid = pcntl_fork();
+        if ($pid == -1) {
+            throw new \Exception('could not pcntl_fork');
+        } elseif ($pid == 0) {
+            //child
+            \DB::connection()->reconnect();
+            try {
+                $this->messageWork();
+            } catch (\Exception $e) {
+                $this->error($e);
+            }
+            return;
+        }
 
-                $closeTime = 0;
-                $ret = 0;
-                while (true) {
-                    if (!$closeTime) {
-                        $ret = pcntl_waitpid($pid, $status, WNOHANG);
-                        echo "ret:$ret\n";
-                    }
-                    if ($ret == -1) {
-                        $vbotJob->update([
-                            'status' => -2,
-                            'context' => $this->vbot->config->all(),
-                            'exception' => 'sub_process ret=-1'
-                        ]);
-                        break;
-                    } elseif ($ret > 0) {
-                        $ret = 0;
-                        $closeTime = time();
-                        $closeTimeStr = date('H:i:s', $closeTime);
-                        echo "child close at $closeTimeStr\n";
-                    }
-                    if ($closeTime && time() - $closeTime > 60) {
-                        $now = date('H:i:s', time());
-                        echo "parent close at $now\n";
-
-                        $vbotJob->update([
-                            'status' => -1,
-                            'context' => $this->vbot->config->all()
-                        ]);
-                        break;
-                    }
-                    echo "fetch message\n";
-                    if (!($checkSync = $this->vbot->messageHandler->checkSync())) {
-                        continue;
-                    }
-                    if (!$this->vbot->messageHandler->handleCheckSync($checkSync[0], $checkSync[1])) {
-                        break;
-                    }
-                }
-            } else {
-                //child
-                \DB::connection()->reconnect();
-                $data = $vbotJob->data;
-
-                $pid = posix_getpid();
-                echo "child $pid\n";
-
-                $text = '由于微信好友太多，我正在使用宏海清粉软件，如有打扰请包涵。';
-                //$text = '我近期在开发和测试微信清粉群发软件，如有打扰请包涵，不必回复';
-                $text = array_get($data, 'send_text', $text);
-                foreach ($friends = vbot('friends') as $item) {
-                    $vbotJob = $vbotJob->fresh();
-                    if (in_array($vbotJob->status, [-2, -1])) {
-                        return;
-                    }
-                    try {
-                        Text::send($item['UserName'], $text);
-                        $data['send_contacts'][] = $item['NickName'];
-                    } catch (\Exception $e) {
-                        $vbotJob->update([
-                            'status' => -2,
-                            'context' => $this->vbot->config->all(),
-                            'data' => $data,
-                            'exception' => $e->getMessage() . $e->getTraceAsString()
-                        ]);
-                    }
-                    sleep(1);
-                    echo "send:{$item['UserName']}\n";
-                }
-                $vbotJob->update([
-                    'status' => 3,
-                    'context' => $this->vbot->config->all(),
-                    'data' => $data
-                ]);
+        while (true) {
+            $ret = pcntl_waitpid($pid, $status, WNOHANG);
+            if ($ret == $pid) {
                 return;
+            }
+
+            sleep(1);
+        }
+    }
+
+    public function getUuid()
+    {
+        $this->vbot->server->cleanCookies();
+        $uuid = $this->vbot->server->getUuid();
+        $qrcode = $this->vbot->server->getQrcode($uuid);
+
+        $this->vbot->console->log("uuid:$uuid");
+        $this->vbot->console->log("qrcode:$qrcode");
+
+        $this->vbotJob->update(['login_status' => 1, 'qrcode' => $qrcode]);
+    }
+
+    public function waitForLogin()
+    {
+        $retryTime = 10;
+        $tip = 1;
+
+        $this->vbot->console->log('please scan the qrCode with wechat.');
+        while ($retryTime > 0) {
+            $url = sprintf('https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?tip=%s&uuid=%s&_=%s', $tip, $this->vbot->config['server.uuid'], time());
+
+            $content = $this->vbot->http->get($url, ['timeout' => 35]);
+
+            preg_match('/window.code=(\d+);/', $content, $matches);
+
+            $code = $matches[1];
+            switch ($code) {
+                case '201':
+
+                    $this->vbotJob->update(['login_status' => 2]);
+
+                    $this->vbot->console->log('please confirm login in wechat.');
+                    $tip = 0;
+                    break;
+                case '200':
+
+                    preg_match('/window.redirect_uri="(https:\/\/(\S+?)\/\S+?)";/', $content, $matches);
+
+                    $this->vbot->config['server.uri.redirect'] = $matches[1] . '&fun=new';
+                    $url = 'https://%s/cgi-bin/mmwebwx-bin';
+                    $this->vbot->config['server.uri.file'] = sprintf($url, 'file.' . $matches[2]);
+                    $this->vbot->config['server.uri.push'] = sprintf($url, 'webpush.' . $matches[2]);
+                    $this->vbot->config['server.uri.base'] = sprintf($url, $matches[2]);
+
+                    $this->vbot->server->getLogin();
+
+                    $this->vbotJob->update(['login_status' => 3]);
+                    $this->vbot->console->log('is login.');
+
+                    return;
+                case '408':
+                    $tip = 1;
+                    $retryTime -= 1;
+                    sleep(1);
+                    break;
+                default:
+                    $tip = 1;
+                    $retryTime -= 1;
+                    sleep(1);
+                    break;
+            }
+        }
+
+        $this->vbot->console->log('login time out!', Console::ERROR);
+
+        throw new LoginTimeoutException('Login time out.');
+    }
+
+    public function init($first = true)
+    {
+        $this->vbot->console->log('current session: ' . $this->vbot->config['session']);
+        $this->vbot->console->log('init begin.');
+
+        $url = $this->vbot->config['server.uri.base'] . '/webwxinit?r=' . time();
+
+        $tries = 0;
+        while (true) {
+            $result = $this->vbot->http->json($url, [
+                'BaseRequest' => $this->vbot->config['server.baseRequest'],
+            ], true);
+            try {
+                ApiExceptionHandler::handle($result, function ($result) {
+                    $this->vbot->cache->forget('session.' . $this->vbot->config['session']);
+                    $this->vbot->log->error('Init failed.' . json_encode($result));
+
+                    throw new InitFailException('Init failed:' . $result['BaseResponse']['Ret']);
+                });
+            } catch (Exceptions\ArgumentException $e) {
+                $tries++;
+                $this->vbot->console->log($e->getTraceAsString() . " tries:$tries");
+                if ($tries == 3) {
+                    throw $e;
+                }
+                sleep(1);
+                continue;
+            }
+            break;
+        }
+
+        $this->vbot->server->generateSyncKey($result, $first);
+
+        $this->vbot->myself->init($result['User']);
+
+        $this->vbot->log->info('response:' . json_encode($result));
+        $this->vbot->console->log('init success.');
+        $this->vbot->loginSuccessObserver->trigger();
+        $this->vbot->console->log('init contacts begin.');
+
+        $this->vbot->server->initContactList($result['ContactList']);
+        $this->vbot->server->initContact();
+
+        $friends = vbot('friends');
+        $groups = vbot('groups');
+        $members = vbot('members');
+        $officials = vbot('officials');
+        $specials = vbot('specials');
+        $myself = vbot('myself');
+        $this->vbotJob->update(compact('friends', 'groups', 'members', 'officials', 'specials', 'myself'));
+    }
+
+    public function messageWork()
+    {
+        $this->vbot->messageHandler->setHandler(function (Collection $message) {
+            if ($message['type'] == FriendVerify::TYPE) {
+                $from = $message['from'];
+                vbot('friends')->setRemarkName($from['UserName'], 'A 宏海0000' . $from['NickName']);
+            }
+        });
+
+        while (true) {
+            if (!($checkSync = $this->vbot->messageHandler->checkSync())) {
+                continue;
+            }
+            if (!$this->vbot->messageHandler->handleCheckSync($checkSync[0], $checkSync[1])) {
+                throw new \Exception('handleCheckSync error:' . $checkSync[0]);
             }
         }
     }
 
-    public function error()
+    public function jobWork()
     {
-        $this->vbotJob->update(['status' => -2]);
+
+    }
+
+    public function userClear()
+    {
+        $vbotJob = $this->vbotJob;
+        $data = $vbotJob->data;
+
+        $defaultText = '由于微信好友太多，我正在使用宏海清粉软件，如有打扰请包涵。';
+        $text = array_get($data, 'send_text', $defaultText);
+
+        foreach ($friends = vbot('friends') as $item) {
+            try {
+                Text::send($item['UserName'], $text);
+                $data['send_contacts'][] = $item['NickName'];
+            } catch (\Exception $e) {
+                $vbotJob->update([
+                    'status' => -2,
+                    'context' => $this->vbot->config->all(),
+                    'data' => $data,
+                    'exception' => $e->getMessage() . $e->getTraceAsString()
+                ]);
+            }
+            $this->vbot->console->log("send:{$item['NickName']}");
+            sleep(1);
+        }
+        return;
+    }
+
+    public function error(\Exception $e)
+    {
+        $this->vbotJob->update([
+            'status' => -2,
+            'exception' => $e->getMessage() . "\n" . $e->getTraceAsString() . "\n",
+        ]);
     }
 }
