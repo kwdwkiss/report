@@ -20,6 +20,7 @@ use Cly\Vbot\Message\Text;
 use Illuminate\Redis\Connections\Connection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
+use Ko\ProcessManager;
 
 class VbotService
 {
@@ -38,11 +39,20 @@ class VbotService
      */
     protected $redis;
 
+    /**
+     * vbotJob id
+     * @var
+     */
+    protected $key;
+
+    protected $processIds = [];
+
     public function __construct($vbotJob)
     {
         $this->redis = Redis::connection('vbot');
 
         $this->vbotJob = $vbotJob;
+        $this->key = $vbotJob->id;
 
         $path = storage_path('vbot/');
         $this->vbot = new Vbot([
@@ -105,19 +115,16 @@ class VbotService
 
     public static function deamon()
     {
-        pcntl_signal(SIGCHLD, function ($signo) {
-            pcntl_waitpid(-1, $status, WNOHANG);
+        $deamonManager = new ProcessManager();
+        $deamonManager->onShutdown(function () {
+            exit();
         });
 
         while (true) {
             $vbotJob = VbotJob::query()->where('status', 0)->first();
 
             if ($vbotJob) {
-                $pid = pcntl_fork();
-                if ($pid == -1) {
-                    throw new \Exception('could not pcntl_fork');
-                } elseif ($pid == 0) {
-                    //child
+                $deamonManager->fork(function (\Ko\Process $p) use ($vbotJob) {
                     \DB::connection()->reconnect();
                     $vbotService = new VbotService($vbotJob);
                     try {
@@ -125,16 +132,18 @@ class VbotService
                     } catch (\Exception $e) {
                         $vbotService->error($e);
                     }
-                    return;
-                }
+                });
             }
-            pcntl_signal_dispatch();
+
+            $deamonManager->dispatch();
             sleep(1);
         }
     }
 
     public function manager()
     {
+        $this->redis->hset($this->key, 'pid', posix_getpid());
+
         $this->vbotJob->update(['status' => 1]);
         //login
         $this->getUuid();
@@ -143,11 +152,9 @@ class VbotService
         $this->init();
         //do job
 
-        $pid = pcntl_fork();
-        if ($pid == -1) {
-            throw new \Exception('could not pcntl_fork');
-        } elseif ($pid == 0) {
-            //child
+        $manager = new ProcessManager();
+
+        $manager->fork(function (\Ko\Process $p) {
             \DB::connection()->reconnect();
             try {
                 $this->messageWork();
@@ -155,16 +162,16 @@ class VbotService
                 $this->error($e);
             }
             return;
-        }
+        });
+
+        $this->vbot->console->log('manager loop');
 
         while (true) {
-            $ret = pcntl_waitpid($pid, $status, WNOHANG);
-            if ($ret == $pid) {
-                return;
-            }
-
-            sleep(1);
+            $manager->dispatch();
+            usleep(200000);
         }
+
+        $this->redis->del([$this->key]);
     }
 
     public function getUuid()
@@ -296,7 +303,13 @@ class VbotService
             }
         });
 
+        $this->vbot->console->log('message_work start');
+
         while (true) {
+            if ($this->isExitMessageWork()) {
+                return;
+            }
+
             if (!($checkSync = $this->vbot->messageHandler->checkSync())) {
                 continue;
             }
@@ -335,6 +348,16 @@ class VbotService
             sleep(1);
         }
         return;
+    }
+
+    public function exitMessageWork()
+    {
+        $this->redis->hset($this->key, 'sig_exit_message_work', 1);
+    }
+
+    public function isExitMessageWork()
+    {
+        return $this->redis->hget($this->key, 'sig_exit_message_work');
     }
 
     public function error(\Exception $e)
