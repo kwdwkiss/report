@@ -5,14 +5,15 @@
             <div class="panel-body">
 
                 <div class="row">
-                    <button class="btn btn-primary" @click="doCreate">扫码登录</button>
+                    <button class="btn btn-primary" @click="doCreate" v-show="!vbotJob">扫码登录</button>
+                    <button class="btn btn-danger" @click="doStop" v-show="status===1">终止任务</button>
                 </div>
                 <div class="row" v-show="vbotJob">
                     <p>任务状态：{{status_label}}</p>
                 </div>
                 <div class="row" v-show="vbotJob">
                     <div class="hidden qrcode"></div>
-                    <img :src="qrcode_url" alt="">
+                    <img :src="qrcdoe" alt="">
                 </div>
 
                 <ul class="nav nav-tabs" id="myTabs">
@@ -23,7 +24,22 @@
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="friends-admin">
-
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>昵称</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="tab-pane" id="multiple-send">
 
@@ -43,7 +59,7 @@
         name: "VbotIndex",
         data: function () {
             return {
-                qrcode_url: '',
+                qrcdoe: '',
                 handle: null,
                 vbotJob: null,
                 interval: 10000,//更新状态10秒一次
@@ -54,6 +70,12 @@
             user: function () {
                 return this.$store.state.user;
             },
+            status: function () {
+                if (!this.vbotJob) {
+                    return 0;
+                }
+                return this.vbotJob.status;
+            }
         },
         watch: {
             '$route': function (to, from) {
@@ -73,7 +95,7 @@
         },
         methods: {
             init: function () {
-                this.qrcode_url = '';
+                this.qrcdoe = '';
                 this.handle = null;
                 this.vbotJob = null;
                 this.interval = 10000;
@@ -86,13 +108,13 @@
                 }
                 self.init();
                 axios.post(api.userVbotCreate).then(function (res) {
-                    self.$message.success('任务已创建，请等待执行完毕后再创建新任务');
+                    self.$message.success('任务已创建');
                     self.loop();
                 })
             },
             loop: function () {
                 let self = this;
-                self.doStatus();
+                setTimeout(self.doStatus, 1000);
                 self.handle = setInterval(function () {
                     self.doStatus();
                 }, self.interval);
@@ -117,22 +139,27 @@
                             case 0:
                                 break;
                             case 1:
-                                let url = self.vbotJob.qrcode_url;
-                                $('.qrcode').empty();
-                                let canvas = $('.qrcode').qrcode({width: 128, height: 128, text: url}).find('canvas');
-                                self.qrcode_url = canvas.get(0).toDataURL('image/jpg');
                                 break;
-                            case 2:
-                                self.qrcode_url = '';
-                                break;
-                            case 3:
-                                break;
+                        }
+                        if (self.vbotJob.qrcode) {
+                            let url = self.vbotJob.qrcode;
+                            $('.qrcode').empty();
+                            let canvas = $('.qrcode')
+                                .qrcode({width: 128, height: 128, text: url})
+                                .find('canvas');
+                            self.qrcdoe = canvas.get(0).toDataURL('image/jpg');
                         }
                     } else {
                         clearInterval(self.handle);
                         self.init();
                     }
                 })
+            },
+            doStop: function () {
+                let self = this;
+                axios.get(api.userVbotStop).then(function (res) {
+                    self.$message.success('请等待任务终止');
+                });
             }
         }
     }

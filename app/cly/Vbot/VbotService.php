@@ -17,10 +17,7 @@ use Cly\Vbot\Exceptions\LoginTimeoutException;
 use Cly\Vbot\Foundation\Vbot;
 use Cly\Vbot\Message\FriendVerify;
 use Cly\Vbot\Message\Text;
-use Illuminate\Redis\Connections\Connection;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Redis;
-use Ko\ProcessManager;
 
 class VbotService
 {
@@ -34,25 +31,9 @@ class VbotService
      */
     protected $vbotJob;
 
-    /**
-     * @var Connection
-     */
-    protected $redis;
-
-    /**
-     * vbotJob id
-     * @var
-     */
-    protected $key;
-
-    protected $processIds = [];
-
     public function __construct($vbotJob)
     {
-        $this->redis = Redis::connection('vbot');
-
         $this->vbotJob = $vbotJob;
-        $this->key = $vbotJob->id;
 
         $path = storage_path('vbot/');
         $this->vbot = new Vbot([
@@ -113,67 +94,6 @@ class VbotService
         ]);
     }
 
-    public static function deamon()
-    {
-        $deamonManager = new ProcessManager();
-        $deamonManager->onShutdown(function () {
-            exit();
-        });
-
-        while (true) {
-            $vbotJob = VbotJob::query()->where('status', 0)->first();
-
-            if ($vbotJob) {
-                $deamonManager->fork(function (\Ko\Process $p) use ($vbotJob) {
-                    \DB::connection()->reconnect();
-                    $vbotService = new VbotService($vbotJob);
-                    try {
-                        $vbotService->manager();
-                    } catch (\Exception $e) {
-                        $vbotService->error($e);
-                    }
-                });
-            }
-
-            $deamonManager->dispatch();
-            sleep(1);
-        }
-    }
-
-    public function manager()
-    {
-        $this->redis->hset($this->key, 'pid', posix_getpid());
-
-        $this->vbotJob->update(['status' => 1]);
-        //login
-        $this->getUuid();
-        $this->waitForLogin();
-        //init myself,init contacts
-        $this->init();
-        //do job
-
-        $manager = new ProcessManager();
-
-        $manager->fork(function (\Ko\Process $p) {
-            \DB::connection()->reconnect();
-            try {
-                $this->messageWork();
-            } catch (\Exception $e) {
-                $this->error($e);
-            }
-            return;
-        });
-
-        $this->vbot->console->log('manager loop');
-
-        while (true) {
-            $manager->dispatch();
-            usleep(200000);
-        }
-
-        $this->redis->del([$this->key]);
-    }
-
     public function getUuid()
     {
         $this->vbot->server->cleanCookies();
@@ -186,13 +106,15 @@ class VbotService
         $this->vbotJob->update(['login_status' => 1, 'qrcode' => $qrcode]);
     }
 
-    public function waitForLogin()
+    public function waitForLogin(VbotManager $manager)
     {
         $retryTime = 10;
         $tip = 1;
 
         $this->vbot->console->log('please scan the qrCode with wechat.');
         while ($retryTime > 0) {
+            $manager->dispatch();
+
             $url = sprintf('https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?tip=%s&uuid=%s&_=%s', $tip, $this->vbot->config['server.uuid'], time());
 
             $content = $this->vbot->http->get($url, ['timeout' => 35]);
@@ -261,9 +183,8 @@ class VbotService
 
                     throw new InitFailException('Init failed:' . $result['BaseResponse']['Ret']);
                 });
-            } catch (Exceptions\ArgumentException $e) {
+            } catch (\Exception $e) {
                 $tries++;
-                $this->vbot->console->log($e->getTraceAsString() . " tries:$tries");
                 if ($tries == 3) {
                     throw $e;
                 }
@@ -280,10 +201,21 @@ class VbotService
         $this->vbot->log->info('response:' . json_encode($result));
         $this->vbot->console->log('init success.');
         $this->vbot->loginSuccessObserver->trigger();
+
+        $this->vbotJob->update(['login_status' => 4]);
+
+        return $result;
+    }
+
+    public function initContact()
+    {
         $this->vbot->console->log('init contacts begin.');
 
-        $this->vbot->server->initContactList($result['ContactList']);
+        //$this->vbot->server->initContactList($result['ContactList']);
+
         $this->vbot->server->initContact();
+
+        $this->vbot->console->log('init contacts end.');
 
         $friends = vbot('friends');
         $groups = vbot('groups');
@@ -291,7 +223,11 @@ class VbotService
         $officials = vbot('officials');
         $specials = vbot('specials');
         $myself = vbot('myself');
-        $this->vbotJob->update(compact('friends', 'groups', 'members', 'officials', 'specials', 'myself'));
+
+        $updateData = compact('friends', 'groups', 'members', 'officials', 'specials', 'myself');
+        $updateData['login_status'] = 5;
+
+        $this->vbotJob->update($updateData);
     }
 
     public function messageWork()
@@ -303,13 +239,9 @@ class VbotService
             }
         });
 
-        $this->vbot->console->log('message_work start');
+        $this->vbot->console->log('message work');
 
         while (true) {
-            if ($this->isExitMessageWork()) {
-                return;
-            }
-
             if (!($checkSync = $this->vbot->messageHandler->checkSync())) {
                 continue;
             }
@@ -317,11 +249,6 @@ class VbotService
                 throw new \Exception('handleCheckSync error:' . $checkSync[0]);
             }
         }
-    }
-
-    public function jobWork()
-    {
-
     }
 
     public function userClear()
@@ -348,23 +275,5 @@ class VbotService
             sleep(1);
         }
         return;
-    }
-
-    public function exitMessageWork()
-    {
-        $this->redis->hset($this->key, 'sig_exit_message_work', 1);
-    }
-
-    public function isExitMessageWork()
-    {
-        return $this->redis->hget($this->key, 'sig_exit_message_work');
-    }
-
-    public function error(\Exception $e)
-    {
-        $this->vbotJob->update([
-            'status' => -2,
-            'exception' => $e->getMessage() . "\n" . $e->getTraceAsString() . "\n",
-        ]);
     }
 }

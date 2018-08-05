@@ -14,6 +14,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\VbotJobResource;
 use App\Jobs\VbotUserClear;
 use App\VbotJob;
+use Cly\Vbot\VbotDeamon;
+use Cly\Vbot\VbotManager;
 use Cly\Vbot\VbotService;
 
 class VbotController extends Controller
@@ -43,12 +45,11 @@ class VbotController extends Controller
             throw new JsonException('任务正在进行中，请结束后再创建新任务');
         }
 
-        VbotJob::create([
+        $vbotJob = VbotJob::create([
             'user_id' => $user->id,
             'status' => 0
         ]);
-
-        //dispatch(new VbotUserClear($vbotJob));
+        (new VbotDeamon())->push($vbotJob);
 
         return [];
     }
@@ -63,5 +64,21 @@ class VbotController extends Controller
             ->first();
 
         return ['data' => $vbotJob ? new VbotJobResource($vbotJob) : ''];
+    }
+
+    public function stop()
+    {
+        $user = \Auth::guard('user')->user();
+
+        $vbotJob = VbotJob::query()
+            ->where('user_id', $user->id)
+            ->whereNotIn('status', [-1, -2])
+            ->firstOrFail();
+
+        $manager = new VbotManager($vbotJob);
+
+        $manager->sigTerm();
+
+        return [];
     }
 }

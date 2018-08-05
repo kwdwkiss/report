@@ -99,22 +99,22 @@
                         无<span class="text-warning">{{name}}</span>账号信息，如果确认是恶意号码，请投诉举报！
                     </p>
                 </div>
-                <div v-if="accounts.length>0" class="row" v-for="(item,index) in accounts" :key="'accounts'+index">
-                    <div v-if="[103,105,106].indexOf(item.status)>-1" class="text-success">
-                        <p class="col-sm-6">{{item.type_label}}账号:<span class="text-warning">{{item.name}}</span></p>
-                        <p class="col-sm-6 text-primary">认证:{{item.status_label}}</p>
-                        <p class="col-sm-6">认证时间:{{item.created_at}}</p>
-                        <p class="col-sm-6">建议合作金额:{{item.auth_cash}}</p>
-                        <p class="col-sm-6">常用地址:{{item.address}}</p>
-                        <p class="col-sm-6">备注:{{item.remark}}</p>
-                        <p class="col-sm-6">如发现此账号有恶意行为，请用户立即联系网站客服处理</p>
-                    </div>
-                    <div v-else-if="item.status==104" class="text-danger">
-                        <p class="col-sm-6">{{item.type_label}}账号：{{item.name}}</p>
-                        <p class="col-sm-6">已被多数用户举报为恶意号码，请用户谨慎合作，危险！</p>
-                        <p class="col-sm-6">备注:{{item.remark}}</p>
-                    </div>
-                </div>
+                <!--<div v-if="accounts.length>0" class="row" v-for="(item,index) in accounts" :key="'accounts'+index">-->
+                    <!--<div v-if="[103,105,106].indexOf(item.status)>-1" class="text-success">-->
+                        <!--<p class="col-sm-6">{{item.type_label}}账号:<span class="text-warning">{{item.name}}</span></p>-->
+                        <!--<p class="col-sm-6 text-primary">认证:{{item.status_label}}</p>-->
+                        <!--<p class="col-sm-6">认证时间:{{item.created_at}}</p>-->
+                        <!--<p class="col-sm-6">建议合作金额:{{item.auth_cash}}</p>-->
+                        <!--<p class="col-sm-6">常用地址:{{item.address}}</p>-->
+                        <!--<p class="col-sm-6">备注:{{item.remark}}</p>-->
+                        <!--<p class="col-sm-6">如发现此账号有恶意行为，请用户立即联系网站客服处理</p>-->
+                    <!--</div>-->
+                    <!--<div v-else-if="item.status==104" class="text-danger">-->
+                        <!--<p class="col-sm-6">{{item.type_label}}账号：{{item.name}}</p>-->
+                        <!--<p class="col-sm-6">已被多数用户举报为恶意号码，请用户谨慎合作，危险！</p>-->
+                        <!--<p class="col-sm-6">备注:{{item.remark}}</p>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="table-responsive" v-if="account_reports.length>0">
                     <table class="table table-striped table-hover">
                         <thead>

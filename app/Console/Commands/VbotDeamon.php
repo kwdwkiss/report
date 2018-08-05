@@ -38,6 +38,6 @@ class VbotDeamon extends Command
      */
     public function handle()
     {
-        VbotService::deamon();
+        (new \Cly\Vbot\VbotDeamon())->run();
     }
 }

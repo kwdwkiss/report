@@ -87,6 +87,7 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
 
     Route::post('/user/vbot/create', 'User\VbotController@create');
     Route::get('/user/vbot/status', 'User\VbotController@status');
+    Route::get('/user/vbot/stop', 'User\VbotController@stop');
 
     Route::post('/mobile/search', 'Index\MobileController@search');
 });

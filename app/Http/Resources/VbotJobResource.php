@@ -18,7 +18,6 @@ class VbotJobResource extends Resource
         $data = parent::toArray($request);
 
         $data['status_label'] = VbotJob::$statusTypes[$data['status']];
-        $data['run_status_label'] = VbotJob::$runStatusTypes[$data['run_status']];
 
         return $data;
     }
