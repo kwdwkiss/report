@@ -39,7 +39,7 @@ class Test extends Command
      */
     public function handle()
     {
-        dd(md5(time()));
+        dd('0e830400451993494058024219903391'=='0e462097431906509019562988736854');
 
         //        \DB::enableQueryLog();
 //        $today = \App\User::query()

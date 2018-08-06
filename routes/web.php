@@ -53,10 +53,6 @@ Route::middleware(['csrf'])->group(function () {
 
     Route::get('/user/recharge/callback', 'User\RechargeController@apiCallback');
     Route::get('/user/recharge/page-callback', 'User\RechargeController@pageCallback');
-
-    Route::get('/admin', 'Admin\IndexController@index');
-    Route::get('/admin/logout', 'Admin\IndexController@logout');
-    Route::post('/admin/login', 'Admin\IndexController@login');
 });
 
 Route::middleware(['auth:user', 'csrf'])->group(function () {
@@ -93,6 +89,12 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
 });
 
 //>>>>>>>>>admin
+Route::middleware(['domain.check', 'csrf'])->group(function () {
+    Route::get('/admin', 'Admin\IndexController@index');
+    Route::get('/admin/logout', 'Admin\IndexController@logout');
+    Route::post('/admin/login', 'Admin\IndexController@login');
+});
+
 Route::middleware(['domain.check', 'auth:admin'])->group(function () {
     Route::post('/admin/upload', 'Admin\IndexController@upload');
     Route::post('/admin/upload-oss', 'Admin\IndexController@uploadOss');
