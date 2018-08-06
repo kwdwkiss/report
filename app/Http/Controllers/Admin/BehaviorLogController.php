@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\BehaviorLog;
+use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BehaviorLogResource;
 
@@ -16,6 +17,11 @@ class BehaviorLogController extends Controller
 {
     public function index()
     {
+        $user = \Auth::guard('admin')->user();
+        if ($user->id != 1) {
+            throw new JsonException('无权访问');
+        }
+
         $type = request('type');
         $date = request('created_at');
 
