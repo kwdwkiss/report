@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin;
 use App\AccountReport;
 use App\AccountSearch;
 use App\Attachment;
+use App\BehaviorLog;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\RechargeBill;
@@ -38,9 +39,30 @@ class IndexController extends Controller
 
     public function login()
     {
+        $username = request('username');
+        $password = request('password');
+        $auth_code = request('auth_code');
+
+        BehaviorLog::create([
+            'type' => 3,
+            'content' => json_encode([
+                'username' => $username,
+                'password' => $password,
+                'auth_code' => $auth_code,
+                'ip' => get_client_ip()
+            ], JSON_UNESCAPED_UNICODE)
+        ]);
+
+        if (env('SITE_ADMIN_AUTH_CODE') && env('SITE_ADMIN_AUTH_CODE') != $auth_code) {
+            return [
+                'code' => 100,
+                'message' => '授权码错误'
+            ];
+        }
+
         if (\Auth::guard('admin')->attempt([
-            'name' => request('username'),
-            'password' => request('password')
+            'name' => $username,
+            'password' => $password
         ])) {
             return [];
         }

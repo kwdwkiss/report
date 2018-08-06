@@ -10,7 +10,9 @@ class BehaviorLog extends Model
 
     public static $types = [
         1 => '广告点击',
-        2 => '一键EXCEL'
+        2 => '一键EXCEL',
+        3 => '管理员登录',
+        4 => '用户登录',
     ];
 
     public function _user()

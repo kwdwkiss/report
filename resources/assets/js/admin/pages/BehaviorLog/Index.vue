@@ -6,6 +6,8 @@
                 <el-option :value="0" label="无"></el-option>
                 <el-option :value="1" label="广告点击"></el-option>
                 <el-option :value="2" label="一键EXCEL"></el-option>
+                <el-option :value="3" label="管理员登录"></el-option>
+                <el-option :value="4" label="用户登录"></el-option>
             </el-select>
             <!--<el-input v-model="search.bill_no" placeholder="系统订单号"></el-input>-->
             <el-date-picker
