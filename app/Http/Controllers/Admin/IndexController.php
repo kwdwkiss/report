@@ -41,7 +41,7 @@ class IndexController extends Controller
         if (\Auth::guard('admin')->attempt([
             'name' => request('username'),
             'password' => request('password')
-        ], request('remember'))) {
+        ])) {
             return [];
         }
         return [
