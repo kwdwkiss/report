@@ -1,16 +1,15 @@
 <template>
     <div>
         <div class="row demo">
-            <p class="col-xs-6 text-danger" style="font-size: 18px">
-                EXCEL专用客服微信：<br>
-                <span>SYX0518ZA</span>
-            </p>
             <p class="col-xs-6">
                 示例:<br>
                 日期+姓名+单号+电话+价格/<br>
                 9.15+小明+01+1340+100/<br>
                 9.15+小里+02+1341+100/<br>
                 9.15+小亮+03+135+100<br>
+            </p>
+            <p class="col-xs-6 text-success" style="font-size: 18px">
+                微信客服：<span>SYX0518ZA</span><br>
             </p>
         </div>
         <div class="table-responsive">
@@ -98,13 +97,13 @@
                 this.table = [];
                 str = str.replace(/\//g, "\n");
                 str = str.replace(/＋/g, '+');
-                str = str.replace(/\+/g, ' ');
+                //str = str.replace(/\+/g, ' ');
                 let rows = str.split(/\n+/);
                 for (let i in rows) {
                     if (rows[i] === '') {
                         continue;
                     }
-                    let rowData = rows[i].split(/\s+/);
+                    let rowData = rows[i].split(/\+/);
                     this.table.push(rowData);
                 }
             },
