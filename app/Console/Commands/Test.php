@@ -39,7 +39,10 @@ class Test extends Command
      */
     public function handle()
     {
-        $sig=Redis::connection('vbot')->hget('manager:55','sig');
-        var_dump($sig);
+        dd(md5(time()));
+
+        //        \DB::enableQueryLog();
+//        $today = \App\User::query()
+//            ->whereDate('created_at', Carbon::today()->toDateString())
     }
 }

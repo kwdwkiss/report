@@ -93,13 +93,13 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
 });
 
 //>>>>>>>>>admin
-Route::middleware(['auth:admin'])->group(function () {
+Route::middleware(['domain.check', 'auth:admin'])->group(function () {
     Route::post('/admin/upload', 'Admin\IndexController@upload');
     Route::post('/admin/upload-oss', 'Admin\IndexController@uploadOss');
     Route::post('/admin/upload-oss-image', 'Admin\IndexController@uploadOssImage');
 });
 
-Route::middleware(['auth:admin', 'csrf'])->group(function () {
+Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
     Route::get('/admin/dashboard', 'Admin\IndexController@statement');
     Route::get('/admin/statement/list', 'Admin\StatementController@index');
     Route::get('/admin/behavior-log/list', 'Admin\BehaviorLogController@index');
