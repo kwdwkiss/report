@@ -19,6 +19,14 @@ class DomainCheck
         if ($domain && $domain != $request->getHost()) {
             abort(403);
         }
+        $accessIp = env('SITE_ADMIN_ACCESS_IP');
+        if ($accessIp) {
+            $accessIp = explode(',', $accessIp);
+            $clientIp = get_client_ip();
+            if (!in_array($clientIp, $accessIp)) {
+                abort(403);
+            }
+        }
         return $next($request);
     }
 }
