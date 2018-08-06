@@ -13,6 +13,7 @@ class BehaviorLog extends Model
         2 => '一键EXCEL',
         3 => '管理员登录',
         4 => '用户登录',
+        5 => '管理员充值',
     ];
 
     public function _user()

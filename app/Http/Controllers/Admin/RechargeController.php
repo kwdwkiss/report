@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\AmountBill;
+use App\BehaviorLog;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RechargeBillResource;
@@ -83,6 +84,19 @@ class RechargeController extends Controller
             }
 
             RechargeBill::recharge($user, $money, $pay_no, $pay_type);
+
+            $admin = \Auth::guard('admin')->user();
+            $data = [
+                'user_id' => $user->id,
+                'money' => $money,
+                'pay_no' => $pay_no,
+                'pay_type' => $pay_type,
+                'admin_user_id'=>$admin->id,
+            ];
+            BehaviorLog::create([
+                'type' => 5,
+                'content' => json_encode($data, JSON_UNESCAPED_UNICODE),
+            ]);
         });
 
         return [];

@@ -8,6 +8,7 @@
                 <el-option :value="2" label="一键EXCEL"></el-option>
                 <el-option :value="3" label="管理员登录"></el-option>
                 <el-option :value="4" label="用户登录"></el-option>
+                <el-option :value="5" label="管理员充值"></el-option>
             </el-select>
             <!--<el-input v-model="search.bill_no" placeholder="系统订单号"></el-input>-->
             <el-date-picker
