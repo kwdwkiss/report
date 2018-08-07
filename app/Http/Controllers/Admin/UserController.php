@@ -387,7 +387,7 @@ class UserController extends Controller
         $user = User::findOrFail(request('id'));
 
         $auth_start_at = Carbon::now();
-        $auth_end_at = $auth_start_at->addMonths($auth_duration);
+        $auth_end_at = Carbon::now()->addMonths($auth_duration);
         $user->update([
             'type' => $auth_type,
             'auth_type' => $auth_type,
