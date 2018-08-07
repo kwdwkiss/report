@@ -53,7 +53,7 @@ class Oss
         return [
             'code' => 0,
             'message' => '成功',
-            'url' => $res['oss-request-url']
+            'url' => str_replace(['http:', 'https'], '', $res['oss-request-url'])
         ];
     }
 }

@@ -14,9 +14,17 @@ const store = window.store = new Vuex.Store({
                 state.taxonomy = res.data.data;
             });
         },
-        user(state) {
+        user(state, payload) {
             axios.get(api.adminInfo).then(function (res) {
                 state.user = res.data.data;
+                if (payload && payload.callback instanceof Function) {
+                    payload.callback();
+                }
+            }).catch(function () {
+                state.user = null;
+                if (payload && payload.callback instanceof Function) {
+                    payload.callback();
+                }
             });
         }
     }

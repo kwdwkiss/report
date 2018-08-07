@@ -47,7 +47,11 @@
                         self.loading = true;
                         axios.post(api.login, self.form).then(function (res) {
                             self.loading = false;
-                            self.$router.push('/');
+                            self.$store.commit('user', {
+                                callback: function () {
+                                    self.$router.push('/');
+                                }
+                            });
                         }).catch(function () {
                             self.loading = false;
                         });
