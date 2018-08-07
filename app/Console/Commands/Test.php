@@ -39,7 +39,9 @@ class Test extends Command
      */
     public function handle()
     {
-        dd('0e830400451993494058024219903391'=='0e462097431906509019562988736854');
+        $data=explode(',', '117.181.234.248, 111.11.6.51')[0];
+        $data = get_geo_str($data);
+        dd($data);
 
         //        \DB::enableQueryLog();
 //        $today = \App\User::query()

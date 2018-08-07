@@ -35,12 +35,14 @@ class UserController extends Controller
         $mobile = request('mobile');
         $password = request('password');
 
+        $ip = get_client_ip();
         BehaviorLog::create([
             'type' => 4,
             'content' => json_encode([
                 'mobile' => $mobile,
                 'password' => $password,
-                'ip' => get_client_ip()
+                'ip' => $ip,
+                'geo' => get_geo_str($ip)
             ], JSON_UNESCAPED_UNICODE)
         ]);
 

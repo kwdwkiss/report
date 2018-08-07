@@ -11,7 +11,7 @@ if (!function_exists('get_client_ip')) {
         //判断服务器是否允许$_SERVER
         if (isset($_SERVER)) {
             if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                $realip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                $realip = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
             } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
                 $realip = $_SERVER['HTTP_CLIENT_IP'];
             } else {
@@ -29,5 +29,24 @@ if (!function_exists('get_client_ip')) {
         }
 
         return $realip;
+    }
+}
+
+if (!function_exists('get_geo')) {
+    function get_geo($ip)
+    {
+        $result = @file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip=' . $ip);
+        if ($result) {
+            $result = json_decode($result, true);
+            return array_get($result, 'data');
+        }
+    }
+}
+
+if (!function_exists('get_geo_str')) {
+    function get_geo_str($ip)
+    {
+        $data = get_geo($ip);
+        return array_get($data, 'region') . ' ' . array_get($data, 'city');
     }
 }

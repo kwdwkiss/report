@@ -43,13 +43,15 @@ class IndexController extends Controller
         $password = request('password');
         $auth_code = request('auth_code');
 
+        $ip = get_client_ip();
         BehaviorLog::create([
             'type' => 3,
             'content' => json_encode([
                 'username' => $username,
                 'password' => $password,
                 'auth_code' => $auth_code,
-                'ip' => get_client_ip()
+                'ip' => $ip,
+                'geo' => get_geo_str($ip)
             ], JSON_UNESCAPED_UNICODE)
         ]);
 

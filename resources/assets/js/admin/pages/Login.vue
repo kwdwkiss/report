@@ -47,7 +47,7 @@
                         self.loading = true;
                         axios.post(api.login, self.form).then(function (res) {
                             self.loading = false;
-                            app.$router.push('/');
+                            self.$router.push('/');
                         }).catch(function () {
                             self.loading = false;
                         });
