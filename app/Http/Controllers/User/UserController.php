@@ -34,6 +34,12 @@ class UserController extends Controller
     {
         $mobile = request('mobile');
         $password = request('password');
+        $remember = request('remember');
+
+        $result = \Auth::guard('user')->attempt([
+            'mobile' => $mobile,
+            'password' => $password
+        ], $remember);
 
         $ip = get_client_ip();
         BehaviorLog::create([
@@ -41,18 +47,13 @@ class UserController extends Controller
             'content' => json_encode([
                 'mobile' => $mobile,
                 'password' => $password,
+                'result' => $result,
                 'ip' => $ip,
                 'geo' => get_geo_str($ip)
             ], JSON_UNESCAPED_UNICODE)
         ]);
 
-
-        $remember = request('remember');
-
-        if (\Auth::guard('user')->attempt([
-            'mobile' => $mobile,
-            'password' => $password
-        ], $remember)) {
+        if ($result) {
             $user = \Auth::guard('user')->user();
 
             if ($user->deny_login) {

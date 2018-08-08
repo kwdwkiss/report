@@ -80,7 +80,7 @@ class VbotManager
                     case 'send_msg':
                         $sendList = array_get($sendMsg, 'send_list');
                         $sendText = array_get($sendMsg, 'send_text');
-                        $this->vbotService->sendMsg($type, $sendList, $sendText, $this);
+                        $this->vbotService->sendMsg($sendList, $sendText, 'username', $this);
                         break;
                 }
 
