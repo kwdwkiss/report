@@ -2,10 +2,10 @@
     <el-form :model="form" :rules="rules" ref="form" class="form-container">
         <h3 class="title">系统登录</h3>
         <el-form-item prop="username">
-            <el-input type="text" v-model="form.username" placeholder="账号"></el-input>
+            <el-input type="text" name="username" v-model="form.username" placeholder="账号"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-            <el-input type="password" v-model="form.password" placeholder="密码"></el-input>
+            <el-input type="password" name="password" v-model="form.password" placeholder="密码"></el-input>
         </el-form-item>
         <el-form-item prop="auth_code">
             <el-input type="text" v-model="form.auth_code" placeholder="授权码"></el-input>

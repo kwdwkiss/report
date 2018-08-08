@@ -64,4 +64,14 @@ class Myself
             ));
         }
     }
+
+    public function toArray()
+    {
+        return [
+            'nickname' => $this->nickname,
+            'username' => $this->username,
+            'uin' => $this->uin,
+            'sex' => $this->sex,
+        ];
+    }
 }

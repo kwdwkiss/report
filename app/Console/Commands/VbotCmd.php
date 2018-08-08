@@ -4,11 +4,13 @@ namespace App\Console\Commands;
 
 use App\Jobs\VbotUserClear;
 use App\VbotJob;
+use Carbon\Carbon;
 use Cly\Vbot\Foundation\Vbot;
 use Cly\Vbot\Message\FriendVerify;
 use Cly\Vbot\Message\Text;
 use Cly\Vbot\VbotService;
 use Illuminate\Console\Command;
+use Illuminate\Container\Container;
 use Illuminate\Support\Collection;
 
 class VbotCmd extends Command
@@ -48,7 +50,19 @@ class VbotCmd extends Command
             'user_id' => 1,
             'status' => 0
         ]);
+
         $vbotService = new VbotService($vbotJob);
-        $vbotService->manager();
+
+        if (!$vbotService->isLogin()) {
+            $vbotService->getQrcode();
+            $vbotService->waitForLogin();
+        }
+
+        $vbotService->init();
+        $vbotService->initContact();
+
+        $vbotService->sendMsg(['三石寰宇1'], Carbon::now());
+
+        $vbotService->sendMsg(['@123'], Carbon::now(),null,'username');
     }
 }

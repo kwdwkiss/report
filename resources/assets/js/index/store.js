@@ -21,6 +21,7 @@ const store = window.store = new Vuex.Store({
         excel: {data: [], meta: {}, links: {}},
         report: {data: [], meta: {}, links: {}},
         amount: {data: [], meta: {}, links: {}},
+        vbot: {},
     },
     mutations: {
         breadcrumb(state, payload) {
@@ -84,6 +85,9 @@ const store = window.store = new Vuex.Store({
             axios.get(api.userAmountList, {params: payload}).then(function (res) {
                 state.amount = res.data;
             });
+        },
+        vbot(state, payload) {
+            state.vbot = _.assign(state.vbot, payload);
         },
     }
 });

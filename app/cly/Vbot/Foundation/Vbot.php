@@ -50,6 +50,7 @@ use Illuminate\Container\Container;
  */
 class Vbot extends Container
 {
+    protected static $instance;
     /**
      * Service Providers.
      *
@@ -76,6 +77,17 @@ class Vbot extends Container
         (new Kernel($this))->bootstrap();
 
         static::$instance = $this;
+
+        require_once __DIR__ . '/../Support/helpers.php';
+    }
+
+    public static function getInstance()
+    {
+        if (is_null(static::$instance)) {
+            static::$instance = new static;
+        }
+
+        return static::$instance;
     }
 
     private function initializeConfig(array $config)

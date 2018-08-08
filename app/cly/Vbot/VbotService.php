@@ -94,26 +94,30 @@ class VbotService
         ]);
     }
 
-    public function getUuid()
+    public function isLogin()
+    {
+        return $this->vbot->server->tryLogin();
+    }
+
+    public function getQrcode()
     {
         $this->vbot->server->cleanCookies();
         $uuid = $this->vbot->server->getUuid();
         $qrcode = $this->vbot->server->getQrcode($uuid);
 
-        $this->vbot->console->log("uuid:$uuid");
         $this->vbot->console->log("qrcode:$qrcode");
 
-        $this->vbotJob->update(['login_status' => 1, 'qrcode' => $qrcode]);
+        return $qrcode;
     }
 
-    public function waitForLogin(VbotManager $manager)
+    public function waitForLogin(VbotManager $manager = null)
     {
         $retryTime = 10;
         $tip = 1;
 
         $this->vbot->console->log('please scan the qrCode with wechat.');
         while ($retryTime > 0) {
-            $manager->dispatch();
+            $manager && $manager->dispatch();
 
             $url = sprintf('https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?tip=%s&uuid=%s&_=%s', $tip, $this->vbot->config['server.uuid'], time());
 
@@ -124,11 +128,10 @@ class VbotService
             $code = $matches[1];
             switch ($code) {
                 case '201':
-
-                    $this->vbotJob->update(['login_status' => 2]);
-
                     $this->vbot->console->log('please confirm login in wechat.');
                     $tip = 0;
+
+                    $manager && $manager->scanStatus();
                     break;
                 case '200':
 
@@ -142,9 +145,9 @@ class VbotService
 
                     $this->vbot->server->getLogin();
 
-                    $this->vbotJob->update(['login_status' => 3]);
                     $this->vbot->console->log('is login.');
 
+                    $manager && $manager->loginStatus();
                     return;
                 case '408':
                     $tip = 1;
@@ -181,7 +184,7 @@ class VbotService
                     $this->vbot->cache->forget('session.' . $this->vbot->config['session']);
                     $this->vbot->log->error('Init failed.' . json_encode($result));
 
-                    throw new InitFailException('Init failed:' . $result['BaseResponse']['Ret']);
+                    throw new InitFailException('Init failed:' . json_encode($result));
                 });
             } catch (\Exception $e) {
                 $tries++;
@@ -202,8 +205,6 @@ class VbotService
         $this->vbot->console->log('init success.');
         $this->vbot->loginSuccessObserver->trigger();
 
-        $this->vbotJob->update(['login_status' => 4]);
-
         return $result;
     }
 
@@ -216,18 +217,6 @@ class VbotService
         $this->vbot->server->initContact();
 
         $this->vbot->console->log('init contacts end.');
-
-        $friends = vbot('friends');
-        $groups = vbot('groups');
-        $members = vbot('members');
-        $officials = vbot('officials');
-        $specials = vbot('specials');
-        $myself = vbot('myself');
-
-        $updateData = compact('friends', 'groups', 'members', 'officials', 'specials', 'myself');
-        $updateData['login_status'] = 5;
-
-        $this->vbotJob->update($updateData);
     }
 
     public function messageWork()
@@ -251,27 +240,35 @@ class VbotService
         }
     }
 
-    public function userClear()
+    public function sendMsg($sendList, $sendText = '', $manager = null, $type = 'nickname')
     {
-        $vbotJob = $this->vbotJob;
-        $data = $vbotJob->data;
-
         $defaultText = '由于微信好友太多，我正在使用宏海清粉软件，如有打扰请包涵。';
-        $text = array_get($data, 'send_text', $defaultText);
+        $sendText = $sendText ?: $defaultText;
 
-        foreach ($friends = vbot('friends') as $item) {
-            try {
-                Text::send($item['UserName'], $text);
-                $data['send_contacts'][] = $item['NickName'];
-            } catch (\Exception $e) {
-                $vbotJob->update([
-                    'status' => -2,
-                    'context' => $this->vbot->config->all(),
-                    'data' => $data,
-                    'exception' => $e->getMessage() . $e->getTraceAsString()
-                ]);
+        $friends = vbot('friends');
+
+        if (!in_array($type, ['username', 'nickname', 'remarkName'])) {
+            throw new \Exception('sendMsg type argument error');
+        }
+
+        foreach ($sendList as $value) {
+            $username = '';
+            if ($type == 'nickname') {
+                $username = $friends->getUsernameByNickname($value);
+            } elseif ($type == 'remarkName') {
+                $username = $friends->getUsernameByRemarkName($value);
+            } elseif ($type == 'username') {
+                if ($friends->getAccount($value)) {
+                    $username = $value;
+                }
             }
-            $this->vbot->console->log("send:{$item['NickName']}");
+            if ($username) {
+                Text::send($username, $sendText);
+                $this->vbot->console->log("send:$username");
+            }
+
+            $manager && $manager->dispatch();
+
             sleep(1);
         }
         return;

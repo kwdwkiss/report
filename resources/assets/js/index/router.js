@@ -65,6 +65,9 @@ router.beforeEach((to, from, next) => {
     if (store.state.user) {
         if (['login', 'forgetPassword'].indexOf(to.name) > -1) {
             next({name: 'index'});
+        } else if (from.name === 'vbotIndex' && from.name !== to.name) {
+            store.commit('vbot',{stop: 1});
+            next();
         } else {
             next();
         }
@@ -77,7 +80,8 @@ router.beforeEach((to, from, next) => {
             'inviterLink',
             'userProfile',
             'userMerchant',
-            'excelList'
+            'excelList',
+            'vbotIndex'
         ].indexOf(to.name) > -1) {
             next({name: 'login'});
         } else {

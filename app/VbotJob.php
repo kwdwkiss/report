@@ -19,12 +19,7 @@ class VbotJob extends Model
         'myself' => 'array',
     ];
 
-    protected $dataTemplate = [
-        'contacts' => [],//联系人
-        'send_text' => '',//发送的文本消息
-        'send_mode' => 0,//发送模式，0-所有人，1-根据联系人列表
-        'send_contacts' => [],//发送联系人列表
-    ];
+    protected $dataTemplate = [];
 
     public static $statusTypes = [
         -2 => '异常退出',

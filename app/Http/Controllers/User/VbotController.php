@@ -63,7 +63,15 @@ class VbotController extends Controller
             ->whereNotIn('status', [-1, -2])
             ->first();
 
-        return ['data' => $vbotJob ? new VbotJobResource($vbotJob) : ''];
+        if ($vbotJob) {
+            $manager = new VbotManager($vbotJob);
+            return [
+                'vbotJob' => new VbotJobResource($vbotJob),
+                'data' => $manager->getData()
+            ];
+        }
+
+        return [];
     }
 
     public function stop()
@@ -78,6 +86,25 @@ class VbotController extends Controller
         $manager = new VbotManager($vbotJob);
 
         $manager->sigTerm();
+
+        return [];
+    }
+
+    public function send()
+    {
+        $sendList = request('send_list', []);
+        $sendText = request('send_text', '');
+
+        $user = \Auth::guard('user')->user();
+
+        $vbotJob = VbotJob::query()
+            ->where('user_id', $user->id)
+            ->whereNotIn('status', [-1, -2])
+            ->firstOrFail();
+
+        $manager = new VbotManager($vbotJob);
+
+        $manager->sigMsg($sendList, $sendText);
 
         return [];
     }

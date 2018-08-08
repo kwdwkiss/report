@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Resources\VbotJobResource;
+use App\VbotJob;
+use Cly\Vbot\Foundation\Vbot;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;
 use Ko\Process;
@@ -39,9 +42,9 @@ class Test extends Command
      */
     public function handle()
     {
-        $data=explode(',', '117.181.234.248, 111.11.6.51')[0];
-        $data = get_geo_str($data);
-        dd($data);
+        $data = VbotJob::find(14);
+        //$data = new VbotJobResource($data);
+        dd(count($data->friends));
 
         //        \DB::enableQueryLog();
 //        $today = \App\User::query()
