@@ -93,6 +93,7 @@ class VbotManager
                 'exception' => $e->getMessage() . PHP_EOL . $e->getTraceAsString() . PHP_EOL,
             ]);
             $this->redis->del([$this->key]);
+            $this->termChild();
             throw $e;
         }
     }
@@ -102,9 +103,7 @@ class VbotManager
         pcntl_async_signals(true);
         pcntl_signal(SIGTERM, function () {
             echo 'manager SIGTERM' . PHP_EOL;
-            foreach ($this->children as $childPid) {
-                posix_kill($childPid, SIGTERM);
-            }
+            $this->termChild();
             $this->redis->del([$this->key]);
             $this->vbotJob->update(['status' => -1]);
             exit();
@@ -114,6 +113,13 @@ class VbotManager
             $pid = pcntl_waitpid(-1, $status);
             unset($this->children[$pid]);
         });
+    }
+
+    public function termChild()
+    {
+        foreach ($this->children as $childPid) {
+            posix_kill($childPid, SIGTERM);
+        }
     }
 
     public function dispatch()
