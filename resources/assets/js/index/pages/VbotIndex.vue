@@ -6,8 +6,8 @@
 
                 <div class="row">
                     <button class="btn btn-primary" @click="doCreate" v-show="scanBtnShow">扫码登录</button>
+                    <button class="btn btn-success" @click="doSend" v-show="stopBtnShow">开始清粉</button>
                     <button class="btn btn-danger" @click="doStop" v-show="stopBtnShow">终止任务</button>
-                    <button class="btn btn-warning" @click="doSend" v-show="stopBtnShow">清粉</button>
                 </div>
                 <div class="row" v-show="statusShow">
                     <p class="col-xs-12">任务状态：{{statusLabel}}</p>
@@ -137,7 +137,7 @@
         watch: {
             'checkAll': function () {
                 if (this.checkAll) {
-                    this.sendList= _.keys(this.data.friends);
+                    this.sendList = _.keys(this.data.friends);
                 } else {
                     this.sendList = [];
                 }
