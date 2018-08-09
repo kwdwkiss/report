@@ -63,6 +63,6 @@ class VbotCmd extends Command
 
         $vbotService->sendMsg(['三石寰宇1'], Carbon::now());
 
-        $vbotService->sendMsg(['@123'], Carbon::now(),null,'username');
+        $vbotService->sendMsg(['@123'], Carbon::now(), null, 'username');
     }
 }
