@@ -6,7 +6,7 @@
 
                 <div class="row">
                     <button class="btn btn-primary" @click="doCreate" v-show="scanBtnShow">扫码登录</button>
-                    <button class="btn btn-success" @click="doSend" v-show="stopBtnShow">开始清粉</button>
+                    <button class="btn btn-success" @click="doSend" v-show="sendBtnShow">开始清粉</button>
                     <button class="btn btn-danger" @click="doStop" v-show="stopBtnShow">终止任务</button>
                 </div>
                 <div class="row" v-show="statusShow">
@@ -120,6 +120,9 @@
             },
             scanBtnShow: function () {
                 return !this.vbotJob;
+            },
+            sendBtnShow: function () {
+                return this.vbotJob && this.data.message_status;
             },
             stopBtnShow: function () {
                 return this.vbotJob && this.vbotJob.status !== 0;
