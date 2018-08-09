@@ -10,6 +10,7 @@ namespace Cly\Vbot;
 
 
 use App\VbotJob;
+use Cly\Vbot\Exceptions\LoginTimeoutException;
 use Illuminate\Redis\Connections\Connection;
 use Illuminate\Support\Facades\Redis;
 
@@ -88,13 +89,15 @@ class VbotManager
             }
 
         } catch (\Exception $e) {
+            echo $e->getMessage() . PHP_EOL;
+
             $this->vbotJob->update([
                 'status' => -2,
                 'exception' => $e->getMessage() . PHP_EOL . $e->getTraceAsString() . PHP_EOL,
             ]);
             $this->redis->del([$this->key]);
             $this->termChild();
-            throw $e;
+            exit();
         }
     }
 
