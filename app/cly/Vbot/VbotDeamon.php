@@ -11,6 +11,7 @@ namespace Cly\Vbot;
 
 use App\VbotJob;
 use Cly\Process\Manager;
+use Illuminate\Support\Facades\Redis;
 
 class VbotDeamon extends Manager
 {
@@ -66,7 +67,7 @@ class VbotDeamon extends Manager
     public function runInit()
     {
         $keys = $this->redis->keys('*');
-        $this->redis->del($keys);
+        Redis::resolve()->del($keys);
         VbotJob::query()->whereIn('status', [0, 1])->update(['status' => -1]);
 
         parent::runInit();
