@@ -63,6 +63,15 @@ class VbotDeamon extends Manager
         }
     }
 
+    public function runInit()
+    {
+        $keys = $this->redis->keys('*');
+        $this->redis->del($keys);
+        VbotJob::query()->whereIn('status', [0, 1])->update(['status' => -1]);
+
+        parent::runInit();
+    }
+
     public function __invoke()
     {
         while (true) {
