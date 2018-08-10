@@ -30,7 +30,7 @@ class Sync
      */
     public function checkSync()
     {
-        $content = $this->vbot->http->get($this->vbot->config['server.uri.push'].'/synccheck', ['timeout' => 35, 'query' => [
+        $content = $this->vbot->http->get($this->vbot->config['server.uri.push'].'/synccheck', ['timeout' => 20, 'query' => [
             'r'        => time(),
             'sid'      => $this->vbot->config['server.sid'],
             'uin'      => $this->vbot->config['server.uin'],

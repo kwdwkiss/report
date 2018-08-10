@@ -112,20 +112,19 @@ class VbotService
 
     public function waitForLogin(VbotManager $manager = null)
     {
-        $retryTime = 10;
+        $retryTime = 12;
         $tip = 1;
 
         $this->vbot->console->log('please scan the qrCode with wechat.');
         while ($retryTime > 0) {
-            $manager && $manager->dispatch();
 
             $url = sprintf('https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?tip=%s&uuid=%s&_=%s', $tip, $this->vbot->config['server.uuid'], time());
 
-            $content = $this->vbot->http->get($url, ['timeout' => 35]);
+            $content = $this->vbot->http->get($url, ['timeout' => 30]);
 
             preg_match('/window.code=(\d+);/', $content, $matches);
 
-            $code = $matches[1];
+            $code = $matches[1] ?? '';
             switch ($code) {
                 case '201':
                     $this->vbot->console->log('please confirm login in wechat.');
@@ -240,7 +239,7 @@ class VbotService
         }
     }
 
-    public function sendMsg($sendList, $sendText = '', $manager = null, $type = 'nickname')
+    public function sendMsg($sendList, $sendText = '', $type = 'nickname')
     {
         $defaultText = '由于微信好友太多，我正在使用宏海清粉软件，如有打扰请包涵。';
         $sendText = $sendText ?: $defaultText;
@@ -266,8 +265,6 @@ class VbotService
                 Text::send($username, $sendText);
                 $this->vbot->console->log("send:$username");
             }
-
-            $manager && $manager->dispatch();
 
             sleep(1);
         }

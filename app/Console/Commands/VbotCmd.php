@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Cly\Vbot\Foundation\Vbot;
 use Cly\Vbot\Message\FriendVerify;
 use Cly\Vbot\Message\Text;
+use Cly\Vbot\VbotManager;
 use Cly\Vbot\VbotService;
 use Illuminate\Console\Command;
 use Illuminate\Container\Container;
@@ -50,19 +51,6 @@ class VbotCmd extends Command
             'user_id' => 1,
             'status' => 0
         ]);
-
-        $vbotService = new VbotService($vbotJob);
-
-        if (!$vbotService->isLogin()) {
-            $vbotService->getQrcode();
-            $vbotService->waitForLogin();
-        }
-
-        $vbotService->init();
-        $vbotService->initContact();
-
-        $vbotService->sendMsg(['三石寰宇1'], Carbon::now());
-
-        $vbotService->sendMsg(['@123'], Carbon::now(), null, 'username');
+        \Cly\Vbot\VbotDeamon::sendVbotJob($vbotJob);
     }
 }

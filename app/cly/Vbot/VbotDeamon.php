@@ -10,98 +10,64 @@ namespace Cly\Vbot;
 
 
 use App\VbotJob;
-use Illuminate\Redis\Connections\Connection;
-use Illuminate\Support\Facades\Redis;
+use Cly\Process\Manager;
 
-class VbotDeamon
+class VbotDeamon extends Manager
 {
     /**
-     * @var Connection
+     * @var VbotDeamon
      */
-    protected $redis;
+    protected static $instance;
 
-    protected $key;
-
-    protected $children = [];
-
-    public function __construct()
+    public static function getInstance()
     {
-        $this->redis = Redis::connection('vbot');
-        $this->key = 'deamon';
+        if (!static::$instance) {
+            static::$instance = new static([
+                'redis' => 'vbot',
+                'prefix' => 'deamon',
+                'name' => 'global',
+            ]);
+        }
+        return static::$instance;
     }
 
-    public function run()
+    public function __construct(array $options = [])
     {
-        $this->installSig();
+        parent::__construct($options);
+        $this->setMsgHandler('vbot_job', [$this, 'vbotJobHandler']);
+    }
 
-        $this->redis->hset($this->key, 'pid', getmypid());
+    public static function sendVbotJob(VbotJob $vbotJob)
+    {
+        $instance = static::getInstance();
+        if (!$instance->isRunning()) {
+            throw new \Exception($instance->getName() . ' is not running');
+        }
+        $msg = [
+            'name' => 'vbot_job',
+            'id' => $vbotJob->id,
+        ];
+        $instance->sendMsg($msg);
+    }
 
+    public function vbotJobHandler(VbotDeamon $deamon, $msg)
+    {
+        echo 'vbotJobHandler:' . json_encode($msg) . PHP_EOL;
+        $id = array_get($msg, 'id');
+        $vbotJob = VbotJob::query()
+            ->where('status', 0)
+            ->find($id);
+        if ($vbotJob) {
+            $manager = new VbotManager($vbotJob);
+            $this->fork($manager);
+        }
+    }
+
+    public function __invoke()
+    {
         while (true) {
-            $id = $this->pop();
-            $vbotJob = VbotJob::find($id);
-
-            if ($vbotJob && $vbotJob->status == 0) {
-
-                $this->children[] = $pid = pcntl_fork();
-                if ($pid == -1) {
-                    throw new \Exception('pcntl_fork error');
-                } elseif ($pid == 0) {
-                    \DB::connection()->reconnect();
-                    $vbotJob->update(['status' => 1]);
-                    $vbotManager = new VbotManager($vbotJob);
-                    $vbotManager->run();
-                    exit();
-                }
-
-            }
-
-            $this->dispatch();
-            usleep(200000);
+            $this->dispatchMsg();
+            sleep(1);
         }
-    }
-
-    public function installSig()
-    {
-        pcntl_async_signals(true);
-        pcntl_signal(SIGTERM, function () {
-            echo 'deamon SIGTERM' . PHP_EOL;
-            foreach ($this->children as $childPid) {
-                posix_kill($childPid, SIGTERM);
-            }
-            $this->redis->del([$this->key]);
-            exit();
-        });
-        pcntl_signal(SIGCHLD, function () {
-            echo 'deamon SIGCHLD' . PHP_EOL;
-            $pid = pcntl_waitpid(-1, $status);
-            unset($this->children[$pid]);
-        });
-    }
-
-    public function dispatch()
-    {
-        $sig = $this->redis->hget($this->key, 'sig');
-        switch ((string)$sig) {
-            case 'sig_term':
-                echo 'deamon sig_term' . PHP_EOL;
-                posix_kill(getmypid(), SIGTERM);
-                break;
-        }
-        $this->redis->hdel($this->key, ['sig']);
-    }
-
-    public function sig($sig)
-    {
-        $this->redis->hset($this->key, 'sig', $sig);
-    }
-
-    public function push(VbotJob $vbotJob)
-    {
-        $this->redis->rpush($this->key . ':queue', [$vbotJob->id]);
-    }
-
-    public function pop()
-    {
-        return $this->redis->lpop($this->key . ':queue');
     }
 }

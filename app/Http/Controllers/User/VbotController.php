@@ -45,11 +45,18 @@ class VbotController extends Controller
             throw new JsonException('任务正在进行中，请结束后再创建新任务');
         }
 
-        $vbotJob = VbotJob::create([
-            'user_id' => $user->id,
-            'status' => 0
-        ]);
-        (new VbotDeamon())->push($vbotJob);
+        \DB::transaction(function () use ($user) {
+            $vbotJob = VbotJob::create([
+                'user_id' => $user->id,
+                'status' => 0
+            ]);
+
+            try {
+                VbotDeamon::sendVbotJob($vbotJob);
+            } catch (\Exception $e) {
+                throw new JsonException('服务暂停维护中，请稍后再来');
+            }
+        });
 
         return [];
     }
@@ -85,7 +92,7 @@ class VbotController extends Controller
 
         $manager = new VbotManager($vbotJob);
 
-        $manager->sigTerm();
+        $manager->kill();
 
         return [];
     }
@@ -104,7 +111,7 @@ class VbotController extends Controller
 
         $manager = new VbotManager($vbotJob);
 
-        $manager->sigMsg($sendList, $sendText);
+        $manager->sendText($sendList, $sendText);
 
         return [];
     }

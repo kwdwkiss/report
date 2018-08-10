@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use Cly\Vbot\VbotService;
 use Illuminate\Console\Command;
 
 class VbotDeamon extends Command
@@ -38,6 +37,6 @@ class VbotDeamon extends Command
      */
     public function handle()
     {
-        (new \Cly\Vbot\VbotDeamon())->run();
+        \Cly\Vbot\VbotDeamon::getInstance()->run();
     }
 }

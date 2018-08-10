@@ -50,3 +50,12 @@ if (!function_exists('get_geo_str')) {
         return array_get($data, 'region') . ' ' . array_get($data, 'city');
     }
 }
+
+if (!function_exists('debug_backtrace_print')) {
+    function debug_backtrace_print()
+    {
+        foreach (debug_backtrace() as $item) {
+            echo array_get($item, 'file') . '(' . array_get($item, 'line') . ')' . PHP_EOL;
+        }
+    }
+}

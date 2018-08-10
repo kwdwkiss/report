@@ -2,12 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Resources\VbotJobResource;
-use App\VbotJob;
-use Cly\Vbot\Foundation\Vbot;
+use Cly\Process\Manager;
+use Cly\Process\Process;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Redis;
-use Ko\Process;
+use Illuminate\Support\Facades\DB;
+use Workerman\Worker;
 
 class Test extends Command
 {
@@ -42,12 +41,49 @@ class Test extends Command
      */
     public function handle()
     {
-        $data = VbotJob::find(14);
-        //$data = new VbotJobResource($data);
-        dd(count($data->friends));
+        $this->processTest();
+    }
 
-        //        \DB::enableQueryLog();
-//        $today = \App\User::query()
-//            ->whereDate('created_at', Carbon::today()->toDateString())
+    protected function processTest()
+    {
+        $manager = new Manager(['redis' => 'vbot', 'prefix' => 'l1', 'name' => '1']);
+        $manager->setCallable(function (Manager $manager) {
+            $subManager = new Manager(['redis' => 'vbot', 'prefix' => 'l2', 'name' => '1']);
+            $subManager->setCallable(function (Manager $manager) {
+
+                $process1 = new Process(['redis' => 'vbot', 'prefix' => 'l3', 'name' => '1']);
+                $process1->setCallable(function ($process) {
+                    while (true) {
+                        sleep(1);
+                    }
+                });
+                $manager->fork($process1);
+
+                $process2 = new Process(['redis' => 'vbot', 'prefix' => 'l3', 'name' => '2']);
+                $process2->setCallable(function ($process) {
+                    while (true) {
+                        sleep(1);
+                    }
+                });
+                $manager->fork($process2);
+
+                while (true) {
+                    sleep(1);
+                }
+            });
+            $manager->fork($subManager);
+
+            while (true) {
+                //echo 'sleep start: ' . time() . PHP_EOL;
+                sleep(10);
+                //echo 'sleep end  : ' . time() . PHP_EOL;
+            }
+        });
+        $manager->run();
+    }
+
+    protected function enableQueryLog()
+    {
+        DB::enableQueryLog();
     }
 }
