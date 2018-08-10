@@ -218,7 +218,7 @@
             doStop: function () {
                 let self = this;
                 axios.post(api.userVbotStop).then(function (res) {
-                    self.$message.success('请等待任务终止');
+                    self.$message.warning('请等待任务终止,可能需要30秒左右的时间');
                 });
             },
             doSend: function () {
@@ -227,7 +227,7 @@
                     'send_list': self.sendList,
                     'send_text': self.sendText,
                 }).then(function (res) {
-                    self.$message.success('请等待发送信息');
+                    self.$message.warning('请等待发送信息');
                 });
             }
         }
