@@ -27,7 +27,7 @@
                 <ul class="nav nav-tabs" id="myTabs">
                     <li class="active"><a href="#friends-admin" data-toggle="tab">好友列表</a></li>
                     <!--<li><a href="#multiple-send" data-toggle="tab">群发</a></li>-->
-                    <!--<li><a href="#user-clear" data-toggle="tab">清粉</a></li>-->
+                    <li><a href="#user-clear" data-toggle="tab">清粉设置</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -37,7 +37,6 @@
                                 <thead>
                                 <tr>
                                     <th><input type="checkbox" v-model="checkAll">全选</th>
-                                    <th>头像</th>
                                     <th>昵称</th>
                                     <th>备注</th>
                                 </tr>
@@ -45,7 +44,6 @@
                                 <tbody>
                                 <tr v-for="item in data.friends">
                                     <td><input type="checkbox" v-model="sendList" :value="item.UserName"></td>
-                                    <td></td>
                                     <td>{{item.NickName}}</td>
                                     <td>{{item.RemarkName}}</td>
                                 </tr>
@@ -57,7 +55,14 @@
 
                     </div>
                     <div class="tab-pane" id="user-clear">
-
+                        <form class="form-horizontal row">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">发送消息</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" v-model="sendText">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -91,7 +96,7 @@
                 interval: 10000,//更新状态10秒一次
                 checkAll: 0,
                 sendList: [],
-                sendText: '',
+                sendText: '由于微信好友太多，我正在使用宏海清粉软件，如有打扰请包涵。',
             }
         },
         computed: {
@@ -179,7 +184,6 @@
                 this.interval = 10000;
                 this.checkAll = 0;
                 this.sendList = [];
-                this.sendText = '';
             },
             doCreate: function () {
                 let self = this;
