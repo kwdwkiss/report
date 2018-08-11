@@ -30,7 +30,8 @@ class VbotManager extends Manager
         $options = [
             'redis' => 'vbot',
             'prefix' => 'manager',
-            'name' => $vbotJob->id
+            'name' => $vbotJob->id,
+            'ticker' => 5,
         ];
         parent::__construct($options);
         $this->setMsgHandler('send_text', [$this, 'handleSendText']);

@@ -266,7 +266,7 @@ class VbotService
                 $this->vbot->console->log("send:$username");
             }
 
-            sleep(1);
+            sleep(2);
         }
         return;
     }
