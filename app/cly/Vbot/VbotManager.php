@@ -112,7 +112,9 @@ class VbotManager extends Manager
 
     public function handleException(\Exception $e)
     {
-        if (!$e instanceof LoginTimeoutException) {
+        if ($e instanceof LoginTimeoutException) {
+
+        } else {
             parent::handleException($e);
         }
     }
