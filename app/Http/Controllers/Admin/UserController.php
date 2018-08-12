@@ -81,7 +81,10 @@ class UserController extends Controller
             }
             Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($type);
             if ($mobile) {
-                if (!preg_match(RegExp::MOBILE, $mobile)) {
+                //带+为国际号码，不是中国的不处理
+                if (strpos($mobile, '+') === 0 && strpos($mobile, '+86') !== 0) {
+
+                } elseif (!preg_match(RegExp::MOBILE, $mobile)) {
                     throw new JsonException('手机号错误');
                 }
                 $exists = User::where('mobile', $mobile)->first();
