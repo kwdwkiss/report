@@ -42,31 +42,33 @@ class VbotManager extends Manager
 
     public function __invoke()
     {
-        \DB::connection()->reconnect();
+        try {
 
-        $this->vbotJob->update(['status' => 1]);
-
-        $this->initUuid();
-        $this->vbotService->waitForLogin($this);
-        $this->initUser();
-        $this->initContacts();
-
-        $process = new Process([
-            'redis' => 'vbot',
-            'prefix' => $this->getName(),
-            'name' => 'msg_work'
-        ]);
-        $process->callable = function () {
             \DB::connection()->reconnect();
-            $this->redis->hset($this->getName(), 'receive_msg_pid', getmypid());
-            $this->redis->hset($this->getName(), 'message_status', 1);
-            $this->vbotService->messageWork();
-        };
-        $this->fork($process);
+            $this->vbotJob->update(['status' => 1]);
+            $this->initUuid();
+            $this->vbotService->waitForLogin($this);
+            $this->initUser();
+            $this->initContacts();
+            $process = new Process([
+                'redis' => 'vbot',
+                'prefix' => $this->getName(),
+                'name' => 'msg_work'
+            ]);
+            $process->callable = function () {
+                \DB::connection()->reconnect();
+                $this->redis->hset($this->getName(), 'receive_msg_pid', getmypid());
+                $this->redis->hset($this->getName(), 'message_status', 1);
+                $this->vbotService->messageWork();
+            };
+            $this->fork($process);
+            while (true) {
+                $this->dispatchMsg();
+                sleep(1);
+            }
 
-        while (true) {
-            $this->dispatchMsg();
-            sleep(1);
+        } catch (Exceptions\LoginTimeoutException $e) {
+            $this->exit();
         }
     }
 
@@ -85,6 +87,19 @@ class VbotManager extends Manager
             'sendText' => $sendText
         ];
         $this->sendMsg($msg);
+    }
+
+    public function SIGCHLD()
+    {
+        echo $this->getName() . ' pid:' . $this->pid . ' receive:SIGCHLD' . PHP_EOL;
+        $pid = pcntl_waitpid(-1, $status, WNOHANG);
+        if ($pid) {
+            $process = $this->children[$pid];
+            unset($this->children[$pid]);
+            if ($process->name == 'msg_work') {
+                $this->kill();
+            }
+        }
     }
 
     public function exit(\Exception $e = null, $clearRedis = true)
