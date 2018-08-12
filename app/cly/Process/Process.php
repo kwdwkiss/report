@@ -181,13 +181,18 @@ class Process
     {
         echo $this->getName() . ' pid:' . $this->pid . ' exit ' . PHP_EOL;
         if ($e) {
-            echo $e->getMessage() . PHP_EOL . $e->getTraceAsString() . PHP_EOL;
+            $this->handleException($e);
         }
         if ($clearRedis) {
             $this->clearRedis();
         }
         echo $this->getName() . ' done exit ' . PHP_EOL;
         exit();
+    }
+
+    public function handleException(\Exception $e)
+    {
+        echo $e->getMessage() . PHP_EOL . $e->getTraceAsString() . PHP_EOL;
     }
 
     public function clearRedis()

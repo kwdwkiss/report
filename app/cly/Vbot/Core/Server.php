@@ -196,6 +196,10 @@ class Server
 
         $data = (array)simplexml_load_string($content, 'SimpleXMLElement', LIBXML_NOCDATA);
 
+        if (!isset($data['skey'])) {
+            throw new LoginFailedException('Login failed:skey null');
+        }
+
         $this->vbot->config['server.skey'] = $data['skey'];
         $this->vbot->config['server.sid'] = $data['wxsid'];
         $this->vbot->config['server.uin'] = $data['wxuin'];

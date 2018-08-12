@@ -12,6 +12,7 @@ namespace Cly\Vbot;
 use App\VbotJob;
 use Cly\Process\Manager;
 use Cly\Process\Process;
+use Cly\Vbot\Exceptions\LoginTimeoutException;
 
 class VbotManager extends Manager
 {
@@ -42,33 +43,27 @@ class VbotManager extends Manager
 
     public function __invoke()
     {
-        try {
-
+        \DB::connection()->reconnect();
+        $this->vbotJob->update(['status' => 1]);
+        $this->initUuid();
+        $this->vbotService->waitForLogin($this);
+        $this->initUser();
+        $this->initContacts();
+        $process = new Process([
+            'redis' => 'vbot',
+            'prefix' => $this->getName(),
+            'name' => 'msg_work'
+        ]);
+        $process->callable = function () {
             \DB::connection()->reconnect();
-            $this->vbotJob->update(['status' => 1]);
-            $this->initUuid();
-            $this->vbotService->waitForLogin($this);
-            $this->initUser();
-            $this->initContacts();
-            $process = new Process([
-                'redis' => 'vbot',
-                'prefix' => $this->getName(),
-                'name' => 'msg_work'
-            ]);
-            $process->callable = function () {
-                \DB::connection()->reconnect();
-                $this->redis->hset($this->getName(), 'receive_msg_pid', getmypid());
-                $this->redis->hset($this->getName(), 'message_status', 1);
-                $this->vbotService->messageWork();
-            };
-            $this->fork($process);
-            while (true) {
-                $this->dispatchMsg();
-                sleep(1);
-            }
-
-        } catch (Exceptions\LoginTimeoutException $e) {
-            $this->exit();
+            $this->redis->hset($this->getName(), 'receive_msg_pid', getmypid());
+            $this->redis->hset($this->getName(), 'message_status', 1);
+            $this->vbotService->messageWork();
+        };
+        $this->fork($process);
+        while (true) {
+            $this->dispatchMsg();
+            sleep(1);
         }
     }
 
@@ -113,6 +108,13 @@ class VbotManager extends Manager
             $this->vbotJob->update(['status' => -1]);
         }
         parent::exit($e, $clearRedis);
+    }
+
+    public function handleException(\Exception $e)
+    {
+        if (!$e instanceof LoginTimeoutException) {
+            parent::handleException($e);
+        }
     }
 
     public function initUuid()
