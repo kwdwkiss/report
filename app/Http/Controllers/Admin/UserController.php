@@ -312,6 +312,12 @@ class UserController extends Controller
             $user = User::with('_profile')->findOrFail(request('id'));
             $user->syncTag([]);
             $user->_profile->delete();
+
+            $merchant = $user->_merchant;
+            if ($merchant) {
+                $merchant->delete();
+            }
+
             $user->delete();
         });
 
