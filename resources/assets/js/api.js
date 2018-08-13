@@ -145,5 +145,4 @@ module.exports = {
     userVbotStatus: '/user/vbot/status',
     userVbotStop: '/user/vbot/stop',
     userVbotSend: '/user/vbot/send',
-    userVbotSend: '/user/vbot/send',
 };

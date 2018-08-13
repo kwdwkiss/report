@@ -25,6 +25,7 @@ use Carbon\Carbon;
 use Cly\RegExp\RegExp;
 use Cly\Spreadsheet\NoScienceValueBinder;
 use Illuminate\Http\File;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -38,6 +39,19 @@ class IndexController extends Controller
 //        if ($detect->isMobile()) {
 //            return redirect('/mobile');
 //        }
+
+//        $routes = app('router')->getRoutes();
+//        $routes = collect($routes)->map(function (Route $route) {
+//            return [
+//                'host' => $route->domain(),
+//                'method' => implode('|', $route->methods()),
+//                'uri' => $route->uri(),
+//                'name' => $route->getName(),
+//                'action' => $route->getActionName(),
+//                'middleware' => $this->getMiddleware($route),
+//            ];
+//        });
+
         $page = [];
         \DB::transaction(function () use (&$page) {
             $user = \Auth::guard('user')->user();
@@ -48,7 +62,7 @@ class IndexController extends Controller
                 $user = null;
                 $unreadNotification = 0;
             }
-            $page = array_merge([
+            $page = array_merge($page, [
                 'user' => $user,
                 'unreadNotification' => $unreadNotification,
 
@@ -56,7 +70,7 @@ class IndexController extends Controller
                 'taxonomy' => Taxonomy::allDisplay(),
             ], Config::getSiteIndex(), Config::getSiteStatics());
         });
-        return view('index', compact('page'));
+        return view('index', compact('page', 'routes'));
     }
 
     public function popWindow()
@@ -259,7 +273,8 @@ class IndexController extends Controller
             ]);
         }
 
-        \DB::transaction(function () use ($account, $user, $account_type, $name,
+        \DB::transaction(function () use (
+            $account, $user, $account_type, $name,
             $report_type, $ip, $description, $attachment
         ) {
             $account->increment('report_count');
