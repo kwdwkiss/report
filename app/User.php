@@ -136,4 +136,58 @@ class User extends Authenticatable
     {
         $this->update(['api_secret' => md5($this->id . microtime())]);
     }
+
+    public static function register($mobile, $password, $inviterMobile)
+    {
+        $user = null;
+        \DB::transaction(function () use (&$user, $mobile, $password, $inviterMobile) {
+            $user = User::create([
+                'mobile' => $mobile,
+                'type' => 401,
+                'password' => bcrypt($password),
+                'last_ip' => get_client_ip()
+            ]);
+
+            //新用户注册发放200积分
+            $amount = 100;
+
+            $userProfile = UserProfile::create([
+                'user_id' => $user->id,
+                'amount' => $amount,
+            ]);
+
+            AmountBill::create([
+                'user_id' => $user->id,
+                'bill_no' => AmountBill::generateBillNo($user->id),
+                'type' => 0,
+                'amount' => $amount,
+                'user_amount' => $userProfile->amount,
+                'biz_type' => 0,
+                'biz_id' => 4,
+                'description' => "新用户注册赠送${amount}积分"
+            ]);
+
+            //邀请人发放100积分
+            $inviterUser = User::with('_profile')
+                ->where('id', '!=', $user->id)//邀请人不能是自己
+                ->where('mobile', $inviterMobile)
+                ->first();
+            if ($inviterUser) {
+                $inviterAmount = 50;
+                $inviterUser->_profile->increment('amount', $inviterAmount);
+                AmountBill::create([
+                    'user_id' => $inviterUser->id,
+                    'bill_no' => AmountBill::generateBillNo($inviterUser->id),
+                    'type' => 0,
+                    'amount' => $inviterAmount,
+                    'user_amount' => $inviterUser->_profile->amount,
+                    'biz_type' => 0,
+                    'biz_id' => 5,
+                    'description' => "邀请新用户注册赠送${inviterAmount}积分"
+                ]);
+                $userProfile->update(['inviter' => $inviterMobile]);
+            }
+        });
+        return $user;
+    }
 }

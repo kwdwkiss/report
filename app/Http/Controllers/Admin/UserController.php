@@ -66,149 +66,35 @@ class UserController extends Controller
 
     public function create()
     {
-        \DB::transaction(function () {
-            $type = request('type');
-            $password = request('password');
-            $mobile = request('mobile');
-            $qq = request('qq');
-            $wx = request('wx');
-            $ww = request('ww');
-            $jd = request('jd');
-            $is = request('is');
+        $password = request('password');
+        $mobile = request('mobile');
+        $inviterMobile = request('inviter', '');
 
-            if (empty($type)) {
-                throw new JsonException('请选择类型');
-            }
-            Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($type);
-            if ($mobile) {
-                //带+为国际号码，不是中国的不处理
-                if (strpos($mobile, '+') === 0 && strpos($mobile, '+86') !== 0) {
+        if ($mobile) {
+            //带+为国际号码，不是中国的不处理
+            if (strpos($mobile, '+') === 0 && strpos($mobile, '+86') !== 0) {
 
-                } elseif (!preg_match(RegExp::MOBILE, $mobile)) {
-                    throw new JsonException('手机号错误');
-                }
-                $exists = User::where('mobile', $mobile)->first();
-                if ($exists) {
-                    throw new JsonException('手机号码已存在');
-                }
-            } else {
-                throw new JsonException('手机号不能为空');
+            } elseif (!preg_match(RegExp::MOBILE, $mobile)) {
+                throw new JsonException('手机号错误');
             }
-            if ($qq) {
-                if (!preg_match('/^[1-9][0-9]{4,14}$/', $qq)) {
-                    throw new JsonException('QQ号错误');
-                }
-                $exists = User::where('qq', $qq)->first();
-                if ($exists) {
-                    throw new JsonException('QQ已存在');
-                }
-            } else {
-                $qq = null;
+            $exists = User::where('mobile', $mobile)->first();
+            if ($exists) {
+                throw new JsonException('手机号码已存在');
             }
+        } else {
+            throw new JsonException('手机号不能为空');
+        }
+        if ($password) {
+            if (!preg_match(RegExp::PASSWORD, $password)) {
+                throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
+            }
+            $createData['password'] = bcrypt($password);
+        }
+        if ($inviterMobile && !preg_match(RegExp::MOBILE, $inviterMobile)) {
+            throw new JsonException('邀请人手机号码格式错误');
+        }
 
-            if ($wx) {
-                $exists = User::where('wx', $wx)->first();
-                if ($exists) {
-                    throw new JsonException('微信已存在');
-                }
-            } else {
-                $wx = null;
-            }
-
-            if ($ww) {
-                $exists = User::where('ww', $ww)->first();
-                if ($exists) {
-                    throw new JsonException('旺旺已存在');
-                }
-            } else {
-                $ww = null;
-            }
-
-            if ($jd) {
-                $exists = User::where('jd', $jd)->first();
-                if ($exists) {
-                    throw new JsonException('京东已存在');
-                }
-            } else {
-                $jd = null;
-            }
-
-            if ($is) {
-                $exists = User::where('is', $is)->first();
-                if ($exists) {
-                    throw new JsonException('IS已存在');
-                }
-            } else {
-                $is = null;
-            }
-            $createData = [
-                'type' => $type,
-                'mobile' => $mobile,
-                'qq' => $qq,
-                'wx' => $wx,
-                'ww' => $ww,
-                'jd' => $jd,
-                'is' => $is
-            ];
-            if ($password) {
-                if (!preg_match(RegExp::PASSWORD, $password)) {
-                    throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
-                }
-                $createData['password'] = bcrypt($password);
-            }
-            $user = User::create($createData);
-
-            $profileData = request('_profile');
-            $name = array_get($profileData, 'name', '');
-            $age = array_get($profileData, 'age', '');
-            $gender = array_get($profileData, 'gender', 0);
-            $occupation = array_get($profileData, 'occupation', '');
-            $province = array_get($profileData, 'province', '');
-            $city = array_get($profileData, 'city', '');
-            $remark = array_get($profileData, 'remark', '');
-            $alipay = array_get($profileData, 'alipay', '');
-
-            if (!in_array($gender, [0, 1, 2,])) {
-                throw new JsonException('性别错误');
-            }
-            UserProfile::create([
-                'user_id' => $user->id,
-                'name' => $name,
-                'age' => $age,
-                'gender' => $gender,
-                'occupation' => $occupation,
-                'province' => $province,
-                'city' => $city,
-                'alipay' => $alipay,
-                'remark' => $remark
-            ]);
-
-            $merchantData = request('_merchant');
-            $merchant_type = array_get($merchantData, 'type', 0);
-            $merchant_name = array_get($merchantData, 'name', '');
-            $merchant_goods_type = array_get($merchantData, 'goods_type', '');
-            $merchant_url = array_get($merchantData, 'url', '');
-            $merchant_credit = array_get($merchantData, 'credit', '');
-            $merchant_manager = array_get($merchantData, 'manager', '');
-            $merchant_user_lock = array_get($merchantData, 'user_lock', 0);
-
-            if (!in_array($merchant_type, [0, 1, 2, 3])) {
-                throw new JsonException('店铺类型错误');
-            }
-            if (!in_array($merchant_user_lock, [0, 1])) {
-                throw new JsonException('锁错误');
-            }
-            UserMerchant::create([
-                'user_id' => $user->id,
-                'type' => $merchant_type,
-                'name' => $merchant_name,
-                'goods_type' => $merchant_goods_type,
-                'url' => $merchant_url,
-                'credit' => $merchant_credit,
-                'manager' => $merchant_manager,
-                'user_lock' => $merchant_user_lock,
-            ]);
-        });
+        User::register($mobile, $password, $inviterMobile);
 
         return [];
     }
