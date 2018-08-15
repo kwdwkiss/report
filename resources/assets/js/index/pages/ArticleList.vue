@@ -53,7 +53,7 @@
                 let self = this;
                 let id = this.$route.params.id;
                 this.taxonomy = _.find(this.articleType, function (item) {
-                    return item.id == id;
+                    return item.id === id;
                 }).name;
                 this.search.id = id;
                 axios.get(api.indexArticleList, {params: this.search}).then(function (res) {

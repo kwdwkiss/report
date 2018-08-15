@@ -11,17 +11,14 @@ class VbotJob extends Model
     protected $casts = [
         'context' => 'array',
         'data' => 'array',
-        'friends' => 'array',
-        'groups' => 'array',
-        'members' => 'array',
-        'officials' => 'array',
-        'specials' => 'array',
-        'myself' => 'array',
+        'send_list' => 'array',
+        'sent_list' => 'array',
     ];
 
     protected $dataTemplate = [];
 
     public static $statusTypes = [
+        -3 => '用户停止',
         -2 => '异常退出',
         -1 => '完成',
         0 => '待运行',
@@ -39,5 +36,7 @@ class VbotJob extends Model
     {
         parent::__construct($attributes);
         $this->data = $this->dataTemplate;
+        $this->send_list = [];
+        $this->sent_list = [];
     }
 }

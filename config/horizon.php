@@ -76,7 +76,7 @@ return [
                 'connection' => 'redis',
                 'queue' => ['send_notification'],
                 'balance' => 'simple',
-                'processes' => 10,
+                'processes' => 3,
                 'tries' => 3,
             ],
         ],

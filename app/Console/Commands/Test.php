@@ -6,6 +6,7 @@ use Cly\Process\Manager;
 use Cly\Process\Process;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 use Workerman\Worker;
 
 class Test extends Command
@@ -41,7 +42,8 @@ class Test extends Command
      */
     public function handle()
     {
-        $this->processTest();
+        Redis::connection()->sadd('test',['']);
+        //$this->processTest();
     }
 
     protected function processTest()

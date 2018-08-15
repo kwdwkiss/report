@@ -141,8 +141,14 @@ module.exports = {
 
     userAmountList: '/user/amount/index',
 
+    userVbotIndex: '/user/vbot/index',
     userVbotCreate: '/user/vbot/create',
+    userVbotDetail: '/user/vbot/detail',
+    userVbotDelete: '/user/vbot/delete',
     userVbotStatus: '/user/vbot/status',
+    userVbotRun: '/user/vbot/run',
     userVbotStop: '/user/vbot/stop',
     userVbotSend: '/user/vbot/send',
+    userVbotAddSend: '/user/vbot/add_send',
+    userVbotDeleteSend: '/user/vbot/delete_send',
 };

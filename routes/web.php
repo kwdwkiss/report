@@ -81,10 +81,16 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::get('/user/user-auth-bill/index', 'User\UserAuthBillController@index');
     Route::post('/user/user-auth-bill/pay', 'User\UserAuthBillController@pay');
 
+    Route::get('/user/vbot/index', 'User\VbotController@index');
     Route::post('/user/vbot/create', 'User\VbotController@create');
+    Route::get('/user/vbot/detail', 'User\VbotController@detail');
+    Route::post('/user/vbot/delete', 'User\VbotController@delete');
     Route::get('/user/vbot/status', 'User\VbotController@status');
+    Route::post('/user/vbot/run', 'User\VbotController@run');
     Route::post('/user/vbot/stop', 'User\VbotController@stop');
     Route::post('/user/vbot/send', 'User\VbotController@send');
+    Route::post('/user/vbot/add_send', 'User\VbotController@addSend');
+    Route::post('/user/vbot/delete_send', 'User\VbotController@deleteSend');
 
     Route::post('/mobile/search', 'Index\MobileController@search');
 });

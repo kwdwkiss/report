@@ -1,71 +1,70 @@
 <template>
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">微信工具</div>
+            <div class="panel-heading">
+                <h5>微信清粉工具——任务列表</h5>
+            </div>
             <div class="panel-body">
-
-                <div class="row">
-                    <button class="btn btn-primary" @click="doCreate" v-show="scanBtnShow">扫码登录</button>
-                    <button class="btn btn-success" @click="doSend" v-show="sendBtnShow">开始清粉</button>
-                    <button class="btn btn-danger" @click="doStop" v-show="stopBtnShow">终止任务</button>
-                </div>
-                <div class="row" v-show="statusShow">
-                    <p class="col-xs-12">任务状态：{{statusLabel}}</p>
-                    <p class="col-xs-6">获取二维码：{{data.uuid_status?'成功':''}}</p>
-                    <p class="col-xs-6">扫描二维码：{{data.scan_status?'成功':''}}</p>
-                    <p class="col-xs-6">登录状态：{{data.login_status?'成功':''}}</p>
-                    <p class="col-xs-6">初始化用户：{{data.init_status?'成功':''}}</p>
-                    <p class="col-xs-6">加载联系人：{{data.contacts_status?'成功':''}}</p>
-                    <p class="col-xs-6">接收消息：{{data.message_status?'成功':''}}</p>
-                </div>
-                <div class="row" v-show="qrcodeShow">
-                    <div class="hidden qrcode"></div>
-                    <img :src="qrcode" alt="">
-                    <p class="text-danger">注意：只能用微信扫一扫，通过摄像头扫码。通过二维码识别无效！</p>
-                </div>
-
-                <ul class="nav nav-tabs" id="myTabs">
-                    <li class="active"><a href="#friends-admin" data-toggle="tab">好友列表</a></li>
-                    <!--<li><a href="#multiple-send" data-toggle="tab">群发</a></li>-->
-                    <li><a href="#user-clear" data-toggle="tab">清粉设置</a></li>
-                </ul>
-
-                <div class="tab-content">
-                    <div class="tab-pane active" id="friends-admin">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th><input type="checkbox" v-model="checkAll">全选</th>
-                                    <th>昵称</th>
-                                    <th>备注</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="item in data.friends">
-                                    <td><input type="checkbox" v-model="sendList" :value="item.UserName"></td>
-                                    <td>{{item.NickName}}</td>
-                                    <td>{{item.RemarkName}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="table-responsive">
+                    <div class="row">
+                        <button class="btn btn-primary" @click="createDialog">创建任务</button>
+                        <el-pagination class="pull-right" layout="prev, pager, next"
+                                       :total="dataList.meta.total"
+                                       :page-size="dataList.meta.per_page"
+                                       @current-change="paginate"></el-pagination>
                     </div>
-                    <div class="tab-pane" id="multiple-send">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>名称</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in dataList.data">
+                            <td>{{item.id}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.status_label}}</td>
+                            <td>{{item.created_at}}</td>
+                            <td>
+                                <button class="btn btn-warning" @click="doAdmin(item)">管理</button>
+                                <button class="btn btn-danger" @click="doDelete(item)">删除</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
+        <div class="modal fade" id="create-dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">创建任务</h4>
                     </div>
-                    <div class="tab-pane" id="user-clear">
-                        <form class="form-horizontal row">
+                    <div class="modal-body">
+                        <form class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-md-2 control-label">发送消息</label>
+                                <label class="col-md-2 control-label">名称</label>
                                 <div class="col-md-8">
-                                    <input class="form-control" type="text" v-model="sendText">
+                                    <input class="form-control" type="text" v-model="form.name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-8">
+                                    <button class="btn btn-success" @click="doCreate">提交</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -76,165 +75,47 @@
         name: "VbotIndex",
         data: function () {
             return {
-                data: {
-                    qrcode: '',
-                    uuid_status: '',
-                    scan_status: '',
-                    login_status: '',
-                    init_status: '',
-                    contacts_status: '',
-                    message_status: '',
-                    friends: {},
-                    groups: {},
-                    members: {},
-                    officials: {},
-                    specials: {},
-                    myself: {},
-                },
-                handle: null,
-                vbotJob: null,
-                interval: 10000,//更新状态10秒一次
-                checkAll: 0,
-                sendList: [],
-                sendText: '由于微信好友太多，我正在使用宏海清粉软件，如有打扰请包涵。',
-            }
-        },
-        computed: {
-            user: function () {
-                return this.$store.state.user;
-            },
-            status: function () {
-                if (!this.vbotJob) {
-                    return 0;
-                }
-                return this.vbotJob.status;
-            },
-            statusLabel: function () {
-                if (!this.vbotJob) {
-                    return '';
-                }
-                return this.vbotJob.status_label;
-            },
-            qrcode: function () {
-                if (!this.data.qrcode) {
-                    return '';
-                }
-                return $('.qrcode').empty()
-                    .qrcode({width: 128, height: 128, text: this.data.qrcode})
-                    .find('canvas').get(0).toDataURL('image/jpg');
-            },
-            scanBtnShow: function () {
-                return !this.vbotJob;
-            },
-            sendBtnShow: function () {
-                return this.vbotJob && this.data.message_status;
-            },
-            stopBtnShow: function () {
-                return this.vbotJob && this.vbotJob.status !== 0;
-            },
-            statusShow: function () {
-                return this.vbotJob;
-            },
-            qrcodeShow: function () {
-                return this.data.qrcode && this.data.uuid_status && !this.data.login_status;
-            },
-            vbot: function () {
-                return this.$store.state.vbot;
-            }
-        },
-        watch: {
-            'checkAll': function () {
-                if (this.checkAll) {
-                    this.sendList = _.keys(this.data.friends);
-                } else {
-                    this.sendList = [];
-                }
+                dataList: {meta: {}},
+                search: {order_query: {}},
+                form: {},
             }
         },
         mounted: function () {
-            this.init();
-            this.loop();
-
-            $('#myTabs a').click(function (e) {
-                e.preventDefault();
-                $(this).tab('show')
-            })
+            this.loadData();
         },
         methods: {
-            init: function () {
-                clearInterval(this.handle);
-                this.$store.commit('vbot', {stop: 0});
-                this.data = {
-                    qrcode: '',
-                    uuid_status: '',
-                    scan_status: '',
-                    login_status: '',
-                    init_status: '',
-                    contacts_status: '',
-                    message_status: '',
-                    friends: {},
-                    groups: {},
-                    members: {},
-                    officials: {},
-                    specials: {},
-                    myself: {},
-                };
-                this.handle = null;
-                this.vbotJob = null;
-                this.interval = 10000;
-                this.checkAll = 0;
-                this.sendList = [];
+            paginate: function (page) {
+                this.search.page = page;
+                this.loadData();
+            },
+            loadData: function () {
+                let self = this;
+                axios.get(api.userVbotIndex, {params: self.search}).then(function (res) {
+                    self.dataList = res.data;
+                });
+            },
+            createDialog: function () {
+                $('#create-dialog').modal('show');
             },
             doCreate: function () {
                 let self = this;
-                if (!self.user) {
-                    self.$message.error('请登录后再使用此功能');
-                    return;
-                }
-                axios.post(api.userVbotCreate).then(function (res) {
-                    self.$message.success('任务已创建');
-                    setTimeout(self.loop, 1000);
-                })
-            },
-            loop: function () {
-                let self = this;
-                self.doStatus();
-                self.handle = setInterval(function () {
-                    self.doStatus();
-                }, self.interval);
-            },
-            doStatus: function () {
-                let self = this;
-                if (this.vbot.stop) {
-                    self.init();
-                    self.stop();
-                    return;
-                }
-                axios.get(api.userVbotStatus).then(function (res) {
-                    if (!res.data.vbotJob) {
-                        self.init();
-                        return;
-                    }
-                    self.vbotJob = res.data.vbotJob;
-                    self.data = res.data.data;
+                axios.post(api.userVbotCreate, self.form).then(function (res) {
+                    $('#create-dialog').modal('hide');
+                    self.$message.success('创建成功');
+                    self.loadData();
                 });
             },
-            doStop: function () {
+            doDelete: function (item) {
                 let self = this;
-                axios.post(api.userVbotStop).then(function (res) {
-                    self.$message.warning('请等待任务终止,可能需要30秒左右的时间');
+                axios.post(api.userVbotDelete, {id: item.id}).then(function (res) {
+                    self.$message.success('删除成功');
+                    self.loadData();
                 });
             },
-            doSend: function () {
-                let self = this;
-                axios.post(api.userVbotSend, {
-                    'send_list': self.sendList,
-                    'send_text': self.sendText,
-                }).then(function (res) {
-                    self.$message.warning('请等待发送信息');
-                });
+            doAdmin: function (item) {
+                this.$router.push({name: 'vbotDetail', params: {id: item.id}})
             }
-        }
+        },
     }
 </script>
 

@@ -71,9 +71,11 @@ class Process
 
             call_user_func($this->callable, $this);
 
-            $this->exit();
         } catch (\Exception $e) {
-            $this->exit($e);
+            $this->handleException($e);
+        } finally {
+            $this->clearRedis();
+            $this->exit();
         }
     }
 
@@ -88,7 +90,8 @@ class Process
                 throw new \Exception($this->getName() . ' is Running');
             }
         } catch (\Exception $e) {
-            $this->exit($e, false);
+            $this->handleException($e);
+            $this->exit();
         }
 
         $this->pid = getmypid();
@@ -168,25 +171,20 @@ class Process
     public function SIGTERM()
     {
         echo $this->getName() . ' pid:' . $this->pid . ' receive:SIGTERM' . PHP_EOL;
+        $this->clearRedis();
         $this->exit();
     }
 
     public function SIGINT()
     {
         echo $this->getName() . ' pid:' . $this->pid . ' receive:SIGINT' . PHP_EOL;
+        $this->clearRedis();
         $this->exit();
     }
 
-    public function exit(\Exception $e = null, $clearRedis = true)
+    public function exit()
     {
         echo $this->getName() . ' pid:' . $this->pid . ' exit ' . PHP_EOL;
-        if ($e) {
-            $this->handleException($e);
-        }
-        if ($clearRedis) {
-            $this->clearRedis();
-        }
-        echo $this->getName() . ' done exit ' . PHP_EOL;
         exit();
     }
 

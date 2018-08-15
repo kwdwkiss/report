@@ -101,7 +101,8 @@ class UserController extends Controller
 
     public function update()
     {
-        \DB::transaction(function () {
+        $user = null;
+        \DB::transaction(function () use (&$user) {
             $type = request('type');
             $password = request('password');
             $mobile = request('mobile');
@@ -261,6 +262,11 @@ class UserController extends Controller
                 ]);
             }
         });
+
+        if ($user->deny_login) {
+            \Auth::guard('user')->login($user);
+            \Auth::guard('user')->logout();
+        }
 
         return [];
     }

@@ -55,10 +55,8 @@ class VbotDeamon extends Manager
     {
         echo 'vbotJobHandler:' . json_encode($msg) . PHP_EOL;
         $id = array_get($msg, 'id');
-        $vbotJob = VbotJob::query()
-            ->where('status', 0)
-            ->find($id);
-        if ($vbotJob) {
+        $vbotJob = VbotJob::query()->find($id);
+        if (!in_array($vbotJob->status, [-1, 1])) {
             $manager = new VbotManager($vbotJob);
             $this->fork($manager);
         }
@@ -67,10 +65,10 @@ class VbotDeamon extends Manager
     public function runInit()
     {
         $keys = $this->redis->keys('*');
-        if(!empty($keys)){
+        if (!empty($keys)) {
             Redis::resolve()->del($keys);
         }
-        VbotJob::query()->whereIn('status', [0, 1])->update(['status' => -1]);
+        VbotJob::query()->where('status', 1)->update(['status' => -2]);
 
         parent::runInit();
     }

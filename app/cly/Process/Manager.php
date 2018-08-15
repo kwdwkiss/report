@@ -43,7 +43,7 @@ class Manager extends Process
         unset($this->children[$pid]);
     }
 
-    public function exit(\Exception $e = null, $clearRedis = true)
+    public function exit()
     {
         foreach ($this->children as $key => $process) {
             $pid = $process->pid;
@@ -63,6 +63,6 @@ class Manager extends Process
                 }
             }
         }
-        parent::exit($e, $clearRedis);
+        parent::exit();
     }
 }

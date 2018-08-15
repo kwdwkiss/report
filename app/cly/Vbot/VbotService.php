@@ -12,6 +12,7 @@ namespace Cly\Vbot;
 use App\VbotJob;
 use Cly\Vbot\Console\Console;
 use Cly\Vbot\Core\ApiExceptionHandler;
+use Cly\Vbot\Exceptions\CheckSyncException;
 use Cly\Vbot\Exceptions\InitFailException;
 use Cly\Vbot\Exceptions\LoginTimeoutException;
 use Cly\Vbot\Foundation\Vbot;
@@ -234,7 +235,7 @@ class VbotService
                 continue;
             }
             if (!$this->vbot->messageHandler->handleCheckSync($checkSync[0], $checkSync[1])) {
-                throw new \Exception('handleCheckSync error:' . $checkSync[0]);
+                throw new CheckSyncException('handleCheckSync error:' . $checkSync[0]);
             }
         }
     }
@@ -269,5 +270,28 @@ class VbotService
             sleep(2);
         }
         return;
+    }
+
+    public function sendMsgUser($user, $sendText = '', $type = 'nickname')
+    {
+        $defaultText = '由于微信好友太多，我正在使用宏海清粉软件，如有打扰请包涵。';
+        $sendText = $sendText ?: $defaultText;
+
+        $friends = vbot('friends');
+
+        $username = '';
+        if ($type == 'nickname') {
+            $username = $friends->getUsernameByNickname($user);
+        } elseif ($type == 'remarkName') {
+            $username = $friends->getUsernameByRemarkName($user);
+        } elseif ($type == 'username') {
+            if ($friends->getAccount($user)) {
+                $username = $user;
+            }
+        }
+        if ($username) {
+            $this->vbot->console->log("send:$username");
+            Text::send($username, $sendText);
+        }
     }
 }

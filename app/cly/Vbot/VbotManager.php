@@ -12,7 +12,13 @@ namespace Cly\Vbot;
 use App\VbotJob;
 use Cly\Process\Manager;
 use Cly\Process\Process;
+use Cly\Vbot\Exceptions\ApiFrequencyException;
+use Cly\Vbot\Exceptions\CheckSyncException;
+use Cly\Vbot\Exceptions\FetchUuidException;
+use Cly\Vbot\Exceptions\InitFailException;
+use Cly\Vbot\Exceptions\LoginFailedException;
 use Cly\Vbot\Exceptions\LoginTimeoutException;
+use Cly\Vbot\Exceptions\LogoutException;
 
 class VbotManager extends Manager
 {
@@ -45,6 +51,8 @@ class VbotManager extends Manager
     {
         \DB::connection()->reconnect();
         $this->vbotJob->update(['status' => 1]);
+        $this->initRedis();
+
         $this->initUuid();
         $this->vbotService->waitForLogin($this);
         $this->initUser();
@@ -69,19 +77,42 @@ class VbotManager extends Manager
 
     protected function handleSendText(VbotManager $manager, $msg)
     {
-        $sendList = array_get($msg, 'sendList');
+        $sendList = $this->vbotJob->refresh()->send_list;
+
         $sendText = array_get($msg, 'sendText');
-        $this->vbotService->sendMsg($sendList, $sendText, 'username');
+        if ($sendList && $sendText) {
+            $this->redis->hset($this->getName(), 'send_status', 1);
+            $sentList = $this->redis->smembers($this->getName() . ':sent_list');
+
+            foreach (array_diff($sendList, $sentList) as $user) {
+                $this->vbotService->sendMsgUser($user, $sendText, 'nickname');
+
+                $this->redis->sadd($this->getName() . ':sent_list', $user);
+
+                sleep(5);
+            }
+
+            $this->redis->hset($this->getName(), 'send_status', 0);
+        }
     }
 
-    public function sendText($sendList, $sendText)
+    public function startJob()
     {
-        $msg = [
+        VbotDeamon::sendVbotJob($this->vbotJob);
+    }
+
+    public function stopJob()
+    {
+        $this->redis->hset($this->getName(), 'status', -3);
+        $this->kill();
+    }
+
+    public function sendText($sendText)
+    {
+        $this->sendMsg([
             'name' => 'send_text',
-            'sendList' => $sendList,
             'sendText' => $sendText
-        ];
-        $this->sendMsg($msg);
+        ]);
     }
 
     public function SIGCHLD()
@@ -97,26 +128,58 @@ class VbotManager extends Manager
         }
     }
 
-    public function exit(\Exception $e = null, $clearRedis = true)
+    protected function initRedis()
     {
-        if ($e) {
-            $this->vbotJob->update([
-                'status' => -2,
-                'exception' => $e->getMessage() . PHP_EOL . $e->getTraceAsString() . PHP_EOL,
-            ]);
-        } else {
-            $this->vbotJob->update(['status' => -1]);
+        //读已发送列表
+        if ($this->vbotJob->sent_list) {
+            $this->redis->sadd($this->getName() . ':sent_list', $this->vbotJob->sent_list);
         }
-        parent::exit($e, $clearRedis);
+        $this->redis->hset($this->getName(), 'error_msg', '');
+    }
+
+    public function clearRedis()
+    {
+        $status = $this->redis->hget($this->getName(), 'status') ?: -2;
+
+        $sentList = $this->redis->smembers($this->getName() . ':sent_list');
+        $exception = $this->redis->hget($this->getName(), 'exception');
+        $error_msg = $this->redis->hget($this->getName(), 'error_msg');
+
+        $this->vbotJob->update([
+            'status' => $status,
+            'sent_list' => $sentList,
+            'exception' => $exception,
+            'error_msg' => $error_msg,
+        ]);
+        $this->redis->del([$this->getName() . ':sent_list']);
+        parent::clearRedis();
     }
 
     public function handleException(\Exception $e)
     {
-        if ($e instanceof LoginTimeoutException) {
+        $this->redis->hset($this->getName(), 'status', -2);
 
+        $exception = $e->getMessage() . PHP_EOL . $e->getTraceAsString() . PHP_EOL;
+        $this->redis->hset($this->getName(), 'exception', $exception);
+
+        if ($e instanceof FetchUuidException) {
+            $error_msg = '获取二维码失败，请稍后尝试';
+        } elseif ($e instanceof LoginTimeoutException) {
+            $error_msg = '扫码登录超时';
+        } elseif ($e instanceof LoginFailedException) {
+            $error_msg = '登录失败，请稍后尝试';
+        } elseif ($e instanceof InitFailException) {
+            $error_msg = '初始化用户失败，请稍后尝试';
+        } elseif ($e instanceof CheckSyncException) {
+            $error_msg = '读取消息失败，可能登录信息丢失，请稍后重新登录';
+        } elseif ($e instanceof LogoutException) {
+            $error_msg = '用户已登出，可能登录信息丢失，请稍后重新登录';
+        } elseif ($e instanceof ApiFrequencyException) {
+            $error_msg = '微信接口调用限制，请稍后尝试';
         } else {
-            parent::handleException($e);
+            $error_msg = '服务器错误，请稍后尝试';
         }
+        $this->redis->hset($this->getName(), 'error_msg', $error_msg);
     }
 
     public function initUuid()
@@ -173,6 +236,7 @@ class VbotManager extends Manager
             'init_status' => $this->redis->hget($this->getName(), 'init_status'),
             'contacts_status' => $this->redis->hget($this->getName(), 'contacts_status'),
             'message_status' => $this->redis->hget($this->getName(), 'message_status'),
+            'send_status' => $this->redis->hget($this->getName(), 'send_status'),
             'qrcode' => $this->redis->hget($this->getName(), 'qrcode'),
             'friends' => json_decode($this->redis->hget($this->getName(), 'friends'), true),
             'groups' => json_decode($this->redis->hget($this->getName(), 'groups'), true),
@@ -180,6 +244,7 @@ class VbotManager extends Manager
             'officials' => json_decode($this->redis->hget($this->getName(), 'officials'), true),
             'specials' => json_decode($this->redis->hget($this->getName(), 'specials'), true),
             'myself' => json_decode($this->redis->hget($this->getName(), 'myself'), true),
+            'sent_list' => $this->redis->smembers($this->getName() . ':sent_list'),
         ];
     }
 }
