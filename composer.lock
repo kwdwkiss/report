@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "03b6be21bac2169577213bc8e7595572",
+    "content-hash": "560469d7812b0d2040a03babb310cb29",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -712,6 +712,52 @@
                 "watermark"
             ],
             "time": "2018-05-29T14:19:03+00:00"
+        },
+        {
+            "name": "ipip/datx",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ipipdotnet/datx-php.git",
+                "reference": "07e97ae34867c969420fe144e8f67f03bee08e09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ipipdotnet/datx-php/zipball/07e97ae34867c969420fe144e8f67f03bee08e09",
+                "reference": "07e97ae34867c969420fe144e8f67f03bee08e09",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ipip\\datx\\": "src/ipip/datx/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "IPIP.net",
+                    "email": "frk@ipip.net",
+                    "homepage": "https://www.ipip.net"
+                }
+            ],
+            "description": "IPIP.net官方支持的IP数据库datx格式解析库",
+            "homepage": "https://www.ipip.net",
+            "keywords": [
+                "IP",
+                "datx",
+                "geo",
+                "geoip",
+                "geolocation",
+                "ipip.net"
+            ],
+            "time": "2018-03-08T06:14:24+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",

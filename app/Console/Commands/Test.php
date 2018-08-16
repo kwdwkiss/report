@@ -7,6 +7,7 @@ use Cly\Process\Process;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
+use ipip\datx\City;
 use Workerman\Worker;
 
 class Test extends Command
@@ -42,7 +43,9 @@ class Test extends Command
      */
     public function handle()
     {
-        Redis::connection()->sadd('test',['']);
+        $path = storage_path('ip/17monipdb.datx');
+        $bs = new \ipip\datx\City($path); // 城市级数据库
+        var_export($bs->find("127.0.0.1"));
         //$this->processTest();
     }
 
