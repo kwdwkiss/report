@@ -49,7 +49,7 @@ class UserController extends Controller
                 'password' => $password,
                 'result' => $result,
                 'ip' => $ip,
-                'geo' => get_geo_str($ip)
+                //'geo' => get_geo_str($ip)
             ], JSON_UNESCAPED_UNICODE)
         ]);
 
