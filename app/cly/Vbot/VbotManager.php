@@ -70,8 +70,18 @@ class VbotManager extends Manager
         };
         $this->fork($process);
         while (true) {
+            $this->checkTime();
             $this->dispatchMsg();
             sleep(1);
+        }
+    }
+
+    protected function checkTime()
+    {
+        $lastTime = $this->redis->hget($this->getName(), 'last_time');
+        if (time() - $lastTime > 60 * 10) {
+            $this->redis->hset($this->getName(), 'error_msg', '操作超时');
+            $this->kill();
         }
     }
 
@@ -93,11 +103,18 @@ class VbotManager extends Manager
             }
 
             $this->redis->hset($this->getName(), 'send_status', 0);
+            $this->refreshTime();
         }
+    }
+
+    public function refreshTime()
+    {
+        $this->redis->hset($this->getName(), 'last_time', time());
     }
 
     public function startJob()
     {
+        $this->refreshTime();
         VbotDeamon::sendVbotJob($this->vbotJob);
     }
 

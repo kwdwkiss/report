@@ -11,6 +11,7 @@
                     <button class="btn btn-danger" @click="doStop" v-show="stopBtnShow">停止任务</button>
                 </div>
                 <div class="row text-success">
+                    <p class="col-xs-12 text-danger">提示：10分钟不操作（发送信息时除外），系统自动停止任务</p>
                     <p class="col-xs-12 text-danger" v-if="vbotJob.error_msg">错误信息：{{vbotJob.error_msg}}</p>
                     <p class="col-xs-6">任务状态：{{statusLabel}}</p>
                     <p class="col-xs-6">获取二维码：{{data.uuid_status?'成功':''}}</p>
@@ -211,9 +212,6 @@
             qrcodeShow: function () {
                 return this.data.qrcode && this.data.uuid_status && !this.data.login_status;
             },
-            vbot: function () {
-                return this.$store.state.vbot;
-            },
             sentList: function () {
                 if (this.vbotJob !== 1) {
                     return this.vbotJob.sent_list;
@@ -306,11 +304,6 @@
             },
             doStatus: function () {
                 let self = this;
-                if (this.vbot.stop) {
-                    self.init();
-                    self.doStop();
-                    return;
-                }
                 axios.get(api.userVbotStatus, {params: {id: self.vbotJob.id}}).then(function (res) {
                     self.vbotJob = res.data.vbotJob;
                     self.data = res.data.data;

@@ -66,10 +66,7 @@ router.beforeEach((to, from, next) => {
     if (store.state.user) {
         if (['login', 'forgetPassword'].indexOf(to.name) > -1) {
             next({name: 'index'});
-        } else if (from.name === 'vbotDetail' && from.name !== to.name) {
-            store.commit('vbot',{stop: 1});
-            next();
-        } else {
+        }  else {
             next();
         }
     } else {

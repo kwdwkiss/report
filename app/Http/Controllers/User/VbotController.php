@@ -159,6 +159,9 @@ class VbotController extends Controller
         $vbotJob->send_list = array_values(array_unique(array_merge($vbotJob->send_list, $sendList)));
         $vbotJob->save();
 
+        $manager = new VbotManager($vbotJob);
+        $manager->refreshTime();
+
         return [];
     }
 
@@ -174,6 +177,9 @@ class VbotController extends Controller
 
         $vbotJob->send_list = array_values(array_diff($vbotJob->send_list, $sendList));
         $vbotJob->save();
+
+        $manager = new VbotManager($vbotJob);
+        $manager->refreshTime();
 
         return [];
     }
