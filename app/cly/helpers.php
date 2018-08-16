@@ -35,11 +35,14 @@ if (!function_exists('get_client_ip')) {
 if (!function_exists('get_geo')) {
     function get_geo($ip)
     {
-        $result = @file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip=' . $ip);
-        if ($result) {
-            $result = json_decode($result, true);
-            return array_get($result, 'data');
-        }
+//        $result = @file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip=' . $ip);
+//        if ($result) {
+//            $result = json_decode($result, true);
+//            return array_get($result, 'data');
+//        }
+        $path = storage_path('ip/17monipdb.datx');
+        $bs = new \ipip\datx\City($path);
+        return $bs->find($ip);
     }
 }
 
@@ -47,7 +50,10 @@ if (!function_exists('get_geo_str')) {
     function get_geo_str($ip)
     {
         $data = get_geo($ip);
-        return array_get($data, 'region') . ' ' . array_get($data, 'city');
+        if (!$data) {
+            return '';
+        }
+        return array_get($data, 1) . ' ' . array_get($data, 2);
     }
 }
 

@@ -22,7 +22,7 @@ class CheckAccountController
         ];
         abort_if(!isset($pageList[$page]), 403);
         $page = $pageList[$page];
-        $geo = $this->getGeo(get_client_ip());
+        $geo = get_geo_str(get_client_ip());
         return view('check_tb.tb', compact('page', 'geo'));
     }
 
@@ -35,7 +35,7 @@ class CheckAccountController
         ];
         abort_if(!isset($pageList[$page]), 403);
         $page = $pageList[$page];
-        $geo = $this->getGeo(get_client_ip());
+        $geo = get_geo_str(get_client_ip());
         return view('check_tb.pdd', compact('page', 'geo'));
     }
 
@@ -50,7 +50,7 @@ class CheckAccountController
         ];
         abort_if(!isset($pageList[$pageKey]), 403);
         $page = $pageList[$pageKey];
-        $geo = $this->getGeo(get_client_ip());
+        $geo = get_geo_str(get_client_ip());
         if (in_array($pageKey, ['jd_member', 'credit'])) {
             return view('check_tb.jd_fix', compact('page', 'geo'));
         }
@@ -76,7 +76,7 @@ class CheckAccountController
 
     public function geo()
     {
-        $geo = $this->getGeo(get_client_ip());
+        $geo = get_geo_str(get_client_ip());
 
         return ['data' => $geo];
     }

@@ -43,9 +43,7 @@ class Test extends Command
      */
     public function handle()
     {
-        $path = storage_path('ip/17monipdb.datx');
-        $bs = new \ipip\datx\City($path); // 城市级数据库
-        var_export($bs->find("127.0.0.1"));
+        dd(get_geo_str('180.140.32.199'));
         //$this->processTest();
     }
 
