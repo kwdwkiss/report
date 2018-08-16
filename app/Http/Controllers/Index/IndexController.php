@@ -97,9 +97,8 @@ class IndexController extends Controller
         }
 
         $searchUsers = null;
-        $accounts = null;
         $accountReports = null;
-        \DB::transaction(function () use ($user, $name, &$searchUsers, &$accounts, &$accountReports) {
+        \DB::transaction(function () use ($user, $name, &$searchUsers, &$accountReports) {
             $user->_profile->decrement('amount', 2);
 
             AccountSearch::create([
@@ -120,9 +119,6 @@ class IndexController extends Controller
                 ->orWhere('jd', $name)
                 ->orWhere('is', $name)
                 ->get();
-
-            //所有的账号
-            $accounts = Account::where('name', $name)->get();
 
             //type 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
             $query = AccountReport::query()->with('_attachments');
@@ -180,7 +176,6 @@ class IndexController extends Controller
             'data' => [
                 'name' => $name,
                 'user' => UserResource::collection($searchUsers),
-                'accounts' => AccountResource::collection($accounts),
                 'account_reports' => AccountReportResource::collection($accountReports)
             ]
         ];
