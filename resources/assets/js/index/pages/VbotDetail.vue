@@ -308,15 +308,15 @@
                 let self = this;
                 if (this.vbot.stop) {
                     self.init();
-                    self.stop();
+                    self.doStop();
                     return;
                 }
                 axios.get(api.userVbotStatus, {params: {id: self.vbotJob.id}}).then(function (res) {
                     self.vbotJob = res.data.vbotJob;
                     self.data = res.data.data;
-                    if ([-2, -1].indexOf(self.vbotJob.status) > -1) {
+                    if (self.vbotJob.status !== 1) {
                         self.init();
-                        self.stop();
+                        self.doStop();
                     }
                 });
             },
