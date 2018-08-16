@@ -103,6 +103,15 @@ class VbotController extends Controller
 
         $user = \Auth::guard('user')->user();
 
+        $otherRun = VbotJob::query()
+            ->where('user_id', $user->id)
+            ->where('id', '!=', $id)
+            ->where('status', 1)
+            ->count();
+        if ($otherRun > 0) {
+            throw new \Exception('只能运行一个任务，请停止其他任务后再尝试');
+        }
+
         $vbotJob = VbotJob::query()->where('user_id', $user->id)->findOrFail($id);
 
         if (in_array($vbotJob->status, [-1, 1])) {
