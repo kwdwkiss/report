@@ -70,7 +70,7 @@ class VbotController extends Controller
         $vbotJob = VbotJob::query()->where('user_id', $user->id)->findOrFail($id);
 
         if ($vbotJob->status == 1) {
-            throw new \Exception('任务运行中，请终止后再删除');
+            throw new JsonException('任务运行中，请终止后再删除');
         }
 
         $vbotJob->delete();
@@ -109,13 +109,13 @@ class VbotController extends Controller
             ->where('status', 1)
             ->count();
         if ($otherRun > 0) {
-            throw new \Exception('只能运行一个任务，请停止其他任务后再尝试');
+            throw new JsonException('只能运行一个任务，请停止其他任务后再尝试');
         }
 
         $vbotJob = VbotJob::query()->where('user_id', $user->id)->findOrFail($id);
 
         if (in_array($vbotJob->status, [-1, 1])) {
-            throw new \Exception('任务异常');
+            throw new JsonException('任务异常');
         }
 
         try {
