@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Statement;
+use Carbon\Carbon;
 use Cly\Process\Manager;
 use Cly\Process\Process;
 use Illuminate\Console\Command;
@@ -43,7 +45,9 @@ class Test extends Command
      */
     public function handle()
     {
-        dd(get_geo_str('180.140.32.199'));
+        DB::enableQueryLog();
+        Statement::profile();
+        dd(DB::getQueryLog());
         //$this->processTest();
     }
 

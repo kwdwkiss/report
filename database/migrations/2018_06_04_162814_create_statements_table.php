@@ -32,6 +32,8 @@ class CreateStatementsTable extends Migration
             $table->integer('excel_save_count');//excel保存个数
             $table->integer('excel_save_user');//excel保存用户数
             $table->timestamps();
+
+            $table->index('date');
         });
     }
 
