@@ -19,17 +19,20 @@ class SearchBill extends Model
     public static function settleDay($date)
     {
         $date = $date ? Carbon::parse($date)->toDateString() : Carbon::yesterday()->toDateString();
+        $nextDate = Carbon::parse($date)->addDay()->toDateString();
 
         $userIds = AccountSearch::query()
             ->select('user_id')
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->groupBy('user_id')
             ->get()->pluck('user_id');
 
         foreach ($userIds as $userId) {
-            \DB::transaction(function () use ($userId, $date) {
+            \DB::transaction(function () use ($userId, $date, $nextDate) {
                 $count = AccountSearch::query()
-                    ->whereDate('created_at', $date)
+                    ->where('created_at', '>=', $date)
+                    ->where('created_at', '<', $nextDate)
                     ->where('user_id', $userId)
                     ->count();
 
