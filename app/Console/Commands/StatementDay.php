@@ -43,6 +43,7 @@ class StatementDay extends Command
         $date = $this->argument('date');
 
         if (!$start) {
+            $date = $date ?: Carbon::yesterday()->toDateString();
             Statement::day($date);
         } else {
             $startDate = Carbon::parse($start);

@@ -43,6 +43,7 @@ class StatementMonth extends Command
         $date = $this->argument('date');
 
         if (!$start) {
+            $date = $date ?: Carbon::now()->subMonth()->firstOfMonth()->toDateString();
             Statement::month($date);
         } else {
             $startDate = Carbon::parse($start);

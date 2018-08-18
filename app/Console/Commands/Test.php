@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\AccountSearch;
+use App\Excel;
+use App\RechargeBill;
 use App\Statement;
 use Carbon\Carbon;
 use Cly\Process\Manager;
@@ -47,15 +49,15 @@ class Test extends Command
     public function handle()
     {
         DB::enableQueryLog();
-        $date='2018-08-05';
-        $date = $date ? Carbon::parse($date)->toDateString() : Carbon::yesterday()->toDateString();
-        $nextDate = Carbon::parse($date)->addDay()->toDateString();
-        $count = AccountSearch::query()
-            ->where('created_at', '>=', $date)
-            ->where('created_at', '<', $nextDate)
-            ->where('user_id', '46833')
-            ->count();
-        dd(DB::getQueryLog());
+        $start = time();
+        Statement::month('2018-7');
+        $log = DB::getQueryLog();
+        foreach ($log as &$item) {
+            if (count($item['bindings']) > 10) {
+                unset($item['bindings']);
+            }
+        }
+        dd($log, time() - $start);
         //$this->processTest();
     }
 

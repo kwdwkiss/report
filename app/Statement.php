@@ -11,46 +11,56 @@ class Statement extends Model
 
     public static function day($date)
     {
-        $date = $date ? Carbon::parse($date)->toDateString() : Carbon::yesterday()->toDateString();
+        $date = $date ? Carbon::parse($date)->toDateString() : Carbon::now()->toDateString();
+        $nextDate = Carbon::parse($date)->addDay()->toDateString();
 
         $user_register = User::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $user_register_inviter = User::query()
             ->whereHas('_profile', function ($query) {
                 $query->where('inviter', '!=', '');
             })
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $account_report = AccountReport::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $account_search = AccountSearch::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $subQuery = AccountSearch::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->groupBy('user_id');
         $account_search_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
             ->mergeBindings($subQuery->getQuery())->count();
 
         $recharge_count = RechargeBill::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $recharge_money = RechargeBill::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->sum('money');
 
         $userIds = RechargeBill::query()
             ->select('user_id')
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->get()->pluck('user_id')->toArray();
         $subQuery = RechargeBill::query()
+            ->where('created_at', '<', $nextDate)
             ->whereIn('user_id', $userIds)
             ->groupBy('user_id')
             ->havingRaw('count(*)=1');
@@ -58,32 +68,38 @@ class Statement extends Model
             ->mergeBindings($subQuery->getQuery())->count();
 
         $recharge_referer_count = AmountBill::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->where('biz_type', 2)
             ->count();
 
         $recharge_referer_amount = AmountBill::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->where('biz_type', 2)
             ->sum('amount');
 
         $excel_download_count = BehaviorLog::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->where('type', 2)
             ->count();
 
         $subQuery = BehaviorLog::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->groupBy('user_id');
         $excel_download_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
             ->mergeBindings($subQuery->getQuery())->count();
 
         $excel_save_count = Excel::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $subQuery = Excel::query()
-            ->whereDate('created_at', $date)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->groupBy('user_id');
         $excel_save_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
             ->mergeBindings($subQuery->getQuery())->count();
@@ -111,56 +127,57 @@ class Statement extends Model
 
     public static function month($date)
     {
-        $date = $date ? Carbon::parse($date) : Carbon::now()->subMonth();
-        $year = $date->year;
-        $month = $date->month;
+        $date = $date ? Carbon::parse($date)->firstOfMonth()->toDateString()
+            : Carbon::now()->firstOfMonth()->toDateString();
+        $nextDate = Carbon::parse($date)->addMonth()->toDateString();
 
         $user_register = User::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $user_register_inviter = User::query()
             ->whereHas('_profile', function ($query) {
                 $query->where('inviter', '!=', '');
             })
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $account_report = AccountReport::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $account_search = AccountSearch::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $subQuery = AccountSearch::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->groupBy('user_id');
         $account_search_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
             ->mergeBindings($subQuery->getQuery())->count();
 
         $recharge_count = RechargeBill::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $recharge_money = RechargeBill::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->sum('money');
 
         $userIds = RechargeBill::query()
             ->select('user_id')
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->get()->pluck('user_id')->toArray();
         $subQuery = RechargeBill::query()
+            ->where('created_at', '<', $nextDate)
             ->whereIn('user_id', $userIds)
             ->groupBy('user_id')
             ->havingRaw('count(*)=1');
@@ -168,44 +185,44 @@ class Statement extends Model
             ->mergeBindings($subQuery->getQuery())->count();
 
         $recharge_referer_count = AmountBill::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->where('biz_type', 2)
             ->count();
 
         $recharge_referer_amount = AmountBill::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->where('biz_type', 2)
             ->sum('amount');
 
         $excel_download_count = BehaviorLog::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->where('type', 2)
             ->count();
 
         $subQuery = BehaviorLog::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->groupBy('user_id');
         $excel_download_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
             ->mergeBindings($subQuery->getQuery())->count();
 
         $excel_save_count = Excel::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->count();
 
         $subQuery = Excel::query()
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->groupBy('user_id');
         $excel_save_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
             ->mergeBindings($subQuery->getQuery())->count();
 
         Statement::updateOrCreate([
-            'date' => date('Y-m', $date->getTimestamp()),
+            'date' => Carbon::parse($date)->format('Y-m'),
             'type' => 2,
         ], [
             'user_register' => $user_register,
