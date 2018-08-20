@@ -57,7 +57,7 @@ class Test extends Command
                 unset($item['bindings']);
             }
         }
-        dd($log, time() - $start);
+        dd($log);
         //$this->processTest();
     }
 

@@ -29,6 +29,7 @@ use Illuminate\Routing\Route;
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class IndexController extends Controller
@@ -382,13 +383,17 @@ class IndexController extends Controller
         $filename = 'temp/' . date('YmdHis', time()) . str_random(4) . '.xlsx';
         $path = \Storage::disk('public')->path($filename);
 
-        Cell::setValueBinder(new NoScienceValueBinder());
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->fromArray($data);
-        $writer = new Xlsx($spreadsheet);
-        $writer->save($path);
-
+        try {
+            Cell::setValueBinder(new NoScienceValueBinder());
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+            $sheet->fromArray($data);
+            $writer = new Xlsx($spreadsheet);
+            $writer->save($path);
+        } catch (Exception $e) {
+            logger($e->getMessage(), $data);
+            throw $e;
+        }
 //        $fp = fopen($path, 'w');
 //        fputs($fp, chr(239) . chr(187) . chr(191));
 //        foreach ($data as $row) {
