@@ -9,6 +9,7 @@ use App\Statement;
 use Carbon\Carbon;
 use Cly\Process\Manager;
 use Cly\Process\Process;
+use Cly\RegExp\RegExp;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
@@ -48,16 +49,8 @@ class Test extends Command
      */
     public function handle()
     {
-        DB::enableQueryLog();
-        $start = time();
-        Statement::month('2018-7');
-        $log = DB::getQueryLog();
-        foreach ($log as &$item) {
-            if (count($item['bindings']) > 10) {
-                unset($item['bindings']);
-            }
-        }
-        dd($log);
+        $data = preg_match(RegExp::MOBILE, '16619873755');
+        dd($data);
         //$this->processTest();
     }
 
