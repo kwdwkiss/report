@@ -230,6 +230,23 @@
                 </div>
             </div>
             <div class="panel">
+                <div class="panel-heading">微信清粉页面广告</div>
+                <div class="panel-body">
+                    <el-form label-width="100px">
+                        <el-form-item label="图片路径">
+                            <el-input v-model="data.mobile_ad.wx_clear_friends.img_src"></el-input>
+                            <el-button type="primary" @click="uploadImage(data.mobile_ad.wx_clear_friends)">上传</el-button>
+                        </el-form-item>
+                        <el-form-item label="链接">
+                            <el-input v-model="data.mobile_ad.wx_clear_friends.url"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="success" @click="doSave">保存</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </div>
+            <div class="panel">
                 <div class="panel-heading">登录页面广告</div>
                 <div class="panel-body">
                     <el-form label-width="100px">
