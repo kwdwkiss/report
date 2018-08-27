@@ -156,6 +156,7 @@ class VbotController extends Controller
 
         $vbotJob = VbotJob::query()->where('user_id', $user->id)->findOrFail($id);
 
+        $vbotJob->send_list = is_array($vbotJob->send_list) ? $vbotJob->send_list : [];
         $vbotJob->send_list = array_values(array_unique(array_merge($vbotJob->send_list, $sendList)));
         $vbotJob->save();
 
