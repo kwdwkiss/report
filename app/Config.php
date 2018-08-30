@@ -126,6 +126,10 @@ class Config extends Model
             ['name' => ''],
             ['name' => ''],
         ],
+        'service_wx_id' => [
+            ['name' => ''],
+            ['name' => ''],
+        ],
         'service_wx' => [
             ['name' => '/images/wx_kf.png'],
             ['name' => '/images/wx_kf.png'],

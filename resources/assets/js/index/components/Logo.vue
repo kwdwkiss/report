@@ -11,11 +11,15 @@
                 <li class="col-xs-6" v-for="(item, index) in page.service_qq" :key="index">
                     {{item.name}}
                 </li>
+                <li class="col-xs-12">微信客服：</li>
+                <li class="col-xs-6" v-for="(item, index) in page.service_wx_id" :key="index">
+                    {{item.name}}
+                </li>
             </ul>
         </div>
         <div class="hidden-xs hidden-sm service-wx col-xs-12 col-md-3">
             <ul>
-                <li>微信<br/>客服：</li>
+                <li>微信<br/>公众号：</li>
                 <li v-for="(item, index) in page.service_wx" :key="index">
                     <img :src="item.name" alt="">
                 </li>
