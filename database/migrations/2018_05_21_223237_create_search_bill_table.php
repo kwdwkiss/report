@@ -15,6 +15,7 @@ class CreateSearchBillTable extends Migration
     {
         Schema::create('search_bill', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('type');//0-按日 1-按月统计
             $table->string('date');//查询结算日期
             $table->integer('user_id');//用户
             $table->integer('count');//当前查询次数

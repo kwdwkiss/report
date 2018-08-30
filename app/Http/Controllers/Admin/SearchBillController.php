@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SearchBillResource;
 use App\SearchBill;
@@ -16,8 +17,13 @@ class SearchBillController extends Controller
 {
     public function index()
     {
+        $type = request('type', 0);
         $mobile = request('mobile');
         $date = request('created_at');
+
+        if (!in_array($type, [0, 1])) {
+            throw new JsonException('argument type error');
+        }
 
         $query = SearchBill::query()
             ->with('_user');
@@ -34,6 +40,7 @@ class SearchBillController extends Controller
         }
         $query->orderBy('id', 'desc');
 
+        $query->where('type', $type);
         if (!is_null($mobile)) {
             $query->whereHas('_user', function ($query) use ($mobile) {
                 $query->where('mobile', $mobile);

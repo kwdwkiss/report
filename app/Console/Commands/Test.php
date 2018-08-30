@@ -49,7 +49,7 @@ class Test extends Command
      */
     public function handle()
     {
-        $data = preg_match(RegExp::PASSWORD, 'caoleiyu27');
+        $data = preg_match(RegExp::MOBILE, '13164044744');
         dd($data);
         //$this->processTest();
     }

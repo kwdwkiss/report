@@ -72,4 +72,40 @@ class SearchBill extends Model
             });
         }
     }
+
+    public static function settleMonth($date)
+    {
+        //用日统计的累加起来计算月统计的
+        $date = $date ? Carbon::parse($date)->firstOfMonth()->toDateString()
+            : Carbon::now()->firstOfMonth()->toDateString();
+        $nextDate = Carbon::parse($date)->addMonth()->firstOfMonth()->toDateString();
+
+        $userIds = SearchBill::query()
+            ->select('user_id')
+            ->where('date', '>=', $date)
+            ->where('date', '<', $nextDate)
+            ->groupBy('user_id')
+            ->get()->pluck('user_id');
+
+        foreach ($userIds as $userId) {
+            \DB::transaction(function () use ($userId, $date, $nextDate) {
+                $count = SearchBill::query()
+                    ->where('date', '>=', $date)
+                    ->where('date', '<', $nextDate)
+                    ->where('user_id', $userId)
+                    ->sum('count');
+
+                $amount = $count * 2;//一次查询消耗2积分
+
+                SearchBill::updateOrCreate([
+                    'type' => 1,
+                    'date' => $date,
+                    'user_id' => $userId
+                ], [
+                    'count' => $count,
+                    'amount' => $amount
+                ]);
+            });
+        }
+    }
 }
