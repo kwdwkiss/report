@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use App\AccountSearch;
+use App\AmountBill;
 use App\Excel;
 use App\RechargeBill;
+use App\SearchBill;
 use App\Statement;
 use Carbon\Carbon;
 use Cly\Process\Manager;
@@ -49,8 +51,23 @@ class Test extends Command
      */
     public function handle()
     {
-        $data = preg_match(RegExp::MOBILE, '13164044744');
-        dd($data);
+        $ids = SearchBill::query()
+            ->select('id')
+            ->where('type', 0)
+            ->where('date', '2018-07-01')
+            ->get()->pluck('id')->toArray();
+
+//        SearchBill::destroy($ids);
+//        AmountBill::query()
+//            ->where('biz_type', 101)
+//            ->whereIn('biz_id', $ids)
+//            ->delete();
+
+        $data = AmountBill::query()
+            ->where('biz_type', 101)
+            ->whereIn('biz_id', $ids)
+            ->count();
+        dd(count($ids), $data);
         //$this->processTest();
     }
 

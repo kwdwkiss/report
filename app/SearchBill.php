@@ -21,56 +21,72 @@ class SearchBill extends Model
         $date = $date ? Carbon::parse($date)->toDateString() : Carbon::yesterday()->toDateString();
         $nextDate = Carbon::parse($date)->addDay()->toDateString();
 
-        $userIds = AccountSearch::query()
-            ->select('user_id')
+        $data = AccountSearch::query()
+            ->select('user_id', \DB::raw('count(*) as count'))
             ->where('created_at', '>=', $date)
             ->where('created_at', '<', $nextDate)
             ->groupBy('user_id')
-            ->get()->pluck('user_id');
+            ->get();
 
-        foreach ($userIds as $userId) {
-            \DB::transaction(function () use ($userId, $date, $nextDate) {
-                $count = AccountSearch::query()
-                    ->where('created_at', '>=', $date)
-                    ->where('created_at', '<', $nextDate)
-                    ->where('user_id', $userId)
-                    ->count();
+        \DB::transaction(function () use ($data, $date, $nextDate) {
+            //清空旧数据
+            $ids = SearchBill::query()
+                ->select('id')
+                ->where('type', 0)
+                ->where('date', $date)
+                ->get()->pluck('id')->toArray();
+            SearchBill::destroy($ids);
+            AmountBill::query()
+                ->where('biz_type', 101)
+                ->whereIn('biz_id', $ids)
+                ->delete();
+
+            $searchBillData = [];
+            foreach ($data as $item) {
+                $userId = $item['user_id'];
+                $count = $item['count'];
 
                 $amount = $count * 2;//一次查询消耗2积分
 
-                $searchBill = static::updateOrCreate([
+                $searchBillData[] = [
+                    'type' => 0,
                     'date' => $date,
-                    'user_id' => $userId
-                ], [
+                    'user_id' => $userId,
                     'count' => $count,
-                    'amount' => $amount
-                ]);
+                    'amount' => $amount,
+                ];
+            }
+            $chunkData = array_chunk($searchBillData, 1000);
+            //批量插入数据
+            foreach ($chunkData as $insertItemData) {
+                SearchBill::query()->insert($insertItemData);
+            }
 
-                $amountBill = AmountBill::query()
-                    ->where('user_id', $userId)
-                    ->where('biz_id', $searchBill->id)
-                    ->where('biz_type', 101)
-                    ->first();
+            $searchBills = SearchBill::query()
+                ->where('type', 0)
+                ->where('date', $date)
+                ->get();
 
-                if (!$amountBill) {
-                    AmountBill::create([
-                        'user_id' => $userId,
-                        'bill_no' => AmountBill::generateBillNo($userId),
-                        'biz_id' => $searchBill->id,
-                        'biz_type' => 101,
-                        'type' => 1,
-                        'amount' => $searchBill->amount,
-                        'description' => "${date}查询${count}次"
-                    ]);
-                } else {
-                    $amountBill->update([
-                        'type' => 1,
-                        'amount' => $searchBill->amount,
-                        'description' => "${date}查询${count}次"
-                    ]);
-                }
-            });
-        }
+            //更新amount_bill
+            $amountBillData = [];
+            foreach ($searchBills as $item) {
+                $amountBillData[] = [
+                    'user_id' => $item['user_id'],
+                    'bill_no' => AmountBill::generateBillNo($item['user_id']),
+                    'biz_id' => $item['id'],
+                    'biz_type' => 101,
+                    'type' => 1,
+                    'amount' => $item['amount'],
+                    'description' => "${date}查询{$item['count']}次"
+                ];
+            }
+
+            $chunkData = array_chunk($amountBillData, 1000);
+            //批量插入数据
+            foreach ($chunkData as $insertItemData) {
+                AmountBill::query()->insert($insertItemData);
+            }
+        });
     }
 
     public static function settleMonth($date)
@@ -112,7 +128,7 @@ class SearchBill extends Model
                 ];
             }
 
-            $chunkData = array_chunk($insertData, 10000);
+            $chunkData = array_chunk($insertData, 1000);
             //批量插入数据
             foreach ($chunkData as $insertItemData) {
                 SearchBill::query()->insert($insertItemData);
