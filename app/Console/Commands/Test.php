@@ -51,23 +51,9 @@ class Test extends Command
      */
     public function handle()
     {
-        $ids = SearchBill::query()
-            ->select('id')
-            ->where('type', 0)
-            ->where('date', '2018-07-01')
-            ->get()->pluck('id')->toArray();
 
-//        SearchBill::destroy($ids);
-//        AmountBill::query()
-//            ->where('biz_type', 101)
-//            ->whereIn('biz_id', $ids)
-//            ->delete();
-
-        $data = AmountBill::query()
-            ->where('biz_type', 101)
-            ->whereIn('biz_id', $ids)
-            ->count();
-        dd(count($ids), $data);
+        $data = Carbon::now()->toDateTimeString();
+        dd($data);
         //$this->processTest();
     }
 

@@ -54,6 +54,7 @@ class SearchBill extends Model
                     'user_id' => $userId,
                     'count' => $count,
                     'amount' => $amount,
+                    'created_at' => Carbon::now()->toDateTimeString(),
                 ];
             }
             $chunkData = array_chunk($searchBillData, 1000);
@@ -77,7 +78,8 @@ class SearchBill extends Model
                     'biz_type' => 101,
                     'type' => 1,
                     'amount' => $item['amount'],
-                    'description' => "${date}查询{$item['count']}次"
+                    'description' => "${date}查询{$item['count']}次",
+                    'created_at' => Carbon::now()->toDateTimeString(),
                 ];
             }
 
@@ -121,7 +123,8 @@ class SearchBill extends Model
                     'date' => Carbon::parse($date)->format('Y-m'),
                     'user_id' => $userId,
                     'count' => $count,
-                    'amount' => $amount
+                    'amount' => $amount,
+                    'created_at' => Carbon::now()->toDateTimeString(),
                 ];
             }
 

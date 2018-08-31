@@ -6,14 +6,14 @@ use App\SearchBill;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class SearchSettleMonth extends Command
+class SearchBillDay extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'search_settle_month {--start=} {date?}';
+    protected $signature = 'search_bill_day {--start=} {date?}';
 
     /**
      * The console command description.
@@ -42,17 +42,6 @@ class SearchSettleMonth extends Command
         $start = $this->option('start');
         $date = $this->argument('date');
 
-        if (!$start) {
-            $date = $date ?: Carbon::now()->subMonth()->format('Y-m');
-            SearchBill::settleMonth($date);
-        } else {
-            $startDate = Carbon::parse($start)->format('Y-m');
-            $endDate = $date ? Carbon::parse($date)->format('Y-m') : Carbon::now()->format('Y-m');
-            while ($startDate < $endDate) {
-                $this->info('statement ' . $startDate);
-                SearchBill::settleMonth($startDate);
-                $startDate = Carbon::parse($startDate)->addMonth()->format('Y-m');
-            }
-        }
+        SearchBill::settleDay($date);
     }
 }
