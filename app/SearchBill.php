@@ -91,15 +91,14 @@ class SearchBill extends Model
 
     public static function settleMonth($date)
     {
-        //用日统计的累加起来计算月统计的
         $date = $date ? Carbon::parse($date)->firstOfMonth()->toDateString()
             : Carbon::now()->firstOfMonth()->toDateString();
         $nextDate = Carbon::parse($date)->addMonth()->firstOfMonth()->toDateString();
 
-        $data = SearchBill::query()
-            ->select('user_id', \DB::raw('group_concat(count) as count_str'))
-            ->where('date', '>=', $date)
-            ->where('date', '<', $nextDate)
+        $data = AccountSearch::query()
+            ->select('user_id', \DB::raw('count(*) as count'))
+            ->where('created_at', '>=', $date)
+            ->where('created_at', '<', $nextDate)
             ->groupBy('user_id')
             ->get();
 
@@ -112,10 +111,8 @@ class SearchBill extends Model
 
             $insertData = [];
             foreach ($data as $item) {
-                $countStr = $item['count_str'];
                 $userId = $item['user_id'];
-
-                $count = array_sum(explode(',', $countStr));
+                $count = $item['count'];
 
                 $amount = $count * 2;//一次查询消耗2积分
 
