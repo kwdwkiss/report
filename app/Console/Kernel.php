@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('statement_profile')->everyTenMinutes();
         $schedule->command('statement_day')->dailyAt('00:00');
         $schedule->command('statement_month')->monthlyOn(1, '00:01');
-        $schedule->command('search_bill_month')->monthlyOn(1, '05:11');
+        $schedule->command('search_bill_month')->monthlyOn(1, '02:10');
         //耗时任务2点执行
         $schedule->command('search_bill_day')->dailyAt('02:00');
         //清除temp文件
