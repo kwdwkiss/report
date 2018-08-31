@@ -12,6 +12,7 @@ use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SearchBillResource;
 use App\SearchBill;
+use Carbon\Carbon;
 
 class SearchBillController extends Controller
 {
@@ -47,8 +48,13 @@ class SearchBillController extends Controller
             });
         }
         if (!is_null($date)) {
-            $query->where('date', '>=', $date[0]);
-            $query->where('date', '<=', $date[1]);
+            if ($type == 0) {
+                $query->where('date', '>=', $date[0]);
+                $query->where('date', '<=', $date[1]);
+            } elseif ($type == 1) {
+                $query->where('date', '>=', Carbon::parse($date[0])->format('Y-m'));
+                $query->where('date', '<=', Carbon::parse($date[1])->format('Y-m'));
+            }
         }
 
         return SearchBillResource::collection($query->paginate());

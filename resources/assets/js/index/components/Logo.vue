@@ -20,7 +20,7 @@
         <div class="hidden-xs hidden-sm service-wx col-xs-12 col-md-3">
             <ul>
                 <li>微信<br/>公众号：</li>
-                <li v-for="(item, index) in page.service_wx" :key="index">
+                <li v-for="(item, index) in page.service_wx" :key="index" v-if="item.name">
                     <img :src="item.name" alt="">
                 </li>
             </ul>
