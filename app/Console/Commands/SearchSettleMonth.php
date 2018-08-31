@@ -43,15 +43,15 @@ class SearchSettleMonth extends Command
         $date = $this->argument('date');
 
         if (!$start) {
-            $date = $date ?: Carbon::now()->subMonth()->firstOfMonth()->toDateString();
+            $date = $date ?: Carbon::now()->subMonth()->format('Y-m');
             SearchBill::settleMonth($date);
         } else {
-            $startDate = Carbon::parse($start);
-            $endDate = Carbon::parse($date);
+            $startDate = Carbon::parse($start)->format('Y-m');
+            $endDate = $date ? Carbon::parse($date)->format('Y-m') : Carbon::now()->format('Y-m');
             while ($startDate < $endDate) {
-                $this->info('statement ' . date('Y-m', $startDate->getTimestamp()));
-                SearchBill::settleMonth(date('Y-m', $startDate->getTimestamp()));
-                $startDate = $startDate->addMonth();
+                $this->info('statement ' . $startDate);
+                SearchBill::settleMonth($startDate);
+                $startDate = Carbon::parse($startDate)->addMonth()->format('Y-m');
             }
         }
     }

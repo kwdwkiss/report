@@ -47,7 +47,7 @@ class StatementDay extends Command
             Statement::day($date);
         } else {
             $startDate = Carbon::parse($start);
-            $endDate = Carbon::parse($date);
+            $endDate = $date ? Carbon::parse($date) : Carbon::now();
             while ($startDate < $endDate) {
                 $this->info('statement ' . $startDate->toDateString());
                 Statement::day($startDate->toDateString());

@@ -80,32 +80,43 @@ class SearchBill extends Model
             : Carbon::now()->firstOfMonth()->toDateString();
         $nextDate = Carbon::parse($date)->addMonth()->firstOfMonth()->toDateString();
 
-        $userIds = SearchBill::query()
-            ->select('user_id')
+        $data = SearchBill::query()
+            ->select('user_id', \DB::raw('group_concat(count) as count_str'))
             ->where('date', '>=', $date)
             ->where('date', '<', $nextDate)
             ->groupBy('user_id')
-            ->get()->pluck('user_id');
+            ->get();
 
-        foreach ($userIds as $userId) {
-            \DB::transaction(function () use ($userId, $date, $nextDate) {
-                $count = SearchBill::query()
-                    ->where('date', '>=', $date)
-                    ->where('date', '<', $nextDate)
-                    ->where('user_id', $userId)
-                    ->sum('count');
+        \DB::transaction(function () use ($data, $date, $nextDate) {
+            //删除旧数据
+            SearchBill::query()
+                ->where('type', 1)
+                ->where('date', Carbon::parse($date)->format('Y-m'))
+                ->delete();
+
+            $insertData = [];
+            foreach ($data as $item) {
+                $countStr = $item['count_str'];
+                $userId = $item['user_id'];
+
+                $count = array_sum(explode(',', $countStr));
 
                 $amount = $count * 2;//一次查询消耗2积分
 
-                SearchBill::updateOrCreate([
+                $insertData[] = [
                     'type' => 1,
-                    'date' => $date,
-                    'user_id' => $userId
-                ], [
+                    'date' => Carbon::parse($date)->format('Y-m'),
+                    'user_id' => $userId,
                     'count' => $count,
                     'amount' => $amount
-                ]);
-            });
-        }
+                ];
+            }
+
+            $chunkData = array_chunk($insertData, 10000);
+            //批量插入数据
+            foreach ($chunkData as $insertItemData) {
+                SearchBill::query()->insert($insertItemData);
+            }
+        });
     }
 }

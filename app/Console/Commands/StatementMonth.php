@@ -46,8 +46,8 @@ class StatementMonth extends Command
             $date = $date ?: Carbon::now()->subMonth()->firstOfMonth()->toDateString();
             Statement::month($date);
         } else {
-            $startDate = Carbon::parse($start);
-            $endDate = Carbon::parse($date);
+            $startDate = Carbon::parse($start)->firstOfMonth();
+            $endDate = $date ? Carbon::parse($date) : Carbon::now()->firstOfMonth();
             while ($startDate < $endDate) {
                 $this->info('statement ' . date('Y-m', $startDate->getTimestamp()));
                 Statement::month(date('Y-m', $startDate->getTimestamp()));

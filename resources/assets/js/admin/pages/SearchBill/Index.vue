@@ -15,6 +15,11 @@
                     :picker-options="datePickerOptions">
             </el-date-picker>
 
+            <el-select v-model="search.type" placeholder="请选择统计类型">
+                <el-option label="按天" :value="0"></el-option>
+                <el-option label="按月" :value="1"></el-option>
+            </el-select>
+
             <el-button type="primary" @click="doSearch">搜索</el-button>
             <el-button type="warning" @click="reset">重置</el-button>
 
@@ -103,7 +108,7 @@
                 this.loadData();
             },
             reset: function () {
-                this.search = {};
+                this.search = {order_query: {}};
                 this.loadData();
             },
             paginate: function (page) {
