@@ -372,6 +372,11 @@ class IndexController extends Controller
     public function oneKeyExcel()
     {
         $data = request('data', []);
+        $user = \Auth::guard('user')->user();
+
+        if (!$user) {
+            throw new JsonException('请登录后再下载表格');
+        }
 
         if (!is_array($data)) {
             throw new JsonException('数据格式错误');
@@ -394,6 +399,7 @@ class IndexController extends Controller
             logger($e->getMessage(), $data);
             throw $e;
         }
+
 //        $fp = fopen($path, 'w');
 //        fputs($fp, chr(239) . chr(187) . chr(191));
 //        foreach ($data as $row) {
@@ -404,7 +410,6 @@ class IndexController extends Controller
 //        }
 //        fclose($fp);
 
-        $user = \Auth::guard('user')->user();
         BehaviorLog::create([
             'user_id' => $user ? $user->id : 0,
             'type' => 2,
