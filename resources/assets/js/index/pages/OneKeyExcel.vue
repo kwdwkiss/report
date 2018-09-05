@@ -72,21 +72,21 @@
             </div>
         </div>
 
-        <div class="modal fade" id="msg-dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title">通知</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p style="font-size: 16px;color: red">9月1日起，EXCEL表格功能需要登录才能使用！</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!--<div class="modal fade" id="msg-dialog">-->
+            <!--<div class="modal-dialog">-->
+                <!--<div class="modal-content">-->
+                    <!--<div class="modal-header">-->
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
+                            <!--&times;-->
+                        <!--</button>-->
+                        <!--<h4 class="modal-title">通知</h4>-->
+                    <!--</div>-->
+                    <!--<div class="modal-body">-->
+                        <!--<p style="font-size: 16px;color: red">9月1日起，EXCEL表格功能需要登录才能使用！</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </template>
 
@@ -101,7 +101,7 @@
             }
         },
         mounted: function () {
-            $('#msg-dialog').modal('show');
+            // $('#msg-dialog').modal('show');
         },
         computed: {
             page: function () {
