@@ -10,12 +10,12 @@
                             充值方式一：（<span class="text-danger">推荐，不用写备注</span>）
                         </label>
                     </div>
-                    <!--<div>-->
-                        <!--<label class="radio-inline">-->
-                            <!--<input type="radio" name="way" :value="2" v-model="way">-->
-                            <!--充值方式二：（<span class="text-danger">需要填写手机号备注</span>）-->
-                        <!--</label>-->
-                    <!--</div>-->
+                    <div>
+                        <label class="radio-inline">
+                            <input type="radio" name="way" :value="2" v-model="way">
+                            充值方式二：（<span class="text-danger">需要填写手机号备注</span>）
+                        </label>
+                    </div>
                 </div>
                 <div class="row" v-show="way===1">
                     <!--<p>如有支付问题，请联系微信：ywh171337832</p>-->
