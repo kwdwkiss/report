@@ -10,23 +10,23 @@
                             充值方式一：（<span class="text-danger">推荐，不用写备注</span>）
                         </label>
                     </div>
-                    <div>
-                        <label class="radio-inline">
-                            <input type="radio" name="way" :value="2" v-model="way">
-                            充值方式二：（<span class="text-danger">需要填写手机号备注</span>）
-                        </label>
-                    </div>
+                    <!--<div>-->
+                        <!--<label class="radio-inline">-->
+                            <!--<input type="radio" name="way" :value="2" v-model="way">-->
+                            <!--充值方式二：（<span class="text-danger">需要填写手机号备注</span>）-->
+                        <!--</label>-->
+                    <!--</div>-->
                 </div>
                 <div class="row" v-show="way===1">
-                    <!--<p>如有支付问题，请联系微信：ywh171337832</p>-->
-                    <!--<div class="col-md-8">-->
-                        <!--<iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350"-->
-                                <!--frameborder="0"></iframe>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<p class="text-center" style="color: red;font-size: 18px;font-weight: bold">支付宝扫码领红包福利</p>-->
-                        <!--<img class="center-block" src="/images/alipay_redpack.png" alt="" style="max-width: 200px">-->
-                    <!--</div>-->
+                    <p>如有支付问题，请联系微信：ywh171337832</p>
+                    <div class="col-md-8">
+                        <iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350"
+                                frameborder="0"></iframe>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="text-center" style="color: red;font-size: 18px;font-weight: bold">支付宝扫码领红包福利</p>
+                        <img class="center-block" src="/images/alipay_redpack.png" alt="" style="max-width: 200px">
+                    </div>
                 </div>
                 <div class="row" v-show="way===2">
                     <div class="col-md-8">
