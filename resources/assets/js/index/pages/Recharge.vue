@@ -18,15 +18,15 @@
                     <!--</div>-->
                 </div>
                 <div class="row" v-show="way===1">
-                    <p>如有支付问题，请联系微信：ywh171337832</p>
-                    <div class="col-md-8">
-                        <iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350"
-                                frameborder="0"></iframe>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="text-center" style="color: red;font-size: 18px;font-weight: bold">支付宝扫码领红包福利</p>
-                        <img class="center-block" src="/images/alipay_redpack.png" alt="" style="max-width: 200px">
-                    </div>
+                    <!--<p>如有支付问题，请联系微信：ywh171337832</p>-->
+                    <!--<div class="col-md-8">-->
+                        <!--<iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350"-->
+                                <!--frameborder="0"></iframe>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<p class="text-center" style="color: red;font-size: 18px;font-weight: bold">支付宝扫码领红包福利</p>-->
+                        <!--<img class="center-block" src="/images/alipay_redpack.png" alt="" style="max-width: 200px">-->
+                    <!--</div>-->
                 </div>
                 <div class="row" v-show="way===2">
                     <div class="col-md-8">
