@@ -256,9 +256,13 @@ class IndexController extends Controller
                 break;
         }
         $reportUser = $query->first();
-        if ($reportUser && $reportUser->isAuth() && (empty($description) || empty($attachment))) {
-            throw new JsonException('举报的账号为宏海认证会员，必须同时提交图片和描述才能举报');
+        //举报会员需要联系客服
+        if($reportUser && $reportUser->isAuth()){
+            throw new JsonException('此用户为宏海实名认证会员，请联系客服举报');
         }
+//        if ($reportUser && $reportUser->isAuth() && (empty($description) || empty($attachment))) {
+//            throw new JsonException('举报的账号为宏海认证会员，必须同时提交图片和描述才能举报');
+//        }
 
         $account = Account::where('type', $account_type)->where('name', $name)->first();
         if (!$account) {
