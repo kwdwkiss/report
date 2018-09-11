@@ -88,6 +88,7 @@ class Statement extends Model
         $subQuery = BehaviorLog::query()
             ->where('created_at', '>=', $date)
             ->where('created_at', '<', $nextDate)
+            ->where('type', 2)
             ->groupBy('user_id');
         $excel_download_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
             ->mergeBindings($subQuery->getQuery())->count();
@@ -205,6 +206,7 @@ class Statement extends Model
         $subQuery = BehaviorLog::query()
             ->where('created_at', '>=', $date)
             ->where('created_at', '<', $nextDate)
+            ->where('type', 2)
             ->groupBy('user_id');
         $excel_download_user = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
             ->mergeBindings($subQuery->getQuery())->count();
