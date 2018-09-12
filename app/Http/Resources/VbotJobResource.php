@@ -19,8 +19,10 @@ class VbotJobResource extends Resource
 
         $data['status_label'] = VbotJob::$statusTypes[$data['status']];
 
-        $data['send_list_count'] = count($data['send_list']);
-        $data['sent_list_count'] = count($data['sent_list']);
+        $send_list = is_array($data['send_list']) ? $data['send_list'] : [];
+        $sent_list = is_array($data['sent_list']) ? $data['sent_list'] : [];
+        $data['send_list_count'] = count($send_list);
+        $data['sent_list_count'] = count($sent_list);
 
         return $data;
     }
