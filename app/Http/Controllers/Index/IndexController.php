@@ -257,7 +257,7 @@ class IndexController extends Controller
         }
         $reportUser = $query->first();
         //举报会员需要联系客服
-        if($reportUser && $reportUser->isAuth()){
+        if ($reportUser && $reportUser->isAuth()) {
             throw new JsonException('此用户为宏海实名认证会员，请联系客服举报');
         }
 //        if ($reportUser && $reportUser->isAuth() && (empty($description) || empty($attachment))) {
@@ -392,6 +392,22 @@ class IndexController extends Controller
         $filename = 'temp/' . date('YmdHis', time()) . str_random(4) . '.xlsx';
         $path = \Storage::disk('public')->path($filename);
 
+        //记录日志
+        BehaviorLog::create([
+            'user_id' => $user ? $user->id : 0,
+            'type' => 2,
+            'content' => json_encode($data, JSON_UNESCAPED_UNICODE)
+        ]);
+
+        //给=前面加'
+        foreach ($data as &$row) {
+            foreach ($row as &$col) {
+                if (strpos($col, '=') === 0) {
+                    $col = "'" . $col;
+                }
+            }
+        }
+
         try {
             Cell::setValueBinder(new NoScienceValueBinder());
             $spreadsheet = new Spreadsheet();
@@ -413,12 +429,6 @@ class IndexController extends Controller
 //            fputcsv($fp, $row);
 //        }
 //        fclose($fp);
-
-        BehaviorLog::create([
-            'user_id' => $user ? $user->id : 0,
-            'type' => 2,
-            'content' => json_encode($data, JSON_UNESCAPED_UNICODE)
-        ]);
 
         return ['data' => asset('storage/' . $filename)];
     }
