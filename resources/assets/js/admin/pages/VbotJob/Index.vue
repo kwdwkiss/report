@@ -30,8 +30,8 @@
                 <el-table-column prop="_user.mobile" label="用户" min-width="110"></el-table-column>
                 <el-table-column prop="name" label="名称" min-width="110"></el-table-column>
                 <el-table-column prop="status_label" label="状态" min-width="90"></el-table-column>
-                <el-table-column prop="send_list_str" label="发送列表" min-width="300"></el-table-column>
-                <el-table-column prop="sent_list_str" label="已发送列表" min-width="300"></el-table-column>
+                <el-table-column prop="send_list_count" label="发送列表数" min-width="110"></el-table-column>
+                <el-table-column prop="sent_list_count" label="已发送列表数" min-width="110"></el-table-column>
                 <el-table-column prop="created_at" label="创建时间" min-width="170"></el-table-column>
                 <el-table-column label="操作" min-width="300">
                     <template slot-scope="scope">
