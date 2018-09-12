@@ -190,6 +190,9 @@ Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/wechat/refresh-token', 'Admin\WechatController@refreshToken');
     Route::get('/admin/wechat/get-menu', 'Admin\WechatController@getMenu');
     Route::post('/admin/wechat/set-menu', 'Admin\WechatController@setMenu');
+
+    Route::get('/admin/vbot_job/index', 'Admin\VbotJobController@index');
+    Route::get('/admin/excel/index', 'Admin\ExcelController@index');
 });
 
 //>>>>>wechat serv

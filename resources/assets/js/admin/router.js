@@ -55,6 +55,10 @@ const router = new VueRouter({
 
                 {name: 'wechatServer', path: 'wechat/server', component: require('./pages/Wechat/Server')},
                 {name: 'wechatMenu', path: 'wechat/menu', component: require('./pages/Wechat/Menu')},
+
+                {name: 'vbotJobIndex', path: 'vbot_job/index', component: require('./pages/VbotJob/Index')},
+
+                {name: 'excelIndex', path: 'excel/index', component: require('./pages/Excel/Index')},
             ]
         }
     ]

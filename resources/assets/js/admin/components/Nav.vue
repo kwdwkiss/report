@@ -59,6 +59,16 @@
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">电商工具<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="collapse-hide" href="javascript:" @click="go('vbotJobIndex')">微信清粉</a>
+                                </li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('excelIndex')">EXCEL</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">系统设置<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="go('systemSite')">站点设置</a></li>

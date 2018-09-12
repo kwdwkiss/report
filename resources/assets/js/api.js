@@ -83,6 +83,10 @@ module.exports = {
     adminWechatGetMenu: '/admin/wechat/get-menu',
     adminWechatSetMenu: '/admin/wechat/set-menu',
 
+    adminVbotJobIndex: '/admin/vbot_job/index',
+
+    adminExcelIndex: '/admin/excel/index',
+
     //>>>>>>>>>>index
     taxonomyAllData: '/taxonomy/all/data',
     taxonomyAllDisplay: '/taxonomy/all/display',

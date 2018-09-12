@@ -39,4 +39,9 @@ class VbotJob extends Model
         $this->send_list = [];
         $this->sent_list = [];
     }
+
+    public function _user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

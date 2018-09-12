@@ -19,6 +19,9 @@ class VbotJobResource extends Resource
 
         $data['status_label'] = VbotJob::$statusTypes[$data['status']];
 
+        $data['send_list_str'] = implode(',', $data['send_list']);
+        $data['sent_list_str'] = implode(',', $data['sent_list']);
+
         return $data;
     }
 }
