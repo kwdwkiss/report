@@ -51,8 +51,7 @@ class Test extends Command
      */
     public function handle()
     {
-
-        $data = Carbon::now()->toDateTimeString();
+        $data = preg_replace('/[,\s]+/','','科技馆老钟批发部楼上六楼');
         dd($data);
         //$this->processTest();
     }

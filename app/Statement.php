@@ -255,6 +255,8 @@ class Statement extends Model
         $searchYesterday = $row ? $row->account_search : 0;
         $rechargeYesterday = $row ? $row->recharge_money : 0;
         $rechargeYesterdayOnce = $row ? $row->recharge_first_user : 0;
+        $excelDownloadYesterday = $row ? $row->excel_download_count : 0;
+        $excelDownloadUserYesterday = $row ? $row->excel_download_user : 0;
 
         $row = Statement::query()
             ->where('date', date('Y-m', Carbon::now()->subMonth()->getTimestamp()))
@@ -337,6 +339,18 @@ class Statement extends Model
             return \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))->mergeBindings($subQuery->getQuery())->count();
         });
 
+        $excelDownloadToday = BehaviorLog::query()
+            ->where('created_at', '>=', Carbon::today())
+            ->where('type', 2)
+            ->count();
+
+        $subQuery = BehaviorLog::query()
+            ->where('created_at', '>=', Carbon::today())
+            ->where('type', 2)
+            ->groupBy('user_id');
+        $excelDownloadTodayUser = \DB::table(\DB::raw("({$subQuery->toSql()}) as a"))
+            ->mergeBindings($subQuery->getQuery())->count();
+
         return [
             'userRegister' => [
                 'total' => $registerTotal,
@@ -366,7 +380,15 @@ class Statement extends Model
                 'lastMonth' => $rechargeLastMonth,
                 'todayOnce' => $rechargeTodayOnce,
                 'yesterdayOnce' => $rechargeYesterdayOnce
-            ]
+            ],
+            'excelDownload' => [
+                'today' => $excelDownloadToday,
+                'yesterday' => $excelDownloadYesterday,
+            ],
+            'excelDownloadUsers' => [
+                'today' => $excelDownloadTodayUser,
+                'yesterday' => $excelDownloadUserYesterday,
+            ],
         ];
     }
 }

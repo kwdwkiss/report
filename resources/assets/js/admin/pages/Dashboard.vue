@@ -86,6 +86,24 @@
                 </div>
             </div>
         </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">EXCEL统计</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>今日：</p>
+                        <p>下载数：{{statement.excelDownload.today}}</p>
+                        <p>下载用户数：{{statement.excelDownloadUsers.today}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p>昨日：</p>
+                        <p>下载数：{{statement.excelDownload.yesterday}}</p>
+                        <p>下载用户数：{{statement.excelDownloadUsers.yesterday}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </template>
