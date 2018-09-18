@@ -20,7 +20,7 @@ class Attachment extends Model
         try {
             $dir = 'upload/' . date('Ymd', time());
             $path = $uploadFile->store($dir, 'public');
-            $url = asset('storage/' . $path);
+            $url = '/storage/' . $path;
             $attachment = static::create([
                 'user_id' => $user ? $user->id : 0,
                 'user_type' => static::parseUserType($user),

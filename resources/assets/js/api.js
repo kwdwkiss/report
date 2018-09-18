@@ -8,6 +8,7 @@ module.exports = {
     adminInfo: '/admin/info',
     register: '/admin/register',
     modifyPassword: '/admin/modify-password',
+    adminUpload: '/admin/upload',
     adminUploadOss: '/admin/upload-oss',
     adminUploadOssImage: '/admin/upload-oss-image',
 
