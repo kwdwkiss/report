@@ -96,6 +96,8 @@ module.exports = {
     oneKeyExcel: '/index/one-key-excel',
     checkGeo: 'check_geo',
 
+    indexIndexBasic: '/index/index/basic',
+
     indexSearch: '/index/search',
     indexReport: '/index/report',
     indexPopWindow: '/index/pop-window',

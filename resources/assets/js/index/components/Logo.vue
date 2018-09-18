@@ -8,11 +8,11 @@
         <div class="hidden-xs hidden-sm service-qq col-xs-12 col-md-3">
             <ul>
                 <li class="col-xs-12">QQ客服：</li>
-                <li class="col-xs-6" v-for="(item, index) in page.service_qq" :key="index">
+                <li class="col-xs-6" v-for="(item, index) in page.service_qq" :key="'service_qq_'+index">
                     {{item.name}}
                 </li>
                 <li class="col-xs-12">微信客服：</li>
-                <li class="col-xs-6" v-for="(item, index) in page.service_wx_id" :key="index">
+                <li class="col-xs-6" v-for="(item, index) in page.service_wx_id" :key="'service_wx_id_'+index">
                     {{item.name}}
                 </li>
             </ul>
@@ -20,7 +20,7 @@
         <div class="hidden-xs hidden-sm service-wx col-xs-12 col-md-3">
             <ul>
                 <li>微信<br/>公众号：</li>
-                <li v-for="(item, index) in page.service_wx" :key="index" v-if="item.name">
+                <li v-for="(item, index) in page.service_wx" :key="'service_wx_'+index" v-if="item.name">
                     <img :src="item.name" alt="">
                 </li>
             </ul>

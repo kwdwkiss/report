@@ -6,6 +6,7 @@ Vue.use(Vuex);
 const store = window.store = new Vuex.Store({
     state: {
         page: laravel,
+        basic: laravel.basic,
         taxonomy: laravel.taxonomy,
         breadcrumb: {},
         searchResult: {
@@ -37,6 +38,11 @@ const store = window.store = new Vuex.Store({
         taxonomy(state) {
             axios.get(api.taxonomyAllData).then(function (res) {
                 state.taxonomy = res.data.data;
+            })
+        },
+        basic(state) {
+            axios.get(api.indexIndexBasic).then(function (res) {
+                state.basic = res.data.data;
             })
         },
         user(state, payload) {

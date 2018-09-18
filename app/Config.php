@@ -20,6 +20,28 @@ class Config extends Model
         'data' => 'array'
     ];
 
+    public static function getBasic()
+    {
+        $basicList = [
+            'domain',
+            'name',
+            'close_register',
+            'index_blog_article',
+            'seo_keywords',
+            'seo_description',
+            'close_recharge',
+            'close_recharge_text',
+        ];
+        $basic = [];
+
+        \DB::transaction(function () use (&$basic, $basicList) {
+            foreach ($basicList as $name) {
+                $basic[$name] = Config::get('site.' . $name);
+            }
+        });
+        return $basic;
+    }
+
     public static function get($name, $default = '')
     {
         $config = static::find($name);

@@ -19,7 +19,9 @@ class SiteController extends Controller
         'close_register',
         'index_blog_article',
         'seo_keywords',
-        'seo_description'
+        'seo_description',
+        'close_recharge',
+        'close_recharge_text',
     ];
 
     public function getBasic()

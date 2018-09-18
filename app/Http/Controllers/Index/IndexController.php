@@ -68,10 +68,16 @@ class IndexController extends Controller
                 'unreadNotification' => $unreadNotification,
 
                 'index_blog_article' => Config::get('site.index_blog_article'),
+                'basic' => Config::getBasic(),
                 'taxonomy' => Taxonomy::allDisplay(),
             ], Config::getSiteIndex(), Config::getSiteStatics());
         });
         return view('index', compact('page', 'routes'));
+    }
+
+    public function basic()
+    {
+        return ['data' => Config::getBasic()];
     }
 
     public function popWindow()

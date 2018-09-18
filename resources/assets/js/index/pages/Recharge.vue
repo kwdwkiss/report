@@ -11,22 +11,27 @@
                         </label>
                     </div>
                     <!--<div>-->
-                        <!--<label class="radio-inline">-->
-                            <!--<input type="radio" name="way" :value="2" v-model="way">-->
-                            <!--充值方式二：（<span class="text-danger">需要填写手机号备注</span>）-->
-                        <!--</label>-->
+                    <!--<label class="radio-inline">-->
+                    <!--<input type="radio" name="way" :value="2" v-model="way">-->
+                    <!--充值方式二：（<span class="text-danger">需要填写手机号备注</span>）-->
+                    <!--</label>-->
                     <!--</div>-->
                 </div>
                 <div class="row" v-show="way===1">
-                    <p>如有支付问题，请联系微信：ywh171337832</p>
-                    <div class="col-md-8">
-                        <iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350"
-                                frameborder="0"></iframe>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="text-center" style="color: red;font-size: 18px;font-weight: bold">支付宝扫码领红包福利</p>
-                        <img class="center-block" src="/images/alipay_redpack.png" alt="" style="max-width: 200px">
-                    </div>
+                    <template v-if="!basic.close_recharge">
+                        <p>如有支付问题，请联系微信：ywh171337832</p>
+                        <div class="col-md-8">
+                            <iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350"
+                                    frameborder="0"></iframe>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-center" style="color: red;font-size: 18px;font-weight: bold">支付宝扫码领红包福利</p>
+                            <img class="center-block" src="/images/alipay_redpack.png" alt="" style="max-width: 200px">
+                        </div>
+                    </template>
+                    <template v-else>
+                        <h2 class="text-danger">{{basic.close_recharge_text}}</h2>
+                    </template>
                 </div>
                 <div class="row" v-show="way===2">
                     <div class="col-md-8">
@@ -81,7 +86,13 @@
             },
             pay_src: function () {
                 return `http://${this.domain}/pay/?appid=${this.appid}&payno=${this.user.mobile}&back_url=${this.back_url}`
-            }
+            },
+            basic: function () {
+                return this.$store.state.basic;
+            },
+        },
+        mounted: function () {
+            this.$store.commit('basic');
         },
         methods: {
             doRecharge: function () {

@@ -42,6 +42,8 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/index/article/list', 'Index\ArticleController@list');
     Route::get('/index/article/show', 'Index\ArticleController@show');
 
+    Route::get('/index/index/basic', 'Index\IndexController@basic');
+
     Route::get('/taxonomy/all/data', 'Index\TaxonomyController@allData');
     Route::get('/taxonomy/all/display', 'Index\TaxonomyController@allDisplay');
 
