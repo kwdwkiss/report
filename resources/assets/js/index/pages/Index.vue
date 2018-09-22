@@ -1,5 +1,11 @@
 <template>
     <div>
+        <div class="row hidden-md hidden-lg hidden-sm">
+            <a :href="page.mobile_ad.report_search_top.url">
+                <img :src="page.mobile_ad.report_search_top.img_src" style="width: 100%;max-height: 80px">
+            </a>
+        </div>
+
         <div class="row hidden-xs dashboard">
             <div class="col-sm-4">
                 <p>恶意账号：<span class="text-warning">{{page.report_num}}</span></p>
@@ -344,7 +350,7 @@
 
         <div class="row hidden-md hidden-lg hidden-sm">
             <a :href="page.mobile_ad.report_search.url">
-                <img :src="page.mobile_ad.report_search.img_src" style="width: 100%;max-height: 100px">
+                <img :src="page.mobile_ad.report_search.img_src" style="width: 100%;max-height: 80px">
             </a>
         </div>
     </div>

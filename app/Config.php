@@ -134,6 +134,7 @@ class Config extends Model
             ['img_src' => '/images/ad_empty.gif', 'url' => ''],
         ],
         'mobile_ad' => [
+            'report_search_top' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
             'report_search' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
             'check_tb' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
             'check_pdd' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
