@@ -116,7 +116,9 @@
                     userRegister: {},
                     accountReport: {},
                     accountSearch: {},
-                    rechargeBill: {}
+                    rechargeBill: {},
+                    excelDownload: {},
+                    excelDownloadUsers: {},
                 }
             }
         },
