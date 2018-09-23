@@ -82,7 +82,7 @@
                         <!--<h4 class="modal-title">通知</h4>-->
                     <!--</div>-->
                     <!--<div class="modal-body">-->
-                        <!--<p style="font-size: 16px;color: red">9月1日起，EXCEL表格功能需要登录才能使用！</p>-->
+                        <!--<p style="font-size: 16px;color: red">由于智能表格系统使用用户大量增加，导致服务器无法承载，网站需要升级服务器跟网络带宽来保障用户的体验，所以决定10月1日起，每下载一张表格，会扣除10点宏海积分。</p>-->
                     <!--</div>-->
                 <!--</div>-->
             <!--</div>-->

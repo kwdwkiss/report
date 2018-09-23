@@ -19,7 +19,8 @@
                 </div>
                 <div class="row" v-show="way===1">
                     <template v-if="!basic.close_recharge">
-                        <p>如有支付问题，请联系微信：ywh171337832</p>
+                        <p>1、1元=100积分，查询一次消耗2个积分。</p>
+                        <p>2、如有支付问题，请联系微信：ywh171337832</p>
                         <div class="col-md-8">
                             <iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350"
                                     frameborder="0"></iframe>
@@ -85,6 +86,10 @@
                 return this.$store.state.user;
             },
             pay_src: function () {
+                if (!this.user.mobile) {
+                    this.$message.error('手机号没有获取到，请重新登录再试');
+                    return;
+                }
                 return `http://${this.domain}/pay/?appid=${this.appid}&payno=${this.user.mobile}&back_url=${this.back_url}`
             },
             basic: function () {
