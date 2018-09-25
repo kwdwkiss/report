@@ -72,21 +72,21 @@
             </div>
         </div>
 
-        <!--<div class="modal fade" id="msg-dialog">-->
-            <!--<div class="modal-dialog">-->
-                <!--<div class="modal-content">-->
-                    <!--<div class="modal-header">-->
-                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
-                            <!--&times;-->
-                        <!--</button>-->
-                        <!--<h4 class="modal-title">通知</h4>-->
-                    <!--</div>-->
-                    <!--<div class="modal-body">-->
-                        <!--<p style="font-size: 16px;color: red">由于智能表格系统使用用户大量增加，导致服务器无法承载，网站需要升级服务器跟网络带宽来保障用户的体验，所以决定10月1日起，每下载一张表格，会扣除10点宏海积分。</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
+        <div class="modal fade" id="msg-dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">通知</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p style="font-size: 16px;color: red">由于智能表格系统用户使用量大增，导致服务器负载过高，网站需要升级服务器和网络带宽来保障用户体验，所以决定10月1日起，每下载一张表格，会扣除10点宏海积分。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -101,7 +101,7 @@
             }
         },
         mounted: function () {
-            // $('#msg-dialog').modal('show');
+            $('#msg-dialog').modal('show');
         },
         computed: {
             page: function () {
