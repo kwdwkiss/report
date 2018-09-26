@@ -449,6 +449,7 @@
 
                 if (self.reporting) {
                     self.$message('举报中，请不要重复提交');
+                    return;
                 }
                 self.reporting = true;
 
