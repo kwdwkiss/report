@@ -328,6 +328,21 @@
                     </el-form>
                 </div>
             </div>
+            <div class="panel">
+                <div class="panel-heading">EXCEL客服设置</div>
+                <div class="panel-body">
+                    <el-form label-width="100px">
+                        <template v-for="item in data.service_excel">
+                            <el-form-item label="表格客服">
+                                <el-input v-model="item.name"></el-input>
+                            </el-form-item>
+                        </template>
+                        <el-form-item>
+                            <el-button type="success" @click="doSave">保存</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </div>
         </el-tab-pane>
         <input class="input-file" style="display: none" type="file" name="file" @change="uploadChange">
     </el-tabs>

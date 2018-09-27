@@ -9,7 +9,7 @@
                 9.15+小亮+03+135+100<br>
             </p>
             <p class="col-xs-6 text-success" style="font-size: 18px">
-                微信客服：<span>SYX0518ZA</span><br>
+                微信客服：<span>{{page.service_excel[0].name}}</span><br>
             </p>
         </div>
         <div class="table-responsive">

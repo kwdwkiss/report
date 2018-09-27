@@ -157,6 +157,9 @@ class Config extends Model
             ['name' => '/images/wx_kf.png'],
             ['name' => '/images/wx_kf.png'],
         ],
+        'service_excel' => [
+            ['name' => ''],
+        ],
         'notice' => [
             'title' => '12月1日起，凡被恶意举报超过180天的记录，可以联系网站客服免费删除',
             'url' => '',
