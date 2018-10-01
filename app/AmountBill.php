@@ -21,6 +21,7 @@ class AmountBill extends Model
         2 => '充值提成',
         101 => '查询结算',
         102 => '认证会员',
+        103 => '下载EXCEL',
     ];
 
     public $sysGiveAmount = [
@@ -29,6 +30,7 @@ class AmountBill extends Model
         3 => '邀请用户充值积分，提成10%',
         4 => '新用户注册赠送100积分',
         5 => '邀请新用户注册赠送50积分',
+        6 => '下载EXCEL扣除10积分',
     ];
 
     public static function generateBillNo($userId)

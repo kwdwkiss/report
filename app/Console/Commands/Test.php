@@ -51,7 +51,7 @@ class Test extends Command
      */
     public function handle()
     {
-        $data = preg_replace('/[,\s]+/','','科技馆老钟批发部楼上六楼');
+        preg_match('/^(.+?\.php)(/.+)$/','',$data);
         dd($data);
         //$this->processTest();
     }

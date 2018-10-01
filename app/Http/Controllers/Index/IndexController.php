@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Index;
 use App\Account;
 use App\AccountReport;
 use App\AccountSearch;
+use App\AmountBill;
 use App\Attachment;
 use App\BehaviorLog;
 use App\Config;
@@ -414,17 +415,38 @@ class IndexController extends Controller
             }
         }
 
-        try {
-            Cell::setValueBinder(new NoScienceValueBinder());
-            $spreadsheet = new Spreadsheet();
-            $sheet = $spreadsheet->getActiveSheet();
-            $sheet->fromArray($data);
-            $writer = new Xlsx($spreadsheet);
-            $writer->save($path);
-        } catch (Exception $e) {
-            logger($e->getMessage(), $data);
-            throw $e;
-        }
+        \DB::transaction(function () use ($user, $data, $path) {
+            $amount = 10;
+            if ($user->_profile->amount < 10) {
+                throw new JsonException('用户积分不足，请充值');
+            }
+
+            //下载
+            try {
+                Cell::setValueBinder(new NoScienceValueBinder());
+                $spreadsheet = new Spreadsheet();
+                $sheet = $spreadsheet->getActiveSheet();
+                $sheet->fromArray($data);
+                $writer = new Xlsx($spreadsheet);
+                $writer->save($path);
+            } catch (Exception $e) {
+                logger($e->getMessage(), $data);
+                throw $e;
+            }
+
+            //扣积分
+            AmountBill::create([
+                'user_id' => $user->id,
+                'bill_no' => AmountBill::generateBillNo($user->id),
+                'biz_id' => 6,
+                'biz_type' => 103,
+                'type' => 1,
+                'amount' => $amount,
+                'description' => "下载EXCEL，扣除{$amount}积分",
+                'created_at' => Carbon::now()->toDateTimeString(),
+            ]);
+            $user->_profile->decrement('amount', $amount);
+        });
 
 //        $fp = fopen($path, 'w');
 //        fputs($fp, chr(239) . chr(187) . chr(191));

@@ -82,7 +82,8 @@
                         <h4 class="modal-title">通知</h4>
                     </div>
                     <div class="modal-body">
-                        <p style="font-size: 16px;color: red">由于智能表格系统用户使用量大增，导致服务器负载过高，网站需要升级服务器和网络带宽来保障用户体验，所以决定10月1日起，每下载一张表格，会扣除10点宏海积分。</p>
+                        <p style="font-size: 16px;color: red">
+                            由于智能表格系统用户使用量大增，导致服务器负载过高，网站需要升级服务器和网络带宽来保障用户体验，所以决定10月1日起，每下载一张表格，会扣除10点宏海积分。</p>
                     </div>
                 </div>
             </div>
@@ -130,6 +131,7 @@
                 this.parse(this.content);
             },
             download: function () {
+                let self = this;
                 this.parse(this.content);
                 if (this.content.length <= 1) {
                     this.$message.error('数据为空');
@@ -152,6 +154,7 @@
                 // $('#download-btn')[0].href = uri + base64(format(template, ctx));
                 // $('#download-btn')[0].download = 'temp.xls';
                 axios.post(api.oneKeyExcel, {data: this.table}).then(function (res) {
+                    self.$store.commit('user');
                     location.href = res.data.data;
                 });
             },
