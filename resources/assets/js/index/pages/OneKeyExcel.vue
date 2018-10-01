@@ -8,8 +8,11 @@
                 9.15+小里+02+1341+100/<br>
                 9.15+小亮+03+135+100<br>
             </p>
-            <p class="col-xs-6 text-success" style="font-size: 18px">
+            <p class="col-xs-6 text-success" style="font-size: 16px">
                 微信客服：<span>{{page.service_excel[0].name}}</span><br>
+            </p>
+            <p class="col-xs-6 text-warning" style="font-size: 16px">
+                扣分说明：下载一次，扣除10积分。
             </p>
         </div>
         <div class="table-responsive">
