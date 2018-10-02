@@ -21,8 +21,7 @@
                     <template v-if="!basic.close_recharge">
                         <p>1、1元=100积分，查询一次消耗2个积分。</p>
                         <p style="color: red;font-weight: bold">2、生成二维码后5分钟之内必须支付，否则无法到账。过期后请重新生成二维码。</p>
-                        <p style="color: red;font-weight: bold">3、禁止使用花呗付款，否则积分无法到账。</p>
-                        <p>4、如有支付问题，请联系微信：ywh171337832</p>
+                        <p>3、如有支付问题，请联系微信：ywh171337832</p>
                         <div class="col-md-8">
                             <iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350"
                                     frameborder="0"></iframe>
