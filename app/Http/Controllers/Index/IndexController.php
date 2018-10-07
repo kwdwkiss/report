@@ -460,7 +460,7 @@ class IndexController extends Controller
                     'user_amount' => $inviter->_profile->amount,
                     'biz_type' => 3,
                     'biz_id' => 7,
-                    'description' => "推荐好友下载EXCEL,提成${$inviterAmount}积分",
+                    'description' => "推荐好友下载EXCEL,提成{$inviterAmount}积分",
                 ]);
             }
         });
