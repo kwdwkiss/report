@@ -12,7 +12,7 @@
                 微信客服：<span>{{page.service_excel[0].name}}</span><br>
                 1、下载1张表格，消耗10个积分<br>
                 2、推荐好友注册，好友下载1张表格，本人可以获得4点积分<br>
-                3、右上角菜单->积分充值->推广赚积分，即可推荐
+                3、推荐方法：菜单->积分充值->推广赚积分
             </p>
         </div>
         <div class="table-responsive">
@@ -102,6 +102,7 @@
                 content: '',
                 table: [],
                 title: '',
+                doing: false,
             }
         },
         mounted: function () {
@@ -156,6 +157,16 @@
                 // };
                 // $('#download-btn')[0].href = uri + base64(format(template, ctx));
                 // $('#download-btn')[0].download = 'temp.xls';
+
+                if (self.doing) {
+                    self.$message('下载中，请不要重复提交');
+                    return;
+                }
+                self.doing = true;
+                setTimeout(function () {
+                    self.doing = false;
+                }, 1000);
+
                 axios.post(api.oneKeyExcel, {data: this.table}).then(function (res) {
                     self.$store.commit('user');
                     location.href = res.data.data;
