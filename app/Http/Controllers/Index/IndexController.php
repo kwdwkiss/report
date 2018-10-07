@@ -446,6 +446,23 @@ class IndexController extends Controller
                 'created_at' => Carbon::now()->toDateTimeString(),
             ]);
             $user->_profile->decrement('amount', $amount);
+
+            //推荐好友下载EXCEL，提成4积分
+            $inviter = $user->_profile->_inviter;
+            if ($inviter) {
+                $inviterAmount = 4;
+                $inviter->_profile->increment('amount', $inviterAmount);
+                AmountBill::create([
+                    'user_id' => $inviter->id,
+                    'bill_no' => AmountBill::generateBillNo($inviter->id),
+                    'type' => 0,
+                    'amount' => $inviterAmount,
+                    'user_amount' => $inviter->_profile->amount,
+                    'biz_type' => 3,
+                    'biz_id' => 7,
+                    'description' => "推荐好友下载EXCEL,提成${$inviterAmount}积分",
+                ]);
+            }
         });
 
 //        $fp = fopen($path, 'w');
