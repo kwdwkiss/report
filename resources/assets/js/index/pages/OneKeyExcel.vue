@@ -106,7 +106,7 @@
             }
         },
         mounted: function () {
-            $('#msg-dialog').modal('show');
+            //$('#msg-dialog').modal('show');
         },
         computed: {
             page: function () {
