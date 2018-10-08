@@ -118,6 +118,9 @@ class UserController extends Controller
                 throw new JsonException('请选择类型');
             }
             Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($type);
+            if (!$mobile) {
+                throw new JsonException('手机号不为空');
+            }
             if ($mobile) {
                 if (!preg_match(RegExp::MOBILE, $mobile)) {
                     throw new JsonException('手机号错误');
