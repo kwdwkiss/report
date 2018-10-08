@@ -51,6 +51,9 @@ class RechargeController
             return 'tno null';
         }
 
+        if (!$name) {
+            return 'name null';
+        }
         $user = User::where('mobile', $name)->first();
         if (!$user) {
             return 'user null';
