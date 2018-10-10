@@ -9,7 +9,7 @@
         </div>
         <div class="row">
             <p class="col-xs-offset-1 col-xs-10">
-                <a href="https://plogin.m.jd.com/user/login.action">登录或绑定微信</a>
+                <a href="https://m.jd.com">登录或绑定微信</a>
             </p>
             <p class="col-xs-offset-1 col-xs-5">
                 <a href="/check_jd?page=jd_member">1、京东会员</a>
