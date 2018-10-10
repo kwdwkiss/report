@@ -30,7 +30,7 @@ class NoScienceValueBinder extends DefaultValueBinder
             }
         }
 
-        if (is_string($value) && strlen($value) > 11) {
+        if (is_string($value) && strlen($value) > 10) {
             $cell->setValueExplicit($value, DataType::TYPE_STRING);
         } else {
             // Set value explicit
