@@ -9,7 +9,7 @@
                 9.15+小亮+03+135+100<br>
             </p>
             <p class="col-xs-6" style="color: red">
-                微信客服：<span>{{page.service_excel[0].name}}</span><br>
+                QQ交流群：<span>{{page.service_excel[0].name}}</span><br>
                 1、下载1张表格，消耗10个积分<br>
                 2、推荐好友注册，好友下载1张表格，本人可以获得4点积分<br>
                 3、推荐方法：菜单->积分充值->推广赚积分
