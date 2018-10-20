@@ -77,6 +77,7 @@
         name: "Recharge",
         data: function () {
             return {
+                way: 1,
                 recharge_url: '',
                 mobile: '',
             }
