@@ -35,6 +35,7 @@ Route::middleware(['csrf'])->group(function () {
 
     Route::get('/', 'Index\IndexController@index')->name('login');
     Route::get('/index/pop-window', 'Index\IndexController@popWindow');
+    Route::get('/index/index/recharge_url', 'Index\IndexController@rechargeUrl');
     Route::post('/index/upload-oss', 'Index\IndexController@uploadOss');
     Route::post('/index/behavior-log', 'Index\IndexController@behaviorLog');
     Route::post('/index/one-key-excel', 'Index\IndexController@oneKeyExcel');

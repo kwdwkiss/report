@@ -96,6 +96,7 @@ module.exports = {
     behaviorLog: '/index/behavior-log',
     oneKeyExcel: '/index/one-key-excel',
     checkGeo: 'check_geo',
+    indexIndexRechargeUrl: '/index/index/recharge_url',
 
     indexIndexBasic: '/index/index/basic',
 

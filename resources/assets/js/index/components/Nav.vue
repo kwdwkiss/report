@@ -74,6 +74,7 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a class="collapse-hide" href="javascript:" @click="go('userProfile')">用户资料</a>
                                     </li>
+                                    <li><a class="collapse-hide" href="javascript:" @click="go('userProduct')">我的服务</a>
                                     <li><a class="collapse-hide" href="javascript:" @click="go('userAuthBillIndex')">我的认证</a>
                                     </li>
                                     <li><a class="collapse-hide" href="javascript:" @click="go('userMerchant')">店铺资料</a>

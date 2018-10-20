@@ -47,6 +47,7 @@ const router = new VueRouter({
                     path: 'user-auth-bill/index',
                     component: require('./pages/UserAuthBillList')
                 },
+                {name: 'userProduct', path: 'user-product/index', component: require('./pages/UserProduct')},
             ]
         },
         {name: 'tb_my_rate', path: 'check_account/tb_my_rate', component: require('./pages/check_account/TbMyRate')},

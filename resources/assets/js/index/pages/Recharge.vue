@@ -22,6 +22,7 @@
                         <p>1、1元=100积分，查询一次消耗2个积分。</p>
                         <p style="color: red;font-weight: bold">2、生成二维码后5分钟之内必须支付，否则无法到账。过期后请重新生成二维码。</p>
                         <p>3、如有支付问题，请联系微信：ywh171337832</p>
+                        <h4 style="color: red">当前充值账号为：<span class="bold">{{mobile}}</span>，请确认！</h4>
                         <div class="col-md-8">
                             <iframe :src="pay_src" id="myiframe" scrolling="no" width="100%" height="350"
                                     frameborder="0"></iframe>
@@ -76,10 +77,8 @@
         name: "Recharge",
         data: function () {
             return {
-                way: 1,
-                appid: '2018062932',
-                domain: 'pay.tbpzw.com',
-                back_url: encodeURIComponent('http://' + location.host + '/user/recharge/page-callback'),
+                recharge_url: '',
+                mobile: '',
             }
         },
         computed: {
@@ -87,11 +86,12 @@
                 return this.$store.state.user;
             },
             pay_src: function () {
-                if (!this.user.mobile) {
-                    this.$message.error('手机号没有获取到，请重新登录再试');
-                    return;
-                }
-                return `http://${this.domain}/pay/?appid=${this.appid}&payno=${this.user.mobile}&back_url=${this.back_url}`
+                // if (!this.user.mobile) {
+                //     this.$message.error('手机号没有获取到，请重新登录再试');
+                //     return;
+                // }
+                // return `http://${this.domain}/pay/?appid=${this.appid}&payno=${this.user.mobile}&back_url=${this.back_url}`
+                return this.recharge_url;
             },
             basic: function () {
                 return this.$store.state.basic;
@@ -99,6 +99,11 @@
         },
         mounted: function () {
             this.$store.commit('basic');
+            let self = this;
+            axios.get(api.indexIndexRechargeUrl).then(function (res) {
+                self.recharge_url = res.data.data.recharge_url;
+                self.mobile = res.data.data.mobile;
+            });
         },
         methods: {
             doRecharge: function () {

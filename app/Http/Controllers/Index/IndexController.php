@@ -189,6 +189,26 @@ class IndexController extends Controller
         ];
     }
 
+    public function rechargeUrl()
+    {
+        $user = \Auth::guard('user')->user();
+        if (!$user) {
+            throw new JsonException('用户未登录，请登录后再充值');
+        }
+
+        $appid = '2018062932';
+        $domain = 'pay.tbpzw.com';
+        $host = request()->getHttpHost();
+        $back_url = base64_encode("$host/user/recharge/page-callback");
+        $rechargeUrl = "http://{$domain}/pay/?appid={$appid}&payno={$user->mobile}&back_url={$back_url}";
+        return [
+            'data' => [
+                'recharge_url' => $rechargeUrl,
+                'mobile' => $user->mobile,
+            ]
+        ];
+    }
+
     public function report()
     {
         $user = \Auth::guard('user')->user();

@@ -51,8 +51,7 @@ class Test extends Command
      */
     public function handle()
     {
-        preg_match('/^(.+?\.php)(/.+)$/','',$data);
-        dd($data);
+        dd(mb_strlen('18200000003') != 11);
         //$this->processTest();
     }
 
