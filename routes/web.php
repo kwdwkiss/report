@@ -67,6 +67,8 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::get('/user/recharge/index', 'User\RechargeController@index');
     Route::get('/user/amount/index', 'User\AmountController@index');
 
+    Route::get('/index/excel_cost_type', 'Index\IndexController@excelCostType');
+
     Route::get('/index/user_product/index', 'Index\UserProductController@index');
     Route::post('/index/user_product/create', 'Index\UserProductController@create');
 

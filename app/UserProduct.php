@@ -20,6 +20,10 @@ class UserProduct extends Model
         2 => '已过期',
     ];
 
+    public static $productTypes = [
+        'excel' => [1]
+    ];
+
     public function _productBill()
     {
         return $this->belongsTo(ProductBill::class, 'product_bill_id', 'id');
@@ -28,6 +32,17 @@ class UserProduct extends Model
     public function _product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    public static function hasEnableProducts($user, $productKey)
+    {
+        $where = static::query()
+            ->whereIn('product_id', static::$productTypes[$productKey])
+            ->where('user_id', $user->id)
+            ->where('status', 1)
+            ->where('end_at', '>', Carbon::now());
+        return $where
+                ->count() > 0;
     }
 
     public function enable()

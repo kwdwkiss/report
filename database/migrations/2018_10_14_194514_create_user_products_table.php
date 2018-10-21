@@ -22,6 +22,8 @@ class CreateUserProductsTable extends Migration
             $table->timestamp('start_at')->nullable();
             $table->timestamp('end_at')->nullable();
             $table->timestamps();
+
+            $table->index(['user_id', 'end_at']);
         });
     }
 

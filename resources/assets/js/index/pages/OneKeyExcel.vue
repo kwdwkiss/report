@@ -14,6 +14,7 @@
                 2、推荐好友注册，好友下载1张表格，本人可以获得4点积分<br>
                 3、推荐方法：菜单->积分充值->推广赚积分
             </p>
+            <p class="col-xs-12 text-primary" style="font-size: 16px">扣费类型：{{excelCostType}}</p>
         </div>
         <div class="table-responsive">
             <table id="my-table" class="table table-striped table-bordered table-hover">
@@ -103,10 +104,12 @@
                 table: [],
                 title: '',
                 doing: false,
+                excelCostType: '',
             }
         },
         mounted: function () {
             //$('#msg-dialog').modal('show');
+            this.getExcelCostType();
         },
         computed: {
             page: function () {
@@ -171,6 +174,12 @@
                     self.$store.commit('user');
                     location.href = res.data.data;
                 });
+            },
+            getExcelCostType: function () {
+                let self = this;
+                axios.get(api.indexExcelCostType).then(function (res) {
+                    self.excelCostType = res.data.data;
+                })
             },
             save: function () {
                 if (!this.user) {

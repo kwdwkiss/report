@@ -95,6 +95,7 @@ module.exports = {
     uploadOss: '/index/upload-oss',
     behaviorLog: '/index/behavior-log',
     oneKeyExcel: '/index/one-key-excel',
+    indexExcelCostType: '/index/excel_cost_type',
     checkGeo: 'check_geo',
     indexIndexRechargeUrl: '/index/index/recharge_url',
 

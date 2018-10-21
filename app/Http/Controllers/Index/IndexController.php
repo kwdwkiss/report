@@ -22,6 +22,7 @@ use App\Http\Resources\AccountResource;
 use App\Http\Resources\UserResource;
 use App\Taxonomy;
 use App\User;
+use App\UserProduct;
 use Carbon\Carbon;
 use Cly\RegExp\RegExp;
 use Cly\Spreadsheet\NoScienceValueBinder;
@@ -400,6 +401,20 @@ class IndexController extends Controller
         return [];
     }
 
+    public function excelCostType()
+    {
+        $user = \Auth::guard('user')->user();
+
+        $hasEnableExcel = UserProduct::hasEnableProducts($user, 'excel');
+
+        $type = '按次扣费';
+        if ($hasEnableExcel) {
+            $type = 'EXCEL包月';
+        }
+
+        return ['data' => $type];
+    }
+
     public function oneKeyExcel()
     {
         $data = request('data', []);
@@ -437,7 +452,8 @@ class IndexController extends Controller
 
         \DB::transaction(function () use ($user, $data, $path) {
             $amount = 10;
-            if ($user->_profile->amount < 10) {
+            $hasEnableExcel = UserProduct::hasEnableProducts($user, 'excel');
+            if (!$hasEnableExcel && $user->_profile->amount < 10) {
                 throw new JsonException('用户积分不足，请充值');
             }
 
@@ -454,34 +470,36 @@ class IndexController extends Controller
                 throw $e;
             }
 
-            //扣积分
-            AmountBill::create([
-                'user_id' => $user->id,
-                'bill_no' => AmountBill::generateBillNo($user->id),
-                'biz_id' => 6,
-                'biz_type' => 103,
-                'type' => 1,
-                'amount' => $amount,
-                'description' => "下载EXCEL，扣除{$amount}积分",
-                'created_at' => Carbon::now()->toDateTimeString(),
-            ]);
-            $user->_profile->decrement('amount', $amount);
-
-            //推荐好友下载EXCEL，提成4积分
-            $inviter = $user->_profile->_inviter;
-            if ($inviter) {
-                $inviterAmount = 4;
-                $inviter->_profile->increment('amount', $inviterAmount);
+            if(!$hasEnableExcel){
+                //扣积分
                 AmountBill::create([
-                    'user_id' => $inviter->id,
-                    'bill_no' => AmountBill::generateBillNo($inviter->id),
-                    'type' => 0,
-                    'amount' => $inviterAmount,
-                    'user_amount' => $inviter->_profile->amount,
-                    'biz_type' => 3,
-                    'biz_id' => 7,
-                    'description' => "推荐好友下载EXCEL,提成{$inviterAmount}积分",
+                    'user_id' => $user->id,
+                    'bill_no' => AmountBill::generateBillNo($user->id),
+                    'biz_id' => 6,
+                    'biz_type' => 103,
+                    'type' => 1,
+                    'amount' => $amount,
+                    'description' => "下载EXCEL，扣除{$amount}积分",
+                    'created_at' => Carbon::now()->toDateTimeString(),
                 ]);
+                $user->_profile->decrement('amount', $amount);
+
+                //推荐好友下载EXCEL，提成4积分
+                $inviter = $user->_profile->_inviter;
+                if ($inviter) {
+                    $inviterAmount = 4;
+                    $inviter->_profile->increment('amount', $inviterAmount);
+                    AmountBill::create([
+                        'user_id' => $inviter->id,
+                        'bill_no' => AmountBill::generateBillNo($inviter->id),
+                        'type' => 0,
+                        'amount' => $inviterAmount,
+                        'user_amount' => $inviter->_profile->amount,
+                        'biz_type' => 3,
+                        'biz_id' => 7,
+                        'description' => "推荐好友下载EXCEL,提成{$inviterAmount}积分",
+                    ]);
+                }
             }
         });
 
