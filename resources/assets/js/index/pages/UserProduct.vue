@@ -112,6 +112,12 @@
             this.list();
             this.productDetail();
         },
+        mounted: function () {
+            let action = this.$route.query.action;
+            if (action === 'buy') {
+                $('#buy-dialog').modal('show');
+            }
+        },
         methods: {
             list: function (payload) {
                 let self = this;
