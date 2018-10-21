@@ -12,6 +12,8 @@ class ProductController extends Controller
     {
         $query = Product::query();
 
+        $query->orderBy('id', 'desc');
+
         return ProductResource::collection($query->paginate());
     }
 

@@ -20,6 +20,8 @@ class UserProductController extends Controller
             });
         }
 
+        $query->orderBy('id', 'desc');
+
         return UserProductResource::collection($query->paginate());
     }
 }
