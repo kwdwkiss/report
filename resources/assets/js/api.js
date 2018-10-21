@@ -98,6 +98,11 @@ module.exports = {
     checkGeo: 'check_geo',
     indexIndexRechargeUrl: '/index/index/recharge_url',
 
+    indexProductShow: '/index/product/show',
+
+    indexUserProductIndex: '/index/user_product/index',
+    indexUserProductCreate: '/index/user_product/create',
+
     indexIndexBasic: '/index/index/basic',
 
     indexSearch: '/index/search',

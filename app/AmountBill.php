@@ -23,6 +23,7 @@ class AmountBill extends Model
         101 => '查询结算',
         102 => '认证会员',
         103 => '下载EXCEL',
+        104 => '购买EXCEL包月服务',
     ];
 
     public $sysGiveAmount = [

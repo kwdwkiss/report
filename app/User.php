@@ -66,6 +66,11 @@ class User extends Authenticatable
         return $this->hasMany(AccountReport::class, 'user_id', 'id');
     }
 
+    public function _product()
+    {
+        return $this->hasMany(UserProduct::class, 'user_id', 'id');
+    }
+
     public function _tagEntities()
     {
         return $this->belongsTo(TagEntity::class, 'id', 'entity_id');

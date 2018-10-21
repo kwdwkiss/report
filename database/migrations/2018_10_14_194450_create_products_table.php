@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->integer('type');//1-永久 2-按年 3-按月
             $table->integer('amount');
-            $table->integer('duration');
+            $table->text('duration');//可以选择的时长
             $table->timestamps();
         });
     }

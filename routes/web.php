@@ -48,6 +48,8 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/taxonomy/all/data', 'Index\TaxonomyController@allData');
     Route::get('/taxonomy/all/display', 'Index\TaxonomyController@allDisplay');
 
+    Route::get('/index/product/show', 'Index\ProductController@show');
+
     Route::get('/user/logout', 'User\UserController@logout');
     Route::post('/user/login', 'User\UserController@login');
     Route::post('/user/forget-password', 'User\UserController@forgetPassword');
@@ -64,6 +66,9 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::post('/index/report', 'Index\IndexController@report');
     Route::get('/user/recharge/index', 'User\RechargeController@index');
     Route::get('/user/amount/index', 'User\AmountController@index');
+
+    Route::get('/index/user_product/index', 'Index\UserProductController@index');
+    Route::post('/index/user_product/create', 'Index\UserProductController@create');
 
     Route::get('/user/notification', 'User\NotificationController@notificationList');
     Route::get('/user/unread-notification', 'User\NotificationController@unreadNotificationList');
