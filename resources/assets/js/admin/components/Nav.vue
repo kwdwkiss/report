@@ -90,6 +90,15 @@
                                 <li><a class="collapse-hide" href="javascript:" @click="go('wechatMenu')">菜单管理</a></li>
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">产品<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="collapse-hide" href="javascript:" @click="go('productIndex')">产品列表</a>
+                                </li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('userProductIndex')">用户产品</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">

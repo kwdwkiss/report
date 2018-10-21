@@ -203,6 +203,9 @@ Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
 
     Route::get('/admin/vbot_job/index', 'Admin\VbotJobController@index');
     Route::get('/admin/excel/index', 'Admin\ExcelController@index');
+
+    Route::get('/admin/product/index', 'Admin\ProductController@index');
+    Route::get('/admin/user_product/index', 'Admin\UserProductController@index');
 });
 
 //>>>>>wechat serv

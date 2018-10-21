@@ -25,6 +25,11 @@ class UserProduct extends Model
         return $this->belongsTo(ProductBill::class, 'product_bill_id', 'id');
     }
 
+    public function _user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public function _product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');

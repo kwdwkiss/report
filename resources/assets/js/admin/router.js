@@ -59,6 +59,10 @@ const router = new VueRouter({
                 {name: 'vbotJobIndex', path: 'vbot_job/index', component: require('./pages/VbotJob/Index')},
 
                 {name: 'excelIndex', path: 'excel/index', component: require('./pages/Excel/Index')},
+
+                {name: 'productIndex', path: 'product/index', component: require('./pages/Product/Index')},
+
+                {name: 'userProductIndex', path: 'user_product/index', component: require('./pages/UserProduct/Index')},
             ]
         }
     ]

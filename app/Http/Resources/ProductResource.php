@@ -9,6 +9,7 @@
 namespace App\Http\Resources;
 
 
+use App\Product;
 use Illuminate\Http\Resources\Json\Resource;
 
 class ProductResource extends Resource
@@ -16,6 +17,10 @@ class ProductResource extends Resource
     public function toArray($request)
     {
         $data = parent::toArray($request);
+
+        $data['type_label'] = Product::$typesUnit[$data['type']];
+        $data['duration_label']=implode(',',$data['duration']);
+
         return $data;
     }
 }

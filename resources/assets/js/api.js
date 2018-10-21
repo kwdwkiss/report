@@ -88,6 +88,10 @@ module.exports = {
 
     adminExcelIndex: '/admin/excel/index',
 
+    adminProductIndex: '/admin/product/index',
+
+    adminUserProductIndex: '/admin/user_product/index',
+
     //>>>>>>>>>>index
     taxonomyAllData: '/taxonomy/all/data',
     taxonomyAllDisplay: '/taxonomy/all/display',
