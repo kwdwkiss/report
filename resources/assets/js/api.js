@@ -92,6 +92,8 @@ module.exports = {
 
     adminUserProductIndex: '/admin/user_product/index',
 
+    adminProductBillIndex: '/admin/product_bill/index',
+
     //>>>>>>>>>>index
     taxonomyAllData: '/taxonomy/all/data',
     taxonomyAllDisplay: '/taxonomy/all/display',

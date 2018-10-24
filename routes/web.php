@@ -206,6 +206,7 @@ Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
 
     Route::get('/admin/product/index', 'Admin\ProductController@index');
     Route::get('/admin/user_product/index', 'Admin\UserProductController@index');
+    Route::get('/admin/product_bill/index', 'Admin\ProductBillController@index');
 });
 
 //>>>>>wechat serv

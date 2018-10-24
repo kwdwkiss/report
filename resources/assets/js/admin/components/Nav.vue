@@ -97,6 +97,7 @@
                                 <li><a class="collapse-hide" href="javascript:" @click="go('productIndex')">产品列表</a>
                                 </li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('userProductIndex')">用户产品</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('productBillIndex')">产品订单</a></li>
                             </ul>
                         </li>
                     </ul>

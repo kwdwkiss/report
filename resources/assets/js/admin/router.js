@@ -63,6 +63,8 @@ const router = new VueRouter({
                 {name: 'productIndex', path: 'product/index', component: require('./pages/Product/Index')},
 
                 {name: 'userProductIndex', path: 'user_product/index', component: require('./pages/UserProduct/Index')},
+
+                {name: 'productBillIndex', path: 'product_bill/index', component: require('./pages/ProductBill/Index')},
             ]
         }
     ]
