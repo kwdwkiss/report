@@ -15,13 +15,13 @@
                 </ul>
             </div>
         </div>
-        <div class="row hidden-xs hidden-sm">
+        <div class="row hidden-xs hidden-sm" style="margin: 2px">
             <div class="service-qq col-md-2">QQ客服：</div>
             <div class="service-qq col-md-2" v-for="(item, index) in page.service_qq" :key="'service_qq_'+index">
                 {{item.name}}
             </div>
         </div>
-        <div class="row hidden-xs hidden-sm">
+        <div class="row hidden-xs hidden-sm" style="margin: 2px">
             <div class="service-qq col-md-2">微信客服：</div>
             <div class="service-qq col-md-2" v-for="(item, index) in page.service_wx_id" :key="'service_qq_'+index">
                 {{item.name}}
