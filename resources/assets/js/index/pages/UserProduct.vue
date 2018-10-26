@@ -145,6 +145,7 @@
                     self.$store.commit('user');
                     self.list();
                     $('#buy-dialog').modal('hide');
+                    self.$message.success(res.data.message);
                 })
             }
         }

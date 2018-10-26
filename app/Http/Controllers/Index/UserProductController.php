@@ -47,7 +47,8 @@ class UserProductController extends Controller
             throw new JsonException('用户积分不足，请充值');
         }
 
-        \DB::transaction(function () use ($user, $product, $duration, $amountTotal) {
+        $amountBill = null;
+        \DB::transaction(function () use ($user, $product, $duration, $amountTotal, &$amountBill) {
             $user->_profile->decrement('amount', $amountTotal);
 
             $productBill = ProductBill::create([
@@ -59,7 +60,7 @@ class UserProductController extends Controller
 
             $unit = $product->getUnit();
 
-            AmountBill::create([
+            $amountBill = AmountBill::create([
                 'user_id' => $user->id,
                 'bill_no' => AmountBill::generateBillNo($user->id),
                 'type' => 1,
@@ -81,6 +82,6 @@ class UserProductController extends Controller
             $userProduct->enable();
         });
 
-        return [];
+        return ['message' => $amountBill->description . ' 成功'];
     }
 }
