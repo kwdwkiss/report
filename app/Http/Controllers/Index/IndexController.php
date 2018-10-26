@@ -405,6 +405,10 @@ class IndexController extends Controller
     {
         $user = \Auth::guard('user')->user();
 
+        if (!$user) {
+            return ['data' => '未登录'];
+        }
+
         $hasEnableExcel = UserProduct::hasEnableProducts($user, 'excel');
 
         $type = '按次扣费';
@@ -470,7 +474,7 @@ class IndexController extends Controller
                 throw $e;
             }
 
-            if(!$hasEnableExcel){
+            if (!$hasEnableExcel) {
                 //扣积分
                 AmountBill::create([
                     'user_id' => $user->id,

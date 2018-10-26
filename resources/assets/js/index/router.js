@@ -80,7 +80,8 @@ router.beforeEach((to, from, next) => {
             'userProfile',
             'userMerchant',
             'excelList',
-            'vbotIndex'
+            'vbotIndex',
+            'userProduct',
         ].indexOf(to.name) > -1) {
             next({name: 'login'});
         } else {
