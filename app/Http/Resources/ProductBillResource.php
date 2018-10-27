@@ -10,6 +10,7 @@ namespace App\Http\Resources;
 
 
 use App\Product;
+use App\ProductBill;
 use Illuminate\Http\Resources\Json\Resource;
 
 class ProductBillResource extends Resource
@@ -17,6 +18,8 @@ class ProductBillResource extends Resource
     public function toArray($request)
     {
         $data = parent::toArray($request);
+
+        $data['pay_status_label'] = ProductBill::$payStatus[$data['pay_status']];
 
         return $data;
     }

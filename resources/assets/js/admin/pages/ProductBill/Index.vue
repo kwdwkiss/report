@@ -31,6 +31,7 @@
                 <el-table-column prop="_product.title" label="产品" min-width="110"></el-table-column>
                 <el-table-column prop="quantity" label="数量" min-width="110"></el-table-column>
                 <el-table-column prop="amount" label="总积分" min-width="110"></el-table-column>
+                <el-table-column prop="pay_status_label" label="支付状态" min-width="110"></el-table-column>
                 <el-table-column prop="created_at" label="创建时间" min-width="170"></el-table-column>
                 <el-table-column label="操作" min-width="300">
                     <template slot-scope="scope">
