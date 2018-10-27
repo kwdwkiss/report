@@ -56,6 +56,7 @@ class UserProductController extends Controller
                 'product_id' => $product->id,
                 'quantity' => $duration,
                 'amount' => $amountTotal,
+                'pay_status' => 1,
             ]);
 
             $unit = $product->getUnit();

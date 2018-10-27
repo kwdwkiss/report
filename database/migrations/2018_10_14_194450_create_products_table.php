@@ -22,6 +22,8 @@ class CreateProductsTable extends Migration
             $table->integer('amount');
             $table->text('duration');//可以选择的时长
             $table->timestamps();
+
+            $table->unique('name');
         });
     }
 
