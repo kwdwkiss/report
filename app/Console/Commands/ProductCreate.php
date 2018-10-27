@@ -42,10 +42,20 @@ class ProductCreate extends Command
             [
                 'id' => 1,
                 'name' => 'excel_month',
+                'group' => 'excel',
                 'title' => 'EXCEL包月',
                 'type' => 3,
                 'duration' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
                 'amount' => 500
+            ],
+            [
+                'id' => 2,
+                'name' => 'user_auth_year',
+                'group' => 'user_auth',
+                'title' => '用户认证包年',
+                'type' => 2,
+                'duration' => [1],
+                'amount' => 5000
             ]
         ];
 

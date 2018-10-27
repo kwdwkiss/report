@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('title');
+            $table->string('group');//产品分组
             $table->integer('type');//1-永久 2-按年 3-按月
             $table->integer('amount');
             $table->text('duration');//可以选择的时长
