@@ -18,8 +18,9 @@ class CreateProductBillsTable extends Migration
             $table->integer('user_id');
             $table->integer('product_id');
             $table->integer('quantity');
-            $table->integer('pay_status');//0-未支付 1-已支付
             $table->integer('amount');
+            $table->integer('pay_status');//0-未支付 1-已支付
+            $table->timestamp('pay_at')->nullale();
             $table->timestamps();
         });
     }
