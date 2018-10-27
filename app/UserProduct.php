@@ -35,11 +35,11 @@ class UserProduct extends Model
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
-    public static function hasEnableProducts($user, $productKey)
+    public static function hasEnableProducts($user, $group)
     {
         $query = static::query()
-            ->whereHas('_product', function ($query) use ($productKey) {
-                $query->where('name', 'like', $productKey . '_%');
+            ->whereHas('_product', function ($query) use ($group) {
+                $query->where('group', $group);
             })
             ->where('user_id', $user->id)
             ->where('status', 1)
