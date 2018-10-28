@@ -13,8 +13,11 @@ use App\AmountBill;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserAuthBillResource;
+use App\Product;
+use App\ProductBill;
 use App\Taxonomy;
 use App\UserAuthBill;
+use App\UserProduct;
 use Carbon\Carbon;
 
 class UserAuthBillController extends Controller
@@ -23,59 +26,55 @@ class UserAuthBillController extends Controller
     {
         $user = \Auth::guard('user')->user();
 
-        $query = UserAuthBill::query()
+        $query = UserAuthBill::query()->with('_user', '_product', '_productBill')
             ->where('user_id', $user->id)
             ->orderBy('id', 'desc');
 
         return UserAuthBillResource::collection($query->paginate());
     }
 
-    public function pay()
+    public function apply()
     {
         $id = request('id');
+        $duration = request('duration');
 
         $user = \Auth::guard('user')->user();
+        $product = Product::findOrFail($id);
 
-        $userAuthBill = UserAuthBill::query()
+        $exists = UserAuthBill::query()
             ->where('user_id', $user->id)
-            ->findOrFail($id);
+            ->where('product_id', $product->id)
+            ->where('status', 0)
+            ->first();
 
-        \DB::transaction(function () use ($user, $userAuthBill) {
-            $amount = $userAuthBill->amount;
+        if ($exists) {
+            throw new JsonException('存在待审核的认证申请');
+        }
 
-            if ($user->_profile->amount < $amount) {
-                throw new JsonException('用户积分不足，请充值积分');
+        \DB::transaction(function () use ($user, $product, $duration) {
+
+            if (!in_array($duration, $product->duration)) {
+                throw new JsonException('duration error');
             }
 
-            $typeLabel = Taxonomy::findOrFail($userAuthBill->type)->name;
-            $durationLabel = $userAuthBill->duration . '个月';
+            $amountTotal = $product->amount * $duration;
 
-            $user->_profile->decrement('amount', $amount);
-            AmountBill::create([
+            $productBill = ProductBill::create([
                 'user_id' => $user->id,
-                'bill_no' => AmountBill::generateBillNo($user->id),
-                'type' => 1,
-                'amount' => $amount,
-                'user_amount' => $user->_profile->amount,
-                'biz_type' => 102,
-                'biz_id' => $userAuthBill->id,
-                'description' => "认证：{$typeLabel} 时长：$durationLabel"
+                'product_id' => $product->id,
+                'quantity' => $duration,
+                'amount' => $amountTotal,
+                'pay_status' => 0,
             ]);
 
-            $user->update([
-                'type' => $userAuthBill->type,
-                'auth_type' => $userAuthBill->type,
-                'auth_duration' => $userAuthBill->duration,
-                'auth_start_at' => Carbon::now(),
-                'auth_end_at' => Carbon::now()->addMonths($userAuthBill->duration),
-            ]);
-
-            $userAuthBill->update([
-                'status' => 1,
-                'pay_at' => Carbon::now()
+            UserAuthBill::create([
+                'user_id' => $user->id,
+                'product_id' => $product->id,
+                'product_bill_id' => $productBill->id,
+                'status' => 0,
             ]);
         });
 
-        return [];
+        return ['message' => '申请成功'];
     }
 }

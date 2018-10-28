@@ -46,9 +46,8 @@ module.exports = {
     adminUserRemarkCreate: '/admin/user-remark/create',
 
     adminUserAuthBillIndex: '/admin/user-auth-bill/index',
-    adminUserAuthBillCreate: '/admin/user-auth-bill/create',
-    adminUserAuthBillUpdate: '/admin/user-auth-bill/update',
-    adminUserAuthBillDelete: '/admin/user-auth-bill/delete',
+    adminUserAuthBillCheck: '/admin/user-auth-bill/check',
+    adminUserAuthBillReject: '/admin/user-auth-bill/reject',
 
     accountList: '/admin/account/list',
     accountShow: '/admin/account/show',
@@ -105,6 +104,7 @@ module.exports = {
     checkGeo: 'check_geo',
     indexIndexRechargeUrl: '/index/index/recharge_url',
 
+    indexProductIndex: '/index/product/index',
     indexProductShow: '/index/product/show',
 
     indexUserProductIndex: '/index/user_product/index',
@@ -157,7 +157,7 @@ module.exports = {
     userExcelDelete: '/user/excel/delete',
 
     userAuthBillIndex: 'user/user-auth-bill/index',
-    userAuthBillPay: 'user/user-auth-bill/pay',
+    userAuthBillApply: 'user/user-auth-bill/apply',
 
     userAmountList: '/user/amount/index',
 

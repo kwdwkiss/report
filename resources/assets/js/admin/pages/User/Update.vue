@@ -69,10 +69,7 @@
                     <el-tab-pane label="账号资料" name="1">
                         <el-form>
                             <el-form-item prop="type" label="会员类型" labelWidth="100px">
-                                <el-select v-model="form.type">
-                                    <el-option v-for="item in userTypeList" :key="item.id" :value="item.id"
-                                               :label="item.name"></el-option>
-                                </el-select>
+                                <label class="text-center" style="width: 100px">{{form.type_label}}</label>
                                 <el-button type="primary" @click="userAuth">会员认证</el-button>
                             </el-form-item>
                             <el-form-item label="手机号" labelWidth="100px">

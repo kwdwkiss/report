@@ -61,7 +61,7 @@ class UserProductController extends Controller
                 'pay_at' => Carbon::now(),
             ]);
 
-            $unit = $product->getUnit();
+            $unit = $product->getTypeLabel();
 
             $amountBill = AmountBill::create([
                 'user_id' => $user->id,

@@ -12,14 +12,25 @@ class Product extends Model
         'duration' => 'array',
     ];
 
-    public static $typesUnit = [
+    public static $types = [
         1 => '永久',
         2 => '年',
         3 => '月',
     ];
 
-    public function getUnit()
+    public static $userTypes = [
+        2 => 402,
+        3 => 404,
+        4 => 403,
+    ];
+
+    public function getTypeLabel()
     {
-        return static::$typesUnit[$this->type];
+        return static::$types[$this->type];
+    }
+
+    public function getUserType()
+    {
+        return static::$userTypes[$this->id];
     }
 }

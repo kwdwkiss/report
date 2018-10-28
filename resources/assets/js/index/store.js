@@ -22,6 +22,8 @@ const store = window.store = new Vuex.Store({
         excel: {data: [], meta: {}, links: {}},
         report: {data: [], meta: {}, links: {}},
         amount: {data: [], meta: {}, links: {}},
+        product: {duration: []},
+        products: [],
     },
     mutations: {
         breadcrumb(state, payload) {
@@ -89,6 +91,16 @@ const store = window.store = new Vuex.Store({
         amount(state, payload) {
             axios.get(api.userAmountList, {params: payload}).then(function (res) {
                 state.amount = res.data;
+            });
+        },
+        product(state, payload) {
+            axios.get(api.indexProductShow, {params: payload}).then(function (res) {
+                state.product = res.data.data;
+            });
+        },
+        products(state, payload) {
+            axios.get(api.indexProductIndex, {params: payload}).then(function (res) {
+                state.products = res.data.data;
             });
         },
     }

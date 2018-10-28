@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Taxonomy;
 use App\UserAuthBill;
 use Illuminate\Http\Resources\Json\Resource;
 
@@ -18,12 +17,14 @@ class UserAuthBillResource extends Resource
     {
         $data = parent::toArray($request);
 
+        if (isset($data['_product'])) {
+            $data['_product'] = new ProductResource($this->resource->_product);
+        }
+        if (isset($data['_product_bill'])) {
+            $data['_product_bill'] = new ProductBillResource($this->resource->_productBill);
+        }
+
         $data['status_label'] = UserAuthBill::$statusTypes[$data['status']];
-        $data['type_label'] = Taxonomy::query()
-            ->where('pid', Taxonomy::USER_TYPE)
-            ->findOrFail($data['type'])
-            ->name;
-        $data['duration_label'] = $data['duration'] . '个月';
 
         return $data;
     }

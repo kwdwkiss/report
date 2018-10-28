@@ -17,9 +17,15 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $product = Product::all();
+        $group = request('group');
 
-        return ProductResource::collection($product);
+        $query = Product::query();
+
+        if ($group) {
+            $query->where('group', $group);
+        }
+
+        return ProductResource::collection($query->get());
     }
 
     public function show()

@@ -49,27 +49,39 @@ class UserProduct extends Model
 
     public function enable()
     {
-        //找到已经启用的最后一个产品
-        $userProduct = UserProduct::query()
-            ->where('user_id', $this->user_id)
-            ->where('status', 1)
-            ->where('end_at', '>', Carbon::now())
-            ->orderBy('end_at', 'desc')
-            ->first();
+        \DB::transaction(function () {
+            //找到已经启用的最后一个产品
+            $userProduct = UserProduct::query()
+                ->where('user_id', $this->user_id)
+                ->where('status', 1)
+                ->where('end_at', '>', Carbon::now())
+                ->orderBy('end_at', 'desc')
+                ->first();
 
-        if ($userProduct) {
-            $start_at = $userProduct->end_at;
-        } else {
-            $start_at = Carbon::now();
-        }
-        $quantity = $this->_productBill->quantity;
-        $end_at = $start_at->copy()->addMonth($quantity);
+            if ($userProduct) {
+                $start_at = $userProduct->end_at;
+            } else {
+                $start_at = Carbon::now();
+            }
+            $quantity = $this->_productBill->quantity;
+            $end_at = $start_at->copy()->addMonth($quantity);
 
-        $this->update([
-            'status' => 1,
-            'start_at' => $start_at,
-            'end_at' => $end_at,
-        ]);
+            $this->update([
+                'status' => 1,
+                'start_at' => $start_at,
+                'end_at' => $end_at,
+            ]);
+
+            if ($this->_product->group == 'user_auth') {
+                $type = $this->_product->getUserType();
+                $user = $this->_user;
+
+                $user->update([
+                    'type' => $type,
+                    'auth_end_at' => $end_at,
+                ]);
+            }
+        });
     }
 
     public static function check()

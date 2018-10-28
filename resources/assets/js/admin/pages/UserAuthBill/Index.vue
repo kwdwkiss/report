@@ -2,6 +2,12 @@
     <div>
         <el-row class="search">
             <el-input v-model="search.mobile" placeholder="用户手机号"></el-input>
+            <el-select v-model="search.status" placeholder="审核状态">
+                <el-option value="" label="全部"></el-option>
+                <el-option :value="0" label="待审核"></el-option>
+                <el-option :value="1" label="已审核"></el-option>
+                <el-option :value="2" label="拒绝"></el-option>
+            </el-select>
             <!--<el-input v-model="search.bill_no" placeholder="系统订单号"></el-input>-->
             <el-date-picker
                     v-model="search.created_at"
@@ -17,7 +23,6 @@
 
             <el-button type="primary" @click="doSearch">搜索</el-button>
             <el-button type="warning" @click="reset">重置</el-button>
-            <el-button type="success" @click="doCreate">添加</el-button>
 
             <el-pagination layout="prev, pager, next"
                            :total="dataList.meta.total"
@@ -29,17 +34,18 @@
             <el-table :data="dataList.data" stripe @sort-change="sortChange">
                 <el-table-column prop="id" label="ID" min-width="80"></el-table-column>
                 <el-table-column prop="_user.mobile" label="用户" min-width="110"></el-table-column>
+                <el-table-column prop="_product.title" label="内容" min-width="110"></el-table-column>
+                <el-table-column prop="_product_bill.quantity" label="时长" min-width="110">
+                </el-table-column>
+                <el-table-column prop="_product_bill.amount" label="积分" min-width="110">
+                </el-table-column>
                 <el-table-column prop="status_label" label="状态" min-width="110"></el-table-column>
-                <el-table-column prop="amount" label="支付积分" min-width="110"></el-table-column>
-                <el-table-column prop="type_label" label="认证类型" min-width="110"></el-table-column>
-                <el-table-column prop="duration_label" label="时长" min-width="110"></el-table-column>
-                <el-table-column prop="pay_at" label="支付时间" min-width="170"></el-table-column>
-                <!--<el-table-column prop="start_at" label="开始时间" min-width="170"></el-table-column>-->
-                <!--<el-table-column prop="end_at" label="结束时间" min-width="170"></el-table-column>-->
+                <el-table-column prop="_admin.name" label="审核人" min-width="110"></el-table-column>
+                <el-table-column prop="check_at" label="审核时间" min-width="170"></el-table-column>
                 <el-table-column prop="created_at" label="创建时间" min-width="170"></el-table-column>
                 <el-table-column label="操作" min-width="400">
                     <template slot-scope="scope">
-                        <el-button v-if="scope.row.status===0" type="danger" @click="deleteConfirm(scope.row)">删除
+                        <el-button v-if="scope.row.status===0" type="primary" @click="check(scope.row)">审核
                         </el-button>
                     </template>
                 </el-table-column>
@@ -54,7 +60,6 @@
         data: function () {
             return {
                 apiList: api.adminUserAuthBillIndex,
-                apiDelete: api.adminUserAuthBillDelete,
                 dataList: {meta: {}},
                 search: {order_query: {}},
                 datePickerOptions: {
@@ -119,24 +124,21 @@
                     self.dataList = res.data;
                 });
             },
-            doCreate: function () {
-                this.$router.push({name: 'userAuthBillCreate'});
-            },
-            deleteConfirm: function (item) {
+            check: function (item) {
                 let self = this;
-                self.$confirm('是否删除？', '提示', {
+                self.$confirm('是否通过审核？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
-                    type: 'error'
+                    type: 'primary'
                 }).then(() => {
-                    self.doDelete(item.id);
+                    self.doCheck(item.id);
                 }).catch(() => {
                 });
             },
-            doDelete: function (id) {
+            doCheck: function (id) {
                 let self = this;
-                axios.post(self.apiDelete, {id: id}).then(function (res) {
-                    self.$message.success('删除成功');
+                axios.post(api.adminUserAuthBillCheck, {id: id}).then(function (res) {
+                    self.$message.success(res.data.message);
                     self.loadData();
                 });
             }

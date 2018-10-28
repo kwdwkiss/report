@@ -18,7 +18,7 @@ class ProductResource extends Resource
     {
         $data = parent::toArray($request);
 
-        $data['type_label'] = Product::$typesUnit[$data['type']];
+        $data['type_label'] = Product::$types[$data['type']];
         $data['duration_label']=implode(',',$data['duration']);
 
         return $data;

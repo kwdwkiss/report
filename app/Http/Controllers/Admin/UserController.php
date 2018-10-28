@@ -103,7 +103,6 @@ class UserController extends Controller
     {
         $user = null;
         \DB::transaction(function () use (&$user) {
-            $type = request('type');
             $password = request('password');
             $mobile = request('mobile');
             $qq = request('qq');
@@ -114,10 +113,6 @@ class UserController extends Controller
             $deny_login = request('deny_login', 0);
 
             $user = User::with('_profile', '_merchant')->findOrFail(request('id'));
-            if (empty($type)) {
-                throw new JsonException('请选择类型');
-            }
-            Taxonomy::where('pid', Taxonomy::USER_TYPE)->findOrFail($type);
             if (!$mobile) {
                 throw new JsonException('手机号不为空');
             }
@@ -174,7 +169,6 @@ class UserController extends Controller
                 $is = null;
             }
             $updateData = [
-                'type' => $type,
                 'mobile' => $mobile,
                 'qq' => $qq,
                 'wx' => $wx,

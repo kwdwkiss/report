@@ -5,7 +5,7 @@
             <div class="panel-body">
 
                 <div class="row text-success">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#buy-dialog">购买</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#buy-dialog">购买产品</button>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-responsive table-striped">
@@ -45,7 +45,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             &times;
                         </button>
-                        <h4 class="modal-title">购买服务</h4>
+                        <h4 class="modal-title">购买产品</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" role="form">
@@ -58,14 +58,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">单价</label>
                                 <div class="col-sm-10">
-                                    <label class="form-control-static">{{product.amount}}</label>积分/月
+                                    <label class="form-control-static">{{product.amount}}</label>积分/{{product.type_label}}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">时长</label>
                                 <div class="col-sm-10">
                                     <select v-model="form.duration" class="form-control">
-                                        <option :value="item" v-for="item in product.duration">{{item}}个月</option>
+                                        <option :value="item" v-for="item in product.duration">{{item}}{{product.type_label}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -94,7 +94,6 @@
         data: function () {
             return {
                 product_id: 1,
-                product: {duration: []},
                 durations: [],
                 dataList: {meta: {}},
                 form: {duration: 1},
@@ -106,11 +105,14 @@
             },
             amountTotal: function () {
                 return this.form.duration * this.product.amount;
+            },
+            product: function () {
+                return this.$store.state.product;
             }
         },
         created: function () {
             this.list();
-            this.productDetail();
+            this.$store.commit('product', {id: this.product_id});
         },
         mounted: function () {
             let action = this.$route.query.action;
@@ -131,12 +133,6 @@
             detail: function (item) {
                 this.item = item;
                 $('.recharge-dialog').modal('show');
-            },
-            productDetail: function () {
-                let self = this;
-                axios.get(api.indexProductShow, {params: {id: self.product_id}}).then(function (res) {
-                    self.product = res.data.data;
-                })
             },
             doBuy: function (id) {
                 let self = this;

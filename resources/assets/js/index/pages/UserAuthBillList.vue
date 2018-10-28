@@ -9,28 +9,23 @@
                         <div class="col-xs-8">{{user.auth_type_label}}</div>
                     </div>
                     <div class="col-md-6">
-                        <div class="col-xs-4">认证时长：</div>
-                        <div class="col-xs-8">{{user.auth_duration_label}}</div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="col-xs-4">开始时间：</div>
-                        <div class="col-xs-8">{{user.auth_start_at}}</div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="col-xs-4">结束时间：</div>
                         <div class="col-xs-8">{{user.auth_end_at}}</div>
                     </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#apply-dialog">申请认证</button>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-responsive table-striped">
                         <thead>
                         <tr>
                             <th style="width: 60px">ID</th>
-                            <th style="width: 80px">状态</th>
-                            <th style="width: 80px">支付积分</th>
-                            <th style="width: 80px">认证类型</th>
+                            <th style="width: 110px">内容</th>
                             <th style="width: 80px">时长</th>
-                            <th style="width: 160px">支付时间</th>
+                            <th style="width: 80px">积分</th>
+                            <th style="width: 80px">状态</th>
+                            <th style="width: 160px">审核时间</th>
                             <th style="width: 160px">创建时间</th>
                             <th style="width: 100px">操作</th>
                         </tr>
@@ -38,16 +33,13 @@
                         <tbody>
                         <tr v-for="(item, index) in dataList.data" :key="index">
                             <td>{{item.id}}</td>
+                            <td>{{item._product.title}}</td>
+                            <td>{{item._product_bill.quantity}}{{item._product.type_label}}</td>
+                            <td>{{item._product_bill.amount}}</td>
                             <td>{{item.status_label}}</td>
-                            <td>{{item.amount}}</td>
-                            <td>{{item.type_label}}</td>
-                            <td>{{item.duration_label}}</td>
-                            <td>{{item.pay_at}}</td>
+                            <td>{{item.check_at}}</td>
                             <td>{{item.created_at}}</td>
                             <td>
-                                <button v-if="item.status===0"
-                                        class="btn btn-primary" @click="payConfirm(item)">支付
-                                </button>
                             </td>
                         </tr>
                         </tbody>
@@ -60,22 +52,63 @@
             </div>
         </div>
 
-        <div class="modal fade" id="pay-dialog">
+        <div class="modal fade" id="apply-dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             &times;
                         </button>
-                        <h4 class="modal-title">确认支付</h4>
+                        <h4 class="modal-title">申请服务</h4>
                     </div>
                     <div class="modal-body">
-                        <p class="text-primary bold" style="font-size: 16px">支付积分：{{item.amount}}</p>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <button class="btn btn-primary center-block" @click="doPay(item.id)">支付</button>
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">认证类型</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" v-model="product_id">
+                                        <option :value="item.id" v-for="item in products">
+                                            {{item.title}}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">产品名称</label>
+                                <div class="col-sm-10">
+                                    <label class="form-control-static">{{product.title}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">单价</label>
+                                <div class="col-sm-10">
+                                    <label class="form-control-static">{{product.amount}}</label>积分/{{product.type_label}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">时长</label>
+                                <div class="col-sm-10">
+                                    <select v-model="form.duration" class="form-control">
+                                        <option :value="item" v-for="item in product.duration">
+                                            {{item}}{{product.type_label}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">总价</label>
+                                <div class="col-sm-10">
+                                    <label class="form-control-static">{{amountTotal}}积分</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button class="btn btn-primary" data-dismiss="modal" @click="doApply(product_id)">
+                                        确认申请
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -88,17 +121,35 @@
         name: "RechargeList",
         data: function () {
             return {
-                item: {},
+                product_id: 2,
+                durations: [],
                 dataList: {meta: {}},
+                form: {duration: 1},
             }
         },
         computed: {
             user: function () {
                 return this.$store.state.user;
             },
+            amountTotal: function () {
+                return this.form.duration * this.product.amount;
+            },
+            product: function () {
+                return this.$store.state.product;
+            },
+            products: function () {
+                return this.$store.state.products;
+            }
+        },
+        watch: {
+            'product_id': function (to, from) {
+                this.$store.commit('product', {id: to});
+            }
         },
         created: function () {
             this.list();
+            this.$store.commit('products', {group: 'user_auth'});
+            this.$store.commit('product', {id: this.product_id});
         },
         methods: {
             list: function (payload) {
@@ -110,21 +161,12 @@
             paginate: function (page) {
                 this.list({page: page});
             },
-            detail: function (item) {
-                this.item = item;
-                $('.recharge-dialog').modal('show');
-            },
-            payConfirm: function (item) {
-                this.item = item;
-                $('#pay-dialog').modal('show');
-            },
-            doPay: function (id) {
+            doApply: function (id) {
                 let self = this;
-                axios.post(api.userAuthBillPay, {id: id}).then(function (res) {
-                    $('#pay-dialog').modal('hide');
-                    self.$message.success('支付成功');
+                self.form.id = id;
+                axios.post(api.userAuthBillApply, self.form).then(function (res) {
+                    self.$message.success(res.data.message);
                     self.list();
-                    self.$store.commit('user');
                 })
             }
         }

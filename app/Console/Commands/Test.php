@@ -51,7 +51,7 @@ class Test extends Command
      */
     public function handle()
     {
-        dd(mb_strlen('18200000003') != 11);
+        dd(preg_match(RegExp::MOBILE,'18173219770'));
         //$this->processTest();
     }
 

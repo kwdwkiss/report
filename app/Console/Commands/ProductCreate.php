@@ -50,13 +50,31 @@ class ProductCreate extends Command
             ],
             [
                 'id' => 2,
-                'name' => 'user_auth_year',
+                'name' => 'trier_auth_year',
                 'group' => 'user_auth',
-                'title' => '用户认证包年',
+                'title' => '试客认证包年',
                 'type' => 2,
                 'duration' => [1],
                 'amount' => 5000
-            ]
+            ],
+            [
+                'id' => 3,
+                'name' => 'manager_auth_year',
+                'group' => 'user_auth',
+                'title' => '主持认证包年',
+                'type' => 2,
+                'duration' => [1],
+                'amount' => 5000
+            ],
+            [
+                'id' => 4,
+                'name' => 'merchant_auth_year',
+                'group' => 'user_auth',
+                'title' => '商家认证包年',
+                'type' => 2,
+                'duration' => [1],
+                'amount' => 5000
+            ],
         ];
 
         foreach ($data as $item) {

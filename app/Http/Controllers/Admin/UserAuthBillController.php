@@ -9,27 +9,33 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\AmountBill;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserAuthBillResource;
 use App\Taxonomy;
 use App\User;
 use App\UserAuthBill;
+use App\UserProduct;
+use Carbon\Carbon;
 
 class UserAuthBillController extends Controller
 {
     public function index()
     {
         $mobile = request('mobile');
+        $status = request('status');
 
-        $query = UserAuthBill::query()
-            ->with('_user')
+        $query = UserAuthBill::query()->with('_user', '_admin', '_product', '_productBill')
             ->orderBy('id', 'desc');
 
         if ($mobile) {
             $query->whereHas('_user', function ($query) use ($mobile) {
                 return $query->where('mobile', $mobile);
             });
+        }
+        if (is_numeric($status)) {
+            $query->where('status', $status);
         }
 
         return UserAuthBillResource::collection($query->paginate());
@@ -83,23 +89,66 @@ class UserAuthBillController extends Controller
         return [];
     }
 
-    public function update()
-    {
-
-    }
-
-    public function delete()
+    public function check()
     {
         $id = request('id');
 
-        $userAuthBill = UserAuthBill::findOrFail($id);
+        \DB::transaction(function () use ($id) {
+            $admin = \Auth::guard('admin')->user();
 
-        if ($userAuthBill->status == 1) {
-            throw new JsonException('已支付的认证不能删除');
-        }
+            $userAuthBill = UserAuthBill::findOrFail($id);
+            $user = $userAuthBill->_user;
+            $productBill = $userAuthBill->_productBill;
+            $product = $userAuthBill->_product;
 
-        $userAuthBill->delete();
+            $amount = $productBill->amount;
+            $duration = $productBill->duration;
+            $unit = $product->getTypeLabel();
 
+            if ($user->_profile->amount < $amount) {
+                throw new JsonException('用户积分不足');
+            }
+
+            $userAuthBill->update([
+                'admin_id' => $admin->id,
+                'status' => 1,
+                'check_at' => Carbon::now(),
+            ]);
+
+            $user->_profile->decrement('amount', $amount);
+
+            AmountBill::create([
+                'user_id' => $user->id,
+                'bill_no' => AmountBill::generateBillNo($user->id),
+                'type' => 1,
+                'amount' => $amount,
+                'user_amount' => $user->_profile->amount,
+                'biz_type' => 104,
+                'biz_id' => $productBill->id,
+                'description' => "用户认证包年 时长：{$duration}{$unit}"
+            ]);
+
+            $productBill->update([
+                'pay_status' => 1,
+                'pay_at' => Carbon::now(),
+            ]);
+
+            $userProduct = UserProduct::create([
+                'user_id' => $user->id,
+                'product_id' => $product->id,
+                'product_bill_id' => $productBill->id,
+                'status' => 0,
+            ]);
+
+            //启用
+            $userProduct->enable();
+        });
+
+        return ['message' => '审核成功'];
+    }
+
+    public function reject()
+    {
         return [];
     }
 }

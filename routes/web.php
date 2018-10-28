@@ -49,6 +49,7 @@ Route::middleware(['csrf'])->group(function () {
     Route::get('/taxonomy/all/data', 'Index\TaxonomyController@allData');
     Route::get('/taxonomy/all/display', 'Index\TaxonomyController@allDisplay');
 
+    Route::get('/index/product/index', 'Index\ProductController@index');
     Route::get('/index/product/show', 'Index\ProductController@show');
 
     Route::get('/user/logout', 'User\UserController@logout');
@@ -88,7 +89,7 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::post('/user/excel/delete', 'User\ExcelController@delete');
 
     Route::get('/user/user-auth-bill/index', 'User\UserAuthBillController@index');
-    Route::post('/user/user-auth-bill/pay', 'User\UserAuthBillController@pay');
+    Route::post('/user/user-auth-bill/apply', 'User\UserAuthBillController@apply');
 
     Route::get('/user/vbot/index', 'User\VbotController@index');
     Route::post('/user/vbot/create', 'User\VbotController@create');
@@ -159,9 +160,8 @@ Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/user/sub-deposit', 'Admin\UserController@subDeposit');
 
     Route::get('/admin/user-auth-bill/index', 'Admin\UserAuthBillController@index');
-    Route::post('/admin/user-auth-bill/create', 'Admin\UserAuthBillController@create');
-    Route::post('/admin/user-auth-bill/update', 'Admin\UserAuthBillController@update');
-    Route::post('/admin/user-auth-bill/delete', 'Admin\UserAuthBillController@delete');
+    Route::post('/admin/user-auth-bill/check', 'Admin\UserAuthBillController@check');
+    Route::post('/admin/user-auth-bill/reject', 'Admin\UserAuthBillController@reject');
 
     Route::get('/admin/user-remark/index', 'Admin\UserRemarkController@index');
     Route::post('/admin/user-remark/create', 'Admin\UserRemarkController@create');
