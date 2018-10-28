@@ -142,9 +142,9 @@
         name: "index",
         data: function () {
             return {
-                apiList: api.userList,
-                apiUpdate: api.userUpdate,
-                apiDelete: api.userDelete,
+                apiList: api.adminUserList,
+                apiUpdate: api.adminUserUpdate,
+                apiDelete: api.adminUserDelete,
                 dataList: {meta: {}},
                 search: {},
             }

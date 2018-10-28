@@ -119,17 +119,17 @@ Route::middleware(['domain.check', 'auth:admin'])->group(function () {
 });
 
 Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
-    Route::get('/admin/dashboard', 'Admin\IndexController@statement');
-    Route::get('/admin/statement/list', 'Admin\StatementController@index');
-    Route::get('/admin/behavior-log/list', 'Admin\BehaviorLogController@index');
+    Route::get('/admin/index/dashboard', 'Admin\IndexController@statement');
+    Route::get('/admin/statement/index', 'Admin\StatementController@index');
+    Route::get('/admin/behavior_log/index', 'Admin\BehaviorLogController@index');
 
-    Route::get('/admin/info', 'Admin\IndexController@info');
-    Route::post('/admin/modify-password', 'Admin\IndexController@modifyPassword');
+    Route::get('/admin/index/info', 'Admin\IndexController@info');
+    Route::post('/admin/index/modify_password', 'Admin\IndexController@modifyPassword');
 
-    Route::get('/admin/list', 'Admin\AdminController@list');
-    Route::post('/admin/create', 'Admin\AdminController@create');
-    Route::post('/admin/update', 'Admin\AdminController@update');
-    Route::post('/admin/delete', 'Admin\AdminController@delete');
+    Route::get('/admin/admin/list', 'Admin\AdminController@list');
+    Route::post('/admin/admin/create', 'Admin\AdminController@create');
+    Route::post('/admin/admin/update', 'Admin\AdminController@update');
+    Route::post('/admin/admin/delete', 'Admin\AdminController@delete');
 
     Route::get('/admin/site/basic', 'Admin\SiteController@getBasic');
     Route::post('/admin/site/basic', 'Admin\SiteController@setBasic');
@@ -153,18 +153,18 @@ Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/user/update', 'Admin\UserController@update');
     Route::post('/admin/user/delete', 'Admin\UserController@delete');
     Route::post('/admin/user/merchant/modify', 'Admin\UserController@merchantModify');
-    Route::post('/admin/user/update-auth', 'Admin\UserController@updateAuth');
-    Route::post('/admin/user/update-api-key', 'Admin\UserController@updateApiKey');
-    Route::post('/admin/user/update-api-secret', 'Admin\UserController@updateApiSecret');
-    Route::post('/admin/user/add-deposit', 'Admin\UserController@addDeposit');
-    Route::post('/admin/user/sub-deposit', 'Admin\UserController@subDeposit');
+    Route::post('/admin/user/update_auth', 'Admin\UserController@updateAuth');
+    Route::post('/admin/user/update_api_key', 'Admin\UserController@updateApiKey');
+    Route::post('/admin/user/update_api_secret', 'Admin\UserController@updateApiSecret');
+    Route::post('/admin/user/add_deposit', 'Admin\UserController@addDeposit');
+    Route::post('/admin/user/sub_deposit', 'Admin\UserController@subDeposit');
 
-    Route::get('/admin/user-auth-bill/index', 'Admin\UserAuthBillController@index');
-    Route::post('/admin/user-auth-bill/check', 'Admin\UserAuthBillController@check');
-    Route::post('/admin/user-auth-bill/reject', 'Admin\UserAuthBillController@reject');
+    Route::get('/admin/user_auth_bill/index', 'Admin\UserAuthBillController@index');
+    Route::post('/admin/user_auth_bill/check', 'Admin\UserAuthBillController@check');
+    Route::post('/admin/user_auth_bill/reject', 'Admin\UserAuthBillController@reject');
 
-    Route::get('/admin/user-remark/index', 'Admin\UserRemarkController@index');
-    Route::post('/admin/user-remark/create', 'Admin\UserRemarkController@create');
+    Route::get('/admin/user_remark/index', 'Admin\UserRemarkController@index');
+    Route::post('/admin/user_remark/create', 'Admin\UserRemarkController@create');
 
     Route::get('/admin/account/list', 'Admin\AccountController@list');
     Route::get('/admin/account/show', 'Admin\AccountController@show');

@@ -271,8 +271,8 @@
         name: "Update",
         data: function () {
             return {
-                apiShow: api.userShow,
-                apiUpdate: api.userUpdate,
+                apiShow: api.adminUserShow,
+                apiUpdate: api.adminUserUpdate,
                 form: {_profile: {}, _merchant: {}},
                 updateActiveName: '1',
                 provinces: Object.keys(cityData),

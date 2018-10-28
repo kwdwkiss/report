@@ -34,7 +34,7 @@
         name: "Recharge",
         data: function () {
             return {
-                apiCreate: api.userCreate,
+                apiCreate: api.adminUserCreate,
                 form: {_profile: {}, _merchant: {}},
             }
         },
