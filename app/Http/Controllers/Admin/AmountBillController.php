@@ -12,7 +12,7 @@ use App\AmountBill;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AmountBillResource;
 
-class AmountController extends Controller
+class AmountBillController extends Controller
 {
     public function index()
     {

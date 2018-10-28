@@ -55,11 +55,11 @@ module.exports = {
     accountUpdate: '/admin/account/update',
     accountDelete: '/admin/account/delete',
 
-    accountReportList: '/admin/account-report/list',
-    accountReportShow: '/admin/account-report/show',
-    accountReportCreate: '/admin/account-report/create',
-    accountReportUpdate: '/admin/account-report/update',
-    accountReportDelete: '/admin/account-report/delete',
+    accountReportList: '/admin/account_report/index',
+    accountReportShow: '/admin/account_report/show',
+    accountReportCreate: '/admin/account_report/create',
+    accountReportUpdate: '/admin/account_report/update',
+    accountReportDelete: '/admin/account_report/delete',
 
     articleList: '/admin/article/list',
     articleShow: '/admin/article/show',
@@ -74,14 +74,14 @@ module.exports = {
     rechargeList: '/admin/recharge/list',
     rechargeCreate: '/admin/recharge/create',
 
-    amountBillList: '/admin/amount-bill/list',
-    searchBillList: '/admin/search-bill/list',
+    amountBillList: '/admin/amount_bill/index',
+    searchBillList: '/admin/search_bill/index',
 
-    adminWechatGetServer: '/admin/wechat/get-server',
-    adminWechatSetServer: '/admin/wechat/set-server',
-    adminWechatRefreshToken: '/admin/wechat/refresh-token',
-    adminWechatGetMenu: '/admin/wechat/get-menu',
-    adminWechatSetMenu: '/admin/wechat/set-menu',
+    adminWechatGetServer: '/admin/wechat/get_server',
+    adminWechatSetServer: '/admin/wechat/set_server',
+    adminWechatRefreshToken: '/admin/wechat/refresh_token',
+    adminWechatGetMenu: '/admin/wechat/get_menu',
+    adminWechatSetMenu: '/admin/wechat/set_menu',
 
     adminVbotJobIndex: '/admin/vbot_job/index',
 

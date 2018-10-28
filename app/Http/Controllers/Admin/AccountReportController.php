@@ -16,7 +16,7 @@ use App\Taxonomy;
 
 class AccountReportController extends Controller
 {
-    public function list()
+    public function index()
     {
         $account_name = request('account_name');
         $account_type = request('account_type');

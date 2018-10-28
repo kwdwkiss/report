@@ -172,11 +172,11 @@ Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
     Route::post('/admin/account/update', 'Admin\AccountController@update');
     Route::post('/admin/account/delete', 'Admin\AccountController@delete');
 
-    Route::get('/admin/account-report/list', 'Admin\AccountReportController@list');
-    Route::get('/admin/account-report/show', 'Admin\AccountReportController@show');
-    Route::post('/admin/account-report/create', 'Admin\AccountReportController@create');
-    Route::post('/admin/account-report/update', 'Admin\AccountReportController@update');
-    Route::post('/admin/account-report/delete', 'Admin\AccountReportController@delete');
+    Route::get('/admin/account_report/index', 'Admin\AccountReportController@index');
+    Route::get('/admin/account_report/show', 'Admin\AccountReportController@show');
+    Route::post('/admin/account_report/create', 'Admin\AccountReportController@create');
+    Route::post('/admin/account_report/update', 'Admin\AccountReportController@update');
+    Route::post('/admin/account_report/delete', 'Admin\AccountReportController@delete');
 
     Route::get('/admin/article/list', 'Admin\ArticleController@list');
     Route::get('/admin/article/show', 'Admin\ArticleController@show');
@@ -191,14 +191,14 @@ Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
     Route::get('/admin/recharge/list', 'Admin\RechargeController@list');
     Route::post('/admin/recharge/create', 'Admin\RechargeController@create');
 
-    Route::get('/admin/amount-bill/list', 'Admin\AmountController@index');
-    Route::get('/admin/search-bill/list', 'Admin\SearchBillController@index');
+    Route::get('/admin/amount_bill/index', 'Admin\AmountBillController@index');
+    Route::get('/admin/search_bill/index', 'Admin\SearchBillController@index');
 
-    Route::get('/admin/wechat/get-server', 'Admin\WechatController@getServer');
-    Route::post('/admin/wechat/set-server', 'Admin\WechatController@setServer');
-    Route::post('/admin/wechat/refresh-token', 'Admin\WechatController@refreshToken');
-    Route::get('/admin/wechat/get-menu', 'Admin\WechatController@getMenu');
-    Route::post('/admin/wechat/set-menu', 'Admin\WechatController@setMenu');
+    Route::get('/admin/wechat/get_server', 'Admin\WechatController@getServer');
+    Route::post('/admin/wechat/set_server', 'Admin\WechatController@setServer');
+    Route::post('/admin/wechat/refresh_token', 'Admin\WechatController@refreshToken');
+    Route::get('/admin/wechat/get_menu', 'Admin\WechatController@getMenu');
+    Route::post('/admin/wechat/set_menu', 'Admin\WechatController@setMenu');
 
     Route::get('/admin/vbot_job/index', 'Admin\VbotJobController@index');
     Route::get('/admin/excel/index', 'Admin\ExcelController@index');
@@ -210,8 +210,3 @@ Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
 
 //>>>>>wechat serv
 Route::any('/wechat', 'WechatController@serve');
-
-//>>>>>user_api
-Route::middleware(['user.api'])->group(function () {
-    Route::get('/user_api/account-report/search', 'UserApi\AccountReportController@search');
-});
