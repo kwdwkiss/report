@@ -149,6 +149,12 @@ class UserAuthBillController extends Controller
 
     public function reject()
     {
+        $id = request('id');
+
+        $userAuthBill = UserAuthBill::findOrFail($id);
+
+        $userAuthBill->update(['status' => 2]);
+
         return [];
     }
 }

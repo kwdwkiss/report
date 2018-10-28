@@ -15,7 +15,7 @@ class UserAuthBill extends Model
     public static $statusTypes = [
         0 => '待审核',
         1 => '已审核',
-        2 => '拒绝',
+        2 => '已拒绝',
     ];
 
     public function _user()

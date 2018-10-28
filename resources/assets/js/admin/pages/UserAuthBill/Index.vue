@@ -6,7 +6,7 @@
                 <el-option value="" label="全部"></el-option>
                 <el-option :value="0" label="待审核"></el-option>
                 <el-option :value="1" label="已审核"></el-option>
-                <el-option :value="2" label="拒绝"></el-option>
+                <el-option :value="2" label="已拒绝"></el-option>
             </el-select>
             <!--<el-input v-model="search.bill_no" placeholder="系统订单号"></el-input>-->
             <el-date-picker
@@ -47,6 +47,8 @@
                 <el-table-column label="操作" min-width="400">
                     <template slot-scope="scope">
                         <el-button v-if="scope.row.status===0" type="primary" @click="check(scope.row)">审核
+                        </el-button>
+                        <el-button v-if="scope.row.status===0" type="danger" @click="reject(scope.row)">拒绝
                         </el-button>
                     </template>
                 </el-table-column>
@@ -139,6 +141,24 @@
             doCheck: function (id) {
                 let self = this;
                 axios.post(api.adminUserAuthBillCheck, {id: id}).then(function (res) {
+                    self.$message.success(res.data.message);
+                    self.loadData();
+                });
+            },
+            reject: function (item) {
+                let self = this;
+                self.$confirm('是否拒绝审核？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    self.doReject(item.id);
+                }).catch(() => {
+                });
+            },
+            doReject: function (id) {
+                let self = this;
+                axios.post(api.adminUserAuthBillReject, {id: id}).then(function (res) {
                     self.$message.success(res.data.message);
                     self.loadData();
                 });
