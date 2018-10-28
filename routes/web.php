@@ -210,3 +210,8 @@ Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
 
 //>>>>>wechat serv
 Route::any('/wechat', 'WechatController@serve');
+
+//>>>>>user_api
+Route::middleware(['user.api'])->group(function () {
+    Route::get('/user_api/account-report/search', 'UserApi\AccountReportController@search');
+});
