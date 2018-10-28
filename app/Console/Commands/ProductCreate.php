@@ -52,7 +52,7 @@ class ProductCreate extends Command
                 'id' => 2,
                 'name' => 'trier_auth_year',
                 'group' => 'user_auth',
-                'title' => '试客认证包年',
+                'title' => '试客认证按年',
                 'type' => 2,
                 'duration' => [1],
                 'amount' => 5000
@@ -61,7 +61,7 @@ class ProductCreate extends Command
                 'id' => 3,
                 'name' => 'manager_auth_year',
                 'group' => 'user_auth',
-                'title' => '主持认证包年',
+                'title' => '主持认证按年',
                 'type' => 2,
                 'duration' => [1],
                 'amount' => 5000
@@ -70,7 +70,7 @@ class ProductCreate extends Command
                 'id' => 4,
                 'name' => 'merchant_auth_year',
                 'group' => 'user_auth',
-                'title' => '商家认证包年',
+                'title' => '商家认证按年',
                 'type' => 2,
                 'duration' => [1],
                 'amount' => 5000

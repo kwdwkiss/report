@@ -26,7 +26,7 @@ class UserAuthBillController extends Controller
         $mobile = request('mobile');
         $status = request('status');
 
-        $query = UserAuthBill::query()->with('_user', '_admin', '_product', '_productBill')
+        $query = UserAuthBill::query()->with('_user._profile', '_admin', '_product', '_productBill')
             ->orderBy('id', 'desc');
 
         if ($mobile) {

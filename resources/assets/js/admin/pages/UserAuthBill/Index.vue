@@ -34,10 +34,11 @@
             <el-table :data="dataList.data" stripe @sort-change="sortChange">
                 <el-table-column prop="id" label="ID" min-width="80"></el-table-column>
                 <el-table-column prop="_user.mobile" label="用户" min-width="110"></el-table-column>
+                <el-table-column prop="_user._profile.amount" label="用户积分" min-width="110"></el-table-column>
                 <el-table-column prop="_product.title" label="内容" min-width="110"></el-table-column>
                 <el-table-column prop="_product_bill.quantity" label="时长" min-width="110">
                 </el-table-column>
-                <el-table-column prop="_product_bill.amount" label="积分" min-width="110">
+                <el-table-column prop="_product_bill.amount" label="消耗积分" min-width="110">
                 </el-table-column>
                 <el-table-column prop="status_label" label="状态" min-width="110"></el-table-column>
                 <el-table-column prop="_admin.name" label="审核人" min-width="110"></el-table-column>
