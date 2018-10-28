@@ -108,14 +108,14 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
 //>>>>>>>>>admin
 Route::middleware(['domain.check', 'csrf'])->group(function () {
     Route::get('/admin', 'Admin\IndexController@index');
-    Route::get('/admin/logout', 'Admin\IndexController@logout');
-    Route::post('/admin/login', 'Admin\IndexController@login');
+    Route::get('/admin/index/logout', 'Admin\IndexController@logout');
+    Route::post('/admin/index/login', 'Admin\IndexController@login');
 });
 
 Route::middleware(['domain.check', 'auth:admin'])->group(function () {
-    Route::post('/admin/upload', 'Admin\IndexController@upload');
-    Route::post('/admin/upload-oss', 'Admin\IndexController@uploadOss');
-    Route::post('/admin/upload-oss-image', 'Admin\IndexController@uploadOssImage');
+    Route::post('/admin/index/upload', 'Admin\IndexController@upload');
+    Route::post('/admin/index/upload_oss', 'Admin\IndexController@uploadOss');
+    Route::post('/admin/index/upload_oss_image', 'Admin\IndexController@uploadOssImage');
 });
 
 Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
