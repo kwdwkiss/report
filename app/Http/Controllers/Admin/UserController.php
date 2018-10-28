@@ -270,6 +270,7 @@ class UserController extends Controller
 
     public function updateAuth()
     {
+        //todo:delete
         throw new JsonException('此方法已废弃');
 
         $auth_duration = (int)request('auth_duration');

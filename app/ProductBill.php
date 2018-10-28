@@ -15,6 +15,7 @@ class ProductBill extends Model
     public static $payStatus = [
         0 => '未支付',
         1 => '已支付',
+        2 => '已取消',
     ];
 
     public function _user()

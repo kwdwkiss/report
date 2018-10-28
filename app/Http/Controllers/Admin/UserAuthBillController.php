@@ -43,6 +43,9 @@ class UserAuthBillController extends Controller
 
     public function create()
     {
+        //todo:delete
+        throw new JsonException('此方法已废弃');
+
         $mobile = request('mobile');
         $type = request('type');
         $duration = request('duration');
@@ -151,10 +154,15 @@ class UserAuthBillController extends Controller
     {
         $id = request('id');
 
-        $userAuthBill = UserAuthBill::findOrFail($id);
+        \DB::transaction(function () use ($id) {
 
-        $userAuthBill->update(['status' => 2]);
+            $userAuthBill = UserAuthBill::findOrFail($id);
 
-        return [];
+            $userAuthBill->update(['status' => 2]);
+
+            $userAuthBill->_productBill->update(['pay_status' => 2]);
+        });
+
+        return ['message' => '拒绝成功'];
     }
 }
