@@ -8,6 +8,10 @@ class ProductBill extends Model
 {
     protected $guarded = [];
 
+    protected $dates = [
+        'pay_at',
+    ];
+
     public static $payStatus = [
         0 => '未支付',
         1 => '已支付',

@@ -16,6 +16,7 @@ use App\Http\Resources\UserProductResource;
 use App\Product;
 use App\ProductBill;
 use App\UserProduct;
+use Carbon\Carbon;
 
 class UserProductController extends Controller
 {
@@ -57,6 +58,7 @@ class UserProductController extends Controller
                 'quantity' => $duration,
                 'amount' => $amountTotal,
                 'pay_status' => 1,
+                'pay_at' => Carbon::now(),
             ]);
 
             $unit = $product->getUnit();
