@@ -41,6 +41,10 @@ class UserAuthBillController extends Controller
         $user = \Auth::guard('user')->user();
         $product = Product::findOrFail($id);
 
+        if ($user->_profile->amount < 5000) {
+            throw new JsonException('积分不足5000，不能申请认证');
+        }
+
         $exists = UserAuthBill::query()
             ->where('user_id', $user->id)
             ->where('product_id', $product->id)
