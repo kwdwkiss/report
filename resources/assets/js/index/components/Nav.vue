@@ -22,7 +22,7 @@
                                aria-haspopup="true" aria-expanded="false">电商工具<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="go('index')">恶意账号查询</a>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('vbotIndex')">微信清粉工具</a>
+                                <!--<li><a class="collapse-hide" href="javascript:" @click="go('vbotIndex')">微信清粉工具</a>-->
                                 <li><a class="collapse-hide" href="javascript:" @click="go('checkTb')">淘宝验号</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('checkPdd')">拼多多验号</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('checkJd')">京东验号</a></li>
