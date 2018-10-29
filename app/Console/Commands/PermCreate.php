@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Permission;
 use Illuminate\Console\Command;
 
 class PermCreate extends Command
@@ -37,6 +38,22 @@ class PermCreate extends Command
      */
     public function handle()
     {
-        //
+//        $router = app('router');
+//        $routes = $router->getRoutes()->getRoutes();
+//
+//        $routeData = [];
+//        foreach ($routes as $route) {
+//            if (strpos(''))
+//                var_dump($route->uri);
+//        }
+
+        $data = [
+            ['id' => 1, 'name' => 'index/dashboard', 'guard_name' => 'admin'],
+            ['id' => 2, 'name' => 'statement/index', 'guard_name' => 'admin'],
+        ];
+
+        foreach ($data as $item) {
+            Permission::updateOrCreate(['id' => $item['id']], $item);
+        }
     }
 }

@@ -45,7 +45,7 @@
                 this.$refs.form.validate((valid) => {
                     if (valid) {
                         self.loading = true;
-                        axios.post(api.login, self.form).then(function (res) {
+                        axios.post(api.adminIndexLogin, self.form).then(function (res) {
                             self.loading = false;
                             self.$store.commit('user', {
                                 callback: function () {

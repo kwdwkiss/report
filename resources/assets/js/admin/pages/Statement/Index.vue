@@ -58,7 +58,7 @@
         name: "index",
         data: function () {
             return {
-                apiList: api.adminStatementList,
+                apiList: api.adminStatementIndex,
                 dataList: {meta: {}},
                 search: {order_query: {}, type: 1},
                 datePickerOptions: {

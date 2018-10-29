@@ -58,7 +58,7 @@
         name: "index",
         data: function () {
             return {
-                apiList: api.adminBehaviorLogList,
+                apiList: api.adminBehaviorLogIndex,
                 dataList: {meta: {}},
                 search: {order_query: {}, type: 0},
                 datePickerOptions: {

@@ -52,13 +52,13 @@
         methods: {
             loadData: function () {
                 let self = this;
-                axios.get(api.siteBasic).then(function (res) {
+                axios.get(api.adminSiteBasic).then(function (res) {
                     self.dataList = res.data.data;
                 });
             },
             submit: function () {
                 let self = this;
-                axios.post(api.siteBasic, self.dataList).then(function () {
+                axios.post(api.adminSiteBasic, self.dataList).then(function () {
                     self.$message.success('成功');
                     self.loadData();
                 });

@@ -90,7 +90,7 @@
         methods: {
             loadData: function (params) {
                 let self = this;
-                axios.get(api.adminList, {
+                axios.get(api.adminAdminIndex, {
                     params: _.merge(self.dataList.search, params)
                 }).then(function (res) {
                     self.dataList = res.data;
@@ -102,7 +102,7 @@
             },
             dataCreate: function () {
                 let self = this;
-                axios.post(api.adminCreate, self.dialogCreate.data).then(function () {
+                axios.post(api.adminAdminCreate, self.dialogCreate.data).then(function () {
                     self.dialogCreate.data = {};
                     self.dialogCreate.display = false;
                     self.$message.success('成功');
@@ -111,7 +111,7 @@
             },
             dataUpdate: function () {
                 let self = this;
-                axios.post(api.adminUpdate, _.assign(
+                axios.post(api.adminAdminUpdate, _.assign(
                     {id: self.dialogUpdate.row.id},
                     self.dialogUpdate.data
                 )).then(function () {
@@ -123,7 +123,7 @@
             },
             dataDelete: function () {
                 let self = this;
-                axios.post(api.adminDelete, {id: self.dialogDelete.row.id}).then(function () {
+                axios.post(api.adminAdminDelete, {id: self.dialogDelete.row.id}).then(function () {
                     self.dialogDelete.display = false;
                     self.$message.success('成功');
                     self.loadData();

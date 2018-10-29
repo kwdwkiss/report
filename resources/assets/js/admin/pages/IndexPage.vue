@@ -366,13 +366,13 @@
         methods: {
             loadData: function () {
                 let self = this;
-                axios.get(api.siteIndex).then(function (res) {
+                axios.get(api.adminSiteIndex).then(function (res) {
                     self.data = res.data.data;
                 });
             },
             doSave: function () {
                 let self = this;
-                axios.post(api.siteIndex, self.data).then(function () {
+                axios.post(api.adminSiteIndex, self.data).then(function () {
                     self.$message.success('成功');
                 });
             },
@@ -390,7 +390,7 @@
                 let formData = new FormData();
                 let inputFile = $('.input-file');
                 formData.append('file', inputFile.get(0).files[0]);
-                axios.post(api.adminUpload, formData, {
+                axios.post(api.adminIndexUpload, formData, {
                     headers: {'Content-Type': 'multipart/form-data'}
                 }).then(function (res) {
                     self.$message.success('成功');

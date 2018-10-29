@@ -63,7 +63,7 @@
             doSave: function () {
                 let self = this;
                 self.data.content = self.editor.getContent();
-                axios.post(api.sitePopWindow, self.data).then(function () {
+                axios.post(api.adminSitePopWindow, self.data).then(function () {
                     self.$message.success('成功');
                 })
             },

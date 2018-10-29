@@ -14,7 +14,7 @@ use App\Http\Resources\AdminResource;
 
 class AdminController extends Controller
 {
-    public function list()
+    public function index()
     {
         return AdminResource::collection(Admin::paginate());
     }

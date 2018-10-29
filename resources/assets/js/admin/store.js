@@ -15,7 +15,7 @@ const store = window.store = new Vuex.Store({
             });
         },
         user(state, payload) {
-            axios.get(api.adminInfo).then(function (res) {
+            axios.get(api.adminIndexInfo).then(function (res) {
                 state.user = res.data.data;
                 if (payload && payload.callback instanceof Function) {
                     payload.callback();

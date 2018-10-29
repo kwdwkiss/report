@@ -338,7 +338,7 @@
                 if (params === 'identity') {
                     formData.append('watermark', 'identity');
                 }
-                axios.post(api.adminUploadOssImage, formData, {
+                axios.post(api.adminIndexUploadOssImage, formData, {
                     headers: {"Content-Type": "multipart/form-data"}
                 }).then(function (res) {
                     self.$message.success("成功");

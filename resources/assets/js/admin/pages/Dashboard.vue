@@ -133,7 +133,7 @@
         methods: {
             getStatement: function () {
                 let self = this;
-                axios.get(api.adminDashboard).then(function (res) {
+                axios.get(api.adminIndexStatement).then(function (res) {
                     self.statement = _.assign(self.statement, res.data.data);
                 });
             }
