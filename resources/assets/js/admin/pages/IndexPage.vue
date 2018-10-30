@@ -1,5 +1,5 @@
 <template>
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" v-if="data">
         <el-tab-pane label="菜单设置" name="menu">
             <div class="panel">
                 <div class="panel-heading">菜单设置</div>
@@ -150,7 +150,8 @@
                     <el-form label-width="100px">
                         <el-form-item label="图片路径">
                             <el-input v-model="data.mobile_ad.report_search_top.img_src"></el-input>
-                            <el-button type="primary" @click="uploadImage(data.mobile_ad.report_search_top)">上传</el-button>
+                            <el-button type="primary" @click="uploadImage(data.mobile_ad.report_search_top)">上传
+                            </el-button>
                         </el-form-item>
                         <el-form-item label="链接">
                             <el-input v-model="data.mobile_ad.report_search_top.url"></el-input>
@@ -252,7 +253,8 @@
                     <el-form label-width="100px">
                         <el-form-item label="图片路径">
                             <el-input v-model="data.mobile_ad.wx_clear_friends.img_src"></el-input>
-                            <el-button type="primary" @click="uploadImage(data.mobile_ad.wx_clear_friends)">上传</el-button>
+                            <el-button type="primary" @click="uploadImage(data.mobile_ad.wx_clear_friends)">上传
+                            </el-button>
                         </el-form-item>
                         <el-form-item label="链接">
                             <el-input v-model="data.mobile_ad.wx_clear_friends.url"></el-input>
@@ -354,10 +356,7 @@
         data: function () {
             return {
                 activeName: 'article',
-                data: {
-                    notice: {title: '', url: ''},
-                    article_data: []
-                }
+                data: null,
             }
         },
         created: function () {
