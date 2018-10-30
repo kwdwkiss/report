@@ -21,7 +21,7 @@ use Cly\RegExp\RegExp;
 
 class UserController extends Controller
 {
-    public function list()
+    public function index()
     {
         $type = request('type');
         $mobile = request('mobile');

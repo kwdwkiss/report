@@ -43,7 +43,7 @@
         name: "Recharge",
         data: function () {
             return {
-                apiCreate: api.accountCreate,
+                apiCreate: api.adminAccountReportCreate,
                 routeNameList: 'reportList',
                 form: {},
             }

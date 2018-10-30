@@ -106,25 +106,26 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
 });
 
 //>>>>>>>>>admin
-Route::namespace('Admin')->middleware(['domain.check', 'auth:admin'])->group(function () {
-    Route::post('/admin/attachment/upload', 'AttachmentController@upload');
-    Route::post('/admin/attachment/upload_oss', 'AttachmentController@uploadOss');
-    Route::post('/admin/attachment/upload_oss_image', 'AttachmentController@uploadOssImage');
-});
-
 Route::namespace('Admin')->middleware(['domain.check', 'csrf'])->group(function () {
+
     Route::get('/admin', 'IndexController@index');
 
     Route::post('/admin/admin/login', 'AdminController@login');
-    Route::get('/admin/admin/logout', 'AdminController@logout');
     Route::middleware(['auth:admin'])->group(function () {
         Route::get('/admin/admin/index', 'AdminController@index');
         Route::post('/admin/admin/create', 'AdminController@create');
         Route::post('/admin/admin/update', 'AdminController@update');
         Route::post('/admin/admin/delete', 'AdminController@delete');
         Route::get('/admin/admin/info', 'AdminController@info');
+        Route::get('/admin/admin/logout', 'AdminController@logout');
         Route::post('/admin/admin/modify_password', 'AdminController@modifyPassword');
     });
+});
+
+Route::namespace('Admin')->middleware(['domain.check', 'auth:admin'])->group(function () {
+    Route::post('/admin/attachment/upload', 'AttachmentController@upload');
+    Route::post('/admin/attachment/upload_oss', 'AttachmentController@uploadOss');
+    Route::post('/admin/attachment/upload_oss_image', 'AttachmentController@uploadOssImage');
 });
 
 Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
@@ -138,17 +139,17 @@ Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf'])->g
     Route::post('/admin/site/index', 'SiteController@setIndex');
     Route::post('/admin/site/pop-window', 'SiteController@popWindow');
 
-    Route::get('/admin/taxonomy/list', 'TaxonomyController@list');
+    Route::get('/admin/taxonomy/index', 'TaxonomyController@index');
     Route::post('/admin/taxonomy/create', 'TaxonomyController@create');
     Route::post('/admin/taxonomy/update', 'TaxonomyController@update');
     Route::post('/admin/taxonomy/delete', 'TaxonomyController@delete');
 
-    Route::get('/admin/tag/list', 'TagController@list');
+    Route::get('/admin/tag/index', 'TagController@index');
     Route::post('/admin/tag/create', 'TagController@create');
     Route::post('/admin/tag/update', 'TagController@update');
     Route::post('/admin/tag/delete', 'TagController@delete');
 
-    Route::get('/admin/user/list', 'UserController@list');
+    Route::get('/admin/user/index', 'UserController@index');
     Route::get('/admin/user/show', 'UserController@show');
     Route::post('/admin/user/create', 'UserController@create');
     Route::post('/admin/user/update', 'UserController@update');
@@ -167,7 +168,7 @@ Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf'])->g
     Route::get('/admin/user_remark/index', 'UserRemarkController@index');
     Route::post('/admin/user_remark/create', 'UserRemarkController@create');
 
-    Route::get('/admin/account/list', 'AccountController@list');
+    Route::get('/admin/account/index', 'AccountController@index');
     Route::get('/admin/account/show', 'AccountController@show');
     Route::post('/admin/account/create', 'AccountController@create');
     Route::post('/admin/account/update', 'AccountController@update');
@@ -179,17 +180,17 @@ Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf'])->g
     Route::post('/admin/account_report/update', 'AccountReportController@update');
     Route::post('/admin/account_report/delete', 'AccountReportController@delete');
 
-    Route::get('/admin/article/list', 'ArticleController@list');
+    Route::get('/admin/article/index', 'ArticleController@index');
     Route::get('/admin/article/show', 'ArticleController@show');
     Route::post('/admin/article/create', 'ArticleController@create');
     Route::post('/admin/article/update', 'ArticleController@update');
     Route::post('/admin/article/delete', 'ArticleController@delete');
 
-    Route::get('/admin/message/list', 'MessageController@list');
+    Route::get('/admin/message/index', 'MessageController@index');
     Route::post('/admin/message/create', 'MessageController@create');
     Route::post('/admin/message/delete', 'MessageController@delete');
 
-    Route::get('/admin/recharge/list', 'RechargeController@list');
+    Route::get('/admin/recharge/index', 'RechargeController@index');
     Route::post('/admin/recharge/create', 'RechargeController@create');
 
     Route::get('/admin/amount_bill/index', 'AmountBillController@index');

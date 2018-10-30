@@ -17,7 +17,7 @@ use Cly\RegExp\RegExp;
 
 class AccountController extends Controller
 {
-    public function list()
+    public function index()
     {
         $name = request('name');
         $type = request('type');

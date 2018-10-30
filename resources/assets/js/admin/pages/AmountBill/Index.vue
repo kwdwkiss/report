@@ -54,7 +54,7 @@
         name: "index",
         data: function () {
             return {
-                apiList: api.amountBillList,
+                apiList: api.adminAmountBillIndex,
                 dataList: {meta: {}},
                 search: {order_query: {}},
                 datePickerOptions: {

@@ -102,10 +102,10 @@
         data: function () {
             return {
                 action: 'list',
-                apiList: api.taxonomyList,
-                apiCreate: api.taxonomyCreate,
-                apiUpdate: api.taxonomyUpdate,
-                apiDelete: api.taxonomyDelete,
+                apiList: api.adminTaxonomyIndex,
+                apiCreate: api.adminTaxonomyCreate,
+                apiUpdate: api.adminTaxonomyUpdate,
+                apiDelete: api.adminTaxonomyDelete,
                 rootList: store.state.taxonomy.root,
                 dataList: {
                     meta: {},

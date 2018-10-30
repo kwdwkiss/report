@@ -50,8 +50,8 @@
         name: "Update",
         data: function () {
             return {
-                apiShow: api.accountReportShow,
-                apiUpdate: api.accountReportUpdate,
+                apiShow: api.adminAccountReportShow,
+                apiUpdate: api.adminAccountReportUpdate,
                 routeNameList: 'reportList',
                 form: {},
             }

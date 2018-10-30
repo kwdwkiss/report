@@ -104,9 +104,9 @@
         data: function () {
             return {
                 action: 'list',
-                apiList: api.messageList,
-                apiCreate: api.messageCreate,
-                apiDelete: api.messageDelete,
+                apiList: api.adminMessageIndex,
+                apiCreate: api.adminMessageCreate,
+                apiDelete: api.adminMessageDelete,
                 dataList: {
                     meta: {},
                 },

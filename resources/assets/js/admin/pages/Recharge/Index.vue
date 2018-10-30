@@ -49,7 +49,7 @@
         name: "index",
         data: function () {
             return {
-                apiList: api.rechargeList,
+                apiList: api.adminRechargeIndex,
                 dataList: {meta: {}},
                 search: {order_query: {}},
                 datePickerOptions: {

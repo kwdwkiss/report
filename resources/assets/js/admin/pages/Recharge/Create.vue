@@ -32,7 +32,7 @@
         name: "Recharge",
         data: function () {
             return {
-                api: api.rechargeCreate,
+                api: api.adminRechargeCreate,
                 form: {}
             }
         },

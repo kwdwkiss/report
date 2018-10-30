@@ -55,10 +55,10 @@
     export default {
         data: function () {
             return {
-                apiList: api.tagList,
-                apiCreate: api.tagCreate,
-                apiUpdate: api.tagUpdate,
-                apiDelete: api.tagDelete,
+                apiList: api.adminTagIndex,
+                apiCreate: api.adminTagCreate,
+                apiUpdate: api.adminTagUpdate,
+                apiDelete: api.adminTagDelete,
                 dataList: {
                     meta: {},
                     search: {}

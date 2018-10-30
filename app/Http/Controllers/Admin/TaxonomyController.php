@@ -15,7 +15,7 @@ use App\Taxonomy;
 
 class TaxonomyController extends Controller
 {
-    public function list()
+    public function index()
     {
         $pid = request('pid');
 

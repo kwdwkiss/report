@@ -38,7 +38,7 @@
         components: {VueUEditor},
         data: function () {
             return {
-                apiCreate: api.articleCreate,
+                apiCreate: api.adminArticleCreate,
                 form: {},
                 editor: {},
             }

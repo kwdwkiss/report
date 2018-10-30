@@ -22,7 +22,7 @@ use Illuminate\Notifications\DatabaseNotification;
 
 class MessageController extends Controller
 {
-    public function list()
+    public function index()
     {
         $name = request('name');
 

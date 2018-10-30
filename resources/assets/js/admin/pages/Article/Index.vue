@@ -52,9 +52,9 @@
         name: "index",
         data: function () {
             return {
-                apiList: api.articleList,
-                apiUpdate: api.articleUpdate,
-                apiDelete: api.articleDelete,
+                apiList: api.adminArticleIndex,
+                apiUpdate: api.adminArticleUpdate,
+                apiDelete: api.adminArticleDelete,
                 dataList: {meta: {}},
                 search: {},
             }

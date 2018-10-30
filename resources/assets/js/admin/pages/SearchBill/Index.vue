@@ -56,7 +56,7 @@
         name: "index",
         data: function () {
             return {
-                apiList: api.searchBillList,
+                apiList: api.adminSearchBillIndex,
                 dataList: {meta: {}},
                 search: {order_query: {}},
                 datePickerOptions: {

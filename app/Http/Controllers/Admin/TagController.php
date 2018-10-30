@@ -15,7 +15,7 @@ use App\TagEntity;
 
 class TagController extends Controller
 {
-    public function list()
+    public function index()
     {
         return TagResource::collection(Tag::paginate());
     }

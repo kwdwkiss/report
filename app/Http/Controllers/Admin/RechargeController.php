@@ -18,7 +18,7 @@ use App\User;
 
 class RechargeController extends Controller
 {
-    public function list()
+    public function index()
     {
         $mobile = request('mobile');
         $payType = request('pay_type');

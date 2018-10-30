@@ -38,8 +38,8 @@
         components: {VueUEditor},
         data: function () {
             return {
-                apiShow: api.articleShow,
-                apiUpdate: api.articleUpdate,
+                apiShow: api.adminArticleShow,
+                apiUpdate: api.adminArticleUpdate,
                 form: {},
                 editor: {},
             }

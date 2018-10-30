@@ -48,9 +48,9 @@
         name: "index",
         data: function () {
             return {
-                apiList: api.accountList,
-                apiUpdate: api.accountUpdate,
-                apiDelete: api.accountDelete,
+                apiList: api.adminAccountIndex,
+                apiUpdate: api.adminAccountUpdate,
+                apiDelete: api.adminAccountDelete,
                 routeNameCreate: 'accountCreate',
                 routeNameUpdate: 'accountUpdate',
                 dataList: {meta: {}},

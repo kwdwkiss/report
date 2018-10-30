@@ -17,7 +17,7 @@ use App\Taxonomy;
 
 class ArticleController extends Controller
 {
-    public function list()
+    public function index()
     {
         $type = request('type');
         $title = request('title');
