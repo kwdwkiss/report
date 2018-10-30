@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Permission;
 use Illuminate\Console\Command;
+use Spatie\Permission\Models\Permission;
 
 class PermCreate extends Command
 {
@@ -48,8 +48,8 @@ class PermCreate extends Command
 //        }
 
         $data = [
-            ['id' => 1, 'name' => 'index/dashboard', 'guard_name' => 'admin'],
-            ['id' => 2, 'name' => 'statement/index', 'guard_name' => 'admin'],
+            ['id' => 1, 'name' => 'statement|profile', 'guard_name' => 'admin'],
+            ['id' => 2, 'name' => 'statement|index', 'guard_name' => 'admin'],
         ];
 
         foreach ($data as $item) {

@@ -390,7 +390,7 @@
                 let formData = new FormData();
                 let inputFile = $('.input-file');
                 formData.append('file', inputFile.get(0).files[0]);
-                axios.post(api.adminIndexUpload, formData, {
+                axios.post(api.adminAttachmentUpload, formData, {
                     headers: {'Content-Type': 'multipart/form-data'}
                 }).then(function (res) {
                     self.$message.success('成功');

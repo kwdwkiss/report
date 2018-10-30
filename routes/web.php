@@ -106,25 +106,26 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
 });
 
 //>>>>>>>>>admin
-Route::middleware(['domain.check', 'csrf'])->group(function () {
-    Route::get('/admin', 'Admin\IndexController@index');
-    Route::get('/admin/index/logout', 'Admin\IndexController@logout');
-    Route::post('/admin/index/login', 'Admin\IndexController@login');
+Route::namespace('Admin')->middleware(['domain.check', 'csrf'])->group(function () {
+    Route::get('/admin', 'IndexController@index');
+
+    Route::post('/admin/admin/login', 'AdminController@login');
+    Route::get('/admin/admin/logout', 'AdminController@logout');
 });
 
 Route::middleware(['domain.check', 'auth:admin'])->group(function () {
-    Route::post('/admin/index/upload', 'Admin\IndexController@upload');
-    Route::post('/admin/index/upload_oss', 'Admin\IndexController@uploadOss');
-    Route::post('/admin/index/upload_oss_image', 'Admin\IndexController@uploadOssImage');
+    Route::post('/admin/attachment/upload', 'Admin\AttachmentController@upload');
+    Route::post('/admin/attachment/upload_oss', 'Admin\AttachmentController@uploadOss');
+    Route::post('/admin/attachment/upload_oss_image', 'Admin\AttachmentController@uploadOssImage');
 });
 
 Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
-    Route::get('/admin/index/statement', 'Admin\IndexController@statement');
+    Route::get('/admin/statement/profile', 'Admin\StatementController@profile');
     Route::get('/admin/statement/index', 'Admin\StatementController@index');
     Route::get('/admin/behavior_log/index', 'Admin\BehaviorLogController@index');
 
-    Route::get('/admin/index/info', 'Admin\IndexController@info');
-    Route::post('/admin/index/modify_password', 'Admin\IndexController@modifyPassword');
+    Route::get('/admin/admin/info', 'Admin\AdminController@info');
+    Route::post('/admin/admin/modify_password', 'Admin\AdminController@modifyPassword');
 
     Route::get('/admin/admin/index', 'Admin\AdminController@index');
     Route::post('/admin/admin/create', 'Admin\AdminController@create');

@@ -150,7 +150,7 @@
         methods: {
             doLogout: function () {
                 let self = this;
-                axios.get(api.adminIndexLogout).then(function () {
+                axios.get(api.adminAdminLogout).then(function () {
                     self.$router.push('/login');
                 });
             },

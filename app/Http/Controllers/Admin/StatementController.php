@@ -50,4 +50,20 @@ class StatementController extends Controller
 
         return StatementResource::collection($query->paginate());
     }
+
+    public function profile()
+    {
+        $user = \Auth::guard('admin')->user();
+        if ($user->id != 1) {
+            throw new JsonException('无权访问');
+        }
+
+        $data = \Cache::get('statement.profile', []);
+
+        if (!$data) {
+            $data = Statement::profile();
+        }
+
+        return ['data' => $data];
+    }
 }

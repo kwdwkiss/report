@@ -1,19 +1,19 @@
 module.exports = {
-    adminIndexStatement: '/admin/index/statement',
+    adminStatementProfile: '/admin/statement/profile',
     adminStatementIndex: '/admin/statement/index',
     adminBehaviorLogIndex: '/admin/behavior_log/index',
 
-    adminIndexLogin: '/admin/index/login',
-    adminIndexLogout: '/admin/index/logout',
-    adminIndexInfo: '/admin/index/info',
-    adminIndexUpload: '/admin/index/upload',
-    adminIndexUploadOss: '/admin/index/upload_oss',
-    adminIndexUploadOssImage: '/admin/index/upload_oss_image',
+    adminAttachmentUpload: '/admin/attachment/upload',
+    adminAttachmentUploadOss: '/admin/attachment/upload_oss',
+    adminAttachmentUploadOssImage: '/admin/attachment/upload_oss_image',
 
     adminAdminIndex: '/admin/admin/index',
     adminAdminCreate: '/admin/admin/create',
     adminAdminUpdate: '/admin/admin/update',
     adminAdminDelete: '/admin/admin/delete',
+    adminAdminLogin: '/admin/admin/login',
+    adminAdminLogout: '/admin/admin/logout',
+    adminAdminInfo: '/admin/admin/info',
 
     adminSiteBasic: '/admin/site/basic',
     adminSiteIndex: '/admin/site/index',
