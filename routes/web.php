@@ -126,7 +126,7 @@ Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
     Route::get('/admin/index/info', 'Admin\IndexController@info');
     Route::post('/admin/index/modify_password', 'Admin\IndexController@modifyPassword');
 
-    Route::get('/admin/admin/index', 'Admin\AdminController@list');
+    Route::get('/admin/admin/index', 'Admin\AdminController@index');
     Route::post('/admin/admin/create', 'Admin\AdminController@create');
     Route::post('/admin/admin/update', 'Admin\AdminController@update');
     Route::post('/admin/admin/delete', 'Admin\AdminController@delete');
