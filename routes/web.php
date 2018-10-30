@@ -106,107 +106,107 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
 });
 
 //>>>>>>>>>admin
+Route::namespace('Admin')->middleware(['domain.check', 'auth:admin'])->group(function () {
+    Route::post('/admin/attachment/upload', 'AttachmentController@upload');
+    Route::post('/admin/attachment/upload_oss', 'AttachmentController@uploadOss');
+    Route::post('/admin/attachment/upload_oss_image', 'AttachmentController@uploadOssImage');
+});
+
 Route::namespace('Admin')->middleware(['domain.check', 'csrf'])->group(function () {
     Route::get('/admin', 'IndexController@index');
 
     Route::post('/admin/admin/login', 'AdminController@login');
     Route::get('/admin/admin/logout', 'AdminController@logout');
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/admin/admin/index', 'AdminController@index');
+        Route::post('/admin/admin/create', 'AdminController@create');
+        Route::post('/admin/admin/update', 'AdminController@update');
+        Route::post('/admin/admin/delete', 'AdminController@delete');
+        Route::get('/admin/admin/info', 'AdminController@info');
+        Route::post('/admin/admin/modify_password', 'AdminController@modifyPassword');
+    });
 });
 
-Route::middleware(['domain.check', 'auth:admin'])->group(function () {
-    Route::post('/admin/attachment/upload', 'Admin\AttachmentController@upload');
-    Route::post('/admin/attachment/upload_oss', 'Admin\AttachmentController@uploadOss');
-    Route::post('/admin/attachment/upload_oss_image', 'Admin\AttachmentController@uploadOssImage');
-});
+Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
+    Route::get('/admin/statement/profile', 'StatementController@profile');
+    Route::get('/admin/statement/index', 'StatementController@index');
+    Route::get('/admin/behavior_log/index', 'BehaviorLogController@index');
 
-Route::middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
-    Route::get('/admin/statement/profile', 'Admin\StatementController@profile');
-    Route::get('/admin/statement/index', 'Admin\StatementController@index');
-    Route::get('/admin/behavior_log/index', 'Admin\BehaviorLogController@index');
+    Route::get('/admin/site/basic', 'SiteController@getBasic');
+    Route::post('/admin/site/basic', 'SiteController@setBasic');
+    Route::get('/admin/site/index', 'SiteController@getIndex');
+    Route::post('/admin/site/index', 'SiteController@setIndex');
+    Route::post('/admin/site/pop-window', 'SiteController@popWindow');
 
-    Route::get('/admin/admin/info', 'Admin\AdminController@info');
-    Route::post('/admin/admin/modify_password', 'Admin\AdminController@modifyPassword');
+    Route::get('/admin/taxonomy/list', 'TaxonomyController@list');
+    Route::post('/admin/taxonomy/create', 'TaxonomyController@create');
+    Route::post('/admin/taxonomy/update', 'TaxonomyController@update');
+    Route::post('/admin/taxonomy/delete', 'TaxonomyController@delete');
 
-    Route::get('/admin/admin/index', 'Admin\AdminController@index');
-    Route::post('/admin/admin/create', 'Admin\AdminController@create');
-    Route::post('/admin/admin/update', 'Admin\AdminController@update');
-    Route::post('/admin/admin/delete', 'Admin\AdminController@delete');
+    Route::get('/admin/tag/list', 'TagController@list');
+    Route::post('/admin/tag/create', 'TagController@create');
+    Route::post('/admin/tag/update', 'TagController@update');
+    Route::post('/admin/tag/delete', 'TagController@delete');
 
-    Route::get('/admin/site/basic', 'Admin\SiteController@getBasic');
-    Route::post('/admin/site/basic', 'Admin\SiteController@setBasic');
-    Route::get('/admin/site/index', 'Admin\SiteController@getIndex');
-    Route::post('/admin/site/index', 'Admin\SiteController@setIndex');
-    Route::post('/admin/site/pop-window', 'Admin\SiteController@popWindow');
+    Route::get('/admin/user/list', 'UserController@list');
+    Route::get('/admin/user/show', 'UserController@show');
+    Route::post('/admin/user/create', 'UserController@create');
+    Route::post('/admin/user/update', 'UserController@update');
+    Route::post('/admin/user/delete', 'UserController@delete');
+    Route::post('/admin/user/merchant/modify', 'UserController@merchantModify');
+    Route::post('/admin/user/update_auth', 'UserController@updateAuth');
+    Route::post('/admin/user/update_api_key', 'UserController@updateApiKey');
+    Route::post('/admin/user/update_api_secret', 'UserController@updateApiSecret');
+    Route::post('/admin/user/add_deposit', 'UserController@addDeposit');
+    Route::post('/admin/user/sub_deposit', 'UserController@subDeposit');
 
-    Route::get('/admin/taxonomy/list', 'Admin\TaxonomyController@list');
-    Route::post('/admin/taxonomy/create', 'Admin\TaxonomyController@create');
-    Route::post('/admin/taxonomy/update', 'Admin\TaxonomyController@update');
-    Route::post('/admin/taxonomy/delete', 'Admin\TaxonomyController@delete');
+    Route::get('/admin/user_auth_bill/index', 'UserAuthBillController@index');
+    Route::post('/admin/user_auth_bill/check', 'UserAuthBillController@check');
+    Route::post('/admin/user_auth_bill/reject', 'UserAuthBillController@reject');
 
-    Route::get('/admin/tag/list', 'Admin\TagController@list');
-    Route::post('/admin/tag/create', 'Admin\TagController@create');
-    Route::post('/admin/tag/update', 'Admin\TagController@update');
-    Route::post('/admin/tag/delete', 'Admin\TagController@delete');
+    Route::get('/admin/user_remark/index', 'UserRemarkController@index');
+    Route::post('/admin/user_remark/create', 'UserRemarkController@create');
 
-    Route::get('/admin/user/list', 'Admin\UserController@list');
-    Route::get('/admin/user/show', 'Admin\UserController@show');
-    Route::post('/admin/user/create', 'Admin\UserController@create');
-    Route::post('/admin/user/update', 'Admin\UserController@update');
-    Route::post('/admin/user/delete', 'Admin\UserController@delete');
-    Route::post('/admin/user/merchant/modify', 'Admin\UserController@merchantModify');
-    Route::post('/admin/user/update_auth', 'Admin\UserController@updateAuth');
-    Route::post('/admin/user/update_api_key', 'Admin\UserController@updateApiKey');
-    Route::post('/admin/user/update_api_secret', 'Admin\UserController@updateApiSecret');
-    Route::post('/admin/user/add_deposit', 'Admin\UserController@addDeposit');
-    Route::post('/admin/user/sub_deposit', 'Admin\UserController@subDeposit');
+    Route::get('/admin/account/list', 'AccountController@list');
+    Route::get('/admin/account/show', 'AccountController@show');
+    Route::post('/admin/account/create', 'AccountController@create');
+    Route::post('/admin/account/update', 'AccountController@update');
+    Route::post('/admin/account/delete', 'AccountController@delete');
 
-    Route::get('/admin/user_auth_bill/index', 'Admin\UserAuthBillController@index');
-    Route::post('/admin/user_auth_bill/check', 'Admin\UserAuthBillController@check');
-    Route::post('/admin/user_auth_bill/reject', 'Admin\UserAuthBillController@reject');
+    Route::get('/admin/account_report/index', 'AccountReportController@index');
+    Route::get('/admin/account_report/show', 'AccountReportController@show');
+    Route::post('/admin/account_report/create', 'AccountReportController@create');
+    Route::post('/admin/account_report/update', 'AccountReportController@update');
+    Route::post('/admin/account_report/delete', 'AccountReportController@delete');
 
-    Route::get('/admin/user_remark/index', 'Admin\UserRemarkController@index');
-    Route::post('/admin/user_remark/create', 'Admin\UserRemarkController@create');
+    Route::get('/admin/article/list', 'ArticleController@list');
+    Route::get('/admin/article/show', 'ArticleController@show');
+    Route::post('/admin/article/create', 'ArticleController@create');
+    Route::post('/admin/article/update', 'ArticleController@update');
+    Route::post('/admin/article/delete', 'ArticleController@delete');
 
-    Route::get('/admin/account/list', 'Admin\AccountController@list');
-    Route::get('/admin/account/show', 'Admin\AccountController@show');
-    Route::post('/admin/account/create', 'Admin\AccountController@create');
-    Route::post('/admin/account/update', 'Admin\AccountController@update');
-    Route::post('/admin/account/delete', 'Admin\AccountController@delete');
+    Route::get('/admin/message/list', 'MessageController@list');
+    Route::post('/admin/message/create', 'MessageController@create');
+    Route::post('/admin/message/delete', 'MessageController@delete');
 
-    Route::get('/admin/account_report/index', 'Admin\AccountReportController@index');
-    Route::get('/admin/account_report/show', 'Admin\AccountReportController@show');
-    Route::post('/admin/account_report/create', 'Admin\AccountReportController@create');
-    Route::post('/admin/account_report/update', 'Admin\AccountReportController@update');
-    Route::post('/admin/account_report/delete', 'Admin\AccountReportController@delete');
+    Route::get('/admin/recharge/list', 'RechargeController@list');
+    Route::post('/admin/recharge/create', 'RechargeController@create');
 
-    Route::get('/admin/article/list', 'Admin\ArticleController@list');
-    Route::get('/admin/article/show', 'Admin\ArticleController@show');
-    Route::post('/admin/article/create', 'Admin\ArticleController@create');
-    Route::post('/admin/article/update', 'Admin\ArticleController@update');
-    Route::post('/admin/article/delete', 'Admin\ArticleController@delete');
+    Route::get('/admin/amount_bill/index', 'AmountBillController@index');
+    Route::get('/admin/search_bill/index', 'SearchBillController@index');
 
-    Route::get('/admin/message/list', 'Admin\MessageController@list');
-    Route::post('/admin/message/create', 'Admin\MessageController@create');
-    Route::post('/admin/message/delete', 'Admin\MessageController@delete');
+    Route::get('/admin/wechat/get_server', 'WechatController@getServer');
+    Route::post('/admin/wechat/set_server', 'WechatController@setServer');
+    Route::post('/admin/wechat/refresh_token', 'WechatController@refreshToken');
+    Route::get('/admin/wechat/get_menu', 'WechatController@getMenu');
+    Route::post('/admin/wechat/set_menu', 'WechatController@setMenu');
 
-    Route::get('/admin/recharge/list', 'Admin\RechargeController@list');
-    Route::post('/admin/recharge/create', 'Admin\RechargeController@create');
+    Route::get('/admin/vbot_job/index', 'VbotJobController@index');
+    Route::get('/admin/excel/index', 'ExcelController@index');
 
-    Route::get('/admin/amount_bill/index', 'Admin\AmountBillController@index');
-    Route::get('/admin/search_bill/index', 'Admin\SearchBillController@index');
-
-    Route::get('/admin/wechat/get_server', 'Admin\WechatController@getServer');
-    Route::post('/admin/wechat/set_server', 'Admin\WechatController@setServer');
-    Route::post('/admin/wechat/refresh_token', 'Admin\WechatController@refreshToken');
-    Route::get('/admin/wechat/get_menu', 'Admin\WechatController@getMenu');
-    Route::post('/admin/wechat/set_menu', 'Admin\WechatController@setMenu');
-
-    Route::get('/admin/vbot_job/index', 'Admin\VbotJobController@index');
-    Route::get('/admin/excel/index', 'Admin\ExcelController@index');
-
-    Route::get('/admin/product/index', 'Admin\ProductController@index');
-    Route::get('/admin/user_product/index', 'Admin\UserProductController@index');
-    Route::get('/admin/product_bill/index', 'Admin\ProductBillController@index');
+    Route::get('/admin/product/index', 'ProductController@index');
+    Route::get('/admin/user_product/index', 'UserProductController@index');
+    Route::get('/admin/product_bill/index', 'ProductBillController@index');
 });
 
 //>>>>>wechat serv
