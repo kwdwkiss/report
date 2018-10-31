@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Permission;
 use Illuminate\Console\Command;
-use Spatie\Permission\Models\Permission;
 
 class PermCreate extends Command
 {
@@ -38,22 +38,32 @@ class PermCreate extends Command
      */
     public function handle()
     {
-//        $router = app('router');
-//        $routes = $router->getRoutes()->getRoutes();
-//
-//        $routeData = [];
-//        foreach ($routes as $route) {
-//            if (strpos(''))
-//                var_dump($route->uri);
-//        }
+        $router = app('router');
+        $routes = $router->getRoutes()->getRoutes();
 
-        $data = [
-            ['id' => 1, 'name' => 'statement|profile', 'guard_name' => 'admin'],
-            ['id' => 2, 'name' => 'statement|index', 'guard_name' => 'admin'],
-        ];
+        $routeData = [];
+        $adminNameSpace = 'App\Http\Controllers\Admin';
+        foreach ($routes as $route) {
+            if ($route->getAction('namespace') == $adminNameSpace) {
+                $controller = $route->getAction('controller');
+                $controller = str_replace($adminNameSpace, '', $controller);
+                $controller = ltrim($controller, '\\');
+                $shortController = explode('@', $controller)[0];
+                $shortController = str_replace('Controller', '', $shortController);
+                $action = explode('@', $controller)[1];
 
-        foreach ($data as $item) {
-            Permission::updateOrCreate(['id' => $item['id']], $item);
+                $shortController = snake_case($shortController);
+                $action = snake_case($action);
+
+                $routeData[] = [
+                    'name' => $shortController . '|' . $action,
+                    'guard_name' => 'admin',
+                ];
+            }
+        }
+
+        foreach ($routeData as $item) {
+            Permission::updateOrCreate(['name' => $item['name']], $item);
         }
     }
 }
