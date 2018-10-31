@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\DeleteFile;
 use App\Http\Middleware\DomainCheck;
 use App\Http\Middleware\JsonSuccessResponse;
+use App\Http\Middleware\PermissionCheck;
 use App\Http\Middleware\UserApi;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -65,5 +66,6 @@ class Kernel extends HttpKernel
         'json.success' => JsonSuccessResponse::class,
         'user.api' => UserApi::class,
         'domain.check' => DomainCheck::class,
+        'rbac' => PermissionCheck::class,
     ];
 }

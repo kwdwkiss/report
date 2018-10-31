@@ -111,7 +111,7 @@ Route::namespace('Admin')->middleware(['domain.check', 'csrf'])->group(function 
     Route::get('/admin', 'IndexController@index');
 
     Route::post('/admin/admin/login', 'AdminController@login');
-    Route::middleware(['auth:admin'])->group(function () {
+    Route::middleware(['auth:admin', 'rbac'])->group(function () {
         Route::get('/admin/admin/index', 'AdminController@index');
         Route::post('/admin/admin/create', 'AdminController@create');
         Route::post('/admin/admin/update', 'AdminController@update');
@@ -122,13 +122,13 @@ Route::namespace('Admin')->middleware(['domain.check', 'csrf'])->group(function 
     });
 });
 
-Route::namespace('Admin')->middleware(['domain.check', 'auth:admin'])->group(function () {
+Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'rbac'])->group(function () {
     Route::post('/admin/attachment/upload', 'AttachmentController@upload');
     Route::post('/admin/attachment/upload_oss', 'AttachmentController@uploadOss');
     Route::post('/admin/attachment/upload_oss_image', 'AttachmentController@uploadOssImage');
 });
 
-Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
+Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf', 'rbac'])->group(function () {
     Route::get('/admin/statement/profile', 'StatementController@profile');
     Route::get('/admin/statement/index', 'StatementController@index');
     Route::get('/admin/behavior_log/index', 'BehaviorLogController@index');
