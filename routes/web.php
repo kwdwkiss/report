@@ -136,11 +136,11 @@ Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf', 'rb
     Route::get('/admin/statement/index', 'StatementController@index');
     Route::get('/admin/behavior_log/index', 'BehaviorLogController@index');
 
-    Route::get('/admin/site/basic', 'SiteController@getBasic');
-    Route::post('/admin/site/basic', 'SiteController@setBasic');
-    Route::get('/admin/site/index', 'SiteController@getIndex');
-    Route::post('/admin/site/index', 'SiteController@setIndex');
-    Route::post('/admin/site/pop-window', 'SiteController@popWindow');
+    Route::get('/admin/site/get_basic', 'SiteController@getBasic');
+    Route::post('/admin/site/set_basic', 'SiteController@setBasic');
+    Route::get('/admin/site/get_index', 'SiteController@getIndex');
+    Route::post('/admin/site/set_index', 'SiteController@setIndex');
+    Route::post('/admin/site/pop_window', 'SiteController@popWindow');
 
     Route::get('/admin/taxonomy/index', 'TaxonomyController@index');
     Route::post('/admin/taxonomy/create', 'TaxonomyController@create');

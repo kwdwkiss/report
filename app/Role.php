@@ -24,6 +24,15 @@ class Role extends \Spatie\Permission\Models\Role
                 'admin|update',
                 'admin|delete',
 
+                'site/get_index',
+                'site/set_index',
+                'behavior_log/index',
+
+                'taxonomy/index',
+                'taxonomy/create',
+                'taxonomy/update',
+                'taxonomy/delete',
+
                 'statement|profile',
                 'statement|index',
             ],

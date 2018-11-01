@@ -18,9 +18,11 @@ module.exports = {
 
     adminRoleAll: '/admin/role/all',
 
-    adminSiteBasic: '/admin/site/basic',
-    adminSiteIndex: '/admin/site/index',
-    adminSitePopWindow: 'admin/site/pop-window',
+    adminSiteGetBasic: '/admin/site/get_basic',
+    adminSiteSetBasic: '/admin/site/set_basic',
+    adminSiteGetIndex: '/admin/site/get_index',
+    adminSiteSetIndex: '/admin/site/set_index',
+    adminSitePopWindow: 'admin/site/pop_window',
 
     adminTaxonomyIndex: '/admin/taxonomy/index',
     adminTaxonomyCreate: '/admin/taxonomy/create',

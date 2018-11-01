@@ -365,13 +365,13 @@
         methods: {
             loadData: function () {
                 let self = this;
-                axios.get(api.adminSiteIndex).then(function (res) {
+                axios.get(api.adminSiteGetIndex).then(function (res) {
                     self.data = res.data.data;
                 });
             },
             doSave: function () {
                 let self = this;
-                axios.post(api.adminSiteIndex, self.data).then(function () {
+                axios.post(api.adminSiteSetIndex, self.data).then(function () {
                     self.$message.success('成功');
                 });
             },
