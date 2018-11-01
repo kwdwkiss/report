@@ -11,20 +11,29 @@ class Permission extends \Spatie\Permission\Models\Permission
         $router = app('router');
         $routes = $router->getRoutes()->getRoutes();
 
-        $routeData = [];
-        $adminNameSpace = 'App\Http\Controllers\Admin';
+        $permIds = [];
+        $namespaces = ['App\Http\Controllers\Admin' => 'admin'];
+        $namespacesKeys = array_keys($namespaces);
+
         foreach ($routes as $route) {
-            if ($route->getAction('namespace') == $adminNameSpace) {
+            $namespace = $route->getAction('namespace');
+            if (in_array($namespace, $namespacesKeys)) {
+
+                $guard_name = $namespaces[$namespace];
                 $perm = static::getPermFromRoute($route);
-                $routeData[] = [
+
+                $permission = static::updateOrCreate([
                     'name' => $perm,
-                    'guard_name' => 'admin',
-                ];
+                    'guard_name' => $guard_name,
+                ]);
+
+                $permIds[] = $permission->id;
             }
         }
 
-        foreach ($routeData as $item) {
-            static::updateOrCreate(['name' => $item['name']], $item);
+        $removePerms = Permission::query()->whereNotIn('id', $permIds)->get();
+        foreach ($removePerms as $removePerm) {
+            $removePerm->delete();
         }
     }
 
