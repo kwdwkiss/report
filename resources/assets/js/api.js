@@ -9,11 +9,14 @@ module.exports = {
 
     adminAdminIndex: '/admin/admin/index',
     adminAdminCreate: '/admin/admin/create',
+    adminAdminShow: '/admin/admin/show',
     adminAdminUpdate: '/admin/admin/update',
     adminAdminDelete: '/admin/admin/delete',
     adminAdminLogin: '/admin/admin/login',
     adminAdminLogout: '/admin/admin/logout',
     adminAdminInfo: '/admin/admin/info',
+
+    adminRoleAll: '/admin/role/all',
 
     adminSiteBasic: '/admin/site/basic',
     adminSiteIndex: '/admin/site/index',

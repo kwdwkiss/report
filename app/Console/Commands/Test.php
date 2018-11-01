@@ -6,6 +6,7 @@ use App\AccountSearch;
 use App\AmountBill;
 use App\Excel;
 use App\RechargeBill;
+use App\Role;
 use App\SearchBill;
 use App\Statement;
 use Carbon\Carbon;
@@ -51,7 +52,7 @@ class Test extends Command
      */
     public function handle()
     {
-        dd(preg_match(RegExp::MOBILE,'18173219770'));
+        Role::initCreate();
         //$this->processTest();
     }
 

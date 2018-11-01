@@ -11,6 +11,8 @@ class Admin extends Authenticatable
     use Notifiable;
     use HasRoles;
 
+    protected $guard_name = 'admin';
+
     protected $table = 'admin';
 
     /**
@@ -30,4 +32,9 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function isFounder()
+    {
+        return $this->id == 1;
+    }
 }

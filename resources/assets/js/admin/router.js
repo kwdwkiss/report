@@ -47,7 +47,11 @@ const router = new VueRouter({
                 {name: 'queueStatus', path: 'queue/status', component: require('./pages/QueueStatus')},
 
                 {name: 'systemSite', path: 'system/site', component: require('./pages/Site')},
-                {name: 'systemAdmin', path: 'system/admin', component: require('./pages/Admin')},
+
+                {name: 'adminIndex', path: 'system/admin', component: require('./pages/Admin/Index')},
+                {name: 'adminCreate', path: 'system/create', component: require('./pages/Admin/Create')},
+                {name: 'adminUpdate', path: 'system/update/:id', component: require('./pages/Admin/Update')},
+
                 {name: 'taxonomyList', path: 'taxonomy/list', component: require('./pages/Taxonomy')},
                 {name: 'articleList', path: 'article/list', component: require('./pages/Article/Index')},
                 {name: 'articleCreate', path: 'article/create', component: require('./pages/Article/Create')},

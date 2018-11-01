@@ -31,10 +31,7 @@ class Permission extends \Spatie\Permission\Models\Permission
             }
         }
 
-        $removePerms = Permission::query()->whereNotIn('id', $permIds)->get();
-        foreach ($removePerms as $removePerm) {
-            $removePerm->delete();
-        }
+        Permission::query()->whereNotIn('id', $permIds)->delete();
     }
 
     public static function getPermFromRoute(Route $route)

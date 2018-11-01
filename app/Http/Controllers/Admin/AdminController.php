@@ -9,81 +9,116 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Admin;
+use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AdminResource;
 use App\BehaviorLog;
+use App\Role;
+use Cly\RegExp\RegExp;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return AdminResource::collection(Admin::paginate());
+        $query = Admin::with('roles');
+
+        return AdminResource::collection($query->paginate());
     }
 
     public function create()
     {
-        $superUser = \Auth::guard('admin')->user();
-        if ($superUser->id != 1) {
-            return [
-                'code' => -1,
-                'message' => '只有超级管理员才能进行此操作'
-            ];
-        }
-        $name = request('name');
+        \DB::transaction(function () {
+            $name = request('name');
+            $password = request('password');
+            $rolesIds = request('roles_ids', []);
 
-        $existsAdmin = Admin::where('name', $name)->first();
-        if ($existsAdmin) {
-            return [
-                'code' => -1,
-                'message' => '用户名已存在'
-            ];
-        }
+            $existsAdmin = Admin::where('name', $name)->lockForUpdate()->first();
+            if ($existsAdmin) {
+                throw new JsonException('用户名已存在');
+            }
 
-        Admin::create([
-            'name' => $name,
-            'password' => bcrypt(request('password'))
-        ]);
+            if (!preg_match(RegExp::PASSWORD, $password)) {
+                throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
+            }
+
+            $roles = Role::whereIn('id', $rolesIds)->get();
+            $rolesName = array_column($roles->toArray(), 'name');
+            if (in_array('super_admin', $rolesName)) {
+                $operator = \Auth::guard('admin')->user();
+                if (!$operator->isFounder()) {
+                    throw new JsonException('创始人才能分配超级管理员');
+                }
+            }
+
+            $admin = Admin::create([
+                'name' => $name,
+                'password' => bcrypt($password)
+            ]);
+
+            $admin->syncRoles($roles);
+        });
 
         return [];
     }
 
+    public function show()
+    {
+        $id = request('id');
+
+        $admin = Admin::with('roles')->findOrFail($id);
+
+        return new AdminResource($admin);
+    }
+
     public function update()
     {
-        $this->validate(request(), [
-            'password' => 'required'
-        ]);
-        $superUser = \Auth::guard('admin')->user();
-        if ($superUser->id != 1) {
-            return [
-                'code' => -1,
-                'message' => '只有超级管理员才能进行此操作'
-            ];
-        }
-        $user = Admin::findOrFail(request('id'));
-        $user->update([
-            'password' => bcrypt(request('password'))
-        ]);
+        \DB::transaction(function () {
+            $id = request('id');
+            $password = request('password');
+            $rolesIds = request('roles_ids', []);
+
+            if ($password && !preg_match(RegExp::PASSWORD, $password)) {
+                throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
+            }
+
+            $admin = Admin::findOrFail($id);
+
+            $roles = Role::whereIn('id', $rolesIds)->get();
+            $rolesName = array_column($roles->toArray(), 'name');
+            if (in_array('super_admin', $rolesName)) {
+                $operator = \Auth::guard('admin')->user();
+                if (!$operator->isFounder()) {
+                    throw new JsonException('创始人才能分配超级管理员');
+                }
+            }
+
+            if ($password) {
+                $admin->password = bcrypt($password);
+            }
+            $admin->save();
+
+            $admin->syncRoles($roles);
+        });
 
         return [];
     }
 
     public function delete()
     {
-        $superUser = \Auth::guard('admin')->user();
-        if ($superUser->id != 1) {
-            return [
-                'code' => -1,
-                'message' => '只有超级管理员才能进行此操作'
-            ];
+        $id = request('id');
+
+        $admin = Admin::findOrFail($id);
+
+        if ($admin->isFounder()) {
+            throw new JsonException('创始人不能删除');
         }
-        $user = Admin::findOrFail(request('id'));
-        if ($user->id == 1) {
-            return [
-                'code' => -1,
-                'message' => '不能删除超级管理员'
-            ];
+
+        $operator = \Auth::guard('admin')->user();
+        if ($operator->id == $id) {
+            throw new JsonException('不能删除自己');
         }
-        $user->delete();
+
+        $admin->delete();
 
         return [];
     }
@@ -112,10 +147,7 @@ class AdminController extends Controller
         ]);
 
         if (env('SITE_ADMIN_AUTH_CODE') && env('SITE_ADMIN_AUTH_CODE') != $auth_code) {
-            return [
-                'code' => 100,
-                'message' => '授权码错误'
-            ];
+            throw new JsonException('授权码错误');
         }
 
         if (\Auth::guard('admin')->attempt([
@@ -138,15 +170,11 @@ class AdminController extends Controller
 
     public function modifyPassword()
     {
-        $this->validate(request(), [
-            'newPassword' => 'required|min:8'
-        ]);
+        $this->validate(request(), ['newPassword' => 'required|min:8']);
+
         $user = \Auth::guard('admin')->user();
         if (!\Hash::check(request('password'), $user->password)) {
-            return [
-                'code' => -1,
-                'message' => '密码错误'
-            ];
+            throw new JsonException('密码错误');
         }
         $user->update([
             'password' => bcrypt(request('newPassword'))

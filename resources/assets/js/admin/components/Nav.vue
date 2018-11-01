@@ -72,7 +72,7 @@
                                aria-haspopup="true" aria-expanded="false">系统设置<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="go('systemSite')">站点设置</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('systemAdmin')">管理员设置</a>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('adminIndex')">管理员设置</a>
                                 </li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('taxonomyList')">分类管理</a>
                                 </li>

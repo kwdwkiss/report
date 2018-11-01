@@ -46,18 +46,10 @@ class MigrateUp extends Command
         $migrator = app('migrator');
         $migrator->requireFiles($files);
 
-        foreach ($files as $item) {
-            $name = $migrator->getMigrationName($item);
+        $migrator->runPending($files, []);
 
-            $query = \DB::table('migrations')->where('migration', $name);
-            if ($query->first()) {
-                $this->line("migrations exits $name");
-                continue;
-            }
-            $instance = $migrator->resolve($name);
-            $instance->up();
-
-            $this->line("$name up and database migration create");
+        foreach ($migrator->getNotes() as $note) {
+            $this->output->writeln($note);
         }
     }
 }
