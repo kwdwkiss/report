@@ -14,17 +14,22 @@ class Permission extends \Spatie\Permission\Models\Permission
         $permIds = [];
         $namespaces = ['App\Http\Controllers\Admin' => 'admin'];
         $namespacesKeys = array_keys($namespaces);
+        $middleware = 'rbac';
 
         foreach ($routes as $route) {
             $namespace = $route->getAction('namespace');
-            if (in_array($namespace, $namespacesKeys)) {
+            $routeMiddlware = $route->gatherMiddleware();
+
+            if (in_array($middleware, $routeMiddlware) && in_array($namespace, $namespacesKeys)) {
 
                 $guard_name = $namespaces[$namespace];
                 $perm = static::getPermFromRoute($route);
+                $routeName = $route->getName();
 
                 $permission = static::updateOrCreate([
                     'name' => $perm,
                     'guard_name' => $guard_name,
+                    'title' => $routeName,
                 ]);
 
                 $permIds[] = $permission->id;

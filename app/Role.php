@@ -35,6 +35,10 @@ class Role extends \Spatie\Permission\Models\Role
 
                 'statement@profile',
                 'statement@index',
+
+                'account_report@delete',
+
+                'recharge@create',
             ],
         ],
     ];
@@ -63,13 +67,11 @@ class Role extends \Spatie\Permission\Models\Role
                 if ($perms[0] == '*') {
                     $permissions = Permission::where('guard_name', $guard_name)->get();
                 } else {
-                    $permissions = Permission::where('guard_name', $guard_name)
-                        ->whereIn('name', $perms)->get();
+                    $permissions = Permission::where('guard_name', $guard_name)->whereIn('name', $perms)->get();
                 }
                 $role->syncPermissions($permissions);
             } elseif ($no_perms) {
-                $permissions = Permission::where('guard_name', $guard_name)
-                    ->whereNotIn('name', $no_perms)->get();
+                $permissions = Permission::where('guard_name', $guard_name)->whereNotIn('name', $no_perms)->get();
                 $role->syncPermissions($permissions);
             }
         }
