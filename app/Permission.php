@@ -46,6 +46,6 @@ class Permission extends \Spatie\Permission\Models\Permission
         $basename = snake_case($basename);
         $action = snake_case($action);
 
-        return $basename . '|' . $action;
+        return $basename . '@' . $action;
     }
 }

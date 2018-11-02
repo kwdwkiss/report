@@ -110,6 +110,7 @@ Route::namespace('Admin')->middleware(['domain.check', 'csrf'])->group(function 
 
     Route::get('/admin', 'IndexController@index');
     Route::post('/admin/admin/login', 'AdminController@login');
+    Route::get('/admin/admin/logout', 'AdminController@logout');
     Route::get('/admin/role/all', 'RoleController@all');
 });
 
@@ -129,7 +130,6 @@ Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf', 'rb
     Route::post('/admin/admin/delete', 'AdminController@delete');
 
     Route::get('/admin/admin/info', 'AdminController@info');
-    Route::get('/admin/admin/logout', 'AdminController@logout');
     Route::post('/admin/admin/modify_password', 'AdminController@modifyPassword');
 
     Route::get('/admin/statement/profile', 'StatementController@profile');

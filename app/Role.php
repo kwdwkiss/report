@@ -18,23 +18,23 @@ class Role extends \Spatie\Permission\Models\Role
             'guard_name' => 'admin',
             'level' => 100,
             'no_perms' => [
-                'admin|index',
-                'admin|create',
-                'admin|show',
-                'admin|update',
-                'admin|delete',
+                'admin@index',
+                'admin@create',
+                'admin@show',
+                'admin@update',
+                'admin@delete',
 
-                'site/get_index',
-                'site/set_index',
-                'behavior_log/index',
+                'site@get_basic',
+                'site@set_basic',
+                'behavior_log@index',
 
-                'taxonomy/index',
-                'taxonomy/create',
-                'taxonomy/update',
-                'taxonomy/delete',
+                'taxonomy@index',
+                'taxonomy@create',
+                'taxonomy@update',
+                'taxonomy@delete',
 
-                'statement|profile',
-                'statement|index',
+                'statement@profile',
+                'statement@index',
             ],
         ],
     ];
@@ -78,9 +78,15 @@ class Role extends \Spatie\Permission\Models\Role
 
         //初始化id为1的用户为超级管理员
         $superAdmin = Admin::find(1);
-        $role = Role::findByName('super_admin', 'admin');
-        if ($superAdmin && $role) {
-            $superAdmin->syncRoles($role);
+        $superAdminRole = Role::findByName('super_admin', 'admin');
+        if ($superAdmin && $superAdminRole) {
+            $superAdmin->syncRoles($superAdminRole);
+        }
+        //没有角色的admin初始化为客服
+        $noRoleAdmins = Admin::doesntHave('roles')->get();
+        $serviceRole = Role::findByName('service', 'admin');
+        foreach ($noRoleAdmins as $noRoleAdmin) {
+            $noRoleAdmin->syncRoles($serviceRole);
         }
     }
 }
