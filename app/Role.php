@@ -43,6 +43,10 @@ class Role extends \Spatie\Permission\Models\Role
                 'site@get_basic',
                 'site@set_basic',
 
+                'user@delete',
+                'user@update_api_key',
+                'user@update_api_secret',
+
                 'account_report@delete',
 
                 'recharge@create',

@@ -25,10 +25,10 @@ class EmulatorTbController extends Controller
 
     public function __construct()
     {
-        $jar = new FileCookieJar(storage_path('test'));
-        $this->client = new Client([
-            'cookies' => $jar,
-        ]);
+//        $jar = new FileCookieJar(storage_path('test'));
+//        $this->client = new Client([
+//            'cookies' => $jar,
+//        ]);
     }
 
     public function index()

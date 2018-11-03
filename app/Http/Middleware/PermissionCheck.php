@@ -22,10 +22,11 @@ class PermissionCheck
         $permName = Permission::getPermFromRoute($route);
 
         $admin = \Auth::guard('admin')->user();
+        $permission = Permission::findByName($permName);
 
-//        if (!$admin->hasPermissionTo($permName)) {
-//            throw new JsonException('你没有访问权限');
-//        }
+        if (!$admin->hasPermissionTo($permission)) {
+            throw new JsonException('你没有权限：' . $permission->title);
+        }
 
         return $next($request);
     }
