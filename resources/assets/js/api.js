@@ -16,7 +16,14 @@ module.exports = {
     adminAdminLogout: '/admin/admin/logout',
     adminAdminInfo: '/admin/admin/info',
 
+    adminRoleIndex: '/admin/role/index',
+    adminRoleShow: '/admin/role/show',
+    adminRoleUpdate: '/admin/role/update',
     adminRoleAll: '/admin/role/all',
+
+    adminPermissionIndex: '/admin/permission/index',
+    adminPermissionAll: '/admin/permission/all',
+    adminPermissionRefresh: '/admin/permission/refresh',
 
     adminSiteGetBasic: '/admin/site/get_basic',
     adminSiteSetBasic: '/admin/site/set_basic',

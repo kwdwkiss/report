@@ -112,6 +112,7 @@ Route::namespace('Admin')->middleware(['domain.check', 'csrf'])->group(function 
     Route::post('/admin/admin/login', 'AdminController@login');
     Route::get('/admin/admin/logout', 'AdminController@logout');
     Route::get('/admin/role/all', 'RoleController@all');
+    Route::get('/admin/permission/all', 'PermissionController@all');
 });
 
 Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'rbac'])->group(function () {
@@ -136,15 +137,12 @@ Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf', 'rb
     Route::post('/admin/admin/update', 'AdminController@update')->name('管理员更新');
     Route::post('/admin/admin/delete', 'AdminController@delete')->name('管理员删除');
 
-    Route::get('/admin/statement/profile', 'StatementController@profile')->name('报表概况');
-    Route::get('/admin/statement/index', 'StatementController@index')->name('报表列表');
-    Route::get('/admin/behavior_log/index', 'BehaviorLogController@index')->name('行为日志列表');
+//    Route::get('/admin/permission/index', 'PermissionController@index')->name('权限列表');
+    Route::post('/admin/permission/refresh', 'PermissionController@refresh')->name('权限刷新');
 
-    Route::get('/admin/site/get_basic', 'SiteController@getBasic')->name('网站设置详情');
-    Route::post('/admin/site/set_basic', 'SiteController@setBasic')->name('网站设置更新');
-    Route::get('/admin/site/get_index', 'SiteController@getIndex')->name('首页设置详情');
-    Route::post('/admin/site/set_index', 'SiteController@setIndex')->name('首页设置更新');
-    Route::post('/admin/site/pop_window', 'SiteController@popWindow')->name('弹窗设置');
+    Route::get('/admin/role/index', 'RoleController@index')->name('角色列表');
+    Route::get('/admin/role/show', 'RoleController@show')->name('角色详情');
+    Route::post('/admin/role/update', 'RoleController@update')->name('角色更新');
 
     Route::get('/admin/taxonomy/index', 'TaxonomyController@index')->name('分类列表');
     Route::post('/admin/taxonomy/create', 'TaxonomyController@create')->name('分类创建');
@@ -155,6 +153,17 @@ Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf', 'rb
 //    Route::post('/admin/tag/create', 'TagController@create')->name('标签创建');
 //    Route::post('/admin/tag/update', 'TagController@update')->name('标签更新');
 //    Route::post('/admin/tag/delete', 'TagController@delete')->name('标签删除');
+
+    Route::get('/admin/statement/profile', 'StatementController@profile')->name('报表概况');
+    Route::get('/admin/statement/index', 'StatementController@index')->name('报表列表');
+    Route::get('/admin/behavior_log/index', 'BehaviorLogController@index')->name('行为日志列表');
+
+    Route::get('/admin/site/get_basic', 'SiteController@getBasic')->name('网站设置详情');
+    Route::post('/admin/site/set_basic', 'SiteController@setBasic')->name('网站设置更新');
+
+    Route::get('/admin/site/get_index', 'SiteController@getIndex')->name('首页设置详情');
+    Route::post('/admin/site/set_index', 'SiteController@setIndex')->name('首页设置更新');
+    Route::post('/admin/site/pop_window', 'SiteController@popWindow')->name('弹窗设置');
 
     Route::get('/admin/user/index', 'UserController@index')->name('用户列表');
     Route::get('/admin/user/show', 'UserController@show')->name('用户详情');

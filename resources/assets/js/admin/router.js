@@ -52,6 +52,11 @@ const router = new VueRouter({
                 {name: 'adminCreate', path: 'system/create', component: require('./pages/Admin/Create')},
                 {name: 'adminUpdate', path: 'system/update/:id', component: require('./pages/Admin/Update')},
 
+                {name: 'roleIndex', path: 'role/index', component: require('./pages/Role/Index')},
+                {name: 'roleUpdate', path: 'role/update/:id', component: require('./pages/Role/Update')},
+
+                {name: 'permissionIndex', path: 'permission/index', component: require('./pages/Permission/Index')},
+
                 {name: 'taxonomyList', path: 'taxonomy/list', component: require('./pages/Taxonomy')},
                 {name: 'articleList', path: 'article/list', component: require('./pages/Article/Index')},
                 {name: 'articleCreate', path: 'article/create', component: require('./pages/Article/Create')},

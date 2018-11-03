@@ -6,14 +6,14 @@ use App\Permission;
 use App\Role;
 use Illuminate\Console\Command;
 
-class PermCreate extends Command
+class PermRefresh extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'perm:create';
+    protected $signature = 'perm:refresh {--role}';
 
     /**
      * The console command description.
@@ -40,6 +40,8 @@ class PermCreate extends Command
     public function handle()
     {
         Permission::initCreate();
-        Role::initCreate();
+        if ($this->option('role')) {
+            Role::initCreate();
+        }
     }
 }

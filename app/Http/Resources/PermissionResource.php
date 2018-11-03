@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Permission;
 use Illuminate\Http\Resources\Json\Resource;
 
-class RoleResource extends Resource
+class PermissionResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -18,9 +18,6 @@ class RoleResource extends Resource
         $data = parent::toArray($request);
 
         $data['guard_title'] = Permission::$guardTitle[$data['guard_name']];
-        if (isset($data['permissions'])) {
-            $data['group_permissions'] = $this->resource->permissions->groupBy('controller');
-        }
 
         return $data;
     }

@@ -74,6 +74,10 @@
                                 <li><a class="collapse-hide" href="javascript:" @click="go('systemSite')">站点设置</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('adminIndex')">管理员设置</a>
                                 </li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('roleIndex')">角色设置</a>
+                                </li>
+                                <!--<li><a class="collapse-hide" href="javascript:" @click="go('permissionIndex')">权限设置</a>-->
+                                <!--</li>-->
                                 <li><a class="collapse-hide" href="javascript:" @click="go('taxonomyList')">分类管理</a>
                                 </li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('articleList')">文章管理</a></li>

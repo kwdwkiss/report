@@ -6,6 +6,11 @@ use Illuminate\Routing\Route;
 
 class Permission extends \Spatie\Permission\Models\Permission
 {
+    public static $guardTitle = [
+        'admin' => '后台管理',
+        'user' => '前台用户',
+    ];
+
     public static function initCreate()
     {
         $router = app('router');
@@ -24,12 +29,16 @@ class Permission extends \Spatie\Permission\Models\Permission
 
                 $guard_name = $namespaces[$namespace];
                 $perm = static::getPermFromRoute($route);
+                $controller = explode('@', $perm)[0];
+                $action = explode('@', $perm)[1];
                 $routeName = $route->getName();
 
                 $permission = static::updateOrCreate([
                     'name' => $perm,
                     'guard_name' => $guard_name,
                     'title' => $routeName,
+                    'controller' => $controller,
+                    'action' => $action,
                 ]);
 
                 $permIds[] = $permission->id;

@@ -8,6 +8,7 @@ const store = window.store = new Vuex.Store({
         taxonomy: laravel.taxonomy,
         user: laravel.user,
         roles: [],
+        permissions: [],
     },
     mutations: {
         taxonomy(state) {
@@ -31,6 +32,11 @@ const store = window.store = new Vuex.Store({
         roles(state, payload) {
             axios.get(api.adminRoleAll, {params: payload}).then(function (res) {
                 state.roles = res.data.data;
+            });
+        },
+        permissions(state, payload) {
+            axios.get(api.adminPermissionAll, {params: payload}).then(function (res) {
+                state.permissions = res.data.data;
             });
         },
     }

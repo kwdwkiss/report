@@ -24,9 +24,12 @@ class Role extends \Spatie\Permission\Models\Role
                 'admin@update',
                 'admin@delete',
 
-                'site@get_basic',
-                'site@set_basic',
-                'behavior_log@index',
+                'permission@index',
+                'permission@refresh',
+
+                'role@index',
+                'role@show',
+                'role@update',
 
                 'taxonomy@index',
                 'taxonomy@create',
@@ -35,10 +38,17 @@ class Role extends \Spatie\Permission\Models\Role
 
                 'statement@profile',
                 'statement@index',
+                'behavior_log@index',
+
+                'site@get_basic',
+                'site@set_basic',
 
                 'account_report@delete',
 
                 'recharge@create',
+
+                'wechat@set_server',
+                'wechat@set_menu',
             ],
         ],
     ];
@@ -90,5 +100,10 @@ class Role extends \Spatie\Permission\Models\Role
         foreach ($noRoleAdmins as $noRoleAdmin) {
             $noRoleAdmin->syncRoles($serviceRole);
         }
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->name == 'super_admin';
     }
 }
