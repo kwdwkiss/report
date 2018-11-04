@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Account;
+use App\AccountFavor;
 use App\AccountReport;
 use App\AccountSearch;
 use App\AmountBill;
@@ -17,6 +18,7 @@ use App\BehaviorLog;
 use App\Config;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AccountFavorResource;
 use App\Http\Resources\AccountReportResource;
 use App\Http\Resources\AccountResource;
 use App\Http\Resources\UserResource;
@@ -105,9 +107,9 @@ class IndexController extends Controller
             throw new JsonException('用户积分不足，请充值');
         }
 
-        $searchUsers = null;
-        $accountReports = null;
-        \DB::transaction(function () use ($user, $name, &$searchUsers, &$accountReports) {
+        $data = [];
+        \DB::transaction(function () use ($user, $name, &$data) {
+
             $user->_profile->decrement('amount', 2);
 
             AccountSearch::create([
@@ -118,6 +120,17 @@ class IndexController extends Controller
                 'success' => 1,
                 'result' => ''
             ]);
+
+            $accountFavorsTotal = AccountFavor::query()
+                ->select(\DB::raw('*,count(*) as total'))
+                ->where('account_name', $name)
+                ->groupBy('account_name', 'account_type')
+                ->get();
+            $accountFavors = AccountFavor::query()
+                ->where('account_name', $name)
+                ->orderBy('id', 'desc')
+                ->limit(5)
+                ->get();
 
             //存在账号的用户
             $searchUsers = User::query()->with('_profile')
@@ -177,17 +190,19 @@ class IndexController extends Controller
                 $accountReportsData[] = $item;
             }
             $accountReports = new Collection($accountReportsData);
-        });
 
-        request()->query->set('ip_hide', 1);
-        request()->query->set('r_index', true);
-        return [
-            'data' => [
+            request()->query->set('ip_hide', 1);
+            request()->query->set('r_index', true);
+            $data = [
                 'name' => $name,
                 'user' => UserResource::collection($searchUsers),
-                'account_reports' => AccountReportResource::collection($accountReports)
-            ]
-        ];
+                'account_reports' => AccountReportResource::collection($accountReports),
+                'account_favors' => AccountFavorResource::collection($accountFavors),
+                'account_favors_total' => AccountFavorResource::collection($accountFavorsTotal),
+            ];
+        });
+
+        return ['data' => $data];
     }
 
     public function rechargeUrl()

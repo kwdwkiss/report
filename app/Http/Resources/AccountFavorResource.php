@@ -21,6 +21,10 @@ class AccountFavorResource extends Resource
             $data['user_mobile'] = $data['_user']['mobile'];
         }
 
+        if ($request->has('ip_hide')) {
+            $data['ip'] = preg_replace('/(\d+\.\d+)\.\d+\.\d+/', '$1.*.*', $data['ip']);
+        }
+
         return $data;
     }
 }

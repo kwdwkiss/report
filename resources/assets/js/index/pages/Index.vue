@@ -100,6 +100,36 @@
                         <p class="col-xs-6 col-sm-4 text-primary">备注：{{item._profile.remark}}</p>
                     </div>
                 </div>
+                <div class="row" v-if="account_favors.length>0">
+                    <div class="col-md-12 text-warning">
+                        点赞信息：
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-4 text-primary" v-for="item in account_favors_total">
+                        {{item.account_type_label}}{{item.account_name}}:点赞{{item.total}}次
+                    </div>
+                </div>
+                <div class="table-responsive" v-if="account_favors.length>0">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>账号类型</th>
+                            <th>账号</th>
+                            <th>点赞者ip</th>
+                            <th>点赞时间</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-primary">
+                        <tr v-for="(item,index) in account_favors" :key="'account_favors'+index">
+                            <td>{{item.account_type_label}}</td>
+                            <td>{{item.account_name}}</td>
+                            <td class="hidden-xs">{{item.ip}}</td>
+                            <td>{{item.created_at}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="row">
                     <div class="col-md-12 text-warning">查询结果：</div>
                 </div>
@@ -391,6 +421,12 @@
             searchUser: function () {
                 return this.$store.state.searchResult.user;
             },
+            account_favors: function () {
+                return this.$store.state.searchResult.account_favors;
+            },
+            account_favors_total: function () {
+                return this.$store.state.searchResult.account_favors_total;
+            }
         },
         created: function () {
             this.initSearchParams();

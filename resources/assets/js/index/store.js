@@ -12,6 +12,8 @@ const store = window.store = new Vuex.Store({
         searchResult: {
             user: [],
             account_reports: [],
+            account_favors: [],
+            account_favors_total: 0,
             accounts: [],
             type: 0,//type 0-不显示 1-显示无记录 2-显示记录列表 3-显示账号信息 4-显示骗子
         },
