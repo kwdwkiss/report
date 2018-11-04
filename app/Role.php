@@ -90,14 +90,33 @@ class Role extends \Spatie\Permission\Models\Role
             }
         }
 
+        //清除没有的角色
         Role::query()->whereNotIn('id', $roleIds)->delete();
 
+        static::assignFirstSuperAdmin();
+        static::assignNoRolesService();
+    }
+
+    public static function refreshSuperAdminPermission()
+    {
+        $superAdminRole = Role::findByName('super_admin', 'admin');
+        $permissions = Permission::where('guard_name', 'admin')->get();
+
+        $superAdminRole->syncPermissions($permissions);
+    }
+
+    public static function assignFirstSuperAdmin()
+    {
         //初始化id为1的用户为超级管理员
         $superAdmin = Admin::find(1);
         $superAdminRole = Role::findByName('super_admin', 'admin');
         if ($superAdmin && $superAdminRole) {
             $superAdmin->syncRoles($superAdminRole);
         }
+    }
+
+    public static function assignNoRolesService()
+    {
         //没有角色的admin初始化为客服
         $noRoleAdmins = Admin::doesntHave('roles')->get();
         $serviceRole = Role::findByName('service', 'admin');

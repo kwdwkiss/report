@@ -22,15 +22,18 @@
             <div class="hidden-xs hidden-sm col-md-2">
                 <label><a class="text-primary" href="javascript:" @click="isSearch=false">账号查询</a></label>
             </div>
-            <div class="col-xs-12 col-md-6">
+            <div class="col-xs-12 col-md-4">
                 <input class="form-control" v-model="searchParams.name" name="name" type="text"
                        placeholder="请输入QQ、旺旺、微信、IS等各类账号">
             </div>
-            <div class="col-xs-6 col-md-2">
+            <div class="col-xs-4 col-md-2">
                 <button @click="doSearch" class="form-control btn btn-success">查询</button>
             </div>
-            <div class="col-xs-6 col-md-2">
+            <div class="col-xs-4 col-md-2">
                 <button @click="report" class="form-control btn btn-danger">投诉举报</button>
+            </div>
+            <div class="col-xs-4 col-md-2">
+                <button @click="go('accountFavorCreate')" class="form-control btn btn-primary">点赞</button>
             </div>
         </div>
 
@@ -485,6 +488,9 @@
                     .catch(function () {
                         inputFile.val("");
                     });
+            },
+            go: function (name) {
+                this.$router.push({name: name});
             }
         }
     };

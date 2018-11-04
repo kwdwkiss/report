@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PermissionResource;
 use App\Permission;
+use App\Role;
 
 class PermissionController extends Controller
 {
@@ -33,6 +34,8 @@ class PermissionController extends Controller
     public function refresh()
     {
         Permission::initCreate();
+
+        Role::refreshSuperAdminPermission();
 
         return [];
     }

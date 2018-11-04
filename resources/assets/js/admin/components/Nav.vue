@@ -33,6 +33,7 @@
                                 <li><a class="collapse-hide" href="javascript:" @click="go('userList')">用户资料</a>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('accountList')">账号信息</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('reportList')">举报信息</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('favorList')">点赞信息</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

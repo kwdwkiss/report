@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Taxonomy;
 use App\User;
+use App\UserFavor;
 use App\UserMerchant;
 use App\UserProfile;
 use Carbon\Carbon;
@@ -31,7 +32,7 @@ class UserController extends Controller
         $jd = request('jd');
         $is = request('is');
 
-        $query = User::with('_profile', '_type', '_auth_type', '_merchant')->orderBy('id', 'desc');
+        $query = User::with('_profile', '_type', '_auth_type', '_merchant', '_favor')->orderBy('id', 'desc');
         if ($type) {
             $query->where('type', $type);
         }
@@ -59,7 +60,7 @@ class UserController extends Controller
 
     public function show()
     {
-        $user = User::with('_profile', '_type', '_merchant')->findOrFail(request('id'));
+        $user = User::with('_profile', '_type', '_merchant', '_favor')->findOrFail(request('id'));
 
         return new UserResource($user);
     }
@@ -264,6 +265,26 @@ class UserController extends Controller
             \Auth::guard('user')->login($user);
             \Auth::guard('user')->logout();
         }
+
+        return [];
+    }
+
+    public function enableFavor()
+    {
+        $id = request('id');
+
+        $user = User::findOrfail($id);
+        $admin = \Auth::guard('admin')->user();
+
+        if ($user->_favor) {
+            throw new JsonException('用户已经开通了');
+        }
+
+        UserFavor::create([
+            'user_id' => $user->id,
+            'admin_id' => $admin->id,
+            'total' => UserFavor::$total,
+        ]);
 
         return [];
     }

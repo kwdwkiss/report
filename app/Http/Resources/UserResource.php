@@ -26,7 +26,6 @@ class UserResource extends Resource
         $data['_profile'] = new UserProfileResource($this->_profile);
         $data['_merchant'] = new UserMerchantResource($this->_merchant);
 
-
         if ($request->has('r_index')) {
             $secretData = [];
 

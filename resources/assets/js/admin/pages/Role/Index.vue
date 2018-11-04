@@ -111,6 +111,7 @@
                 });
             },
             doPermissionRefresh: function () {
+                let self = this;
                 axios.post(api.adminPermissionRefresh).then(function () {
                     self.$message.success('成功');
                 });

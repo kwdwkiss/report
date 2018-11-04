@@ -83,6 +83,9 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::get('/user/report/index', 'User\AccountReportController@index');
     Route::post('/user/report/hide', 'User\AccountReportController@hide');
 
+    Route::get('/user/account_favor/index', 'Index\AccountFavorController@index');
+    Route::post('/user/account_favor/create', 'Index\AccountFavorController@create');
+
     Route::get('/user/excel/index', 'User\ExcelController@index');
     Route::post('/user/excel/create', 'User\ExcelController@create');
     Route::post('/user/excel/update', 'User\ExcelController@update');
@@ -174,6 +177,7 @@ Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf', 'rb
     Route::post('/admin/user/update_auth', 'UserController@updateAuth')->name('用户认证更新');
     Route::post('/admin/user/update_api_key', 'UserController@updateApiKey')->name('用户秘钥key更新');
     Route::post('/admin/user/update_api_secret', 'UserController@updateApiSecret')->name('用户秘钥secret更新');
+    Route::post('/admin/user/enable_favor', 'UserController@enableFavor')->name('用户开通点赞');
 //    Route::post('/admin/user/add_deposit', 'UserController@addDeposit')->name('用户保证金增加');
 //    Route::post('/admin/user/sub_deposit', 'UserController@subDeposit')->name('用户保证金减掉');
 
@@ -195,6 +199,9 @@ Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf', 'rb
 //    Route::post('/admin/account_report/create', 'AccountReportController@create')->name('举报信息创建');
     Route::post('/admin/account_report/update', 'AccountReportController@update')->name('举报信息更新');
     Route::post('/admin/account_report/delete', 'AccountReportController@delete')->name('举报信息删除');
+
+    Route::get('/admin/account_favor/index', 'AccountFavorController@index')->name('点赞信息列表');
+//    Route::post('/admin/account_favor/delete', 'AccountFavorController@delete')->name('点赞信息删除');
 
     Route::get('/admin/article/index', 'ArticleController@index')->name('文章列表');
     Route::get('/admin/article/show', 'ArticleController@show')->name('文章详情');

@@ -245,7 +245,21 @@
                             </el-form-item>
                         </el-form>
                     </el-tab-pane>
-                    <el-tab-pane label="管理员备注" name="4">
+                    <el-tab-pane label="功能" name="4">
+                        <el-form>
+                            <el-form-item v-if="!form._favor" label="点赞功能" labelWidth="100px">
+                                <label>尚未开通</label>
+                                <el-button type="primary" @click="doEnableFavor">开通点赞</el-button>
+                            </el-form-item>
+                            <el-form-item v-if="form._favor" label="点赞功能" labelWidth="100px">
+                                <label>已开通</label>
+                            </el-form-item>
+                            <el-form-item v-if="form._favor" label="可用点赞数" labelWidth="100px">
+                                <label>{{form._favor.total}}</label>
+                            </el-form-item>
+                        </el-form>
+                    </el-tab-pane>
+                    <el-tab-pane label="管理员备注" name="5">
                         <el-input v-model="create_remark" placeholder="备注内容"></el-input>
                         <el-button type="primary" @click="createUserRemark">添加备注</el-button>
                         <el-table :data="user_remark" stripe>
@@ -273,7 +287,7 @@
             return {
                 apiShow: api.adminUserShow,
                 apiUpdate: api.adminUserUpdate,
-                form: {_profile: {}, _merchant: {}},
+                form: {_profile: {}, _merchant: {}, _favor: {}},
                 updateActiveName: '1',
                 provinces: Object.keys(cityData),
                 cities: [],
@@ -417,6 +431,13 @@
                     self.$message.success('成功');
                     self.loadUserRemark();
                 })
+            },
+            doEnableFavor: function () {
+                let self = this;
+                axios.post(api.adminUserEnableFavor, {id: self.form.id}).then(function (res) {
+                    self.$message.success('成功');
+                    self.loadData();
+                });
             }
         }
     }

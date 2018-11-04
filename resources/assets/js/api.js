@@ -51,6 +51,7 @@ module.exports = {
     adminUserUpdateApiSecret: '/admin/user/update_api_secret',
     adminUserAddDeposit: '/admin/user/add_deposit',
     adminUserSubDeposit: '/admin/user/sub_deposit',
+    adminUserEnableFavor: '/admin/user/enable_favor',
 
     adminUserRemarkIndex: '/admin/user_remark/index',
     adminUserRemarkCreate: '/admin/user_remark/create',
@@ -70,6 +71,8 @@ module.exports = {
     adminAccountReportCreate: '/admin/account_report/create',
     adminAccountReportUpdate: '/admin/account_report/update',
     adminAccountReportDelete: '/admin/account_report/delete',
+
+    adminAccountFavorIndex: '/admin/account_favor/index',
 
     adminArticleIndex: '/admin/article/index',
     adminArticleShow: '/admin/article/show',
@@ -153,6 +156,8 @@ module.exports = {
     userMerchantModify: '/user/merchant/modify',
     userReportList: '/user/report/index',
     userReportHide: '/user/report/hide',
+
+    userAccountFavorCreate: '/user/account_favor/create',
 
     userNotificationList: '/user/notification',
     userUnreadNotificationList: '/user/unread-notification',

@@ -19,8 +19,12 @@ const router = new VueRouter({
                 {name: 'userList', path: 'user/list', component: require('./pages/User/Index')},
                 {name: 'userCreate', path: 'user/create', component: require('./pages/User/Create')},
                 {name: 'userUpdate', path: 'user/update/:id', component: require('./pages/User/Update')},
+
                 {name: 'reportList', path: 'report/list', component: require('./pages/AccountReport/Index')},
                 {name: 'reportUpdate', path: 'report/update/:id', component: require('./pages/AccountReport/Update')},
+
+                {name: 'favorList', path: 'favor/list', component: require('./pages/AccountFavor/Index')},
+
                 {name: 'accountList', path: 'account/list', component: require('./pages/Account/Index')},
                 {name: 'accountCreate', path: 'account/create', component: require('./pages/Account/Create')},
                 {name: 'accountUpdate', path: 'account/update/:id', component: require('./pages/Account/Update')},

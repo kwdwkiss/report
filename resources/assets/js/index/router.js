@@ -32,6 +32,12 @@ const router = new VueRouter({
                 {name: 'amountList', path: 'amount/list', component: require('./pages/AmountList')},
                 {name: 'inviterLink', path: 'inviter/link', component: require('./pages/InviterLink')},
 
+                {
+                    name: 'accountFavorCreate',
+                    path: 'account_favor/create',
+                    component: require('./pages/AccountFavor/Create')
+                },
+
                 {name: 'register', path: 'register', component: require('./pages/Register')},
                 {name: 'login', path: 'login', component: require('./pages/Login')},
                 {name: 'forgetPassword', path: 'forget/password', component: require('./pages/ForgetPassword')},
@@ -67,7 +73,7 @@ router.beforeEach((to, from, next) => {
     if (store.state.user) {
         if (['login', 'forgetPassword'].indexOf(to.name) > -1) {
             next({name: 'index'});
-        }  else {
+        } else {
             next();
         }
     } else {

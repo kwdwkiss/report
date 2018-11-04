@@ -223,7 +223,7 @@ class IndexController extends Controller
         $captcha = request('captcha');
         $description = request('description');
         $attachmentData = request('image');
-        $ip = request()->getClientIp();
+        $ip = get_client_ip();
         $attachment = Attachment::find(array_get($attachmentData, 'attachment.id'));
 
         if (!captcha_check($captcha)) {
