@@ -116,7 +116,7 @@
                         <tr>
                             <th>账号类型</th>
                             <th>账号</th>
-                            <th>点赞者ip</th>
+                            <th class="hidden-xs">点赞者ip</th>
                             <th>点赞时间</th>
                         </tr>
                         </thead>
