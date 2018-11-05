@@ -80,6 +80,13 @@ module.exports = {
     adminArticleUpdate: '/admin/article/update',
     adminArticleDelete: '/admin/article/delete',
 
+    adminAdminArticleIndex: '/admin/admin_article/index',
+    adminAdminArticleShow: '/admin/admin_article/show',
+    adminAdminArticleShowLast: '/admin/admin_article/show_last',
+    adminAdminArticleCreate: '/admin/admin_article/create',
+    adminAdminArticleUpdate: '/admin/admin_article/update',
+    adminAdminArticleDelete: '/admin/admin_article/delete',
+
     adminMessageIndex: '/admin/message/index',
     adminMessageCreate: '/admin/message/create',
     adminMessageDelete: '/admin/message/delete',

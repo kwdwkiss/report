@@ -28,7 +28,7 @@ class ArticleController extends Controller
             $query->where('type', $type);
         }
         if (!is_null($title)) {
-            $query->where('title', $title);
+            $query->where('title', 'like', "%$title%");
         }
 
         return ArticleResource::collection($query->paginate());

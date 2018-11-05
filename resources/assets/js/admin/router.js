@@ -12,8 +12,9 @@ const router = new VueRouter({
             component: require('./App.vue'),
             alias: '/',
             children: [
-                {name: 'index', path: '', component: require('./pages/Dashboard')},
+                {name: 'index', path: '', component: require('./pages/Index')},
                 {name: 'statementList', path: 'statement/list', component: require('./pages/Statement/Index')},
+                {name: 'statementProfile', path: 'statement/profile', component: require('./pages/Statement/Profile')},
                 {name: 'behaviorLogList', path: 'behavior-log/list', component: require('./pages/BehaviorLog/Index')},
 
                 {name: 'userList', path: 'user/list', component: require('./pages/User/Index')},
@@ -62,9 +63,26 @@ const router = new VueRouter({
                 {name: 'permissionIndex', path: 'permission/index', component: require('./pages/Permission/Index')},
 
                 {name: 'taxonomyList', path: 'taxonomy/list', component: require('./pages/Taxonomy')},
+
                 {name: 'articleList', path: 'article/list', component: require('./pages/Article/Index')},
                 {name: 'articleCreate', path: 'article/create', component: require('./pages/Article/Create')},
                 {name: 'articleUpdate', path: 'article/update/:id', component: require('./pages/Article/Update')},
+
+                {
+                    name: 'adminArticleIndex',
+                    path: 'admin_article/index',
+                    component: require('./pages/AdminArticle/Index')
+                },
+                {
+                    name: 'adminArticleCreate',
+                    path: 'admin_article/create',
+                    component: require('./pages/AdminArticle/Create')
+                },
+                {
+                    name: 'adminArticleUpdate',
+                    path: 'admin_article/update/:id',
+                    component: require('./pages/AdminArticle/Update')
+                },
 
                 {name: 'wechatServer', path: 'wechat/server', component: require('./pages/Wechat/Server')},
                 {name: 'wechatMenu', path: 'wechat/menu', component: require('./pages/Wechat/Menu')},

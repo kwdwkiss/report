@@ -20,7 +20,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">数据统计<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="collapse-hide" href="javascript:" @click="go('index')">概况</a>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('statementProfile')">概况</a>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('statementList')">报表</a></li>
                                 <li><a class="collapse-hide" href="javascript:"
                                        @click="go('behaviorLogList')">用户行为日志</a></li>
@@ -82,6 +82,8 @@
                                 <li><a class="collapse-hide" href="javascript:" @click="go('taxonomyList')">分类管理</a>
                                 </li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('articleList')">文章管理</a></li>
+                                <li><a class="collapse-hide" href="javascript:"
+                                       @click="go('adminArticleIndex')">内部文章管理</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('messageList')">系统通知</a></li>
                                 <li><a class="collapse-hide" href="javascript:" @click="go('queueStatus')">队列状态</a></li>
                             </ul>
@@ -101,8 +103,10 @@
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="go('productIndex')">产品列表</a>
                                 </li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('userProductIndex')">用户产品</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('productBillIndex')">产品订单</a></li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('userProductIndex')">用户产品</a>
+                                </li>
+                                <li><a class="collapse-hide" href="javascript:" @click="go('productBillIndex')">产品订单</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>

@@ -209,6 +209,13 @@ Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf', 'rb
     Route::post('/admin/article/update', 'ArticleController@update')->name('文章更新');
     Route::post('/admin/article/delete', 'ArticleController@delete')->name('文章删除');
 
+    Route::get('/admin/admin_article/index', 'AdminArticleController@index')->name('内部文章列表');
+    Route::get('/admin/admin_article/show', 'AdminArticleController@show')->name('内部文章详情');
+    Route::get('/admin/admin_article/show_last', 'AdminArticleController@showLast')->name('内部文章最新详情');
+    Route::post('/admin/admin_article/create', 'AdminArticleController@create')->name('内部文章创建');
+    Route::post('/admin/admin_article/update', 'AdminArticleController@update')->name('内部文章更新');
+    Route::post('/admin/admin_article/delete', 'AdminArticleController@delete')->name('内部文章删除');
+
     Route::get('/admin/message/index', 'MessageController@index')->name('消息列表');
     Route::post('/admin/message/create', 'MessageController@create')->name('消息创建');
     Route::post('/admin/message/delete', 'MessageController@delete')->name('消息删除');
