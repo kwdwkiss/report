@@ -13,6 +13,7 @@ use App\AccountFavor;
 use App\Exceptions\JsonException;
 use App\Http\Controllers\Controller;
 use App\Taxonomy;
+use Carbon\Carbon;
 use Cly\RegExp\RegExp;
 
 class AccountFavorController extends Controller
@@ -56,6 +57,15 @@ class AccountFavorController extends Controller
             }
             if ($userFavor->total <= 0) {
                 throw new JsonException('本月点赞次数已用完');
+            }
+            $oldFavor = AccountFavor::query()
+                ->where('account_type', $account_type)
+                ->where('account_name', $account_name)
+                ->where('user_id', $user->id)
+                ->where('created_at', '>', Carbon::now()->subDay(15))
+                ->count();
+            if ($oldFavor) {
+                throw new JsonException('15天后才能对同一账号再次点赞');
             }
 
             $userFavor->decrement('total');
