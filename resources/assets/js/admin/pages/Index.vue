@@ -22,7 +22,9 @@
             loadData: function () {
                 let self = this;
                 axios.get(api.adminAdminArticleShowLast).then(function (res) {
-                    self.form = res.data.data;
+                    if (res.data.data) {
+                        self.form = res.data.data;
+                    }
                 });
             },
         }

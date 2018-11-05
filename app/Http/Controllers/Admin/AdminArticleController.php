@@ -47,7 +47,7 @@ class AdminArticleController extends Controller
     {
         $article = AdminArticle::query()->orderBy('id', 'desc')->first();
 
-        return new AdminArticleResource($article);
+        return $article ? new AdminArticleResource($article) : [];
     }
 
     public function create()
