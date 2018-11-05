@@ -36,15 +36,42 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">上传图片</label>
+                            <label class="col-sm-3 control-label">上传图片1</label>
                             <div class="col-sm-9">
-                                <button @click="uploadImage(form.image)" type="button"
+                                <button @click="uploadImage($event)" type="button"
                                         class="btn btn-primary">上传图片
                                 </button>
-                                <input class="input-file" style="display: none" type="file" @change="uploadChange">
+                                <input class="input-file" style="display: none" type="file" @change="uploadChange"
+                                       data-key="image">
                             </div>
                             <div class="col-sm-offset-3 col-sm-9">
-                                <img :src="form.image.attachment.url" alt="" style="max-height: 200px">
+                                <img :src="form.image.url" alt="" style="max-height: 200px">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">上传图片2</label>
+                            <div class="col-sm-9">
+                                <button @click="uploadImage($event)" type="button"
+                                        class="btn btn-primary">上传图片
+                                </button>
+                                <input class="input-file" style="display: none" type="file" @change="uploadChange"
+                                       data-key="image1">
+                            </div>
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <img :src="form.image1.url" alt="" style="max-height: 200px">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">上传图片3</label>
+                            <div class="col-sm-9">
+                                <button @click="uploadImage($event)" type="button"
+                                        class="btn btn-primary">上传图片
+                                </button>
+                                <input class="input-file" style="display: none" type="file" @change="uploadChange"
+                                       data-key="image2">
+                            </div>
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <img :src="form.image2.url" alt="" style="max-height: 200px">
                             </div>
                         </div>
                         <div class="form-group">
@@ -89,6 +116,12 @@
                     image: {
                         attachment: {}
                     },
+                    image1: {
+                        attachment: {}
+                    },
+                    image2: {
+                        attachment: {}
+                    },
                     description: "",
                     captcha: ""
                 },
@@ -112,9 +145,9 @@
                     account_type: this.$store.state.taxonomy.account_type[0].id,
                     report_type: this.$store.state.taxonomy.report_type[0].id,
                     name: "",
-                    image: {
-                        attachment: {}
-                    },
+                    image: '',
+                    image1: '',
+                    image2: '',
                     description: "",
                     captcha: ""
                 };
@@ -123,23 +156,23 @@
             doCaptcha: function () {
                 this.captcha_src = api.captcha + "?" + Date.parse(new Date());
             },
-            uploadImage: function (item) {
-                let inputFile = $(".input-file");
-                inputFile.data("target", item).click();
+            uploadImage: function (event) {
+                $(event.target).siblings('.input-file').click();
             },
-            uploadChange: function () {
+            uploadChange: function (event) {
                 let self = this;
                 let formData = new FormData();
-                let inputFile = $(".input-file");
-                formData.append("file", inputFile.get(0).files[0]);
+                let inputFile = event.target;
+                formData.append("file", inputFile.files[0]);
                 axios.post(api.uploadOss, formData, {
                     headers: {"Content-Type": "multipart/form-data"}
                 }).then(function (res) {
                     self.$message.success("成功");
-                    inputFile.data("target")["attachment"] = res.data.data;
-                    inputFile.val("");
+                    let key = $(inputFile).data('key');
+                    _.set(self.form, key, res.data.data);
+                    $(inputFile).val('');
                 }).catch(function () {
-                    inputFile.val("");
+                    $(inputFile).val('');
                 });
             },
             doReport: function () {

@@ -211,6 +211,16 @@
                                         <img :src="reportData.attachment.url" alt=""
                                              style="max-height: 200px;max-width: 400px">
                                     </a>
+                                    <a v-if="reportData.attachment1" :href="reportData.attachment1.url"
+                                       target="_blank">
+                                        <img :src="reportData.attachment1.url" alt=""
+                                             style="max-height: 200px;max-width: 400px">
+                                    </a>
+                                    <a v-if="reportData.attachment2" :href="reportData.attachment2.url"
+                                       target="_blank">
+                                        <img :src="reportData.attachment2.url" alt=""
+                                             style="max-height: 200px;max-width: 400px">
+                                    </a>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -272,6 +282,16 @@
                                     <a v-if="reportData.attachment" :href="reportData.attachment.url"
                                        target="_blank">
                                         <img :src="reportData.attachment.url" alt=""
+                                             style="max-height: 200px;max-width: 400px">
+                                    </a>
+                                    <a v-if="reportData.attachment1" :href="reportData.attachment1.url"
+                                       target="_blank">
+                                        <img :src="reportData.attachment1.url" alt=""
+                                             style="max-height: 200px;max-width: 400px">
+                                    </a>
+                                    <a v-if="reportData.attachment2" :href="reportData.attachment2.url"
+                                       target="_blank">
+                                        <img :src="reportData.attachment2.url" alt=""
                                              style="max-height: 200px;max-width: 400px">
                                     </a>
                                 </div>

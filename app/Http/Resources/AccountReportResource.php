@@ -18,9 +18,14 @@ class AccountReportResource extends Resource
         $data['account_type_label'] = $this->_accountType->name;
         $data['type_label'] = $this->_type->name;
 
-        $attachments = $this->_attachments;
-        if (isset($attachments[0])) {
-            $data['attachment'] = new AttachmentResource($attachments[0]);
+        if (isset($data['_attachments']) && isset($data['_attachments'][0])) {
+            $data['attachment'] = new AttachmentResource($this->_attachments[0]);
+        }
+        if (isset($data['_attachments']) && isset($data['_attachments'][1])) {
+            $data['attachment1'] = new AttachmentResource($this->_attachments[1]);
+        }
+        if (isset($data['_attachments']) && isset($data['_attachments'][2])) {
+            $data['attachment2'] = new AttachmentResource($this->_attachments[2]);
         }
 
         if ($request->has('ip_hide')) {

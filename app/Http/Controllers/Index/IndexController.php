@@ -238,8 +238,12 @@ class IndexController extends Controller
         $captcha = request('captcha');
         $description = request('description');
         $attachmentData = request('image');
+        $attachmentData1 = request('image1');
+        $attachmentData2 = request('image2');
         $ip = get_client_ip();
-        $attachment = Attachment::find(array_get($attachmentData, 'attachment.id'));
+        $attachment = Attachment::find(array_get($attachmentData, 'id'));
+        $attachment1 = Attachment::find(array_get($attachmentData1, 'id'));
+        $attachment2 = Attachment::find(array_get($attachmentData2, 'id'));
 
         if (!captcha_check($captcha)) {
             throw new JsonException('验证码错误');
@@ -318,7 +322,7 @@ class IndexController extends Controller
 
         \DB::transaction(function () use (
             $account, $user, $account_type, $name,
-            $report_type, $ip, $description, $attachment
+            $report_type, $ip, $description, $attachment, $attachment1, $attachment2
         ) {
             $account->increment('report_count');
 
@@ -335,6 +339,14 @@ class IndexController extends Controller
             if ($attachment) {
                 $attachment->update(['use' => 1]);
                 $accountReport->_attachments()->attach($attachment);
+            }
+            if ($attachment1) {
+                $attachment1->update(['use' => 1]);
+                $accountReport->_attachments()->attach($attachment1);
+            }
+            if ($attachment2) {
+                $attachment2->update(['use' => 1]);
+                $accountReport->_attachments()->attach($attachment2);
             }
         });
 

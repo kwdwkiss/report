@@ -46,11 +46,19 @@
                         </el-switch>
                     </template>
                 </el-table-column>
-                <el-table-column label="图片" min-width="100">
+                <el-table-column label="图片" min-width="300">
                     <template slot-scope="scope">
                         <a v-if="scope.row.attachment" target="_blank" :href="scope.row.attachment.url">
                             <img :src="scope.row.attachment.url" alt=""
-                                 style="max-height: 80px">
+                                 style="max-height: 80px;max-width: 100px">
+                        </a>
+                        <a v-if="scope.row.attachment1" target="_blank" :href="scope.row.attachment1.url">
+                            <img :src="scope.row.attachment1.url" alt=""
+                                 style="max-height: 80px;max-width: 100px">
+                        </a>
+                        <a v-if="scope.row.attachment2" target="_blank" :href="scope.row.attachment2.url">
+                            <img :src="scope.row.attachment2.url" alt=""
+                                 style="max-height: 80px;max-width: 100px">
                         </a>
                     </template>
                 </el-table-column>
