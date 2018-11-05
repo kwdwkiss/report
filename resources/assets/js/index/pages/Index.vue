@@ -87,15 +87,15 @@
                         </p>
                         <p class="col-xs-6 col-sm-4">会员编号：{{item.id}}</p>
                         <p class="col-xs-6 col-sm-4">会员类型：{{item.type_label}}</p>
-                        <p class="col-xs-6 col-sm-4">保证金：{{item._profile.deposit}}元</p>
+                        <!--<p class="col-xs-6 col-sm-4">保证金：{{item._profile.deposit}}元</p>-->
                         <p class="col-xs-6 col-sm-4">账号：{{item.mobile}}</p>
                         <p class="col-xs-6 col-sm-4">QQ：{{item.qq}}</p>
                         <p class="col-xs-6 col-sm-4">微信：{{item.wx}}</p>
-                        <p class="col-xs-6 col-sm-4">旺旺：{{item.ww}}</p>
-                        <p class="col-xs-6 col-sm-4">京东：{{item.jd}}</p>
-                        <p class="col-xs-6 col-sm-4">IS：{{item.is}}</p>
-                        <p class="col-xs-6 col-sm-4">姓名：{{item._profile.name}}</p>
-                        <p class="col-xs-6 col-sm-4">性别：{{item._profile.gender_label}}</p>
+                        <!--<p class="col-xs-6 col-sm-4">旺旺：{{item.ww}}</p>-->
+                        <!--<p class="col-xs-6 col-sm-4">京东：{{item.jd}}</p>-->
+                        <!--<p class="col-xs-6 col-sm-4">IS：{{item.is}}</p>-->
+                        <!--<p class="col-xs-6 col-sm-4">姓名：{{item._profile.name}}</p>-->
+                        <!--<p class="col-xs-6 col-sm-4">性别：{{item._profile.gender_label}}</p>-->
                         <p class="col-xs-6 col-sm-4">地址：{{item._profile.address}}</p>
                         <p class="col-xs-6 col-sm-4 text-primary">备注：{{item._profile.remark}}</p>
                     </div>
@@ -106,8 +106,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-md-4 text-primary" v-for="item in account_favors_total">
-                        {{item.account_type_label}}{{item.account_name}}:点赞{{item.total}}次
+                    <div class="col-xs-12 col-md-4 text-primary" v-for="item in account_favors_total">
+                        {{item.account_type_label}}:{{item.account_name}}&nbsp;点赞{{item.total}}次
                     </div>
                 </div>
                 <div class="table-responsive" v-if="account_favors.length>0">
@@ -135,7 +135,7 @@
                 </div>
                 <div class="row" v-if="account_reports.length==0">
                     <p class="col-md-12 text-primary">
-                        无<span class="text-warning">{{name}}</span>账号信息，如果确认是恶意号码，请投诉举报！
+                        账号:<span class="text-warning">{{name}}</span> 暂无任何用户举报记录，请自行甄别合作。
                     </p>
                 </div>
                 <div class="table-responsive" v-if="account_reports.length>0">
