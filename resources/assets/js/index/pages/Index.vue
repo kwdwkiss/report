@@ -30,7 +30,7 @@
                 <button @click="doSearch" class="form-control btn btn-success">查询</button>
             </div>
             <div class="col-xs-4 col-md-2">
-                <button @click="report" class="form-control btn btn-danger">投诉举报</button>
+                <button @click="go('accountReportCreate')" class="form-control btn btn-danger">投诉举报</button>
             </div>
             <div class="col-xs-4 col-md-2">
                 <button @click="go('accountFavorCreate')" class="form-control btn btn-primary">点赞</button>

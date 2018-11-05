@@ -33,6 +33,11 @@ const router = new VueRouter({
                 {name: 'inviterLink', path: 'inviter/link', component: require('./pages/InviterLink')},
 
                 {
+                    name: 'accountReportCreate',
+                    path: 'account_report/create',
+                    component: require('./pages/AccountReport/Create')
+                },
+                {
                     name: 'accountFavorCreate',
                     path: 'account_favor/create',
                     component: require('./pages/AccountFavor/Create')
