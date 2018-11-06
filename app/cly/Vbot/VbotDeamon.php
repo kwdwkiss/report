@@ -9,9 +9,9 @@
 namespace Cly\Vbot;
 
 
-use App\VbotJob;
 use Cly\Process\Manager;
 use Illuminate\Support\Facades\Redis;
+use Modules\Common\Entities\VbotJob;
 
 class VbotDeamon extends Manager
 {

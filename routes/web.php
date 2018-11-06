@@ -10,60 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware([])->group(function () {
-    Route::get('/emulator_tb/index', 'Index\EmulatorTbController@index');
-    Route::post('/emulator_tb/member/request_nick_check.do',
-        'Index\EmulatorTbController@member_request_nick_check');
-    Route::post('/emulator_tb/member/login.jhtml',
-        'Index\EmulatorTbController@member_login');
-});
-
-Route::middleware(['csrf'])->group(function () {
-    Route::get('/check_tb', 'Index\CheckAccountController@tb');
-    Route::get('/check_pdd', 'Index\CheckAccountController@pdd');
-    Route::get('/check_jd', 'Index\CheckAccountController@jd');
-    Route::get('/check_geo', 'Index\CheckAccountController@geo');
-
-//    Route::get('/emulator_pdd/login', 'Index\EmulatorPddController@login');
-//    Route::post('/emulator_pdd/sms', 'Index\EmulatorPddController@sms');
-//    Route::post('/emulator_pdd/do-login', 'Index\EmulatorPddController@doLogin');
-//
-//    Route::get('/emulator_pdd_mms/login', 'Index\EmulatorPddMmsController@login');
-//    Route::get('/emulator_pdd_mms/captcha', 'Index\EmulatorPddMmsController@captcha');
-//    Route::post('/emulator_pdd_mms/sms', 'Index\EmulatorPddMmsController@sms');
-//    Route::post('/emulator_pdd_mms/do-login', 'Index\EmulatorPddMmsController@doLogin');
-
-    Route::get('/', 'Index\IndexController@index')->name('login');
-    Route::get('/index/pop-window', 'Index\IndexController@popWindow');
-    Route::get('/index/index/recharge_url', 'Index\IndexController@rechargeUrl');
-    Route::post('/index/upload-oss', 'Index\IndexController@uploadOss');
-    Route::post('/index/behavior-log', 'Index\IndexController@behaviorLog');
-    Route::post('/index/one-key-excel', 'Index\IndexController@oneKeyExcel');
-    Route::get('/index/excel_cost_type', 'Index\IndexController@excelCostType');
-
-    Route::get('/index/article/list', 'Index\ArticleController@list');
-    Route::get('/index/article/show', 'Index\ArticleController@show');
-
-    Route::get('/index/index/basic', 'Index\IndexController@basic');
-
-    Route::get('/taxonomy/all/data', 'Index\TaxonomyController@allData');
-    Route::get('/taxonomy/all/display', 'Index\TaxonomyController@allDisplay');
-
-    Route::get('/index/product/index', 'Index\ProductController@index');
-    Route::get('/index/product/show', 'Index\ProductController@show');
-
-    Route::get('/user/logout', 'User\UserController@logout');
-    Route::post('/user/login', 'User\UserController@login');
-    Route::post('/user/forget-password', 'User\UserController@forgetPassword');
-    Route::post('/user/register', 'User\UserController@register');
-    Route::post('/user/sms', 'User\UserController@sms');
-
-    Route::get('/user/recharge/callback', 'User\RechargeController@apiCallback');
-    Route::get('/user/recharge/page-callback', 'User\RechargeController@pageCallback');
-});
 
 Route::middleware(['auth:user', 'csrf'])->group(function () {
-    Route::get('/user/info', 'User\UserController@info');
+    /*Route::get('/user/info', 'User\UserController@info');
     Route::post('/index/search', 'Index\IndexController@search');
     Route::post('/index/report', 'Index\IndexController@report');
     Route::get('/user/recharge/index', 'User\RechargeController@index');
@@ -105,34 +54,34 @@ Route::middleware(['auth:user', 'csrf'])->group(function () {
     Route::post('/user/vbot/add_send', 'User\VbotController@addSend');
     Route::post('/user/vbot/delete_send', 'User\VbotController@deleteSend');
 
-    Route::post('/mobile/search', 'Index\MobileController@search');
+    Route::post('/mobile/search', 'Index\MobileController@search');*/
 });
 
 //>>>>>>>>>admin
-Route::namespace('Admin')->middleware(['domain.check', 'csrf'])->group(function () {
+/*Route::namespace('Admin')->middleware(['domain.check', 'csrf'])->group(function () {
 
     Route::get('/admin', 'IndexController@index');
     Route::post('/admin/admin/login', 'AdminController@login');
     Route::get('/admin/admin/logout', 'AdminController@logout');
     Route::get('/admin/role/all', 'RoleController@all');
     Route::get('/admin/permission/all', 'PermissionController@all');
-});
+});*/
 
-Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'rbac'])->group(function () {
+/*Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'rbac'])->group(function () {
 
     Route::post('/admin/attachment/upload', 'AttachmentController@upload')->name('上传附件到本地');
     Route::post('/admin/attachment/upload_oss', 'AttachmentController@uploadOss')->name('上传附件到oss');
     Route::post('/admin/attachment/upload_oss_image', 'AttachmentController@uploadOssImage')
         ->name('上传身份证到oss加水印');
-});
+});*/
 
-Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
+/*Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf'])->group(function () {
 
     Route::get('/admin/admin/info', 'AdminController@info');
     Route::post('/admin/admin/modify_password', 'AdminController@modifyPassword');
-});
+});*/
 
-Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf', 'rbac'])->group(function () {
+/*Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf', 'rbac'])->group(function () {
 
     Route::get('/admin/admin/index', 'AdminController@index')->name('管理员列表');
     Route::post('/admin/admin/create', 'AdminController@create')->name('管理员创建');
@@ -239,12 +188,4 @@ Route::namespace('Admin')->middleware(['domain.check', 'auth:admin', 'csrf', 'rb
     Route::get('/admin/product/index', 'ProductController@index')->name('产品列表');
     Route::get('/admin/user_product/index', 'UserProductController@index')->name('用户产品列表');
     Route::get('/admin/product_bill/index', 'ProductBillController@index')->name('产品订单列表');
-});
-
-//>>>>>wechat serv
-Route::any('/wechat', 'WechatController@serve');
-
-//>>>>>user_api
-Route::middleware(['user.api'])->group(function () {
-    Route::get('/user_api/account-report/search', 'UserApi\AccountReportController@search');
-});
+});*/

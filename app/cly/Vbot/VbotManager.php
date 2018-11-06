@@ -9,7 +9,7 @@
 namespace Cly\Vbot;
 
 
-use App\VbotJob;
+
 use Cly\Process\Manager;
 use Cly\Process\Process;
 use Cly\Vbot\Exceptions\ApiFrequencyException;
@@ -19,6 +19,7 @@ use Cly\Vbot\Exceptions\InitFailException;
 use Cly\Vbot\Exceptions\LoginFailedException;
 use Cly\Vbot\Exceptions\LoginTimeoutException;
 use Cly\Vbot\Exceptions\LogoutException;
+use Modules\Common\Entities\VbotJob;
 
 class VbotManager extends Manager
 {

@@ -11,7 +11,7 @@ class TaxonomySeeder extends Seeder
      */
     public function run()
     {
-        $model = new \App\Taxonomy();
+        $model = new \Modules\Common\Entities\Taxonomy();
         DB::statement('truncate table ' . $model->getTable());
         DB::transaction(function () {
             $taxonomy = [
@@ -64,7 +64,7 @@ class TaxonomySeeder extends Seeder
                 ['id' => 506, 'pid' => 5, 'name' => '关于我们'],
             ];
             foreach ($taxonomy as $item) {
-                \App\Taxonomy::create($item);
+                \Modules\Common\Entities\Taxonomy::create($item);
             }
         });
     }

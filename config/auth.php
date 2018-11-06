@@ -77,12 +77,12 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => \Modules\Common\Entities\User::class,
         ],
 
         'admin' => [
             'driver' => 'eloquent',
-            'model' => \App\Admin::class
+            'model' => \Modules\Common\Entities\Admin::class
         ],
 
         // 'users' => [

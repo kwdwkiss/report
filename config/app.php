@@ -177,10 +177,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Mews\Captcha\CaptchaServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
-        Overtrue\LaravelWeChat\ServiceProvider::class,
-        Spatie\Permission\PermissionServiceProvider::class,
+//        Mews\Captcha\CaptchaServiceProvider::class,
+//        Intervention\Image\ImageServiceProvider::class,
+//        Overtrue\LaravelWeChat\ServiceProvider::class,
+//        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*

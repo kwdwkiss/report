@@ -29,8 +29,11 @@ mix
                 }
             ]
         }
-    })
+    });
 
+mix
+    //.js('Modules/Admin/Resources/assets/js/app.js', 'public/js/admin/')
+    //.js('Modules/Index/Resources/assets/js/app.js', 'public/js/index/')
     .js('resources/assets/js/admin/app.js', 'public/js/admin/')
     .js('resources/assets/js/index/app.js', 'public/js/index/')
     // .extract(['element-ui', 'element-ui/lib/theme-chalk/index.css'], 'js/element')
@@ -38,7 +41,7 @@ mix
 
     .sass('resources/assets/sass/app.scss', 'public/css')
 
-if (process.env.NODE_ENV === 'production') {
+if (mix.inProduction()) {
     mix.version()
 }
 

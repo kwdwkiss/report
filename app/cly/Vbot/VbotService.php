@@ -9,7 +9,7 @@
 namespace Cly\Vbot;
 
 
-use App\VbotJob;
+
 use Cly\Vbot\Console\Console;
 use Cly\Vbot\Core\ApiExceptionHandler;
 use Cly\Vbot\Exceptions\CheckSyncException;
@@ -19,6 +19,7 @@ use Cly\Vbot\Foundation\Vbot;
 use Cly\Vbot\Message\FriendVerify;
 use Cly\Vbot\Message\Text;
 use Illuminate\Support\Collection;
+use Modules\Common\Entities\VbotJob;
 
 class VbotService
 {
