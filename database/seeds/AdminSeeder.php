@@ -11,9 +11,9 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $model = new \App\Admin();
+        $model = new \Modules\Common\Entities\Admin();
         DB::statement('truncate table ' . $model->getTable());
-        \App\Admin::create([
+        \Modules\Common\Entities\Admin::create([
             'name' => 'admin',
             'password' => bcrypt('admin')
         ]);
