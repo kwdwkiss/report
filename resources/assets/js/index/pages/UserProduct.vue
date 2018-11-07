@@ -144,10 +144,10 @@
                 let self = this;
                 self.form.id = id;
                 axios.post(api.indexUserProductCreate, self.form).then(function (res) {
-                    self.$store.commit('user');
-                    self.list();
                     $('#buy-dialog').modal('hide');
                     self.$message.success(res.data.message);
+                    self.$store.commit('user');
+                    self.list();
                 })
             }
         }
