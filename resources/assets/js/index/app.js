@@ -3,12 +3,31 @@ import store from './store'
 import router from './router'
 import './element-ui'
 import 'jquery-qrcode'
+import Vue from 'vue'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+let requestUrls = {};
+axios.interceptors.request.use(function (config) {
+    console.log(config.url);
+    if (requestUrls[config.url]) {
+        let msg = '请求提交中，请不要频繁提交';
+        Vue.prototype.$message.warning(msg);
+        throw new Error(msg);
+    } else {
+        requestUrls[config.url] = true;
+        setTimeout(function () {
+            delete requestUrls[config.url];
+        }, 2000);
+        return config;
+    }
+}, function (error) {
+    return Promise.reject(error)
+});
+
 axios.interceptors.response.use(function (response) {
     let errorMessage = null;
 
@@ -19,7 +38,7 @@ axios.interceptors.response.use(function (response) {
     }
 
     if (errorMessage) {
-        app.$message.error({
+        Vue.prototype.$message.error({
             message: errorMessage,
             duration: 5000,
         });
@@ -29,18 +48,18 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
     if (error.response) {
         if (error.response.status === 401) {//Unauthorized
-            app.$message.error('用户未登录,请重新登录或3秒后自动跳转登录页面');
+            Vue.prototype.$message.error('用户未登录,请重新登录或3秒后自动跳转登录页面');
             setTimeout(function () {
                 location.reload();
             }, 3000);
         } else if (error.response.status === 419) {//csrf token invalid
-            app.$message.error('token失效,手动刷新或3秒后自动刷新页面');
+            Vue.prototype.$message.error('token失效,手动刷新或3秒后自动刷新页面');
             setTimeout(function () {
                 location.reload();
             }, 3000);
         } else {
             let errorMessage = error.response.data.message ? error.response.data.message : error.response.statusText;
-            app.$message.error(errorMessage);
+            Vue.prototype.$message.error(errorMessage);
         }
     }
     return Promise.reject(error);

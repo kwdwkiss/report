@@ -173,7 +173,7 @@
                 self.doing = true;
                 setTimeout(function () {
                     self.doing = false;
-                }, 1000);
+                }, 2000);
 
                 axios.post(api.oneKeyExcel, {data: this.table}).then(function (res) {
                     self.$store.commit('user');
