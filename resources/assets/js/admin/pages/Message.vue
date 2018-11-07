@@ -56,7 +56,7 @@
                             <el-input v-if="dialogCreate.data.userSelect==3" type="textarea" :rows="3"
                                       v-model="dialogCreate.data.userId" placeholder="id用英文逗号隔开"></el-input>
                             <el-input v-if="dialogCreate.data.userSelect==4" type="textarea" :rows="3"
-                                      v-model="dialogCreate.data.userMobile" placeholder="手机号码用英文逗号隔开"></el-input>
+                                      v-model="dialogCreate.data.userMobile" placeholder="多个手机号码用英文逗号隔开"></el-input>
                         </el-form-item>
                         <el-form-item prop="name" label="名称" labelWidth="100px">
                             <el-input v-model="dialogCreate.data.name"></el-input>
@@ -154,7 +154,7 @@
                 this.loadData();
             },
             openCreateDialog: function () {
-                this.dialogCreate.data = {userSelect: 1, name: '', content: '', remark: ''};
+                this.dialogCreate.data = {userSelect: 4, name: '', content: '', remark: ''};
                 this.action = 'create';
             },
             doCreate: function () {
