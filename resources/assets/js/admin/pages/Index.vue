@@ -1,9 +1,11 @@
 <template>
-    <div class="article">
-        <h2 class="text-center">{{form.title}}</h2>
-        <div class="text-center">{{form.updated_at.split(' ')[0]}}</div>
-        <hr>
-        <div class="article-content" v-html="form.content"></div>
+    <div>
+        <div class="article" v-for="item in data">
+            <h3 class="text-center">{{item.title}}</h3>
+            <div class="text-center">{{item.updated_at.split(' ')[0]}}</div>
+            <hr>
+            <div class="article-content" v-html="item.content"></div>
+        </div>
     </div>
 </template>
 
@@ -12,6 +14,7 @@
         name: "Index",
         data: function () {
             return {
+                data: [],
                 form: {updated_at: ''}
             }
         },
@@ -23,7 +26,7 @@
                 let self = this;
                 axios.get(api.adminAdminArticleShowLast).then(function (res) {
                     if (res.data.data) {
-                        self.form = res.data.data;
+                        self.data = res.data.data;
                     }
                 });
             },

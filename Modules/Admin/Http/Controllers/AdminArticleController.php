@@ -45,9 +45,9 @@ class AdminArticleController extends Controller
 
     public function showLast()
     {
-        $article = AdminArticle::query()->orderBy('id', 'desc')->first();
+        $articles = AdminArticle::query()->orderBy('id', 'desc')->take(5)->get();
 
-        return $article ? new AdminArticleResource($article) : [];
+        return AdminArticleResource::collection($articles);
     }
 
     public function create()

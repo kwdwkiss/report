@@ -50,33 +50,39 @@
                     <div class="modal-body">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">产品名称</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-3 control-label">产品名称</label>
+                                <div class="col-sm-9">
                                     <label class="form-control-static">{{product.title}}</label>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">单价</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-3 control-label">单价</label>
+                                <div class="col-sm-9">
                                     <label class="form-control-static">{{product.amount}}</label>积分/{{product.type_label}}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">时长</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-3 control-label">时长</label>
+                                <div class="col-sm-9">
                                     <select v-model="form.duration" class="form-control">
                                         <option :value="item" v-for="item in product.duration">{{item}}{{product.type_label}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">总价</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-3 control-label">总价</label>
+                                <div class="col-sm-9">
                                     <label class="form-control-static">{{amountTotal}}积分</label>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
+                                <label class="col-sm-3 control-label">当前积分余额</label>
+                                <div class="col-sm-9">
+                                    <label class="form-control-static">{{user._profile.amount}}积分</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
                                     <button class="btn btn-primary" @click="doBuy(product_id)">确认购买</button>
                                 </div>
                             </div>
