@@ -20,6 +20,7 @@ class AmountBill extends Model
         1 => '充值',
         2 => '充值提成',
         3 => '下载EXCEL提成',
+        4 => '点赞送积分',
         101 => '查询结算',
         102 => '认证会员',
         103 => '下载EXCEL',
@@ -34,6 +35,7 @@ class AmountBill extends Model
         5 => '邀请新用户注册赠送50积分',
         6 => '下载EXCEL扣除10积分',
         7 => '推荐好友下载EXCEL提成4积分',
+        8 => '点赞送2积分',
     ];
 
     public static function generateBillNo($userId)

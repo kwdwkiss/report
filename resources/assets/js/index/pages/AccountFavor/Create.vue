@@ -63,7 +63,7 @@
             doFavor: function () {
                 let self = this;
                 axios.post(api.userAccountFavorCreate, self.form).then(function (res) {
-                    self.$message.success("成功");
+                    self.$message.success(res.data.message);
                     self.$store.commit("user");
                     self.go('index');
                 });

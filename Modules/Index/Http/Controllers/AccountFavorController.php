@@ -10,6 +10,7 @@ namespace Modules\Index\Http\Controllers;
 
 
 use Modules\Common\Entities\AccountFavor;
+use Modules\Common\Entities\AmountBill;
 use Modules\Common\Exceptions\JsonException;
 use Modules\Common\Http\Controllers\Controller;
 use Modules\Common\Entities\Taxonomy;
@@ -77,8 +78,22 @@ class AccountFavorController extends Controller
                 'ip' => $ip,
                 'description' => $description,
             ]);
+
+            //点赞送2积分
+            $amount = 2;
+            $user->_profile->increment('amount', 2);
+            AmountBill::create([
+                'user_id' => $user->id,
+                'bill_no' => AmountBill::generateBillNo($user->id),
+                'biz_id' => 8,
+                'biz_type' => 4,
+                'type' => 0,
+                'amount' => $amount,
+                'description' => "点赞送积分，{$amount}积分",
+                'created_at' => Carbon::now()->toDateTimeString(),
+            ]);
         });
 
-        return [];
+        return ['message' => '点赞成功，送2积分'];
     }
 }
