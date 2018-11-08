@@ -36,6 +36,7 @@
                 <el-table-column prop="bill_no" label="系统订单号" min-width="160"></el-table-column>
                 <el-table-column prop="type_label" label="收支类型" min-width="80"></el-table-column>
                 <el-table-column prop="amount" label="积分" min-width="80"></el-table-column>
+                <el-table-column prop="status_label" label="状态" min-width="80"></el-table-column>
                 <el-table-column prop="description" label="内容" min-width="280"></el-table-column>
                 <el-table-column prop="biz_type_label" label="业务类型" min-width="80"></el-table-column>
                 <el-table-column prop="biz_id" label="业务id" min-width="80"></el-table-column>

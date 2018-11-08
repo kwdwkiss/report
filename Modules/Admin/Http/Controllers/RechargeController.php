@@ -91,7 +91,7 @@ class RechargeController extends Controller
                 'money' => $money,
                 'pay_no' => $pay_no,
                 'pay_type' => $pay_type,
-                'admin_user_id'=>$admin->id,
+                'admin_user_id' => $admin->id,
             ];
             BehaviorLog::create([
                 'type' => 5,
@@ -100,5 +100,14 @@ class RechargeController extends Controller
         });
 
         return [];
+    }
+
+    public function cancel()
+    {
+        $id = request('id');
+
+        RechargeBill::cancel($id);
+
+        return ['message' => '撤销成功'];
     }
 }

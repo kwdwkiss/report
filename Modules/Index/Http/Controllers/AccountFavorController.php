@@ -59,6 +59,15 @@ class AccountFavorController extends Controller
             if ($userFavor->total <= 0) {
                 throw new JsonException('本月点赞次数已用完');
             }
+
+            $todayFavorCount = AccountFavor::query()
+                ->where('user_id', $user->id)
+                ->where('created_at', '>', Carbon::today())
+                ->count();
+            if ($todayFavorCount >= 5) {
+                throw new JsonException('每天只能点赞5次');
+            }
+
             $oldFavor = AccountFavor::query()
                 ->where('account_type', $account_type)
                 ->where('account_name', $account_name)
@@ -68,6 +77,7 @@ class AccountFavorController extends Controller
             if ($oldFavor) {
                 throw new JsonException('15天后才能对同一账号再次点赞');
             }
+
 
             $userFavor->decrement('total');
 

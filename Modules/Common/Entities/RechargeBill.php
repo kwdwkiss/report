@@ -8,6 +8,21 @@ use Illuminate\Support\Facades\DB;
 
 class RechargeBill extends Model
 {
+    public static $status = [
+        0 => '待支付',
+        1 => '已支付',
+        2 => '已撤销',
+    ];
+
+    public static $payTypes = [
+        0 => '无',
+        1 => '手工充值',
+        2 => '支付宝',
+        3 => '财付通',
+        4 => '手Q',
+        5 => '微信',
+    ];
+
     protected $table = 'recharge_bill';
 
     protected $guarded = [];
@@ -15,6 +30,11 @@ class RechargeBill extends Model
     public function _user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function _amountBill()
+    {
+        return $this->morphOne(AmountBill::class, 'biz_recharge', 'biz_type', 'biz_id', 'id');
     }
 
     public static function generateBillNo($userId)
@@ -71,6 +91,24 @@ class RechargeBill extends Model
                     'description' => "邀请人充值${amount}积分",
                 ]);
             }
+        });
+    }
+
+    public static function cancel($id)
+    {
+        \DB::transaction(function () use ($id) {
+
+            $rechargeBill = RechargeBill::findOrFail($id);
+
+            $amountBill = $rechargeBill->_amountBill;
+
+            $user = $amountBill->_user;
+
+            $user->_profile->decrement('amount', $amountBill->amount);
+
+            $amountBill->update(['status' => 2]);
+
+            $rechargeBill->update(['status' => 2]);
         });
     }
 }

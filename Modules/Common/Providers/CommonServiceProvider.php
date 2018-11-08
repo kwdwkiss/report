@@ -6,8 +6,10 @@ use Aliyun\Oss;
 use Aliyun\Sms;
 use Cly\Session\SessionGuard;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
+use Modules\Common\Entities\RechargeBill;
 use Modules\Common\Http\Middleware\DomainCheck;
 use Modules\Common\Http\Middleware\JsonSuccessResponse;
 use Modules\Common\Http\Middleware\PermissionCheck;
@@ -38,6 +40,7 @@ class CommonServiceProvider extends ServiceProvider
         \Schema::defaultStringLength(191);
         $this->bootSession();
         $this->bootHorizon();
+        $this->bootMorphMap();
     }
 
     /**
@@ -53,6 +56,13 @@ class CommonServiceProvider extends ServiceProvider
         $this->registerMiddleware();
         $this->registerSms();
         $this->registerOss();
+    }
+
+    protected function bootMorphMap()
+    {
+        Relation::morphMap([
+            1 => RechargeBill::class,
+        ]);
     }
 
     protected function bootSession()

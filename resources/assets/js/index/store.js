@@ -10,6 +10,7 @@ const store = window.store = new Vuex.Store({
         taxonomy: laravel.taxonomy,
         breadcrumb: {},
         searchResult: {
+            name: '',
             user: [],
             account_reports: [],
             account_favors: [],
@@ -32,6 +33,7 @@ const store = window.store = new Vuex.Store({
             state.breadcrumb = _.assign(state.breadcrumb, payload);
         },
         searchResult(state, payload) {
+            state.searchResult.name = '';
             axios.post(api.indexSearch, payload).then(function (res) {
                 state.searchResult = res.data.data;
                 if (payload && payload.callback instanceof Function) {

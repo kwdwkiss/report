@@ -15,6 +15,12 @@ class AmountBill extends Model
         1 => '支出',
     ];
 
+    public static $status = [
+        0 => '待支付',
+        1 => '已支付',
+        2 => '已撤销',
+    ];
+
     public static $bizTypes = [
         0 => '系统发放',
         1 => '充值',

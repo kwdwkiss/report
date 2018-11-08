@@ -10,6 +10,7 @@
                             <th class="hidden-xs" style="min-width: 130px">积分流水</th>
                             <th style="min-width: 75px">收支类型</th>
                             <th style="min-width: 75px">积分</th>
+                            <th style="min-width: 75px">状态</th>
                             <!--<th class="hidden-xs" style="min-width: 75px">用户积分</th>-->
                             <th class="hidden-xs" style="min-width: 75px">业务类型</th>
                             <th class="hidden-xs" style="min-width: 200px">内容</th>
@@ -21,7 +22,8 @@
                         <tr v-for="(item, index) in amount.data" :key="index">
                             <td class="hidden-xs">{{item.bill_no}}</td>
                             <td>{{item.type_label}}</td>
-                            <td class="hidden-xs">{{item.amount}}</td>
+                            <td>{{item.amount}}</td>
+                            <td>{{item.status_label}}</td>
                             <!--<td>{{item.user_amount}}</td>-->
                             <td class="hidden-xs">{{item.biz_type_label}}</td>
                             <td>{{item.description}}</td>

@@ -66,7 +66,7 @@
             </div>
         </div>
 
-        <div v-if="isSearch" class="row search-data">
+        <div v-if="name" class="row search-data">
             <div>
                 <div class="row" v-if="searchUser.length>0">
                     <div class="col-md-12 text-warning">
@@ -346,6 +346,9 @@
             },
             name: function () {
                 return this.$store.state.searchResult.name;
+            },
+            searchDoing: function () {
+                return this.$store.state.searchResult.doing;
             },
             accounts: function () {
                 return this.$store.state.searchResult.accounts;

@@ -17,6 +17,7 @@ class CreateAmountBillTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('bill_no')->unique();
+            $table->integer('status')->default(1);
             $table->tinyInteger('type');//0-收入 1-支出
             $table->integer('amount');//积分
             $table->integer('user_amount');//用户积分

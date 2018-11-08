@@ -3,6 +3,7 @@
 namespace Modules\Common\Console;
 
 use Illuminate\Console\Command;
+use Modules\Common\Entities\RechargeBill;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -39,6 +40,7 @@ class Test extends Command
      */
     public function handle()
     {
-        echo 'hello test';
+        $data = date('Y-m-d H:i:s', strtotime('today'));
+        dd($data);
     }
 }
