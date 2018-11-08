@@ -124,7 +124,7 @@
             //self methods
             switchDisplay: function (row) {
                 let self = this;
-                axios.post(self.apiUpdate, [{id: row.id, display: row.display}]).then(function () {
+                axios.post(self.apiUpdate, {id: row.id, display: row.display}).then(function () {
                     self.loadData();
                 });
             },

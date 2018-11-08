@@ -67,28 +67,38 @@ class ArticleController extends Controller
 
     public function update()
     {
-        \DB::transaction(function () {
-            $type = request('type');
-            $title = request('title');
-            $remark = request('remark');
-            $content = request('content');
-            $display = request('display');
+        $id = request('id');
+        $type = request('type', null);
+        $title = request('title', null);
+        $remark = request('remark', null);
+        $content = request('content', null);
+        $display = request('display', null);
 
-            $article = Article::findOrFail(request('id'));
+        $article = Article::findOrFail($id);
 
+        if (!is_null($type)) {
             Taxonomy::where('pid', Taxonomy::ARTICLE_TYPE)->findOrFail($type);
-            if (!$title) {
-                throw new JsonException('文章标题不能为空');
+            $article->type = $type;
+        }
+        if (!is_null($title)) {
+            if (empty($title)) {
+                throw new JsonException('标题不能为空');
             }
-
-            $article->update([
-                'type' => $type,
-                'title' => $title,
-                'content' => $content,
-                'remark' => $remark,
-                'display' => $display
-            ]);
-        });
+            $article->title = $title;
+        }
+        if (!is_null($remark)) {
+            $article->remark = $remark;
+        }
+        if (!is_null($content)) {
+            $article->content = $content;
+        }
+        if (!is_null($display)) {
+            if (!in_array($display, [0, 1])) {
+                throw new JsonException('display error');
+            }
+            $article->display = $display;
+        }
+        $article->save();
 
         return [];
     }
