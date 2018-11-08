@@ -17,18 +17,21 @@ class ArticleController extends Controller
     public function list()
     {
         $id = request('id');
-        $query = Article::query()->select([
-            'id', 'type', 'title', 'remark', 'created_at', 'updated_at'
-        ])->orderBy('created_at', 'desc');
+        $query = Article::query()->where('display', 1)->orderBy('created_at', 'desc');
+
         if ($id) {
             $query->where('type', $id);
         }
+
         return ArticleResource::collection($query->paginate());
     }
 
     public function show()
     {
         $id = request('id');
-        return new ArticleResource(Article::findOrFail($id));
+
+        $article = Article::where('display', 1)->findOrFail($id);
+
+        return new ArticleResource($article);
     }
 }
