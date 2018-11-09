@@ -282,6 +282,23 @@
                     </el-form>
                 </div>
             </div>
+            <div class="panel">
+                <div class="panel-heading">点赞页面广告</div>
+                <div class="panel-body">
+                    <el-form label-width="100px">
+                        <el-form-item label="图片路径">
+                            <el-input v-model="data.mobile_ad.favor_create.img_src"></el-input>
+                            <el-button type="primary" @click="uploadImage(data.mobile_ad.favor_create)">上传</el-button>
+                        </el-form-item>
+                        <el-form-item label="链接">
+                            <el-input v-model="data.mobile_ad.favor_create.url"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="success" @click="doSave">保存</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </div>
         </el-tab-pane>
         <el-tab-pane label="客服设置" name="service">
             <div class="panel">

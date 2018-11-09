@@ -142,6 +142,7 @@ class Config extends Model
             'login' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
             'one_key_excel' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
             'wx_clear_friends' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
+            'favor_create' => ['img_src' => '/images/ad_empty.png', 'url' => ''],
         ],
         'service_qq' => [
             ['name' => '2412688374'],
