@@ -179,6 +179,7 @@
 
 <script>
     import cityData from "../../city.json";
+    import lrz from 'lrz';
 
     export default {
         name: "UserProfile",
@@ -226,22 +227,27 @@
             },
             uploadChange: function (event) {
                 let self = this;
-                let formData = new FormData();
                 let inputFile = event.target;
-                formData.append("file", inputFile.files[0]);
-                let params = $(inputFile).data('params');
-                if (params === 'identity') {
-                    formData.append('watermark', 'identity');
-                }
-                axios.post(api.uploadOss, formData, {
-                    headers: {"Content-Type": "multipart/form-data"}
-                }).then(function (res) {
-                    self.$message.success("成功");
-                    let key = $(inputFile).data('key');
-                    _.set(self.userModifyForm, key, res.data.data.url);
-                    $(inputFile).val('');
-                }).catch(function () {
-                    $(inputFile).val('');
+                lrz(inputFile.files[0], {width: 600}).then(function (rst) {
+
+                    let formData=rst.formData;
+                    let params = $(inputFile).data('params');
+                    if (params === 'identity') {
+                        formData.append('watermark', 'identity');
+                    }
+
+                    axios.post(api.uploadOss, formData, {
+                        headers: {"Content-Type": "multipart/form-data"}
+                    }).then(function (res) {
+                        self.$message.success("成功");
+                        let key = $(inputFile).data('key');
+                        _.set(self.userModifyForm, key, res.data.data.url);
+                        $(inputFile).val('');
+                    }).catch(function () {
+                        $(inputFile).val('');
+                    });
+                }).catch(function (err) {
+                    console.log(err);
                 });
             },
         }

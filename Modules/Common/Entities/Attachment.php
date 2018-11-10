@@ -45,7 +45,7 @@ class Attachment extends Model
     {
         $filename = $uploadFile->getRealPath();
 
-        $key = date('Ymd/', time()) . md5(microtime(true)) . '.' . $uploadFile->guessExtension();
+        $key = date('Ymd/') . md5(microtime(true)) . '.' . $uploadFile->guessExtension();
 
         $oss = app('aliyun.oss');
         if ($bucket) {

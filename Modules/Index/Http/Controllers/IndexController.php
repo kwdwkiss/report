@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Cly\RegExp\RegExp;
 use Cly\Spreadsheet\NoScienceValueBinder;
 use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Modules\Common\Entities\Account;
 use Modules\Common\Entities\AccountFavor;
@@ -359,14 +360,31 @@ class IndexController extends Controller
             throw new JsonException('用户未登录，请登录后再上传图片');
         }
 
-        $uploadFile = request()->file('file');
-
+        $uploadFile = request('file');
         if (!$uploadFile) {
             throw new JsonException('上传文件失败，请稍后再次尝试');
         }
-        if (!$uploadFile->isValid()) {
-            $errorMessage = $uploadFile->getErrorMessage();
-            throw new JsonException("上传文件失败：${errorMessage}");
+
+        if ($uploadFile instanceof UploadedFile) {
+            $uploadFile = request()->file('file');
+            if (!$uploadFile->isValid()) {
+                $errorMessage = $uploadFile->getErrorMessage();
+                throw new JsonException("上传文件失败：${errorMessage}");
+            }
+        } elseif (is_string($uploadFile)) {
+            if (!preg_match('/^(data:\s*image\/(\w+);base64,)/', $uploadFile, $result)) {
+                throw new JsonException('上传base64图片格式错误');
+            }
+            //$imageType = $result[2]; //data:image/jpeg;base64,
+            //$output_file = $output_directory . '/' . md5(time()) . '.' . $imageType;
+            $filename = storage_path() . '/' . md5(microtime());
+
+            $fileBinary = base64_decode(str_replace($result[1], '', $uploadFile));
+            file_put_contents($filename, $fileBinary);
+
+            $uploadFile = new File($filename);
+        } else {
+            throw  new JsonException('上传文件格式错误');
         }
 
         $watermark = request('watermark', '');
@@ -385,9 +403,7 @@ class IndexController extends Controller
             } catch (\Exception $e) {
                 throw new JsonException('图片只支持JPG，PNG，GIF格式。');
             }
-            if ($image->height() > 600) {
-                $image->heighten(600);
-            } elseif ($image->width() > 600) {
+            if ($image->width() > 600) {
                 $image->widen(600);
             }
             if ($watermark && is_file($watermark)) {

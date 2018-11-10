@@ -105,6 +105,8 @@
 </template>
 
 <script>
+    import lrz from 'lrz';
+
     export default {
         name: "AccountReport",
         data: function () {
@@ -161,19 +163,23 @@
             },
             uploadChange: function (event) {
                 let self = this;
-                let formData = new FormData();
                 let inputFile = event.target;
-                formData.append("file", inputFile.files[0]);
-                axios.post(api.uploadOss, formData, {
-                    headers: {"Content-Type": "multipart/form-data"}
-                }).then(function (res) {
-                    self.$message.success("成功");
-                    let key = $(inputFile).data('key');
-                    _.set(self.form, key, res.data.data);
-                    $(inputFile).val('');
-                }).catch(function () {
-                    $(inputFile).val('');
+                lrz(inputFile.files[0], {height: 600, width: 600}).then(function (rst) {
+
+                    axios.post(api.uploadOss, rst.formData, {
+                        headers: {"Content-Type": "multipart/form-data"}
+                    }).then(function (res) {
+                        self.$message.success("成功");
+                        let key = $(inputFile).data('key');
+                        _.set(self.form, key, res.data.data);
+                        $(inputFile).val('');
+                    }).catch(function () {
+                        $(inputFile).val('');
+                    });
+                }).catch(function (err) {
+                    console.log(err);
                 });
+
             },
             doReport: function () {
                 let self = this;

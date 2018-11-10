@@ -347,9 +347,6 @@
             name: function () {
                 return this.$store.state.searchResult.name;
             },
-            searchDoing: function () {
-                return this.$store.state.searchResult.doing;
-            },
             accounts: function () {
                 return this.$store.state.searchResult.accounts;
             },
