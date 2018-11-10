@@ -26,8 +26,15 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">点赞描述</label>
                                 <div class="col-sm-9">
-                                <textarea cols="30" rows="4" class="form-control" placeholder="请输入点赞描述"
-                                          v-model="form.description">
+                                    <div class="row">
+                                        <span v-for="item in descriptions">
+                                            <a href="javascript:" @click="addDescription(item)" style="color:blue">
+                                                {{item}}&nbsp;
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <textarea cols="30" rows="4" class="form-control" placeholder="请输入点赞描述"
+                                              v-model="form.description">
                                 </textarea>
                                 </div>
                             </div>
@@ -55,7 +62,8 @@
         name: "UserMerchant",
         data: function () {
             return {
-                form: {account_type: 203}
+                descriptions: ['认真负责', '好评及时', '诚信靠谱', '认真截图', '收菜及时', '垫付安全'],
+                form: {account_type: 203, description: ''}
             }
         },
         computed: {
@@ -80,6 +88,9 @@
             },
             go: function (name) {
                 this.$router.push({name: name});
+            },
+            addDescription: function (item) {
+                this.form.description += item + ' ';
             }
         }
     }
