@@ -118,6 +118,7 @@
                             <th>账号</th>
                             <th class="hidden-xs">点赞者ip</th>
                             <th>点赞时间</th>
+                            <th>详情</th>
                         </tr>
                         </thead>
                         <tbody class="text-primary">
@@ -126,6 +127,9 @@
                             <td>{{item.account_name}}</td>
                             <td class="hidden-xs">{{item.ip}}</td>
                             <td>{{item.created_at}}</td>
+                            <td>
+                                <button class="btn btn-primary" @click="detailFavor(item)">查看</button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -313,6 +317,59 @@
             </div>
         </div>
 
+        <div class="modal fade favor-detail-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">点赞详情</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">账号类型</label>
+                                <div class="col-sm-9 form-control-static">
+                                    {{favorItem.account_type_label}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">点赞账号</label>
+                                <div class="col-sm-9 form-control-static">
+                                    {{favorItem.account_name}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">点赞者ip</label>
+                                <div class="col-sm-9 form-control-static">
+                                    {{favorItem.ip}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">点赞时间</label>
+                                <div class="col-sm-9 form-control-static">
+                                    {{favorItem.created_at}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">描述</label>
+                                <div class="col-sm-9 form-control-static">
+                                    {{favorItem.description}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <middle-ad></middle-ad>
 
         <article-data></article-data>
@@ -335,6 +392,7 @@
                 isSearch: false,
                 reportData: {},
                 searchParams: {},
+                favorItem: {}
             };
         },
         computed: {
@@ -383,6 +441,10 @@
                 this.reportData = item;
                 $('.search-detail-dialog').modal('show');
             },
+            detailFavor: function (item) {
+                this.favorItem = item;
+                $('.favor-detail-dialog').modal('show');
+            },
             initSearchParams: function () {
                 this.searchParams = {name: ""};
             },
@@ -400,7 +462,7 @@
             },
             go: function (name) {
                 this.$router.push({name: name});
-            }
+            },
         }
     };
 </script>
