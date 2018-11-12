@@ -53,6 +53,9 @@ class Role extends \Spatie\Permission\Models\Role
 
                 'wechat@set_server',
                 'wechat@set_menu',
+                'wechat@refresh_token',
+
+                'admin_article@delete',
             ],
         ],
     ];
