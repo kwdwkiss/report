@@ -116,8 +116,8 @@
                         <tr>
                             <th>账号类型</th>
                             <th>账号</th>
-                            <th class="hidden-xs">点赞者ip</th>
                             <th>点赞时间</th>
+                            <th>描述</th>
                             <th>详情</th>
                         </tr>
                         </thead>
@@ -125,8 +125,10 @@
                         <tr v-for="(item,index) in account_favors" :key="'account_favors'+index">
                             <td>{{item.account_type_label}}</td>
                             <td>{{item.account_name}}</td>
-                            <td class="hidden-xs">{{item.ip}}</td>
                             <td>{{item.created_at}}</td>
+                            <td>
+                                {{item.description|truncate({length:22})}}
+                            </td>
                             <td>
                                 <button class="btn btn-primary" @click="detailFavor(item)">查看</button>
                             </td>
@@ -423,6 +425,11 @@
         },
         created: function () {
             this.initSearchParams();
+        },
+        filters: {
+            truncate: function (value, options) {
+                return _.truncate(value, options)
+            }
         },
         methods: {
             detailReport: function (item) {
