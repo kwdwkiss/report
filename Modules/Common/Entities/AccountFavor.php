@@ -47,5 +47,7 @@ class AccountFavor extends Model
         foreach ($chunkData as $insertItemData) {
             UserFavor::query()->insert($insertItemData);
         }
+
+        return count($chunkData);
     }
 }

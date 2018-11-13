@@ -40,7 +40,8 @@ class FavorEnable extends Command
      */
     public function handle()
     {
-        AccountFavor::autoEnable();
+        $total = AccountFavor::autoEnable();
+        $this->line("插入数据{$total}条");
     }
 
     /**
