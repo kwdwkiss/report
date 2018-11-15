@@ -465,6 +465,15 @@ class IndexController extends Controller
         $data = request('data', []);
         $user = \Auth::guard('user')->user();
 
+        $lastTime = session('excel_download_last_time');
+        $now = time();
+        $limit = 1;
+        if ($now - $lastTime < $limit) {
+            logger('user.excel.download.limit', ['lastTime' => date('Y-m-d H:i:s', $lastTime)]);
+            throw new JsonException('请求过于频繁');
+        }
+        session(['excel_download_last_time' => $now]);
+
         if (!$user) {
             throw new JsonException('请登录后再下载表格');
         }
