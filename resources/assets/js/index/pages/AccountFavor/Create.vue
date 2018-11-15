@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">账号点赞</div>
+                <div class="panel-heading">账号点赞&nbsp;<span style="color: red">(每点赞一次赠送2积分)</span></div>
                 <div class="panel-body">
                     <div class="col-md-offset-2 col-md-8">
                         <form class="form-horizontal" role="form">

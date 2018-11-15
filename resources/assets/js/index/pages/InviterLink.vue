@@ -9,6 +9,7 @@
                         <div class="col-sm-6 form-control-static">
                             <p>1、邀请朋友注册，推广者获得50积分。</p>
                             <p>2、被邀请人充值积分，推广者获得充值积分的10%。</p>
+                            <p>3、点赞获得积分，每点赞一次赠送2积分。</p>
                         </div>
                     </div>
                     <div class="form-group">
