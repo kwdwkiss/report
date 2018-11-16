@@ -485,7 +485,6 @@ class IndexController extends Controller
             throw new JsonException('请求过于频繁');
         }
         $redis->expire($key, $limit);
-        logger('user.excel.download.start', ['user_id' => $user->id, 'time' => microtime(true)]);
 
         $filename = 'temp/' . date('YmdHis', time()) . str_random(4) . '.xlsx';
         $path = \Storage::disk('public')->path($filename);
@@ -568,8 +567,6 @@ class IndexController extends Controller
 //            fputcsv($fp, $row);
 //        }
 //        fclose($fp);
-
-        logger('user.excel.download.end', ['user_id' => $user->id, 'time' => microtime(true)]);
 
         return ['data' => asset('storage/' . $filename)];
     }
