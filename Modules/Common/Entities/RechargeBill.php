@@ -37,12 +37,6 @@ class RechargeBill extends Model
         return $this->morphOne(AmountBill::class, 'biz_recharge', 'biz_type', 'biz_id', 'id');
     }
 
-    public static function generateBillNo($userId)
-    {
-        $userId = substr($userId, -4);
-        return date('ymdHis', time()) . random_int(10, 99) . str_pad($userId, 4, '0', STR_PAD_LEFT);
-    }
-
     public static function recharge($user, $money, $tno, $pay_type)
     {
         \DB::transaction(function () use ($user, $money, $tno, $pay_type) {
@@ -53,7 +47,7 @@ class RechargeBill extends Model
 
             $rechargeBill = RechargeBill::create([
                 'user_id' => $user->id,
-                'bill_no' => RechargeBill::generateBillNo($user->id),
+                'bill_no' => AmountBill::generateBillNo($user->id),
                 'pay_type' => $pay_type,
                 'pay_no' => $tno,
                 'money' => $money,
