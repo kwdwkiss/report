@@ -14,6 +14,7 @@ use Cly\Spreadsheet\NoScienceValueBinder;
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Redis;
 use Modules\Common\Entities\Account;
 use Modules\Common\Entities\AccountFavor;
 use Modules\Common\Entities\AccountReport;
@@ -465,19 +466,9 @@ class IndexController extends Controller
         $data = request('data', []);
         $user = \Auth::guard('user')->user();
 
-        $lastTime = session('excel_download_last_time');
-        $now = microtime(true);
-        $limit = 1;
-        if ($now - $lastTime < $limit) {
-            logger('user.excel.download.limit', compact('lastTime', 'now'));
-            throw new JsonException('请求过于频繁');
-        }
-        session(['excel_download_last_time' => $now]);
-
         if (!$user) {
             throw new JsonException('请登录后再下载表格');
         }
-
         if (!is_array($data)) {
             throw new JsonException('数据格式错误');
         }
@@ -485,6 +476,15 @@ class IndexController extends Controller
             throw new JsonException('数据为空');
         }
 
+        $limit = 2;
+        $redis = app('redis');
+        $key = 'user.excel.download:' . $user->id;
+        $result = $redis->setnx($key, microtime(true));
+        if (!$result) {
+            logger('user.excel.download.limit', ['user_id' => $user->id, 'time' => microtime(true)]);
+            throw new JsonException('请求过于频繁');
+        }
+        $redis->expire($key, $limit);
         logger('user.excel.download.start', ['user_id' => $user->id, 'time' => microtime(true)]);
 
         $filename = 'temp/' . date('YmdHis', time()) . str_random(4) . '.xlsx';
