@@ -127,7 +127,7 @@ class UserController extends Controller
                 }
             }
             if ($qq) {
-                if (!preg_match('/^[1-9][0-9]{4,14}$/', $qq)) {
+                if (!preg_match(RegExp::QQ, $qq)) {
                     throw new JsonException('QQ号错误');
                 }
                 $exists = User::where('qq', $qq)->first();

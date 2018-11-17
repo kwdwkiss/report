@@ -106,7 +106,7 @@ class UserController extends Controller
             throw new JsonException('手机号码格式错误');
         }
 
-        if (!preg_match('/^(?![0-9]+$)(?![a-zA-Z]+$)(?![^a-zA-Z^\d]+$).{8,16}$/', $password)) {
+        if (!preg_match(RegExp::PASSWORD, $password)) {
             throw new JsonException('密码必须包含字母、数字、符号两种组合且长度为8-16');
         }
 
@@ -214,11 +214,8 @@ class UserController extends Controller
             }
 
             if ($qq) {
-                if (!preg_match('/^[1-9][0-9]{4,14}$/', $qq)) {
+                if (!preg_match(RegExp::QQ, $qq)) {
                     throw new JsonException('QQ号码格式错误');
-                }
-                if (!preg_match('/^[1-9][0-9]{4,14}$/', $qq)) {
-                    throw new JsonException('QQ号错误');
                 }
                 $exists = User::where('qq', $qq)->first();
                 if ($exists && $exists->id != $user->id) {
@@ -229,7 +226,7 @@ class UserController extends Controller
             }
 
             if ($wx) {
-                if (!preg_match('/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}+$/', $wx)) {
+                if (!preg_match(RegExp::WX, $wx)) {
                     throw new JsonException('微信号码格式错误');
                 }
                 $exists = User::where('wx', $wx)->first();

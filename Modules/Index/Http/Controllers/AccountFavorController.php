@@ -41,10 +41,10 @@ class AccountFavorController extends Controller
             if (!$account_name) {
                 throw new JsonException('账号不能为空');
             }
-            if ($account_type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $account_name)) {
+            if ($account_type == 201 && !preg_match(RegExp::QQ, $account_name)) {
                 throw new JsonException('QQ号码格式错误');
             }
-            if ($account_type == 203 && !preg_match('/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}+$/', $account_name)) {
+            if ($account_type == 203 && !preg_match(RegExp::WX, $account_name)) {
                 throw new JsonException('微信号码格式错误');
             }
             if ($account_type == 204 && !preg_match(RegExp::MOBILE, $account_name)) {

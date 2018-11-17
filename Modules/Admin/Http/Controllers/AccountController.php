@@ -74,7 +74,7 @@ class AccountController extends Controller
             if (is_null($name)) {
                 throw new JsonException('账号不能为空');
             }
-            if ($type == 201 && !preg_match('/^[1-9][0-9]{4,14}$/', $name)) {
+            if ($type == 201 && !preg_match(RegExp::QQ, $name)) {
                 throw new JsonException('QQ号码格式错误');
             }
             if ($type == 204 && !preg_match(RegExp::MOBILE, $name)) {
