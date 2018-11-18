@@ -21,7 +21,7 @@ axios.interceptors.request.use(function (config) {
         requestUrls[config.url] = true;
         setTimeout(function () {
             delete requestUrls[config.url];
-        }, 2000);
+        }, 1000);
         return config;
     }
 }, function (error) {

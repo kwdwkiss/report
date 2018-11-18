@@ -22,9 +22,9 @@
             <div class="hidden-xs hidden-sm col-md-2">
                 <label><a class="text-primary" href="javascript:" @click="isSearch=false">账号查询</a></label>
             </div>
-            <div class="col-xs-12 col-md-4">
+            <div class="col-xs-12 col-md-6">
                 <input class="form-control" v-model="searchParams.name" name="name" type="text"
-                       placeholder="请输入QQ、旺旺、微信、IS等各类账号">
+                       placeholder="请输入QQ、微信、IS账号">
             </div>
             <div class="col-xs-4 col-md-2">
                 <button @click="doSearch" class="form-control btn btn-success">查询</button>
@@ -32,9 +32,9 @@
             <div class="col-xs-4 col-md-2">
                 <button @click="go('accountReportCreate')" class="form-control btn btn-danger">投诉举报</button>
             </div>
-            <div class="col-xs-4 col-md-2">
-                <button @click="go('accountFavorCreate')" class="form-control btn btn-primary">点赞</button>
-            </div>
+            <!--<div class="col-xs-4 col-md-2">-->
+                <!--<button @click="go('accountFavorCreate')" class="form-control btn btn-primary">点赞</button>-->
+            <!--</div>-->
         </div>
 
         <div v-if="!isSearch" class="row report-data">
@@ -68,48 +68,48 @@
 
         <div v-if="name&&isSearch" class="row search-data">
             <div>
-                <div class="row" v-if="searchUser.length>0">
-                    <div class="col-md-12 text-warning">
-                        会员信息：
-                    </div>
-                </div>
-                <div class="row" v-for="(item,index) in searchUser" :key="'search_user'+index"
-                     v-bind:class="{'text-danger':!item.is_auth,'text-success':item.is_auth}">
-                    <div>
-                        <p class="col-xs-6 col-sm-4">
-                            会员审核:
-                            <strong class="bold" v-if="!item.is_auth">
-                                （未审核）
-                            </strong>
-                            <strong class="bold" v-if="item.is_auth">
-                                （实名认证）
-                            </strong>
-                        </p>
-                        <p class="col-xs-6 col-sm-4">会员编号：{{item.id}}</p>
-                        <p class="col-xs-6 col-sm-4">会员类型：{{item.type_label}}</p>
-                        <!--<p class="col-xs-6 col-sm-4">保证金：{{item._profile.deposit}}元</p>-->
-                        <p class="col-xs-6 col-sm-4">账号：{{item.mobile}}</p>
-                        <p class="col-xs-6 col-sm-4">QQ：{{item.qq}}</p>
-                        <p class="col-xs-6 col-sm-4">微信：{{item.wx}}</p>
-                        <!--<p class="col-xs-6 col-sm-4">旺旺：{{item.ww}}</p>-->
-                        <!--<p class="col-xs-6 col-sm-4">京东：{{item.jd}}</p>-->
-                        <!--<p class="col-xs-6 col-sm-4">IS：{{item.is}}</p>-->
-                        <!--<p class="col-xs-6 col-sm-4">姓名：{{item._profile.name}}</p>-->
-                        <!--<p class="col-xs-6 col-sm-4">性别：{{item._profile.gender_label}}</p>-->
-                        <p class="col-xs-6 col-sm-4">地址：{{item._profile.address}}</p>
-                        <p class="col-xs-6 col-sm-4 text-primary">备注：{{item._profile.remark}}</p>
-                    </div>
-                </div>
-                <div class="row" v-if="account_favors.length>0">
-                    <div class="col-md-12 text-warning">
-                        点赞信息：
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 col-md-4 text-primary" v-for="item in account_favors_total">
-                        {{item.account_type_label}}:{{item.account_name}}&nbsp;点赞{{item.total}}次
-                    </div>
-                </div>
+                <!--<div class="row" v-if="searchUser.length>0">-->
+                    <!--<div class="col-md-12 text-warning">-->
+                        <!--会员信息：-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row" v-for="(item,index) in searchUser" :key="'search_user'+index"-->
+                     <!--v-bind:class="{'text-danger':!item.is_auth,'text-success':item.is_auth}">-->
+                    <!--<div>-->
+                        <!--<p class="col-xs-6 col-sm-4">-->
+                            <!--会员审核:-->
+                            <!--<strong class="bold" v-if="!item.is_auth">-->
+                                <!--（未审核）-->
+                            <!--</strong>-->
+                            <!--<strong class="bold" v-if="item.is_auth">-->
+                                <!--（实名认证）-->
+                            <!--</strong>-->
+                        <!--</p>-->
+                        <!--<p class="col-xs-6 col-sm-4">会员编号：{{item.id}}</p>-->
+                        <!--<p class="col-xs-6 col-sm-4">会员类型：{{item.type_label}}</p>-->
+                        <!--&lt;!&ndash;<p class="col-xs-6 col-sm-4">保证金：{{item._profile.deposit}}元</p>&ndash;&gt;-->
+                        <!--<p class="col-xs-6 col-sm-4">账号：{{item.mobile}}</p>-->
+                        <!--<p class="col-xs-6 col-sm-4">QQ：{{item.qq}}</p>-->
+                        <!--<p class="col-xs-6 col-sm-4">微信：{{item.wx}}</p>-->
+                        <!--&lt;!&ndash;<p class="col-xs-6 col-sm-4">旺旺：{{item.ww}}</p>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<p class="col-xs-6 col-sm-4">京东：{{item.jd}}</p>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<p class="col-xs-6 col-sm-4">IS：{{item.is}}</p>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<p class="col-xs-6 col-sm-4">姓名：{{item._profile.name}}</p>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<p class="col-xs-6 col-sm-4">性别：{{item._profile.gender_label}}</p>&ndash;&gt;-->
+                        <!--<p class="col-xs-6 col-sm-4">地址：{{item._profile.address}}</p>-->
+                        <!--<p class="col-xs-6 col-sm-4 text-primary">备注：{{item._profile.remark}}</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row" v-if="account_favors.length>0">-->
+                    <!--<div class="col-md-12 text-warning">-->
+                        <!--点赞信息：-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                    <!--<div class="col-xs-12 col-md-4 text-primary" v-for="item in account_favors_total">-->
+                        <!--{{item.account_type_label}}:{{item.account_name}}&nbsp;点赞{{item.total}}次-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="table-responsive" v-if="account_favors.length>0">
                     <table class="table table-striped table-hover">
                         <thead>
@@ -372,17 +372,17 @@
             </div>
         </div>
 
-        <middle-ad></middle-ad>
+        <!--<middle-ad></middle-ad>-->
 
-        <article-data></article-data>
+        <!--<article-data></article-data>-->
 
-        <bottom-ad></bottom-ad>
+        <!--<bottom-ad></bottom-ad>-->
 
-        <div class="row hidden-md hidden-lg hidden-sm">
-            <a :href="page.mobile_ad.report_search.url">
-                <img :src="page.mobile_ad.report_search.img_src" style="width: 100%;max-height: 80px">
-            </a>
-        </div>
+        <!--<div class="row hidden-md hidden-lg hidden-sm">-->
+            <!--<a :href="page.mobile_ad.report_search.url">-->
+                <!--<img :src="page.mobile_ad.report_search.img_src" style="width: 100%;max-height: 80px">-->
+            <!--</a>-->
+        <!--</div>-->
     </div>
 </template>
 
@@ -433,18 +433,18 @@
         },
         methods: {
             detailReport: function (item) {
-                if (!this.user.report_detail_enable) {
-                    this.$message.error(this.user.report_detail_label);
-                    return;
-                }
+                // if (!this.user.report_detail_enable) {
+                //     this.$message.error(this.user.report_detail_label);
+                //     return;
+                // }
                 this.reportData = item;
                 $('.report-data-dialog').modal('show');
             },
             detailSearch: function (item) {
-                if (!this.user.report_detail_enable) {
-                    this.$message.error(this.user.report_detail_label);
-                    return;
-                }
+                // if (!this.user.report_detail_enable) {
+                //     this.$message.error(this.user.report_detail_label);
+                //     return;
+                // }
                 this.reportData = item;
                 $('.search-detail-dialog').modal('show');
             },

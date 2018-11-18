@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->hasOne(UserFavor::class, 'user_id', 'id');
     }
 
+    public function _report()
+    {
+        return $this->hasOne(UserReport::class, 'user_id', 'id');
+    }
+
     public function _remark()
     {
         return $this->hasMany(UserRemark::class, 'user_id', 'id');

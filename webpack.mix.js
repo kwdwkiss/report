@@ -30,16 +30,15 @@ mix
             ]
         }
     });
+//.js('Modules/Admin/Resources/assets/js/app.js', 'public/js/admin/')
+//.js('Modules/Index/Resources/assets/js/app.js', 'public/js/index/')
+mix.js('resources/assets/js/admin/app.js', 'public/js/admin/')
+mix.js('resources/assets/js/agent/app.js', 'public/js/agent/')
+mix.js('resources/assets/js/index/app.js', 'public/js/index/')
+// .extract(['element-ui', 'element-ui/lib/theme-chalk/index.css'], 'js/element')
+// .extract(['lodash', 'jquery', 'bootstrap-sass', 'axios', 'vue', 'vue-router'], 'js/vendor.js')
 
-mix
-    //.js('Modules/Admin/Resources/assets/js/app.js', 'public/js/admin/')
-    //.js('Modules/Index/Resources/assets/js/app.js', 'public/js/index/')
-    .js('resources/assets/js/admin/app.js', 'public/js/admin/')
-    .js('resources/assets/js/index/app.js', 'public/js/index/')
-    // .extract(['element-ui', 'element-ui/lib/theme-chalk/index.css'], 'js/element')
-    // .extract(['lodash', 'jquery', 'bootstrap-sass', 'axios', 'vue', 'vue-router'], 'js/vendor.js')
-
-    .sass('resources/assets/sass/app.scss', 'public/css')
+mix.sass('resources/assets/sass/app.scss', 'public/css')
 
 if (mix.inProduction()) {
     mix.version()

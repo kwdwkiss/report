@@ -55,6 +55,11 @@ return [
             'driver' => 'cly_session',
             'provider' => 'admin'
         ],
+
+        'agent' => [
+            'driver' => 'cly_session',
+            'provider' => 'agent'
+        ],
     ],
 
     /*
@@ -83,6 +88,11 @@ return [
         'admin' => [
             'driver' => 'eloquent',
             'model' => \Modules\Common\Entities\Admin::class
+        ],
+
+        'agent' => [
+            'driver' => 'eloquent',
+            'model' => \Modules\Common\Entities\Agent::class
         ],
 
         // 'users' => [

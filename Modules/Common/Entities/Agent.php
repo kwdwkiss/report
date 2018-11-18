@@ -4,10 +4,14 @@ namespace Modules\Common\Entities;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class Agent extends Authenticatable
 {
     use Notifiable;
+    use HasRoles;
+
+    protected $guard_name = 'agent';
 
     protected $table = 'agent';
 

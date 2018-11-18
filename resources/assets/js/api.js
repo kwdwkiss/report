@@ -113,6 +113,24 @@ module.exports = {
 
     adminProductBillIndex: '/admin/product_bill/index',
 
+    //>>>>>>>>>>agent
+    agentAgentLogin: '/agent/agent/login',
+    agentAgentLogout: '/agent/agent/logout',
+    agentAgentInfo: '/agent/agent/info',
+
+    agentUserIndex: '/agent/user/index',
+    agentUserShow: '/agent/user/show',
+    agentUserCreate: '/agent/user/create',
+    agentUserUpdate: '/agent/user/update',
+    agentUserDelete: '/agent/user/delete',
+    agentUserEnableReport: '/agent/user/enable_report',
+
+    agentAccountReportIndex: '/agent/account_report/index',
+    agentAccountReportShow: '/agent/account_report/show',
+    agentAccountReportCreate: '/agent/account_report/create',
+    agentAccountReportUpdate: '/agent/account_report/update',
+    agentAccountReportDelete: '/agent/account_report/delete',
+
     //>>>>>>>>>>index
     taxonomyAllData: '/taxonomy/all/data',
     taxonomyAllDisplay: '/taxonomy/all/display',

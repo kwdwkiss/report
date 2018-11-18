@@ -47,8 +47,8 @@
                         self.notification = res.data.data;
                         if (self.notification.title !== '' && self.notification.content !== '') {
                             $('.pop-window-dialog').modal('show');
-                            VueCookie.set('popWindow', true, 1);
                         }
+                        VueCookie.set('popWindow', true, 1);
                     });
                 }
             }

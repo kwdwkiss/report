@@ -4,11 +4,11 @@
 
         <div class="container" style="padding-top:51px">
 
-            <top-ad></top-ad>
+            <!--<top-ad></top-ad>-->
 
-            <my-logo></my-logo>
+            <!--<my-logo></my-logo>-->
 
-            <my-notice></my-notice>
+            <!--<my-notice></my-notice>-->
 
             <!--<my-breadcrumb></my-breadcrumb>-->
 
@@ -16,7 +16,7 @@
 
             <hr>
 
-            <my-copyright></my-copyright>
+            <!--<my-copyright></my-copyright>-->
 
         </div>
 

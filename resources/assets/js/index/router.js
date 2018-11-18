@@ -83,7 +83,6 @@ router.beforeEach((to, from, next) => {
         }
     } else {
         if ([
-            'index',
             'recharge',
             'rechargeList',
             'amountList',

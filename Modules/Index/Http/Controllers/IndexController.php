@@ -264,49 +264,49 @@ class IndexController extends Controller
         $reportType = Taxonomy::where('pid', Taxonomy::REPORT_TYPE)->findOrFail($report_type);
 
         //检查举报字段合法性
-        $imageLimit = array_get(AccountReport::$imageLimit, $account_type, []);
-        if (in_array($report_type, $imageLimit) && !$attachment) {
-            throw new JsonException("为了提高举报数据真实性，{$accountType->name}{$reportType->name}，需要上传图片证据。");
-        }
+//        $imageLimit = array_get(AccountReport::$imageLimit, $account_type, []);
+//        if (in_array($report_type, $imageLimit) && !$attachment) {
+//            throw new JsonException("为了提高举报数据真实性，{$accountType->name}{$reportType->name}，需要上传图片证据。");
+//        }
 
         //同一账号每天限制举报
-        $todayReportCount = AccountReport::query()
-            ->where('user_id', $user->id)
-            ->where('account_type', $account_type)
-            ->where('account_name', $name)
-            ->whereDate('created_at', Carbon::today()->toDateString())
-            ->count();
-        if ($todayReportCount > 0) {
-            throw new JsonException('一个用户每天对同一账号只能举报一次');
-        }
+//        $todayReportCount = AccountReport::query()
+//            ->where('user_id', $user->id)
+//            ->where('account_type', $account_type)
+//            ->where('account_name', $name)
+//            ->whereDate('created_at', Carbon::today()->toDateString())
+//            ->count();
+//        if ($todayReportCount > 0) {
+//            throw new JsonException('一个用户每天对同一账号只能举报一次');
+//        }
 
         //关联用户是审核过了必须证据举报
-        $query = User::query();
-        switch ($account_type) {
-            case 201:
-                $query->where('qq', $name);
-                break;
-            case 202:
-                $query->where('ww', $name);
-                break;
-            case 203:
-                $query->where('wx', $name);
-                break;
-            case 204:
-                $query->where('mobile', $name);
-                break;
-            case 205:
-                $query->where('jd', $name);
-                break;
-            case 207:
-                $query->where('is', $name);
-                break;
-        }
-        $reportUser = $query->first();
+//        $query = User::query();
+//        switch ($account_type) {
+//            case 201:
+//                $query->where('qq', $name);
+//                break;
+//            case 202:
+//                $query->where('ww', $name);
+//                break;
+//            case 203:
+//                $query->where('wx', $name);
+//                break;
+//            case 204:
+//                $query->where('mobile', $name);
+//                break;
+//            case 205:
+//                $query->where('jd', $name);
+//                break;
+//            case 207:
+//                $query->where('is', $name);
+//                break;
+//        }
+//        $reportUser = $query->first();
         //举报会员需要联系客服
-        if ($reportUser && $reportUser->isAuth()) {
-            throw new JsonException('此用户为宏海实名认证会员，请联系客服举报');
-        }
+//        if ($reportUser && $reportUser->isAuth()) {
+//            throw new JsonException('此用户为宏海实名认证会员，请联系客服举报');
+//        }
 //        if ($reportUser && $reportUser->isAuth() && (empty($description) || empty($attachment))) {
 //            throw new JsonException('举报的账号为宏海认证会员，必须同时提交图片和描述才能举报');
 //        }
@@ -318,6 +318,11 @@ class IndexController extends Controller
                 'name' => $name,
                 'status' => 102
             ]);
+        }
+
+        $userReport = $user->_report;
+        if (!$userReport) {
+            throw new JsonException('用户未开通举报功能');
         }
 
         \DB::transaction(function () use (

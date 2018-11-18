@@ -11,7 +11,7 @@
                         <!--<span class="icon-bar"></span>-->
                         <!--<span class="icon-bar"></span>-->
                     </button>
-                    <a class="navbar-brand collapse-hide" href="javascript:" @click="go('index')">宏海网络</a>
+                    <a class="navbar-brand collapse-hide" href="javascript:" @click="go('index')">天网</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -23,48 +23,48 @@
                             <ul class="dropdown-menu">
                                 <li><a class="collapse-hide" href="javascript:" @click="go('index')">恶意账号查询</a>
                                 <!--<li><a class="collapse-hide" href="javascript:" @click="go('vbotIndex')">微信清粉工具</a>-->
-                                <li><a class="collapse-hide" href="javascript:" @click="go('checkTb')">淘宝验号</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('checkPdd')">拼多多验号</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('checkJd')">京东验号</a></li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('oneKeyExcel')">一键生成EXCEL</a>
-                                </li>
-                                <li><a class="collapse-hide" href="javascript:" @click="go('searchOrder')">淘宝信用查询</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">文章资讯<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li v-if="item.name" v-for="(item,index) in page.menu" :key="index">
-                                    <a class="collapse-hide" :href="item.url">{{item.name}}</a>
+                                <!--<li><a class="collapse-hide" href="javascript:" @click="go('checkTb')">淘宝验号</a></li>-->
+                                <!--<li><a class="collapse-hide" href="javascript:" @click="go('checkPdd')">拼多多验号</a></li>-->
+                                <!--<li><a class="collapse-hide" href="javascript:" @click="go('checkJd')">京东验号</a></li>-->
+                                <!--<li><a class="collapse-hide" href="javascript:" @click="go('oneKeyExcel')">一键生成EXCEL</a>-->
+                                <!--</li>-->
+                                <!--<li><a class="collapse-hide" href="javascript:" @click="go('searchOrder')">淘宝信用查询</a>-->
                                 </li>
                             </ul>
                         </li>
+                        <!--<li class="dropdown">-->
+                            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"-->
+                               <!--aria-haspopup="true" aria-expanded="false">文章资讯<span class="caret"></span></a>-->
+                            <!--<ul class="dropdown-menu">-->
+                                <!--<li v-if="item.name" v-for="(item,index) in page.menu" :key="index">-->
+                                    <!--<a class="collapse-hide" :href="item.url">{{item.name}}</a>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</li>-->
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <template v-if="!user">
                             <li><a class="collapse-hide" href="javascript:" @click="go('login')">登录</a></li>
-                            <li><a class="collapse-hide" href="javascript:" @click="go('register')">注册</a></li>
+                            <!--<li><a class="collapse-hide" href="javascript:" @click="go('register')">注册</a></li>-->
                         </template>
                         <template v-if="user">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-haspopup="true" aria-expanded="false">积分充值<span
-                                        class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a>积分:{{user._profile.amount}}</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="go('recharge')">积分充值</a>
-                                    </li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="go('rechargeList')">充值记录</a>
-                                    </li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="go('amountList')">积分记录</a>
-                                    </li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="go('inviterLink')">推广赚积分</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            <!--<li class="dropdown">-->
+                                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"-->
+                                   <!--aria-haspopup="true" aria-expanded="false">积分充值<span-->
+                                        <!--class="caret"></span></a>-->
+                                <!--<ul class="dropdown-menu">-->
+                                    <!--<li><a>积分:{{user._profile.amount}}</a></li>-->
+                                    <!--<li role="separator" class="divider"></li>-->
+                                    <!--<li><a class="collapse-hide" href="javascript:" @click="go('recharge')">积分充值</a>-->
+                                    <!--</li>-->
+                                    <!--<li><a class="collapse-hide" href="javascript:" @click="go('rechargeList')">充值记录</a>-->
+                                    <!--</li>-->
+                                    <!--<li><a class="collapse-hide" href="javascript:" @click="go('amountList')">积分记录</a>-->
+                                    <!--</li>-->
+                                    <!--<li><a class="collapse-hide" href="javascript:" @click="go('inviterLink')">推广赚积分</a>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</li>-->
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                    aria-haspopup="true" aria-expanded="false">个人中心<span
@@ -72,30 +72,30 @@
                                 <ul class="dropdown-menu">
                                     <li><a>账号：{{user.mobile}}</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="go('userProfile')">用户资料</a>
-                                    </li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="go('userProduct')">我的产品</a>
+                                    <!--<li><a class="collapse-hide" href="javascript:" @click="go('userProfile')">用户资料</a>-->
+                                    <!--</li>-->
+                                    <!--<li><a class="collapse-hide" href="javascript:" @click="go('userProduct')">我的产品</a>-->
                                     <!--<li><a class="collapse-hide" href="javascript:" @click="go('userAuthBillIndex')">我的认证</a>-->
-                                    </li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="go('userMerchant')">店铺资料</a>
-                                    </li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="go('userReport')">我的举报</a>
-                                    </li>
-                                    <li><a class="collapse-hide" href="javascript:" @click="go('excelList')">我的表格</a>
-                                    </li>
-                                    <li>
-                                        <a class="collapse-hide" href="javascript:" @click="go('notificationList')">
-                                            系统通知
-                                            <template v-if="unreadNotification>0">
-                                                （{{unreadNotification}}）
-                                            </template>
-                                        </a>
-                                    </li>
+                                    <!--</li>-->
+                                    <!--<li><a class="collapse-hide" href="javascript:" @click="go('userMerchant')">店铺资料</a>-->
+                                    <!--</li>-->
+                                    <!--<li><a class="collapse-hide" href="javascript:" @click="go('userReport')">我的举报</a>-->
+                                    <!--</li>-->
+                                    <!--<li><a class="collapse-hide" href="javascript:" @click="go('excelList')">我的表格</a>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<a class="collapse-hide" href="javascript:" @click="go('notificationList')">-->
+                                            <!--系统通知-->
+                                            <!--<template v-if="unreadNotification>0">-->
+                                                <!--（{{unreadNotification}}）-->
+                                            <!--</template>-->
+                                        <!--</a>-->
+                                    <!--</li>-->
                                     <li><a class="collapse-hide" href="javascript:" @click="doLogout">退出</a></li>
                                 </ul>
                             </li>
                         </template>
-                        <li><a class="collapse-hide" href="javascript:" @click="go('customerService')">联系客服</a></li>
+                        <!--<li><a class="collapse-hide" href="javascript:" @click="go('customerService')">联系客服</a></li>-->
                     </ul>
                 </div>
             </div>

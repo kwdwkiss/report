@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>宏海网络</title>
+    <title>天网</title>
 
     <script>
         window.laravel = {!! json_encode($page) !!};
