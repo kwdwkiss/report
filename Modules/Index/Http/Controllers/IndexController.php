@@ -92,25 +92,25 @@ class IndexController extends Controller
     public function search()
     {
         $user = \Auth::guard('user')->user();
-        if (!$user) {
-            throw new JsonException('用户未登录，请登录后再查询');
-        }
-        if (!$user->_profile) {
-            throw new JsonException('用户数据异常，请联系客服');
-        }
+//        if (!$user) {
+//            throw new JsonException('用户未登录，请登录后再查询');
+//        }
+//        if (!$user->_profile) {
+//            throw new JsonException('用户数据异常，请联系客服');
+//        }
 
         $name = request('name');
         if (!$name) {
             throw new JsonException('查询账号为空');
         }
-        if ($user->_profile->amount < 2) {
-            throw new JsonException('用户积分不足，请充值');
-        }
+//        if ($user->_profile->amount < 2) {
+//            throw new JsonException('用户积分不足，请充值');
+//        }
 
         $data = [];
         \DB::transaction(function () use ($user, $name, &$data) {
 
-            $user->_profile->decrement('amount', 2);
+//            $user->_profile->decrement('amount', 2);
 
             AccountSearch::create([
                 'user_id' => $user ? $user->id : 0,
@@ -121,16 +121,16 @@ class IndexController extends Controller
                 'result' => ''
             ]);
 
-            $accountFavorsTotal = AccountFavor::query()
-                ->select(\DB::raw('*,count(*) as total'))
-                ->where('account_name', $name)
-                ->groupBy('account_name', 'account_type')
-                ->get();
-            $accountFavors = AccountFavor::query()
-                ->where('account_name', $name)
-                ->orderBy('id', 'desc')
-                ->limit(5)
-                ->get();
+//            $accountFavorsTotal = AccountFavor::query()
+//                ->select(\DB::raw('*,count(*) as total'))
+//                ->where('account_name', $name)
+//                ->groupBy('account_name', 'account_type')
+//                ->get();
+//            $accountFavors = AccountFavor::query()
+//                ->where('account_name', $name)
+//                ->orderBy('id', 'desc')
+//                ->limit(5)
+//                ->get();
 
             //存在账号的用户
             $searchUsers = User::query()->with('_profile')
@@ -197,8 +197,8 @@ class IndexController extends Controller
                 'name' => $name,
                 'user' => UserResource::collection($searchUsers),
                 'account_reports' => AccountReportResource::collection($accountReports),
-                'account_favors' => AccountFavorResource::collection($accountFavors),
-                'account_favors_total' => AccountFavorResource::collection($accountFavorsTotal),
+                'account_favors' => [],//AccountFavorResource::collection($accountFavors),
+                'account_favors_total' => [],//AccountFavorResource::collection($accountFavorsTotal),
             ];
         });
 

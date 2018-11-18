@@ -26,6 +26,8 @@ Route::middleware(['csrf'])->group(function () {
     Route::post('/index/one-key-excel', 'IndexController@oneKeyExcel');
     Route::get('/index/excel_cost_type', 'IndexController@excelCostType');
 
+    Route::post('/index/search', 'IndexController@search');
+
     Route::get('/index/article/list', 'ArticleController@list');
     Route::get('/index/article/show', 'ArticleController@show');
 
@@ -50,7 +52,6 @@ Route::middleware(['csrf'])->group(function () {
 Route::middleware(['auth:user', 'csrf'])->group(function () {
 
     Route::get('/user/info', 'UserController@info');
-    Route::post('/index/search', 'IndexController@search');
     Route::post('/index/report', 'IndexController@report');
     Route::get('/user/recharge/index', 'RechargeController@index');
     Route::get('/user/amount/index', 'AmountController@index');

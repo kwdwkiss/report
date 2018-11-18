@@ -461,9 +461,9 @@
                 let name = this.searchParams.name;
                 this.$store.commit("searchResult", {
                     account_type: account_type, name: name,
-                    callback: function () {
-                        self.$store.commit("user");
-                    }
+                    // callback: function () {
+                    //     self.$store.commit("user");
+                    // }
                 });
                 this.isSearch = true;
             },
