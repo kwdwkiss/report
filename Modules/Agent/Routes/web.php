@@ -34,4 +34,5 @@ Route::prefix('agent')->middleware(['auth:agent', 'csrf'])->group(function () {
 
     Route::get('/account_report/index', 'AccountReportController@index')->name('举报信息列表');
     Route::get('/account_report/show', 'AccountReportController@show')->name('举报信息详情');
+    Route::post('/account_report/update', 'AccountReportController@update')->name('举报信息更新');
 });

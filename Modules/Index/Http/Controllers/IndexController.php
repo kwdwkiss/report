@@ -235,7 +235,7 @@ class IndexController extends Controller
         $account_type = request('account_type');
         $name = trim(request('name'));
         $report_type = request('report_type');
-        $captcha = request('captcha');
+//        $captcha = request('captcha');
         $description = request('description');
         $attachmentData = request('image');
         $attachmentData1 = request('image1');
@@ -245,9 +245,9 @@ class IndexController extends Controller
         $attachment1 = Attachment::find(array_get($attachmentData1, 'id'));
         $attachment2 = Attachment::find(array_get($attachmentData2, 'id'));
 
-        if (!captcha_check($captcha)) {
-            throw new JsonException('验证码错误');
-        }
+//        if (!captcha_check($captcha)) {
+//            throw new JsonException('验证码错误');
+//        }
         if (!$name) {
             throw new JsonException('账号不能为空');
         }

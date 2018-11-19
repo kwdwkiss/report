@@ -81,16 +81,16 @@
                                               v-model="form.description"></textarea>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">验证码</label>
-                            <div class="col-sm-6">
-                                <input v-model="form.captcha" name="captcha" type="text"
-                                       class="form-control" placeholder="请输入验证码">
-                            </div>
-                            <div class="col-sm-3">
-                                <img :src="captcha_src" alt="" @click="doCaptcha">
-                            </div>
-                        </div>
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-sm-3 control-label">验证码</label>-->
+                            <!--<div class="col-sm-6">-->
+                                <!--<input v-model="form.captcha" name="captcha" type="text"-->
+                                       <!--class="form-control" placeholder="请输入验证码">-->
+                            <!--</div>-->
+                            <!--<div class="col-sm-3">-->
+                                <!--<img :src="captcha_src" alt="" @click="doCaptcha">-->
+                            <!--</div>-->
+                        <!--</div>-->
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <button type="button" class="btn btn-default" @click="go('index')">返回</button>
